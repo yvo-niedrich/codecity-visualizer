@@ -1,0 +1,27 @@
+{
+  "name": "softis3d-visualizer",
+  "version": "0.0.1",
+  "description": "@TODO",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server --progress --colors",
+    "dev": "start http://localhost:8080/webpack-dev-server/bundle & webpack-dev-server --progress --colors",
+    "babel": "babel --presets es2015 js/main.js -o build/main.bundle.js",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "none"
+  },
+  "author": "Yvo Niedrich",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^1.13.0",
+    "babel-core": "^6.7.6",
+    "babel-loader": "^6.2.4"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^1.14.1"
+  }
+}
