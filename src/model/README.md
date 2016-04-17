@@ -17,7 +17,7 @@ Since this academic Model is still quite abstract, it needs to be augment for it
 ## Directed Graph (G)
 A List of the graphs edges (Software Dependencies).
 ```JS
-[
+model.graph = [
   {
     source : 'node1key',
     target : 'node2key'
@@ -31,16 +31,19 @@ A List of the graphs edges (Software Dependencies).
 > Please note: Every node (target or source) has to be a leaf node in the Tree (T)
 
 ## Hierarchy Tree (T)
-A Tree, consisting of TreeNode-Objects. The Elements of the software are only represented by their identifiers (or keys).
+A Tree, consisting of [TreeNode][treeNodeFile]-Objects. The Elements of the software are only represented by their identifiers (or keys).
 
  * The Root-Node embodies the complete Software
  * Subsequent (non-leaf) Nodes represent Packages of the Software
  * Leaf-Nodes represent Classes
+```JS
+model.tree = <TreeNode>
+```
 
 ## List of Software-Versions (R)
 An ordered List of all Versions. A Version consists of a `key` and it's `label`.
 ```JS
-[
+model.versions = [
   { key : 'hashV1key', label : 'v0.1' },
   { key : 'hashV2key', label : 'v0.2' }
 ]
@@ -51,7 +54,7 @@ A Function, taking node-key and version-key as parameters. It will return a bool
 ```JS
 model.exists('node2key', 'version1key'); // returns false
 model.exists('node2key', 'version2key'); // returns true 
-                                      (because node as added in Version 2)
+// because node2 as added in Version 2
 ```
 
 ## Property function (A)
@@ -72,3 +75,4 @@ model.attributes('node2key', 'version2key'); // Returns an Attribute Object
 
 [//]: #
    [consitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
+   [treeNodeFile]: <treenode.js>
