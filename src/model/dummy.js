@@ -2,11 +2,11 @@ var BaseModel = require("./base.js");
 var TreeNode  = require("./components/treenode.js");
 
 /**
- * DummyModel returning animals
+ * ZooModel returning animals
  *
  * @implements BaseSoftwareModel
  */
-class DummyModel extends BaseModel {
+class ZooModel extends BaseModel {
     constructor(options) {
         super();
         
@@ -87,4 +87,4 @@ class DummyModel extends BaseModel {
     };
 }
 
-module.exports = DummyModel;
+module.exports = ZooModel;

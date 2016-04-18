@@ -1,18 +1,19 @@
 # A Model for Evolving Software Systems
 For the independent representation of the Attributes and Structure of the Software, the '_Model for Evolving Software Systems_' is used.
-It was introduced in "Consistent Software Cities" by Frank Steinbrückner in 2012. [Source][consitentCitiesPaper]
+It was introduced in "Consistent Software Cities" by Frank Steinbrückner in 2012. [Source][ConsitentCitiesPaper]
 
 ## Short Explanation
 The Model consists of the 5-tuple _(G, T, R, fe, A)_.
  * G  = Directed Graph (representing the dependencies/relationship between classes)
- * T  = Hierarchy Tree (representing the containment hierarchy of Packages and Classes)
- * R  = Ordered List of available Software-Versions
+ * T  = Hierarchy Tree (representing the containment hierarchy of packages and classes)
+ * R  = Ordered List of available software versions
  * fe = A function, confirming the existence of a node in a version (or its absence)
  * A  = Property function (Maps the properties of a node to a version)
 
 
 # Representation in CCV
 Since this academic Model is still quite abstract, it needs to be augment for it's usage.
+For simple Example see the [DummyModel][ZooExample].
 
 ## Directed Graph (G)
 A List of the graphs edges (Software Dependencies).
@@ -31,7 +32,7 @@ model.graph = [
 > Please note: Every node (target or source) has to be a leaf node in the Tree (T)
 
 ## Hierarchy Tree (T)
-A Tree, consisting of [TreeNode][treeNodeFile]-Objects. The Elements of the software are only represented by their identifiers (or keys).
+A Tree, consisting of [TreeNode][TreeNodeFile]-Objects. The Elements of the software are only represented by their identifiers (or keys).
 
  * The Root-Node embodies the complete Software
  * Subsequent (non-leaf) Nodes represent Packages of the Software
@@ -74,5 +75,6 @@ model.attributes('node2key', 'version2key'); // Returns an Attribute Object
 ```
 
 [//]: #
-   [consitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
-   [treeNodeFile]: <components/treenode.js>
+   [ConsitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
+   [TreeNodeFile]: <components/treenode.js>
+   [ZooExample]: <dummy.js>

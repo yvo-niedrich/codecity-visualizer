@@ -1,7 +1,7 @@
 var SoftwareModel = require("./model/dummy.js");
 var model = new SoftwareModel();
 
-document.write("My ModelProvider is: " + model.constructor.name);
+document.write("My Model is: " + model.constructor.name);
 
 function inspectTree(node, model) {
     if (!node.children.length) {
