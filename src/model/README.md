@@ -60,7 +60,7 @@ model.exists('node2key', 'version2key'); // returns true
 ## Property function (A)
 A Function, mapping the node-key and the version-key to the nodes attributes in the version.
 ```JS
-model.attributes('node2key', 'version1key'); // returns false
+model.attributes('node2key', 'version1key'); // returns null
 model.attributes('node2key', 'version2key'); // Returns an Attribute Object
 ```
 
@@ -75,4 +75,4 @@ model.attributes('node2key', 'version2key'); // Returns an Attribute Object
 
 [//]: #
    [consitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
-   [treeNodeFile]: <treenode.js>
+   [treeNodeFile]: <components/treenode.js>
