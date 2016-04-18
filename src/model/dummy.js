@@ -15,9 +15,17 @@ class ZooModel extends BaseModel {
         tree.add('mammals');
         tree.find('mammals').add('fennecfox');
         tree.find('mammals').add('armadillo');
+        tree.find('mammals').add('bengaltiger');
         tree.find('mammals').add('monkeys');
-        tree.find('monkeys').add('chimp');
         tree.find('monkeys').add('marmoset');
+        tree.find('monkeys').add('chimp');
+        tree.find('monkeys').add('squirrelmonkey');
+        tree.find('monkeys').add('macaque');
+        tree.find('monkeys').add('orangutan');
+        tree.find('monkeys').add('gorilla');
+        tree.find('monkeys').add('langur');
+        tree.find('monkeys').add('baboon');
+        tree.find('monkeys').add('douc');
         tree.add('reptiles');
         tree.find('reptiles').add('gecko');
         tree.find('reptiles').add('tortoise');
