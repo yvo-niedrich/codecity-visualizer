@@ -1,6 +1,7 @@
 /**
- * All shapes occupy a qubic space with (0|0|0) as it's origin.
- * The qube's size is defined by the dimensions attribute.
+ * All shapes occupy a square area.
+ * It's dimensions described by the vector `dimensions`.
+ * It can be placed on and rotated around the shapes centroid.
  * 
  * @interface
  */
@@ -11,23 +12,44 @@ class BaseShape {
         }
     }
 
+    get centroid () {
+        return {
+            x: this.dimensions.x / 2,
+            y: this.dimensions.y / 2
+        }
+    }
+
     /**
      * Get the vector for the Shape's qubic size
-     * @return {Coordinates}
+     * @return {Object}
      */
     get dimensions() {};
 
     /**
-     * Get coordinates for the connector of this shape
-     * @return {Coordinates}
+     * Set the Size of the Shape
+     * @return {[type]} [description]
      */
-    get connector() {};
+    set size(val) {};
 
     /**
-     * Set absolute Coordinates for this shapes origin, to place it in the scene
-     * @param  {coordinates} coordinates
+     * Set absolute X-Coordinates for this shapes centroid, to place it in the scene
+     * @param  {int} coordinates
      */
-    set absoluteOrigin(coordinates) {};
+    set absoluteX(x) {};
+
+    /**
+     * Set absolute Y-Coordinates for this shapes centroid, to place it in the scene
+     * @param  {int} coordinates
+     */
+    set absoluteY(y) {};
+
+    /**
+     * Set the rotation around the shapes centroid.
+     * @param  {int} degrees clockwise rotation
+     */
+    set rotation(degrees){};
 
     draw() {};
 }
+
+module.exports = BaseShape;
