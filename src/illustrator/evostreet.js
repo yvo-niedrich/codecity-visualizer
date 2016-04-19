@@ -6,7 +6,7 @@ var BaseIllustrator = require("./base.js");
  * @implements BaseIllustrator
  */
 class Evostreet extends BaseIllustrator {
-    construct() {
+    constructor() {
         super();
     }
 }

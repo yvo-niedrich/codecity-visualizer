@@ -6,7 +6,7 @@ var BaseShape = require("./base.js");
  * @implements BaseShape
  */
 class Highway extends BaseShape {
-    construct() {
+    constructor() {
         super();
         this._margin_x = 0;
         this._margin_y = 0;

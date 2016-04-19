@@ -4,7 +4,7 @@
  * @interface
  */
 class BaseIllustrator {
-    construct() {
+    constructor() {
         if (new.target === BaseIllustrator) {
             throw new TypeError("Cannot construct instances of this class directly");
         }

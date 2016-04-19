@@ -6,7 +6,7 @@
  * @interface
  */
 class BaseShape {
-    construct() {
+    constructor() {
         if (new.target === BaseShape) {
             throw new TypeError("Cannot construct instances of this class directly");
         }

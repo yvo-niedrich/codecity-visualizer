@@ -6,7 +6,7 @@ var BaseShape = require("./base.js");
  * @implements BaseShape
  */
 class House extends BaseShape {
-    construct() {
+    constructor() {
         super();
         this._margin = 4;
         this._house = { x: 15, y: 15 };
