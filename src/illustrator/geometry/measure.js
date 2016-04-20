@@ -1,7 +1,7 @@
 class Measure {
-    constructor(width, length) {
-        this._width  = width;
+    constructor(length, width) {
         this._length = length;
+        this._width  = width;
     };
 
     toString() {

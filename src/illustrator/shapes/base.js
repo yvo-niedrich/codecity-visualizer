@@ -10,7 +10,7 @@ var Point   = require("../geometry/point.js");
 class BaseShape {
     constructor(key) {
         this._key = String(key);
-        this._dimension = new Measure(0, 0);
+        this._dimensions = new Measure(0, 0);
         this._rotation = 0;
         this._absolutePosition = null;
     };
@@ -21,7 +21,7 @@ class BaseShape {
 
     // TODO: dimensions vs. displayDimension
     get centroid () {
-        return new Point(this.dimensions.length / 2, this.dimensions.width / 2);
+        return new Point(this._dimensions.length / 2, this._dimensions.width / 2);
     };
 
     /**
@@ -29,19 +29,19 @@ class BaseShape {
      * @return {Measure}
      */
     get dimensions() {
-        return this._dimension;
+        return this._dimensions;
     };
 
     /**
      * Get the shape's qubic size (after possible rotations)
      * @return {Measure}
      */
-    get displayDimension() {
+    get displayDimensions() {
         var swap = this.rotation % 180;
         return new Measure(
-            swap ? this._dimension.width  : this.dimensions.length,
-            swap ? this._dimension.length : this.dimensions.width
-            );
+            swap ? this._dimensions.width  : this._dimensions.length,
+            swap ? this._dimensions.length : this._dimensions.width
+        );
     };
 
     /**
@@ -71,7 +71,7 @@ class BaseShape {
             throw 'Only 90° rotations allowed'
         }
 
-        this._rotation = 360 + degrees % 360;
+        this._rotation = (360 + degrees) % 360;
     };
 
     /**

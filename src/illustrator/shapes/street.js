@@ -11,7 +11,9 @@ class Street extends BaseShape {
         this._margin_x = 0;
         this._margin_y = 0;
         this._width    = 10;
-        this._length   = 50;
+        this._length   = 10;
+
+        this._updateDimensions();
     };
 
     _updateDimensions() {
@@ -21,10 +23,12 @@ class Street extends BaseShape {
 
     set length(length) {
         this._length = length;
+        this._updateDimensions();
     };
 
     set width(width) {
         this._width = width;
+        this._updateDimensions();
     };
 
     draw() {

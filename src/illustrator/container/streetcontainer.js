@@ -61,7 +61,9 @@ class StreetContainer extends BaseContainer {
 
         this._addHousesToFinalStructure();
         this._addBranchesToFinalStructure();
+        this._updateDimensions();
 
+        this._road.width = this.dimensions.length;
         // @TODO
         //  - road length
         //  - position road
@@ -106,18 +108,31 @@ class StreetContainer extends BaseContainer {
     };
 
     _getContainerWidth() {
-        var lengthHouses = Math.max(this._final.houses.left.dimensions.width, this._final.houses.right.dimensions.width);
-        var lengthBranches = Math.max(this._final.branches.left.dimensions.width, this._final.branches.right.dimensions.width);
-        return lengthHouses +
-                lengthBranches +
-                this._configuration.initialMargin +
-                lengthBranches && lengthHouses ? this._configuration.containerMargin : 0;
+        var houseWidth = Math.max(
+            this._final.houses.left.displayDimensions.width,
+            this._final.houses.right.displayDimensions.width
+       );
+        var branchWidth = Math.max(
+            this._final.branches.left.displayDimensions.width,
+            this._final.branches.right.displayDimensions.width
+         );
+        var containerMargin = (branchWidth && houseWidth) ? this._configuration.containerMargin : 0;
+
+        return houseWidth + branchWidth + this._configuration.initialMargin + containerMargin;
+                
     };
 
     _getContainerLength() {
-        return Math.max(this._final.houses.left.dimensions.length, this._final.branches.left.dimensions.length) +
-                this._road.dimensions.length +
-                Math.max(this._final.houses.right.dimensions.length, this._final.branches.right.dimensions.length);
+        var leftLength = Math.max(
+            this._final.houses.left.displayDimensions.length,
+            this._final.branches.left.displayDimensions.length
+        );
+        var rightLength = Math.max(
+            this._final.houses.right.displayDimensions.length,
+            this._final.branches.right.displayDimensions.length
+        );
+        
+        return leftLength + this._road.displayDimensions.length + rightLength;
     };
 
     draw() {};

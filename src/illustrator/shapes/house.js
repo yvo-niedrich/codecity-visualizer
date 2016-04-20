@@ -11,7 +11,6 @@ class House extends BaseShape {
         super(key);
         this._margin = 4;
         this._house = new Measure(15, 15);
-        this._absolute = null;
         this._updateDimensions();
     };
 
