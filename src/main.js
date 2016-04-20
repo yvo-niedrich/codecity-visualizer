@@ -2,6 +2,7 @@ var SoftwareModel = require("./model/dummy.js");
 var Illustrator   = require("./illustrator/evostreet.js");
 // var Renderer = require("./renderer/3js.js");
 
+console.clear();
 
 /* Step 1: Create the Model
  *  - Get Data from DataSource
@@ -14,8 +15,8 @@ var model = new SoftwareModel();
  * - Decide on other stuff (Scaling factor, margins, angles, ...)
  * - Insert model and Options to Illustrator
  */
-// var options = {...}; // eg. Metrics
-// var illustrator = new Illustrator(model, options);
+var options = {}; // eg. Metrics, scaling, ...
+var illustrator = new Illustrator(model, options);
 
 /* Step 3: Render the "generic" Illustration
  *  - Insert CodeCity-Illustration (along with other options) in the Renderer
