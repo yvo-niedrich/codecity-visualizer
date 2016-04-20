@@ -32,7 +32,9 @@ A Tree, consisting of [TreeNode][TreeNodeFile]-Objects. The Elements of the soft
  * Subsequent (non-leaf) Nodes represent Packages of the Software
  * Leaf-Nodes represent Classes
 ```JS
-model.tree = <TreeNode>
+var rootNode = new TreeNode('root');
+rootNode.add('child1');
+model.tree = rootNode;
 ```
 
 ## List of Software-Versions (R)
