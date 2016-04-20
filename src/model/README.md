@@ -12,21 +12,15 @@ The Model consists of the 5-tuple _(G, T, R, fe, A)_.
 
 
 # Representation in CCV
-Since this academic Model is still quite abstract, it needs to be augment for it's usage.
-For simple Example see the [DummyModel][ZooExample].
+Since this academic Model is still quite abstract, it needs to be augment for it's usage. All functions accept the key, as well as the complete object, if a Node or Version is requested.
+For a simple Example see the [DummyModel][ZooExample].
 
 ## Directed Graph (G)
 A List of the graphs edges (Software Dependencies).
 ```JS
 model.graph = [
-  {
-    source : 'node1key',
-    target : 'node2key'
-  },
-  {
-    source : 'node1key',
-    target : 'node3key'
-  }
+  new Dependency('node1key', 'node2key'),
+  new Dependency('node1key', 'node3key')
 ]
 ```
 > Please note: Every node (target or source) has to be a leaf node in the Tree (T)
@@ -42,27 +36,27 @@ model.tree = <TreeNode>
 ```
 
 ## List of Software-Versions (R)
-An ordered List of all Versions. A Version consists of a `key` and it's `label`.
+An ordered List of all Versions. A Version consists have unique `key` and it's `label`.
 ```JS
 model.versions = [
-  { key : 'hashV1key', label : 'v0.1' },
-  { key : 'hashV2key', label : 'v0.2' }
+  new Version('hashV1key', 'v0.1'),
+  new Version('hashV2key', 'v0.2')
 ]
 ```
 
 ## Existence Function (fe)
-A Function, taking node-key and version-key as parameters. It will return a boolean value:
+A Function, taking node-object and version-object as parameters. It will return a boolean value:
 ```JS
-model.exists('node2key', 'version1key'); // returns false
-model.exists('node2key', 'version2key'); // returns true 
+model.exists(node2, version1); // returns false
+model.exists(node2, version2); // returns true 
 // because node2 as added in Version 2
 ```
 
 ## Property function (A)
-A Function, mapping the node-key and the version-key to the nodes attributes in the version.
+A Function, mapping the node-object and the version-object to the nodes attributes in the version.
 ```JS
-model.attributes('node2key', 'version1key'); // returns null
-model.attributes('node2key', 'version2key'); // Returns an Attribute Object
+model.attributes(node2, version1); // returns null
+model.attributes(node2, version2); // Returns an Attribute Object
 ```
 
 

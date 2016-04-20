@@ -1,5 +1,7 @@
-var BaseModel = require("./base.js");
-var TreeNode  = require("./components/treenode.js");
+var BaseModel  = require("./base.js");
+var TreeNode   = require("./components/treenode.js");
+var Version    = require("./components/version.js");
+var Dependency = require("./components/dependency.js");
 
 /**
  * ZooModel returning animals
@@ -33,14 +35,14 @@ class ZooModel extends BaseModel {
 
         /* Step 2: Create Graph */
         this._graph = [
-            { source: 'marmoset', target: 'tortoise'}
+            new Dependency('marmoset', 'tortoise')
             // Because the marmoset likes to ride on a tortoise
         ]
 
         /* Step 3: Create versions */
         this._versions = [
-            { key: 'alpha', label: 'Two Weeks before Opening'},
-            { key: 'v1.0',  label: 'Opening Day'}
+            new Version('alpha', 'Two Weeks before Opening'),
+            new Version('v1.0',  'Opening Day')
         ]
     }
 
@@ -53,15 +55,15 @@ class ZooModel extends BaseModel {
     };
 
     /**
-     * Get all the Animals in the Zoo
-     * @return {function} <components/TreeNode>
+     * Get the Structure of the zoo
+     * @return {TreeNode}
      */
     get tree() {
         return this._tree;
     };
 
     /**
-     * Get the Zoo Snapshots
+     * Get the observed Zoo Snapshots
      * @return {array}
      */
     get versions() {
@@ -69,12 +71,13 @@ class ZooModel extends BaseModel {
     };
 
     /**
-     * Existence Function
-     * @param  {string} node    Node-Key
-     * @param  {string} version Version-Key
+     * Existence Function for Animals on Snapshots
+     * @param  {string} node    Node
+     * @param  {string} version Version
      * @return {boolean}
      */
     exists(node, version) {
+        console.log(node, version);
         // Since Reptiles were acquired later, they are first available on opening day
         if (version == 'alpha') {
             return this._tree.find('mammals').find(node) ? true :false;
@@ -85,8 +88,8 @@ class ZooModel extends BaseModel {
 
     /**
      * Property function
-     * @param  {string} node    Node-Key
-     * @param  {string} version Version-key
+     * @param  {string} node    Node
+     * @param  {string} version Version
      * @return {null|object}
      */
     attributes(node, version) {

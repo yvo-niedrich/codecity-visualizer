@@ -18,28 +18,28 @@ class BaseSoftwareModel {
 
     /**
      * Get the Root-Node of the tree.
-     * @return {function} <components/TreeNode>
+     * @return {components/TreeNode}
      */
     get tree() {};
 
     /**
-     * Get the List of versions. Every version has a `key` and a `label`.
-     * @return {array}
+     * Get the List of versions.
+     * @return {array<components/Version>}
      */
     get versions() {};
 
     /**
      * Existence Function
-     * @param  {string} node    Node-Key
-     * @param  {string} version Version-Key
+     * @param  {Treenode} node    Node-Object
+     * @param  {Version}  version Version-Object
      * @return {boolean}
      */
     exists(node, version) {};
 
     /**
      * Property function
-     * @param  {string} node    Node-Key
-     * @param  {string} version Version-key
+     * @param  {Treenode} node    Node-Object
+     * @param  {Version}  version Version-Object
      * @return {null|object}
      */
     attributes(node, version) {};

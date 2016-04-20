@@ -1,5 +1,5 @@
 var SoftwareModel = require("./model/dummy.js");
-// var Illustrator = require("./illustrator/myillustrator.js");
+var Illustrator   = require("./illustrator/evostreet.js");
 // var Renderer = require("./renderer/3js.js");
 
 
@@ -13,10 +13,12 @@ var model = new SoftwareModel();
  * - Decide on Metrics to use
  * - Decide on other stuff (Scaling factor, margins, angles, ...)
  * - Insert model and Options to Illustrator
+ */
 // var options = {...}; // eg. Metrics
 // var illustrator = new Illustrator(model, options);
 
 /* Step 3: Render the "generic" Illustration
  *  - Insert CodeCity-Illustration (along with other options) in the Renderer
+ */
 // var renderer = new Renderer(illustrator, "#targetCanvas");
 // renderer.render(codeCity);
