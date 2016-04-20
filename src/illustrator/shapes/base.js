@@ -6,10 +6,16 @@
  * @interface
  */
 class BaseShape {
-    constructor() {
+    constructor(key) {
         if (new.target === BaseShape) {
             throw new TypeError("Cannot construct instances of this class directly");
         }
+
+        this._key = String(key);
+    }
+
+    get key() {
+        return this._key;
     }
 
     get centroid () {
@@ -26,8 +32,9 @@ class BaseShape {
     get dimensions() {};
 
     /**
+     * //@TODO: Bessere Definition
      * Set the Size of the Shape
-     * @return {[type]} [description]
+     * @param  {int} val
      */
     set size(val) {};
 

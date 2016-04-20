@@ -6,8 +6,8 @@ var BaseShape = require("./base.js");
  * @implements BaseShape
  */
 class Street extends BaseShape {
-    constructor() {
-        super();
+    constructor(key) {
+        super(key);
         this._margin_x = 0;
         this._margin_y = 0;
         this._width    = 10;
