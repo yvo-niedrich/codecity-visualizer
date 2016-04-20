@@ -5,8 +5,6 @@ var ShapeStreet   = require("../shapes/street.js");
 
 /**
  * Create an evostreet city
- *
- * @TODO: Shape-Methods
  * 
  * @implements BaseContainer
  * @implements BaseShape
