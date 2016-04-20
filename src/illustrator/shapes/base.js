@@ -48,6 +48,8 @@ class BaseShape {
     /**
      * Set the rotation around the shapes centroid.
      * @param  {int} degrees clockwise rotation
+     *
+     * http://www.hinterseher.de/Diplomarbeit/Transformation.html
      */
     set rotation(degrees){};
 
