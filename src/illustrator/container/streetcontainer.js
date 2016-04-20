@@ -69,8 +69,11 @@ class StreetContainer extends BaseContainer {
         });
 
         this._houses.forEach(function(value, key) {
-            if (i%2) this._final.houses.left.add(value);
-            else     this._final.houses.right.add(value);
+            if (key%2) {
+                this._final.houses.left.add(value);
+            } else {
+                this._final.houses.right.add(value);
+            }
         });
 
         this._final.houses.left.finalize();
@@ -81,8 +84,11 @@ class StreetContainer extends BaseContainer {
         // Don't sort branches, as we want to keep them as consistent as possible
         // @TODO: Rotation
         this._branches.forEach(function(value, key) {
-            if (i%2) this._final.branches.left.add(value);
-            else     this._final.branches.right.add(value);
+            if (key%2) {
+                this._final.branches.left.add(value);
+            } else {
+                this._final.branches.right.add(value);
+            }
         });
 
         this._final.branches.left.finalize();
