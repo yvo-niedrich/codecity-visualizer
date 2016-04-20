@@ -4,7 +4,9 @@ var ShapeStreet   = require("../shapes/street.js");
 
 /**
  * Create an evostreet city
- * @TODO
+ *
+ * @TODO: Shape-Methods
+ * 
  * @implements BaseContainer
  * @implements BaseShape
  */
@@ -31,7 +33,14 @@ class StreetContainer extends BaseContainer {
         }
     };
 
-    finalize() {};
+    finalize() {
+        // Sort Houses by size
+        this._houses.sort(function (a, b) {
+            return a.dimensions.x - b.dimensions.x;
+        });
+
+        // @TODO
+    };
 
     get dimensions() {};
     set size(val) {};

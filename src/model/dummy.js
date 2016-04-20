@@ -9,7 +9,7 @@ var Dependency = require("./components/dependency.js");
  * @implements BaseSoftwareModel
  */
 class ZooModel extends BaseModel {
-    constructor(options) {
+    constructor() {
         super();
         
         /* Step 1: Create Tree */
@@ -77,7 +77,6 @@ class ZooModel extends BaseModel {
      * @return {boolean}
      */
     exists(node, version) {
-        console.log(node, version);
         // Since Reptiles were acquired later, they are first available on opening day
         if (version == 'alpha') {
             return this._tree.find('mammals').find(node) ? true :false;

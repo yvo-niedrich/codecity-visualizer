@@ -1,6 +1,7 @@
 /**
  * Converts the model into a 2D SoftwareCity consisting of shapes.
- * @TODO?
+ *
+ * @TODO: Make Spatial Modal publicly available
  * 
  * @interface
  */

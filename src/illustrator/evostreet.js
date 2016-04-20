@@ -6,7 +6,6 @@ var ShapeContainer  = require("./container/streetcontainer.js");
 
 /**
  * Create an evostreet city
- * @TODO
  * 
  * @implements BaseIllustrator
  */
@@ -24,7 +23,6 @@ class Evostreet extends BaseIllustrator {
 
     _createSpatialModel(tree) {
         if (!tree.children.length) {
-            // @TODO: configure shape
             return this._createHouse(tree);
         }
 
@@ -34,13 +32,11 @@ class Evostreet extends BaseIllustrator {
         }
 
         if (tree.parent === null) {
-            var self = new ShapeHighway(tree);
-            // @TODO: configure shape
-            container.add(self);
+            var highway = new ShapeHighway(tree);
+            container.add(highway);
         } else {
-            var self = new ShapeStreet(tree);
-            // @TODO: configure shape
-            container.add(self);
+            var street = new ShapeStreet(tree);
+            container.add(street);
         }
 
         container.finalize();
@@ -49,7 +45,6 @@ class Evostreet extends BaseIllustrator {
 
     _createHouse(node) {
         var house = new ShapeHouse(node);
-        // Apply Spatial properties
         return house;
     }
 }

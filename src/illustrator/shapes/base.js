@@ -28,7 +28,6 @@ class BaseShape {
     get dimensions() {};
 
     /**
-     * //@TODO: Bessere Definition
      * Set the Size of the Shape
      * @param  {int} val
      */
