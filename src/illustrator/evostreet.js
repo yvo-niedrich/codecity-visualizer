@@ -27,11 +27,13 @@ class Evostreet extends BaseIllustrator {
 
         for (var child of tree.children) {
             var tmp = this._createSpatialModel(child);
-            console.log();
-            if (tmp && tmp.constructor.name == 'House') {
+
+            // Kategorisiere & Packe in entspr. Liste
+            if (!tmp) {
+                continue;
+            } else if (tmp instanceof SHouse) {
                 console.log(tmp);
             }
-            // Kategorisiere & Packe in entspr. Liste
         }
 
         if (tree.parent === null) {

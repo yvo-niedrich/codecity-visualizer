@@ -20,10 +20,14 @@ class Street extends BaseShape {
             x: this._width  + (2 * this._margin_x),
             y: this._length + (2 * this._margin_y)
         }
-    };    
+    };
 
     set size(val) {
         this._length = val;
+    }
+
+    set width(val) {
+        this._width = val;
     }
 
     set absoluteX(x) {
