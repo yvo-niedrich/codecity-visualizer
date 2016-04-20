@@ -11,35 +11,20 @@ class Street extends BaseShape {
         this._margin_x = 0;
         this._margin_y = 0;
         this._width    = 10;
-        this._length   = 45;
-        this._rotation = 0;
+        this._length   = 50;
     }
 
-    get dimensions() {
-        return {
-            x: this._width  + (2 * this._margin_x),
-            y: this._length + (2 * this._margin_y)
-        }
-    };
-
-    set size(val) {
-        this._length = val;
+    _updateDimensions() {
+        this.dimensions.length = this._length + (2 * this._margin_y);
+        this.dimensions.width  = this._width  + (2 * this._margin_x);
     }
 
-    set width(val) {
-        this._width = val;
-    }
-
-    set absoluteX(x) {
-        this.absolute.x = x;
+    set length(length) {
+        this._length = length;
     };
 
-    set absoluteY(y) {
-        this.absolute.y = y;
-    };
-
-    set rotation(degrees){
-        this._rotation = degrees % 360;
+    set width(width) {
+        this._width = width;
     };
 
     draw() {

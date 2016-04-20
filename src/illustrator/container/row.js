@@ -15,12 +15,15 @@ class RowContainer extends BaseContainer {
         this._width  = 0;
     }
 
+    _updateDimensions(newShapeDimensions) {
+        this.dimensions.length = Math.max(newShapeDimensions.x, this._width);
+        this.dimensions.width  += newShapeDimensions.width;
+    }
+
     add(shape) {
         this._shapes.push(shape);
-        
-        var d = shape.dimensions;
-        this._length = Math.max(d.x, this._width);
-        this._width += d.y;
+        this._updateDimensions(shape.dimensions)
+
     };
 
     finalize() {
@@ -31,17 +34,7 @@ class RowContainer extends BaseContainer {
         // @TODO: Calculate Shapes coordinates, relative to the containers centriod
     };
 
-    get dimensions() {
-        return {
-            x: this._length,
-            y: this._width
-        }
-    };
-    set size(val) {};
-    set absoluteX(x) {};
-    set absoluteY(y) {};
-    set rotation(degrees){};
     draw() {};
 }
 
-module.exports = RowHouseContainer;
+module.exports = RowContainer;

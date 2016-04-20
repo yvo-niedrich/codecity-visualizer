@@ -1,3 +1,5 @@
+var Measure = require("../geometry/measure.js");
+var Point   = require("../geometry/point.js");
 /**
  * All shapes occupy a square area.
  * It's dimensions described by the vector `dimensions`.
@@ -8,42 +10,55 @@
 class BaseShape {
     constructor(key) {
         this._key = String(key);
+        this._dimension = new Measure(0, 0);
+        this._rotation = 0;
+        this._absolutePosition = null;
     }
 
     get key() {
         return this._key;
     }
 
+    // TODO: dimensions vs. displayDimension
     get centroid () {
-        return {
-            x: this.dimensions.x / 2,
-            y: this.dimensions.y / 2
-        }
+        return new Point(this.dimensions.length / 2, this.dimensions.width / 2);
     }
 
     /**
-     * Get the vector for the Shape's qubic size
-     * @return {Object}
+     * Get the Shape's qubic size
+     * @return {Measure}
      */
-    get dimensions() {};
+    get dimensions() {
+        return this._dimension;
+    };
 
     /**
-     * Set the Size of the Shape
-     * @param  {int} val
+     * Get the shape's qubic size (after possible rotations)
+     * @return {Measure}
      */
-    set size(val) {};
+    get displayDimension() {
+        var swap = this.rotation % 180;
+        return new Measure(
+            swap ? this._dimension.width  : this.dimensions.length,
+            swap ? this._dimension.length : this.dimensions.width
+            );
+    }
 
     /**
-     * Set absolute X-Coordinates for this shapes centroid, to place it in the scene
-     * @param  {int} coordinates
+     * Set the absolute Position for this shapes centroid, to place it in the scene
+     * @param  {Point} coordinates
      */
-    set absoluteX(x) {};
+    set absolute(point) {
+        this._absolutePosition = point;
+    };
 
     /**
-     * Set absolute Y-Coordinates for this shapes centroid, to place it in the scene
-     * @param  {int} coordinates
+     * Get shapes centroid-position, to draw it in the scene
+     * @param  {Point} coordinates
      */
-    set absoluteY(y) {};
+    get absolute() {
+        return this._absolutePosition;
+    };
 
     /**
      * Set the rotation around the shapes centroid.
@@ -51,7 +66,21 @@ class BaseShape {
      *
      * http://www.hinterseher.de/Diplomarbeit/Transformation.html
      */
-    set rotation(degrees){};
+    set rotation(degrees){
+        if (degrees % 90) {
+            throw 'Only 90° rotations allowed'
+        }
+
+        this._rotation = 360 + degrees % 360;
+    };
+
+    /**
+     * Get the 
+     * @return {[type]} [description]
+     */
+    get rotation() {
+        return this._rotation;
+    }
 
     draw() {};
 }

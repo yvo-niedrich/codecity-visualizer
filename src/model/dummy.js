@@ -13,7 +13,7 @@ class ZooModel extends BaseModel {
         super();
         
         /* Step 1: Create Tree */
-        var tree = new TreeNode('animals');
+        var tree = new TreeNode('zoo');
         tree.add('mammals');
         tree.find('mammals').add('fennecfox');
         tree.find('mammals').add('armadillo');

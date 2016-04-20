@@ -18,6 +18,12 @@ class StreetContainer extends BaseContainer {
         this._houses   = [];
         this._branches = [];
 
+        this._configuration = {
+            initialMargin: 30,
+            containerMargin: 30,
+            branchRotation: 90
+        }
+
         this._final = {
             houses: {
                 left:  new RowContainer(key + '_hleft'),
@@ -28,6 +34,11 @@ class StreetContainer extends BaseContainer {
                 right: new RowContainer(key + '_bright')
             }
         }
+    }
+
+    _updateDimensions() {
+        this.dimensions.length = this._getContainerLength();
+        this.dimensions.width  = this._getContainerWidth();
     }
 
     add(shape) {
@@ -63,43 +74,54 @@ class StreetContainer extends BaseContainer {
     };
 
     _addHousesToFinalStructure() {
-        // Sort Houses by size (smallest first)
+        // Sort Houses by size (smallest first), to optimize space
         this._houses.sort(function (a, b) {
-            return a.dimensions.x - b.dimensions.x;
+            return a.dimensions.length - b.dimensions.length;
         });
 
-        this._houses.forEach(function(value, key) {
+        this._houses.forEach(function(house, key) {
             if (key%2) {
-                this._final.houses.left.add(value);
+                this._final.houses.left.add(house);
             } else {
-                this._final.houses.right.add(value);
+                this._final.houses.right.add(house);
             }
-        });
+        }.bind(this));
 
         this._final.houses.left.finalize();
         this._final.houses.right.finalize();
     }
 
     _addBranchesToFinalStructure() {
-        // Don't sort branches, as we want to keep them as consistent as possible
-        // @TODO: Rotation
-        this._branches.forEach(function(value, key) {
+        // Don't sort branches, as we want to keep them consistent over developement
+        this._branches.forEach(function(branch, key) {
             if (key%2) {
-                this._final.branches.left.add(value);
+                branch.rotation = -this._configuration.branchRotation;
+                this._final.branches.left.add(branch);
             } else {
-                this._final.branches.right.add(value);
+                branch.rotation = this._configuration.branchRotation;
+                this._final.branches.right.add(branch);
             }
-        });
+        }.bind(this));
 
         this._final.branches.left.finalize();
         this._final.branches.right.finalize();
     }
 
-    get dimensions() {};
-    set size(val) {};
-    set absoluteX(x) {};
-    set absoluteY(y) {};
-    set rotation(degrees){};
+    _getContainerWidth() {
+        var lengthHouses = Math.max(this._final.houses.left.dimensions.width, this._final.houses.right.dimensions.width);
+        var lengthBranches = Math.max(this._final.branches.left.dimensions.width, this._final.branches.right.dimensions.width);
+        return lengthHouses +
+                lengthBranches +
+                this._configuration.initialMargin +
+                lengthBranches && lengthHouses ? this._configuration.containerMargin : 0;
+    }
+
+    _getContainerLength() {
+        return Math.max(this._final.houses.left.dimensions.length, this._final.branches.left.dimensions.length) +
+                this._road.dimensions.length +
+                Math.max(this._final.houses.right.dimensions.length, this._final.branches.right.dimensions.length);
+    }
+
     draw() {};
 }
 
