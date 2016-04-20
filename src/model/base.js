@@ -4,11 +4,7 @@
  * @interface
  */
 class BaseSoftwareModel {
-    constructor() {
-        if (new.target === BaseSoftwareModel) {
-            throw new TypeError("Cannot construct instances of this class directly");
-        }
-    }
+    constructor() {};
 
     /**
      * Get the Models Graph. A List of Objects, connecting `source` and `target`.
