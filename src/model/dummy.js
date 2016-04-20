@@ -44,7 +44,7 @@ class ZooModel extends BaseModel {
             new Version('alpha', 'Two Weeks before Opening'),
             new Version('v1.0',  'Opening Day')
         ]
-    }
+    };
 
     /**
      * Get all observed animal interactions

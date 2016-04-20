@@ -11,7 +11,7 @@ class Highway extends Street {
     constructor(key) {
         super(key);
         this.width = 20
-    }
+    };
 }
 
 module.exports = Highway;

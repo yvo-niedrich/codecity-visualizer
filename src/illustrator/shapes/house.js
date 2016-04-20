@@ -13,18 +13,18 @@ class House extends BaseShape {
         this._house = new Measure(15, 15);
         this._absolute = null;
         this._updateDimensions();
-    }
+    };
 
     _updateDimensions() {
         this.dimensions.length = this._house.length + (2 * this._margin),
         this.dimensions.width  = this._house.width  + (2 * this._margin)
-    }
+    };
 
     set size(val) {
         this._house.length = val;
         this._house.width  = val;
         this._updateDimensions();
-    }
+    };
 
     draw() {
         throw 'not yet implemented'

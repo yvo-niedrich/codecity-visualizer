@@ -11,7 +11,7 @@ var BaseShape = require("../shapes/base.js");
 class BaseContainer extends BaseShape {
     constructor(key) {
         super(key);
-    }
+    };
 
     /**
      * Add a shape to the container

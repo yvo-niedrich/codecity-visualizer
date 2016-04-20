@@ -19,7 +19,7 @@ class Evostreet extends BaseIllustrator {
         // @TODO: Apply options
 
         this._spatial = this._createSpatialModel(this._model.tree);
-    }
+    };
 
     _createSpatialModel(tree) {
         if (!tree.children.length) {
@@ -41,12 +41,12 @@ class Evostreet extends BaseIllustrator {
 
         container.finalize();
         return container;
-    }
+    };
 
     _createHouse(node) {
         var house = new ShapeHouse(node);
         return house;
-    }
+    };
 }
 
 module.exports = Evostreet;

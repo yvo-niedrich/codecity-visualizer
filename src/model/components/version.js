@@ -10,7 +10,7 @@ class Version {
     constructor(key, label) {
         this._key   = key;
         this._label = label;
-    }
+    };
 
     /**
      * Convert Object to String (it's key)
@@ -18,15 +18,15 @@ class Version {
      */
     toString() {
         return this._key;
-    }
+    };
 
     get key() {
         return this._key;
-    }
+    };
 
     get label() {
         return this._label;
-    }
+    };
 }
 
 module.exports = Version;

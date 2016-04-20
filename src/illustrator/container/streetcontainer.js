@@ -22,7 +22,7 @@ class StreetContainer extends BaseContainer {
             initialMargin: 30,
             containerMargin: 30,
             branchRotation: 90
-        }
+        };
 
         this._final = {
             houses: {
@@ -33,13 +33,13 @@ class StreetContainer extends BaseContainer {
                 left:  new RowContainer(key + '_bleft'),
                 right: new RowContainer(key + '_bright')
             }
-        }
-    }
+        };
+    };
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
         this.dimensions.width  = this._getContainerWidth();
-    }
+    };
 
     add(shape) {
         if (shape instanceof StreetContainer) {
@@ -89,7 +89,7 @@ class StreetContainer extends BaseContainer {
 
         this._final.houses.left.finalize();
         this._final.houses.right.finalize();
-    }
+    };
 
     _addBranchesToFinalStructure() {
         // Don't sort branches, as we want to keep them consistent over developement
@@ -105,7 +105,7 @@ class StreetContainer extends BaseContainer {
 
         this._final.branches.left.finalize();
         this._final.branches.right.finalize();
-    }
+    };
 
     _getContainerWidth() {
         var lengthHouses = Math.max(this._final.houses.left.dimensions.width, this._final.houses.right.dimensions.width);
@@ -114,13 +114,13 @@ class StreetContainer extends BaseContainer {
                 lengthBranches +
                 this._configuration.initialMargin +
                 lengthBranches && lengthHouses ? this._configuration.containerMargin : 0;
-    }
+    };
 
     _getContainerLength() {
         return Math.max(this._final.houses.left.dimensions.length, this._final.branches.left.dimensions.length) +
                 this._road.dimensions.length +
                 Math.max(this._final.houses.right.dimensions.length, this._final.branches.right.dimensions.length);
-    }
+    };
 
     draw() {};
 }

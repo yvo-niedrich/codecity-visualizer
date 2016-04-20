@@ -13,16 +13,16 @@ class BaseShape {
         this._dimension = new Measure(0, 0);
         this._rotation = 0;
         this._absolutePosition = null;
-    }
+    };
 
     get key() {
         return this._key;
-    }
+    };
 
     // TODO: dimensions vs. displayDimension
     get centroid () {
         return new Point(this.dimensions.length / 2, this.dimensions.width / 2);
-    }
+    };
 
     /**
      * Get the Shape's qubic size
@@ -42,7 +42,7 @@ class BaseShape {
             swap ? this._dimension.width  : this.dimensions.length,
             swap ? this._dimension.length : this.dimensions.width
             );
-    }
+    };
 
     /**
      * Set the absolute Position for this shapes centroid, to place it in the scene
@@ -80,7 +80,7 @@ class BaseShape {
      */
     get rotation() {
         return this._rotation;
-    }
+    };
 
     draw() {};
 }

@@ -13,7 +13,7 @@ class RowContainer extends BaseContainer {
         this._shapes   = [];
         this._length = 0;
         this._width  = 0;
-    }
+    };
 
     _updateDimensions(newShapeDimensions) {
         this.dimensions.length = Math.max(newShapeDimensions.x, this._width);
