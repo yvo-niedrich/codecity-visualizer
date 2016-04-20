@@ -7,10 +7,6 @@
  */
 class BaseShape {
     constructor(key) {
-        if (new.target === BaseShape) {
-            throw new TypeError("Cannot construct instances of this class directly");
-        }
-
         this._key = String(key);
     }
 

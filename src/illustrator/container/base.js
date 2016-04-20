@@ -11,9 +11,6 @@ var BaseShape = require("../shapes/base.js");
 class BaseContainer extends BaseShape {
     constructor(key) {
         super(key);
-        if (new.target === BaseContainer) {
-            throw new TypeError("Cannot construct instances of this class directly");
-        }
     }
 
     /**

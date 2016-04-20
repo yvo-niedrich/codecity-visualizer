@@ -1,14 +1,11 @@
 /**
  * Converts the model into a 2D SoftwareCity consisting of shapes.
+ * @TODO?
  * 
  * @interface
  */
 class BaseIllustrator {
-    constructor(model, options) {
-        if (new.target === BaseIllustrator) {
-            throw new TypeError("Cannot construct instances of this class directly");
-        }
-    }
+    constructor(model, options) { }
 }
 
 module.exports = BaseIllustrator;
