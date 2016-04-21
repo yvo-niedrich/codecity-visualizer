@@ -24,12 +24,12 @@ class StreetContainer extends BaseContainer {
 
         this._final = {
             houses: {
-                left:  new RowContainer(key + '_hleft'),
-                right: new RowContainer(key + '_hright')
+                left:  new RowContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
+                right: new RowContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
             },
             branches: {
-                left:  new RowContainer(key + '_bleft'),
-                right: new RowContainer(key + '_bright')
+                left:  new RowContainer(key + '_bl', RowContainer.ALIGNMENT_RIGHT),
+                right: new RowContainer(key + '_br', RowContainer.ALIGNMENT_LEFT)
             }
         };
     };
@@ -95,10 +95,10 @@ class StreetContainer extends BaseContainer {
         // Don't sort branches, as we want to keep them consistent over developement
         this._branches.forEach(function(branch, key) {
             if (key%2) {
-                branch.rotation = -this._configuration.branchRotation;
+                branch.rotate(-this._configuration.branchRotation);
                 this._final.branches.left.add(branch);
             } else {
-                branch.rotation = this._configuration.branchRotation;
+                branch.rotate(this._configuration.branchRotation);
                 this._final.branches.right.add(branch);
             }
         }.bind(this));

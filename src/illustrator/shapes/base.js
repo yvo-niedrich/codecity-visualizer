@@ -19,9 +19,15 @@ class BaseShape {
         return this._key;
     };
 
-    // TODO: dimensions vs. displayDimension
+    /**
+     * Get the shapes centroid
+     * @return {Point}
+     */
     get centroid () {
-        return new Point(this._dimensions.length / 2, this._dimensions.width / 2);
+        return new Point(
+            this.displayDimensions.length / 2,
+            this.displayDimensions.width / 2
+        );
     };
 
     /**
@@ -61,12 +67,12 @@ class BaseShape {
     };
 
     /**
-     * Set the rotation around the shapes centroid.
+     * Rotation the shape around the it's centroid.
      * @param  {int} degrees clockwise rotation
      *
      * http://www.hinterseher.de/Diplomarbeit/Transformation.html
      */
-    set rotation(degrees){
+    rotate(degrees){
         if (degrees % 90) {
             throw 'Only 90° rotations allowed'
         }
