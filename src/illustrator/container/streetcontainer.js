@@ -25,7 +25,7 @@ class StreetContainer extends BaseContainer {
 
         this._structure = {
             'road': {
-                shape: this._road,
+                shape: null,
                 position: null
             },
             houses: {
@@ -68,33 +68,45 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
 
+        this._structure.road.shape = this._road;
         this._structure.road.shape.dimensions.width = this.dimensions.length;
         this._structure.road.position = new Point(this.centroid.x, this.centroid.y);
 
         var containersBottom = -this.centroid.y + this._configuration.initialMargin;
+        var putRoadBetweenBranches = this._structure.road.shape.displayDimensions.width / 2;
 
         if (this._branches.length) {
-            this._structure.branches.left.position = new Point(
-                this.centroid.x - this._structure.branches.left.container.centroid.x - (this._structure.road.shape.width / 2),
-                containersBottom + this._structure.branches.left.container.centroid.y
-            );
-            this._structure.branches.right.position = new Point(
-                this.centroid.x + this._structure.branches.right.container.centroid.x + (this._structure.road.shape.width / 2),
-                containersBottom + this._structure.branches.right.container.centroid.y
-            );
+            if (this._structure.branches.left.container.countElements) {
+                this._structure.branches.left.position = new Point(
+                    this.centroid.x - this._structure.branches.left.container.centroid.x - putRoadBetweenBranches,
+                    containersBottom + this._structure.branches.left.container.centroid.y
+                );
+            }
 
-            containersBottom += _getMaxBranchContainerWidth() + this._configuration.containerMargin;
+            if (this._structure.branches.right.container.countElements) {
+                this._structure.branches.right.position = new Point(
+                    this.centroid.x + this._structure.branches.right.container.centroid.x + putRoadBetweenBranches,
+                    containersBottom + this._structure.branches.right.container.centroid.y
+                );
+            }
+
+            containersBottom += this._getMaxBranchContainerWidth() + this._configuration.containerMargin;
         }
 
         if (this._houses.length) {
-            this._structure.houses.left.position = new Point(
-                this.centroid.x - this._structure.houses.left.container.centroid.x - (this._structure.road.shape.width / 2),
-                containersBottom + this._structure.houses.left.container.centroid.y
-            );
-            this._structure.houses.right.position = new Point(
-                this.centroid.x + this._structure.houses.right.container.centroid.x + (this._structure.road.shape.width / 2),
-                containersBottom + this._structure.houses.right.container.centroid.y
-            );
+            if (this._structure.houses.left.container.countElements) {
+                this._structure.houses.left.position = new Point(
+                    this.centroid.x - this._structure.houses.left.container.centroid.x - putRoadBetweenBranches,
+                    containersBottom + this._structure.houses.left.container.centroid.y
+                );
+            }
+
+            if (this._structure.houses.right.container.countElements) {
+                this._structure.houses.right.position = new Point(
+                    this.centroid.x + this._structure.houses.right.container.centroid.x + putRoadBetweenBranches,
+                    containersBottom + this._structure.houses.right.container.centroid.y
+                );
+            }
         }
     };
 
@@ -133,8 +145,8 @@ class StreetContainer extends BaseContainer {
     };
 
     _getContainerWidth() {
-        var houseWidth = _getMaxHouseContainerWidth();
-        var branchWidth = _getMaxBranchContainerWidth();
+        var houseWidth = this._getMaxHouseContainerWidth();
+        var branchWidth = this._getMaxBranchContainerWidth();
         var containerMargin = (branchWidth && houseWidth) ? this._configuration.containerMargin : 0;
 
         return houseWidth + branchWidth + this._configuration.initialMargin + containerMargin;

@@ -10,7 +10,7 @@ class House extends BaseShape {
     constructor(key) {
         super(key);
         this._margin = 4;
-        this._house = new Measure(15, 15);
+        this._house = new Measure(16, 16);
         this._updateDimensions();
     };
 

@@ -51,22 +51,6 @@ class BaseShape {
     };
 
     /**
-     * Set the absolute Position for this shapes centroid, to place it in the scene
-     * @param  {Point} coordinates
-     */
-    set absolute(point) {
-        this._absolutePosition = point;
-    };
-
-    /**
-     * Get shapes centroid-position, to draw it in the scene
-     * @param  {Point} coordinates
-     */
-    get absolute() {
-        return this._absolutePosition;
-    };
-
-    /**
      * Rotation the shape around the it's centroid.
      * @param  {int} degrees clockwise rotation
      *

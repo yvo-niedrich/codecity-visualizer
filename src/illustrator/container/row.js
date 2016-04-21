@@ -23,7 +23,7 @@ class RowContainer extends BaseContainer {
     }
 
     add(shape) {
-        shape.rotate = 90 * this._alignment;
+        shape.rotate(90 * this._alignment);
         this._shapeList.push({
             shape: shape,
             position: null
@@ -31,6 +31,10 @@ class RowContainer extends BaseContainer {
         this._updateDimensions(shape.displayDimensions)
 
     };
+
+    get countElements() {
+        return this._shapeList.length;
+    }
 
     finalize() {
         if (!this._shapeList.length) {
