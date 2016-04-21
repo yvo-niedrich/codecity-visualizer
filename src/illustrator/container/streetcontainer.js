@@ -2,6 +2,7 @@ var BaseContainer = require("./base.js");
 var RowContainer  = require("./row.js");
 var ShapeHouse    = require("../shapes/house.js");
 var ShapeStreet   = require("../shapes/street.js");
+var Point         = require("../geometry/point.js");
 
 /**
  * Create an evostreet city
@@ -22,14 +23,18 @@ class StreetContainer extends BaseContainer {
             branchRotation: 90
         };
 
-        this._final = {
+        this._structure = {
+            'road': {
+                shape: this._road,
+                position: null
+            },
             houses: {
-                left:  new RowContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
-                right: new RowContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
+                left:  {container: new RowContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT), position: null},
+                right: {container: new RowContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT), position: null}
             },
             branches: {
-                left:  new RowContainer(key + '_bl', RowContainer.ALIGNMENT_RIGHT),
-                right: new RowContainer(key + '_br', RowContainer.ALIGNMENT_LEFT)
+                left:  {container: new RowContainer(key + '_bl', RowContainer.ALIGNMENT_RIGHT), position: null},
+                right: {container: new RowContainer(key + '_br', RowContainer.ALIGNMENT_LEFT), position: null}
             }
         };
     };
@@ -59,21 +64,41 @@ class StreetContainer extends BaseContainer {
             throw 'StreetContainer requires a primary street'
         }
 
-        this._addHousesToFinalStructure();
-        this._addBranchesToFinalStructure();
+        this._addHousesToStructure();
+        this._addBranchesToStructure();
         this._updateDimensions();
 
-        this._road.width = this.dimensions.length;
-        // @TODO
-        //  - road length
-        //  - position road
-        //  - position left house row
-        //  - position right house row
-        //  - position left branch row
-        //  - position right branch row
+        this._structure.road.shape.dimensions.width = this.dimensions.length;
+        this._structure.road.position = new Point(this.centroid.x, this.centroid.y);
+
+        var containersBottom = -this.centroid.y + this._configuration.initialMargin;
+
+        if (this._branches.length) {
+            this._structure.branches.left.position = new Point(
+                this.centroid.x - this._structure.branches.left.container.centroid.x - (this._structure.road.shape.width / 2),
+                containersBottom + this._structure.branches.left.container.centroid.y
+            );
+            this._structure.branches.right.position = new Point(
+                this.centroid.x + this._structure.branches.right.container.centroid.x + (this._structure.road.shape.width / 2),
+                containersBottom + this._structure.branches.right.container.centroid.y
+            );
+
+            containersBottom += _getMaxBranchContainerWidth() + this._configuration.containerMargin;
+        }
+
+        if (this._houses.length) {
+            this._structure.houses.left.position = new Point(
+                this.centroid.x - this._structure.houses.left.container.centroid.x - (this._structure.road.shape.width / 2),
+                containersBottom + this._structure.houses.left.container.centroid.y
+            );
+            this._structure.houses.right.position = new Point(
+                this.centroid.x + this._structure.houses.right.container.centroid.x + (this._structure.road.shape.width / 2),
+                containersBottom + this._structure.houses.right.container.centroid.y
+            );
+        }
     };
 
-    _addHousesToFinalStructure() {
+    _addHousesToStructure() {
         // Sort Houses by size (smallest first), to optimize space
         this._houses.sort(function (a, b) {
             return a.dimensions.length - b.dimensions.length;
@@ -81,55 +106,62 @@ class StreetContainer extends BaseContainer {
 
         this._houses.forEach(function(house, key) {
             if (key%2) {
-                this._final.houses.left.add(house);
+                this._structure.houses.left.container.add(house);
             } else {
-                this._final.houses.right.add(house);
+                this._structure.houses.right.container.add(house);
             }
         }.bind(this));
 
-        this._final.houses.left.finalize();
-        this._final.houses.right.finalize();
+        this._structure.houses.left.container.finalize();
+        this._structure.houses.right.container.finalize();
     };
 
-    _addBranchesToFinalStructure() {
+    _addBranchesToStructure() {
         // Don't sort branches, as we want to keep them consistent over developement
         this._branches.forEach(function(branch, key) {
             if (key%2) {
                 branch.rotate(-this._configuration.branchRotation);
-                this._final.branches.left.add(branch);
+                this._structure.branches.left.container.add(branch);
             } else {
                 branch.rotate(this._configuration.branchRotation);
-                this._final.branches.right.add(branch);
+                this._structure.branches.right.container.add(branch);
             }
         }.bind(this));
 
-        this._final.branches.left.finalize();
-        this._final.branches.right.finalize();
+        this._structure.branches.left.container.finalize();
+        this._structure.branches.right.container.finalize();
     };
 
     _getContainerWidth() {
-        var houseWidth = Math.max(
-            this._final.houses.left.displayDimensions.width,
-            this._final.houses.right.displayDimensions.width
-       );
-        var branchWidth = Math.max(
-            this._final.branches.left.displayDimensions.width,
-            this._final.branches.right.displayDimensions.width
-         );
+        var houseWidth = _getMaxHouseContainerWidth();
+        var branchWidth = _getMaxBranchContainerWidth();
         var containerMargin = (branchWidth && houseWidth) ? this._configuration.containerMargin : 0;
 
         return houseWidth + branchWidth + this._configuration.initialMargin + containerMargin;
-                
     };
+
+    _getMaxHouseContainerWidth(){
+        return Math.max(
+            this._structure.houses.left.container.displayDimensions.width,
+            this._structure.houses.right.container.displayDimensions.width
+        );
+    }
+
+    _getMaxBranchContainerWidth(){
+        return Math.max(
+            this._structure.branches.left.container.displayDimensions.width,
+            this._structure.branches.right.container.displayDimensions.width
+        );
+    }
 
     _getContainerLength() {
         var leftLength = Math.max(
-            this._final.houses.left.displayDimensions.length,
-            this._final.branches.left.displayDimensions.length
+            this._structure.houses.left.container.displayDimensions.length,
+            this._structure.branches.left.container.displayDimensions.length
         );
         var rightLength = Math.max(
-            this._final.houses.right.displayDimensions.length,
-            this._final.branches.right.displayDimensions.length
+            this._structure.houses.right.container.displayDimensions.length,
+            this._structure.branches.right.container.displayDimensions.length
         );
         
         return leftLength + this._road.displayDimensions.length + rightLength;

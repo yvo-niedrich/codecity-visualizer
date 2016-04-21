@@ -92,7 +92,7 @@ class ZooModel extends BaseModel {
      * @return {null|object}
      */
     attributes(node, version) {
-        // @TODO
+        // TODO: Implement Attributes
         throw 'not yet implemented';
     };
 }

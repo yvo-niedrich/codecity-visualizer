@@ -16,7 +16,7 @@ class Evostreet extends BaseIllustrator {
         this._model = model;
         this._options = options;
 
-        // @TODO: Apply options
+        // TODO: Apply options
 
         this._spatial = this._createSpatialModel(this._model.tree);
     };
