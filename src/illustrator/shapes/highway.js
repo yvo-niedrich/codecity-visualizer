@@ -10,7 +10,7 @@ var Street = require("./street.js");
 class Highway extends Street {
     constructor(key) {
         super(key);
-        this.width = 20
+        this.dimensions.length = 20
     };
 }
 

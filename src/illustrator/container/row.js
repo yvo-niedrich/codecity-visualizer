@@ -24,10 +24,7 @@ class RowContainer extends BaseContainer {
 
     add(shape) {
         shape.rotate(90 * this._alignment);
-        this._shapeList.push({
-            shape: shape,
-            position: null
-        });
+        this._shapeList.push(shape);
         this._updateDimensions(shape.displayDimensions)
 
     };
@@ -41,20 +38,21 @@ class RowContainer extends BaseContainer {
             return;
         }
 
-        var barrierXAxis = this.centroid.x * this._alignment;
-        var firstFreePosition = -this.centroid.y;
+        var barrierXAxis = (this.dimensions.length / 2) * this._alignment;
+        var firstFreePosition = - (this.dimensions.width / 2);
 
-        this._shapeList.forEach(function(element) {
-            element.position = new Point(
-                barrierXAxis - (element.shape.centroid.x * this._alignment),
-                firstFreePosition + element.shape.centroid.y
-            );
-
-            firstFreePosition += element.shape.displayDimensions.width;
+        this._shapeList.forEach(function(shape) {
+            shape.relativePosition.x = barrierXAxis - (shape.centroid.x * this._alignment);
+            shape.relativePosition.y = firstFreePosition + shape.centroid.y;
+            firstFreePosition += shape.displayDimensions.width;
         }.bind(this));
     };
 
-    draw() {};
+    draw(parentPosition, parentRotation) {
+        // TODO
+        throw 'not yet implemented';
+        super.draw(parentPosition, parentRotation);
+    };
 }
 
 module.exports = RowContainer;

@@ -11,8 +11,8 @@ class BaseShape {
     constructor(key) {
         this._key = String(key);
         this._dimensions = new Measure(0, 0);
+        this._relativePosition = new Point(0, 0);
         this._rotation = 0;
-        this._absolutePosition = null;
     };
 
     get key() {
@@ -20,15 +20,12 @@ class BaseShape {
     };
 
     /**
-     * Get the shapes centroid
+     * Get this shapes position, relative to it's parents centroid
      * @return {Point}
      */
-    get centroid () {
-        return new Point(
-            this.displayDimensions.length / 2,
-            this.displayDimensions.width / 2
-        );
-    };
+    get relativePosition() {
+        return this._relativePosition;
+    }
 
     /**
      * Get the Shape's qubic size
@@ -51,6 +48,25 @@ class BaseShape {
     };
 
     /**
+     * Get the shapes centroid
+     * @return {Point}
+     */
+    get centroid () {
+        return new Point(
+            this.displayDimensions.length / 2,
+            this.displayDimensions.width / 2
+        );
+    };
+
+    /**
+     * Get the 
+     * @return {[type]} [description]
+     */
+    get rotation() {
+        return this._rotation;
+    };
+
+    /**
      * Rotation the shape around the it's centroid.
      * @param  {int} degrees clockwise rotation
      *
@@ -65,14 +81,13 @@ class BaseShape {
     };
 
     /**
-     * Get the 
-     * @return {[type]} [description]
+     * Draw the Shape
+     * @TODO: Type?!?
+     * @param  {Point} parentPosition [description]
+     * @param  {int}   parentRotation [description]
+     * @return {[type]}                [description]
      */
-    get rotation() {
-        return this._rotation;
-    };
-
-    draw() {};
+    draw(parentPosition, parentRotation) { throw 'NotImplementedException'; };
 }
 
 module.exports = BaseShape;

@@ -25,8 +25,10 @@ class House extends BaseShape {
         this._updateDimensions();
     };
 
-    draw() {
-        throw 'not yet implemented'
+    draw(parentPosition, parentRotation) {
+        // TODO
+        throw 'not yet implemented';
+        super.draw(parentPosition, parentRotation);
     };
 }
 

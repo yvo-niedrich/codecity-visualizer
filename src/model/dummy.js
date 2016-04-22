@@ -78,7 +78,7 @@ class ZooModel extends BaseModel {
      */
     exists(node, version) {
         // Since Reptiles were acquired later, they are first available on opening day
-        if (version == 'alpha') {
+        if (String(version) === 'alpha') {
             return this._tree.find('mammals').find(node) ? true :false;
         }
 

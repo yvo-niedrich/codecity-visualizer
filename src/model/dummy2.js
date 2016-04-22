@@ -31,8 +31,8 @@ class ZooModel extends BaseModel {
 
         /* Step 2: Create Graph */
         this._graph = [
-            new Dependency('marmoset', 'tortoise')
-            // Because the marmoset likes to ride on a tortoise
+            new Dependency('marmoset', 'chimp')
+            // Because the marmoset likes to play with chimp
         ]
 
         /* Step 3: Create versions */
@@ -74,7 +74,7 @@ class ZooModel extends BaseModel {
      */
     exists(node, version) {
         // Since Reptiles were acquired later, they are first available on opening day
-        if (version == 'alpha') {
+        if (String(version) === 'alpha') {
             return this._tree.find('mammals').find(node) ? true :false;
         }
 
