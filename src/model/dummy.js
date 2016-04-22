@@ -14,6 +14,7 @@ class ZooModel extends BaseModel {
         
         /* Step 1: Create Tree */
         var tree = new TreeNode('zoo');
+        tree.add('humans');
         tree.add('mammals');
         tree.find('mammals').add('fennecfox');
         tree.find('mammals').add('armadillo');
@@ -28,6 +29,12 @@ class ZooModel extends BaseModel {
         tree.find('monkeys').add('langur');
         tree.find('monkeys').add('baboon');
         tree.find('monkeys').add('douc');
+        tree.find('monkeys').add('marsupials');
+        tree.find('marsupials').add('opossum');
+        tree.find('marsupials').add('mole');
+        tree.find('marsupials').add('kowari');
+        tree.find('marsupials').add('kaluta');
+        tree.find('marsupials').add('quoll');
         tree.add('reptiles');
         tree.find('reptiles').add('gecko');
         tree.find('reptiles').add('tortoise');

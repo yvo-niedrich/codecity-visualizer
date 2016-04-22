@@ -23,7 +23,7 @@ class RowContainer extends BaseContainer {
     }
 
     add(shape) {
-        shape.rotate(90 * this._alignment);
+        shape.rotate(-90 * this._alignment);
         this._shapeList.push(shape);
         this._updateDimensions(shape.displayDimensions)
 
@@ -50,8 +50,22 @@ class RowContainer extends BaseContainer {
 
     draw(parentPosition, parentRotation) {
         // TODO
-        throw 'not yet implemented';
         super.draw(parentPosition, parentRotation);
+
+        // console.log(this.key, this._relativePosition, parentPosition);
+
+        var s = [];
+        for (var shape of this._shapeList) {
+
+            var res = shape.draw(this._absolutePosition, this._absoluteRotation);
+            if (Object.prototype.toString.call( res ) !== '[object Array]') { s.push(res); }
+            else {
+                for(var o of res) {
+                    s.push(o);
+                }
+            }
+        }
+        return s;
     };
 }
 

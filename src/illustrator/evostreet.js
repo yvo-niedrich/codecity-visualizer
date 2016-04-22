@@ -1,4 +1,5 @@
 var BaseIllustrator = require("./base.js");
+var Point           = require("./geometry/point.js");
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
 var ShapeHighway    = require("./shapes/highway.js");
@@ -26,7 +27,7 @@ class Evostreet extends BaseIllustrator {
             return this._createHouse(tree);
         }
 
-        var container = new ShapeContainer(tree);
+        var container = new ShapeContainer(tree + 'container');
         for (var child of tree.children) {
             container.add(this._createSpatialModel(child));
         }
@@ -47,6 +48,12 @@ class Evostreet extends BaseIllustrator {
         var house = new ShapeHouse(node);
         return house;
     };
+
+    draw() {
+        var origin = new Point(0, 0);
+        var rotation = 0;
+        return this._spatial.draw(origin, rotation);
+    }
 }
 
 module.exports = Evostreet;

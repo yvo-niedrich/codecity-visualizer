@@ -1,4 +1,4 @@
-var SoftwareModel = require("./model/dummy2.js");
+var SoftwareModel = require("./model/dummy.js");
 var Illustrator   = require("./illustrator/evostreet.js");
 // var Renderer = require("./renderer/3js.js");
 

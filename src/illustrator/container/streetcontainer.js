@@ -18,8 +18,9 @@ class StreetContainer extends BaseContainer {
         this._branches = [];
 
         this._configuration = {
-            initialMargin: 30,
-            containerMargin: 30,
+            initialMargin: 50,
+            containerMargin: 50,
+            conclusiveMargin: 10,
             branchRotation: 90
         };
 
@@ -40,7 +41,7 @@ class StreetContainer extends BaseContainer {
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
-        this.dimensions.width  = this._getContainerWidth();
+        this.dimensions.width  = this._getContainerWidth() + this._configuration.conclusiveMargin;
     };
 
     add(shape) {
@@ -67,36 +68,37 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
 
+        var containersBottom = this._configuration.initialMargin - (this.dimensions.width / 2);
+        var halfTheRoadLength = (this._road.displayDimensions.length / 2);
+        var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
+
         this._structure.road = this._road;
         this._structure.road.dimensions.width = this.dimensions.width;
-        this._structure.road.relativePosition.x = (this.dimensions.length / 2) - this._getMaxContainerRightLength();
+        this._structure.road.relativePosition.x = middleOfTheRoad;
         this._structure.road.relativePosition.y = 0;
-
-        var containersBottom = -(this.dimensions.width / 2) + this._configuration.initialMargin;
-        var putRoadBetweenBranches = this._structure.road.displayDimensions.width / 2;
 
         if (this._branches.length) {
             if (this._structure.branches.left.countElements) {
-                this._structure.branches.left.relativePosition.x = - (this._structure.branches.left.centroid.x + putRoadBetweenBranches);
+                this._structure.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.branches.left.centroid.x;
                 this._structure.branches.left.relativePosition.y = containersBottom + this._structure.branches.left.centroid.y;
             }
 
             if (this._structure.branches.right.countElements) {
-                this._structure.branches.right.relativePosition.x = this._structure.branches.right.centroid.x + putRoadBetweenBranches;
+                this._structure.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.branches.right.centroid.x;
                 this._structure.branches.right.relativePosition.y = containersBottom + this._structure.branches.right.centroid.y;
             }
 
-            containersBottom += this._getMaxBranchContainerWidth() + this._configurationMargin;
+            containersBottom += this._getMaxBranchContainerWidth() + this._configuration.containerMargin;
         }
 
         if (this._houses.length) {
             if (this._structure.houses.left.countElements) {
-                this._structure.houses.left.relativePosition.x = - (this._structure.houses.left.centroid.x + putRoadBetweenBranches);
+                this._structure.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.houses.left.centroid.x;
                 this._structure.houses.left.relativePosition.y = containersBottom + this._structure.houses.left.centroid.y;
             }
 
             if (this._structure.houses.right.countElements) {
-                this._structure.houses.right.relativePosition.x = this._structure.houses.right.centroid.x + putRoadBetweenBranches;
+                this._structure.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.houses.right.centroid.x;
                 this._structure.houses.right.relativePosition.y = containersBottom + this._structure.houses.right.centroid.y;
             }
         }
@@ -108,8 +110,8 @@ class StreetContainer extends BaseContainer {
             return a.dimensions.length - b.dimensions.length;
         });
 
-        this._houses.forEach(function(house, key) {
-            if (key%2) {
+        this._houses.forEach(function(house, index) {
+            if (index%2) {
                 this._structure.houses.left.add(house);
             } else {
                 this._structure.houses.right.add(house);
@@ -122,12 +124,12 @@ class StreetContainer extends BaseContainer {
 
     _addBranchesToStructure() {
         // Don't sort branches, as we want to keep them consistent over developement
-        this._branches.forEach(function(branch, key) {
-            if (key%2) {
-                branch.rotate(-this._configuration.branchRotation);
+        this._branches.forEach(function(branch, index) {
+            if (index%2) {
+                // branch.rotate(this._configuration.branchRotation);
                 this._structure.branches.left.add(branch);
             } else {
-                branch.rotate(this._configuration.branchRotation);
+                // branch.rotate(this._configuration.branchRotation);
                 this._structure.branches.right.add(branch);
             }
         }.bind(this));
@@ -139,8 +141,7 @@ class StreetContainer extends BaseContainer {
     _getContainerWidth() {
         var houseWidth = this._getMaxHouseContainerWidth();
         var branchWidth = this._getMaxBranchContainerWidth();
-        var containerMargin = (branchWidth && houseWidth) ? this._configurationMargin : 0;
-
+        var containerMargin = (branchWidth && houseWidth) ? this._configuration.containerMargin : 0;
         return houseWidth + branchWidth + this._configuration.initialMargin + containerMargin;
     };
 
@@ -181,8 +182,22 @@ class StreetContainer extends BaseContainer {
 
     draw(parentPosition, parentRotation) {
         // TODO
-        throw 'not yet implemented';
+
         super.draw(parentPosition, parentRotation);
+
+        var s = [];
+        s.push(this._structure.road.draw(this._absolutePosition, this._absoluteRotation));
+        
+        var hl = this._structure.houses.left.draw(this._absolutePosition, this._absoluteRotation);
+        var hr = this._structure.houses.right.draw(this._absolutePosition, this._absoluteRotation);
+        
+        var bl = this._structure.branches.left.draw(this._absolutePosition, this._absoluteRotation);
+        var br = this._structure.branches.right.draw(this._absolutePosition, this._absoluteRotation);
+
+        var t = s.concat(hl, hr, bl, br);
+
+        return t;
+
     };
 }
 

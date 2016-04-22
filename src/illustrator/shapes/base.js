@@ -69,8 +69,6 @@ class BaseShape {
     /**
      * Rotation the shape around the it's centroid.
      * @param  {int} degrees clockwise rotation
-     *
-     * http://www.hinterseher.de/Diplomarbeit/Transformation.html
      */
     rotate(degrees){
         if (degrees % 90) {
@@ -87,7 +85,37 @@ class BaseShape {
      * @param  {int}   parentRotation [description]
      * @return {[type]}                [description]
      */
-    draw(parentPosition, parentRotation) { throw 'NotImplementedException'; };
+    draw(parentPosition, parentRotation) {
+        var a = (720 - parentRotation) % 360;
+        var rad = a * (Math.PI / 180);
+        var transformedRelativePosition = new Point(
+            Math.cos(rad) * this.relativePosition.x - Math.sin(rad) * this.relativePosition.y,
+            Math.sin(rad) * this.relativePosition.x + Math.cos(rad) * this.relativePosition.y
+        );
+
+        this._absolutePosition = new Point(
+            parentPosition.x + transformedRelativePosition.x,
+            parentPosition.y + transformedRelativePosition.y
+        );
+
+        this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
+
+        if (this.dimensions.width > 0 && this.dimensions.length > 0) {
+            return this._drawMe();
+        }
+    };
+
+    _drawMe() {
+        var swap = this._absoluteRotation % 180;
+        return {
+            pos: this._absolutePosition,
+            size: new Measure(
+                swap ? this._dimensions.width  : this._dimensions.length,
+                swap ? this._dimensions.length : this._dimensions.width
+            ),
+            color: 0x156289
+        }
+    }
 }
 
 module.exports = BaseShape;

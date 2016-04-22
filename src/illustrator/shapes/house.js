@@ -10,7 +10,8 @@ class House extends BaseShape {
     constructor(key) {
         super(key);
         this._margin = 4;
-        this._house = new Measure(16, 16);
+        var randomWidth = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
+        this._house = new Measure(24, randomWidth * 4);
         this._updateDimensions();
     };
 
@@ -27,9 +28,25 @@ class House extends BaseShape {
 
     draw(parentPosition, parentRotation) {
         // TODO
-        throw 'not yet implemented';
         super.draw(parentPosition, parentRotation);
+
+        // console.log(this.key, parentPosition);
+        return this._drawMe();
     };
+
+    _drawMe() {
+        var swap = this._absoluteRotation % 180;
+        return {
+            key: this.key,
+            pos: this._absolutePosition,
+            size: new Measure(
+                swap ? this._house.width  : this._house.length,
+                swap ? this._house.length : this._house.width
+            ),
+            color: 0x1A212E,
+            height: (Math.floor(Math.random() * (10 - 6 + 1)) + 6) * 2
+        }
+    }
 }
 
 module.exports = House;
