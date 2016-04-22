@@ -29,7 +29,7 @@ class ZooModel extends BaseModel {
         tree.find('monkeys').add('langur');
         tree.find('monkeys').add('baboon');
         tree.find('monkeys').add('douc');
-        tree.find('monkeys').add('marsupials');
+        tree.find('mammals').add('marsupials');
         tree.find('marsupials').add('opossum');
         tree.find('marsupials').add('mole');
         tree.find('marsupials').add('kowari');

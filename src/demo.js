@@ -33,7 +33,7 @@ var renderHeight = 600;
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
-camera.position.z = 500;        
+camera.position.z = 540;
 var controls = new THREE.OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { alpha: true } );
 renderer.setSize(renderWidth, renderHeight);

@@ -18,9 +18,10 @@ class StreetContainer extends BaseContainer {
         this._branches = [];
 
         this._configuration = {
-            initialMargin: 50,
-            containerMargin: 50,
+            initialMargin: 30,
+            containerMargin: 60,
             conclusiveMargin: 10,
+            elementRotation: 90,
             branchRotation: 90
         };
 
@@ -112,8 +113,10 @@ class StreetContainer extends BaseContainer {
 
         this._houses.forEach(function(house, index) {
             if (index%2) {
+                house.rotate(-this._configuration.elementRotation);
                 this._structure.houses.left.add(house);
             } else {
+                house.rotate(this._configuration.elementRotation);
                 this._structure.houses.right.add(house);
             }
         }.bind(this));
@@ -126,10 +129,10 @@ class StreetContainer extends BaseContainer {
         // Don't sort branches, as we want to keep them consistent over developement
         this._branches.forEach(function(branch, index) {
             if (index%2) {
-                // branch.rotate(this._configuration.branchRotation);
+                branch.rotate(-this._configuration.branchRotation);
                 this._structure.branches.left.add(branch);
             } else {
-                // branch.rotate(this._configuration.branchRotation);
+                branch.rotate(this._configuration.branchRotation);
                 this._structure.branches.right.add(branch);
             }
         }.bind(this));

@@ -10,8 +10,9 @@ class House extends BaseShape {
     constructor(key) {
         super(key);
         this._margin = 4;
-        var randomWidth = Math.floor(Math.random() * (10 - 6 + 1)) + 6;
-        this._house = new Measure(24, randomWidth * 4);
+        var randomWidth = Math.floor(Math.random() * (16 - 8 + 1)) + 8;
+        var randomLength = Math.floor(Math.random() * (16 - 8 + 1)) + 8;
+        this._house = new Measure(randomLength * 4, randomWidth * 4);
         this._updateDimensions();
     };
 
@@ -44,7 +45,7 @@ class House extends BaseShape {
                 swap ? this._house.length : this._house.width
             ),
             color: 0x1A212E,
-            height: (Math.floor(Math.random() * (10 - 6 + 1)) + 6) * 2
+            height: (Math.floor(Math.random() * (10 - 4 + 1)) + 4) * 4
         }
     }
 }
