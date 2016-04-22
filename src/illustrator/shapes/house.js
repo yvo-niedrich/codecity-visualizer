@@ -45,7 +45,7 @@ class House extends BaseShape {
                 swap ? this._house.length : this._house.width
             ),
             color: 0x1A212E,
-            height: (Math.floor(Math.random() * (10 - 4 + 1)) + 4) * 4
+            height: (Math.floor(Math.random() * (8 - 2 + 1)) + 2) * 4
         }
     }
 }

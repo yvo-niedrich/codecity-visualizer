@@ -18,9 +18,9 @@ class StreetContainer extends BaseContainer {
         this._branches = [];
 
         this._configuration = {
-            initialMargin: 30,
-            containerMargin: 60,
-            conclusiveMargin: 10,
+            initialMargin: 40,
+            containerMargin: 40,
+            conclusiveMargin: 8,
             elementRotation: 90,
             branchRotation: 90
         };
