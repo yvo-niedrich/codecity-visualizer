@@ -11,11 +11,12 @@ var Point         = require("../geometry/point.js");
  * @implements BaseShape
  */
 class StreetContainer extends BaseContainer {
+    static get S_TYPE_HOUSE() { return 'house'; }
+    static get S_TYPE_BRANCH() { return 'branch'; }
+    static get S_TYPE_STREET() { return 'street'; }
+
     constructor(key) {
         super(key);
-        this._road     = null;
-        this._houses   = [];
-        this._branches = [];
 
         this._configuration = {
             initialMargin: 40,
@@ -25,10 +26,13 @@ class StreetContainer extends BaseContainer {
             branchRotation: 90
         };
 
-        this._structure = {
-            'road': {
-                shape: null
-            },
+        this._shapes = {
+            'road': null,
+            'houses': [],
+            'branches': []
+        }
+
+        this._container = {
             houses: {
                 left:  new RowContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
                 right: new RowContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
@@ -47,98 +51,106 @@ class StreetContainer extends BaseContainer {
 
     add(shape) {
         if (shape instanceof StreetContainer) {
-            this._branches.push(shape);
+            this._shapes.branches.push(shape);
         } else if (shape instanceof ShapeHouse) {
-            this._houses.push(shape);
+            this._shapes.houses.push(shape);
         } else if (shape instanceof ShapeStreet) {
-            if (this._road !== null) {
+            if (this._shapes.road !== null) {
                 throw 'StreetContainer can only have one road.'
             }
-            this._road = shape;
+            this._shapes.road = shape;
         } else {
             throw 'Unknown Shape';
         }
     };
 
     finalize() {
-        if (this._road === null) {
+        if (this._shapes.road === null) {
             throw 'StreetContainer requires a primary street'
         }
+        var mainRoad = this._shapes.road;
 
         this._addHousesToStructure();
         this._addBranchesToStructure();
         this._updateDimensions();
 
         var containersTop = (this.dimensions.width / 2) - this._configuration.conclusiveMargin;
-        var halfTheRoadLength = (this._road.displayDimensions.length / 2);
+        var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
 
-        this._structure.road = this._road;
-        this._structure.road.dimensions.width = this.dimensions.width;
-        this._structure.road.relativePosition.x = middleOfTheRoad;
-        this._structure.road.relativePosition.y = 0;
+        mainRoad.dimensions.width = this.dimensions.width;
+        mainRoad.relativePosition.x = middleOfTheRoad;
+        mainRoad.relativePosition.y = 0;
 
         // containersBottom
-
-        if (this._houses.length) {
-            if (this._structure.houses.left.count) {
-                this._structure.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.houses.left.centroid.x;
-                this._structure.houses.left.relativePosition.y = containersTop - this._structure.houses.left.centroid.y;
+        if (this._shapes.houses.length) {
+            if (this._container.houses.left.count) {
+                this._container.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
+                this._container.houses.left.relativePosition.y = containersTop - this._container.houses.left.centroid.y;
             }
 
-            if (this._structure.houses.right.count) {
-                this._structure.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.houses.right.centroid.x;
-                this._structure.houses.right.relativePosition.y = containersTop - this._structure.houses.right.centroid.y;
+            if (this._container.houses.right.count) {
+                this._container.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
+                this._container.houses.right.relativePosition.y = containersTop - this._container.houses.right.centroid.y;
             }
 
             containersTop -= this._getMaxHouseContainerWidth() + this._configuration.containerMargin;
         }
 
-        if (this._branches.length) {
-            if (this._structure.branches.left.count) {
-                this._structure.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.branches.left.centroid.x;
-                this._structure.branches.left.relativePosition.y = containersTop - this._structure.branches.left.centroid.y;
+        if (this._shapes.branches.length) {
+            if (this._container.branches.left.count) {
+                this._container.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
+                this._container.branches.left.relativePosition.y = containersTop - this._container.branches.left.centroid.y;
             }
 
-            if (this._structure.branches.right.count) {
-                this._structure.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.branches.right.centroid.x;
-                this._structure.branches.right.relativePosition.y = containersTop - this._structure.branches.right.centroid.y;
+            if (this._container.branches.right.count) {
+                this._container.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
+                this._container.branches.right.relativePosition.y = containersTop - this._container.branches.right.centroid.y;
             }
 
         }
+
+        super.add(this._shapes.road)
+        super.add(this._container.houses.left)
+        super.add(this._container.houses.right)
+        super.add(this._container.branches.left)
+        super.add(this._container.branches.right)
     };
 
     _addHousesToStructure() {
+        var houses = this._shapes.houses;
         // Sort Houses by size (biggest first), to optimize space
-        this._houses.sort(function (a, b) {
+        houses.sort(function (a, b) {
             return b.dimensions.length - a.dimensions.length;
         });
 
-        for (var house of this._houses) {
-            var rightRowIsShorter = (this._structure.houses.right.displayDimensions.width < this._structure.houses.left.displayDimensions.width);
-            var c = rightRowIsShorter ? this._structure.houses.right : this._structure.houses.left;
+        var diff = 0;
+        for (var house of houses) {
+            var c = (diff > 0) ? this._container.houses.right : this._container.houses.left;
             house.rotate(this._configuration.elementRotation * c.alignment);
             c.add(house);
+            diff += house.displayDimensions.width * c.alignment;
         }
 
-        this._structure.houses.left.finalize();
-        this._structure.houses.right.finalize();
+        this._container.houses.left.finalize();
+        this._container.houses.right.finalize();
     };
 
     _addBranchesToStructure() {
-        // Don't sort branches, as we want to keep them consistent over developement
-        this._branches.forEach(function(branch, index) {
+        // Don't sort branches, as we want to keep them consistent over developement cycles
+        var branches = this._shapes.branches;
+        branches.forEach(function(branch, index) {
             if (index%2) {
                 branch.rotate(-this._configuration.branchRotation);
-                this._structure.branches.left.add(branch);
+                this._container.branches.left.add(branch);
             } else {
                 branch.rotate(this._configuration.branchRotation);
-                this._structure.branches.right.add(branch);
+                this._container.branches.right.add(branch);
             }
         }.bind(this));
 
-        this._structure.branches.left.finalize();
-        this._structure.branches.right.finalize();
+        this._container.branches.left.finalize();
+        this._container.branches.right.finalize();
     };
 
     _getContainerWidth() {
@@ -150,15 +162,15 @@ class StreetContainer extends BaseContainer {
 
     _getMaxHouseContainerWidth(){
         return Math.max(
-            this._structure.houses.left.displayDimensions.width,
-            this._structure.houses.right.displayDimensions.width
+            this._container.houses.left.displayDimensions.width,
+            this._container.houses.right.displayDimensions.width
         );
     }
 
     _getMaxBranchContainerWidth(){
         return Math.max(
-            this._structure.branches.left.displayDimensions.width,
-            this._structure.branches.right.displayDimensions.width
+            this._container.branches.left.displayDimensions.width,
+            this._container.branches.right.displayDimensions.width
         );
     }
 
@@ -166,40 +178,21 @@ class StreetContainer extends BaseContainer {
         var leftLength  = this._getMaxContainerLeftLength();
         var rightLength = this._getMaxContainerRightLength();
         
-        return leftLength + this._road.displayDimensions.length + rightLength;
+        return leftLength + this._shapes.road.displayDimensions.length + rightLength;
     };
 
     _getMaxContainerLeftLength() {
         return Math.max(
-            this._structure.houses.left.displayDimensions.length,
-            this._structure.branches.left.displayDimensions.length
+            this._container.houses.left.displayDimensions.length,
+            this._container.branches.left.displayDimensions.length
         );
     };
 
     _getMaxContainerRightLength() {
         return Math.max(
-            this._structure.houses.right.displayDimensions.length,
-            this._structure.branches.right.displayDimensions.length
+            this._container.houses.right.displayDimensions.length,
+            this._container.branches.right.displayDimensions.length
         );
-    };
-
-    draw(parentPosition, parentRotation) {
-        // TODO
-
-        super.draw(parentPosition, parentRotation);
-
-        var s = [];
-        s.push(this._structure.road.draw(this._absolutePosition, this._absoluteRotation));
-        
-        var hl = this._structure.houses.left.draw(this._absolutePosition, this._absoluteRotation);
-        var hr = this._structure.houses.right.draw(this._absolutePosition, this._absoluteRotation);
-        
-        var bl = this._structure.branches.left.draw(this._absolutePosition, this._absoluteRotation);
-        var br = this._structure.branches.right.draw(this._absolutePosition, this._absoluteRotation);
-
-        var t = s.concat(hl, hr, bl, br);
-
-        return t;
     };
 }
 

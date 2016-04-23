@@ -22,11 +22,6 @@ class RowContainer extends BaseContainer {
         this.dimensions.width += newShapeDimensions.width;
     }
 
-    add(shape) {
-        super.add(shape);
-        this._updateDimensions(shape.displayDimensions);
-    };
-
     get alignment() {
         return this._alignment;
     }
@@ -36,33 +31,18 @@ class RowContainer extends BaseContainer {
             return;
         }
 
+        for (var shape of this.shapes) {
+            this._updateDimensions(shape.displayDimensions);
+        }
+        
         var barrierXAxis = (this.dimensions.length / 2) * this._alignment;
         var firstFreePosition = this.dimensions.width / 2;
 
-        for (var shape of this.getShapes()) {
+        for (var shape of this.shapes) {
             shape.relativePosition.x = barrierXAxis - (shape.centroid.x * this._alignment);
             shape.relativePosition.y = firstFreePosition - shape.centroid.y;
             firstFreePosition -= shape.displayDimensions.width;
         }
-    };
-
-    draw(parentPosition, parentRotation) {
-        // TODO
-        super.draw(parentPosition, parentRotation);
-
-        var s = [];
-        for (var shape of this.getShapes()) {
-
-            var res = shape.draw(this._absolutePosition, this._absoluteRotation);
-            if (Object.prototype.toString.call( res ) !== '[object Array]') {
-                s.push(res);
-            } else {
-                for(var o of res) {
-                    s.push(o);
-                }
-            }
-        }
-        return s;
     };
 }
 

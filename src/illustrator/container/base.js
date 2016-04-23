@@ -11,30 +11,35 @@ var BaseShape = require("../shapes/base.js");
 class BaseContainer extends BaseShape {
     constructor(key) {
         super(key);
-        this._categories = {};
-        this._elementCount = 0;
+        this._elements = [];
     };
 
     get count() {
-        return this._elementCount;
+        return this._elements.length;
     }
 
     /**
      * Add a shape to the container's category
      * @param {BaseShape} shape The new Shape
      */
-    add(shape, category = '_default') {
-        if (!this._categories[category]) {
-            this._categories[category] = [];
-        }
-
-        this._categories[category].push(shape);
-        this._elementCount++;
+    add(shape) {
+        this._elements.push(shape);
     };
 
-    getShapes(category = '_default') {
-        return this._categories[category] ? this._categories[category] : [];
+    get shapes() {
+        return this._elements;
     }
+
+    draw(parentPosition, parentRotation) {
+        // TODO
+        super.draw(parentPosition, parentRotation);
+
+        var result = [];
+        for (var shape of this._elements) {
+            result = result.concat(shape.draw(this._absolutePosition, this._absoluteRotation));
+        }
+        return result;
+    };
 
     /**
      * No more Shapes will be added to the Container. Place the available shapes,
