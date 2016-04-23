@@ -23,7 +23,6 @@ class RowContainer extends BaseContainer {
     }
 
     add(shape) {
-        // this._shapeList.unshift(shape);
         this._shapeList.push(shape);
         this._updateDimensions(shape.displayDimensions)
 
