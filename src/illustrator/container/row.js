@@ -17,9 +17,11 @@ class RowContainer extends BaseContainer {
         this._alignment = alignment;
     };
 
-    _updateDimensions(newShapeDimensions) {
-        this.dimensions.length = Math.max(newShapeDimensions.length, this.dimensions.length);
-        this.dimensions.width += newShapeDimensions.width;
+    _updateDimensions() {
+        for (var shape of this.shapes) {
+            this.dimensions.length = Math.max(shape.displayDimensions.length, this.dimensions.length);
+            this.dimensions.width += shape.displayDimensions.width;
+        }
     }
 
     get alignment() {
@@ -31,9 +33,7 @@ class RowContainer extends BaseContainer {
             return;
         }
 
-        for (var shape of this.shapes) {
-            this._updateDimensions(shape.displayDimensions);
-        }
+        this._updateDimensions();
         
         var barrierXAxis = (this.dimensions.length / 2) * this._alignment;
         var firstFreePosition = this.dimensions.width / 2;
