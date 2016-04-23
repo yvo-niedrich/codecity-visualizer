@@ -18,9 +18,9 @@ class Evostreet extends BaseIllustrator {
         this._options = options;
 
         var defaults = {
-            highwayLength: function() { return 44; },
-            streetLength: function() { return 20; },
-            houseLength: function() { return 12 + Math.floor(Math.random() * 16) * 4; },
+            highwayLength: function() { return 36; },
+            streetLength: function() { return 18; },
+            houseLength: function() { return 16; },
             houseMargin: function() { return 4; }
         }
 
@@ -30,11 +30,14 @@ class Evostreet extends BaseIllustrator {
         }
     };
 
+    _getOption(reference, tree, version) {
+        return this._options[reference](tree, version, this._model);
+    }
+
     _createSpatialModel(tree, version) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
         }
-        this._tmp = 0;
 
         var container = new ShapeContainer(tree + 'container');
         for (var child of tree.children) {
@@ -53,20 +56,20 @@ class Evostreet extends BaseIllustrator {
 
     _createHighway(node, version) {
         var highway = new ShapeHighway(node);
-        highway.dimensions.length = this._options.highwayLength(node, version);
+        highway.dimensions.length = this._getOption('highwayLength', node, version)
         return highway;
     };
 
     _createStreet(node, version) {
         var street = new ShapeStreet(node);
-        street.dimensions.length = this._options.streetLength(node, version);
+        street.dimensions.length = this._getOption('streetLength', node, version);
         return street;
     };
 
     _createHouse(node, version) {
         var house = new ShapeHouse(node);
-        house.margin = this._options.houseMargin(node, version);
-        house.size   = this._options.houseLength(node, version);
+        house.margin = this._getOption('houseMargin', node, version);
+        house.size   = this._getOption('houseLength', node, version);
         return house;
     };
 
@@ -74,7 +77,7 @@ class Evostreet extends BaseIllustrator {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
         var origin = new Point(0, 0);
         var rotation = 0;
-        
+
         return spatialModel.draw(origin, rotation);
     }
 }
