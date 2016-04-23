@@ -13,11 +13,26 @@ class BaseShape {
         this._dimensions = new Measure(0, 0);
         this._relativePosition = new Point(0, 0);
         this._rotation = 0;
+        this._marginH = 0;
+        this._marginV = 0;
     };
 
     get key() {
         return this._key;
     };
+
+    set margin(margin) {
+        this._marginH = margin;
+        this._marginV = margin;
+    }
+
+    set marginHorizontal(margin) {
+        this._marginH = margin;
+    }
+
+    set marginVertical(margin) {
+        this._marginV = margin;
+    }
 
     /**
      * Get this shapes position, relative to it's parents centroid
@@ -41,9 +56,11 @@ class BaseShape {
      */
     get displayDimensions() {
         var swap = this.rotation % 180;
+        var l = this._dimensions.length + 2 * this._marginH;
+        var w = this._dimensions.width + 2 * this._marginV;
         return new Measure(
-            swap ? this._dimensions.width  : this._dimensions.length,
-            swap ? this._dimensions.length : this._dimensions.width
+            swap ? w  : l,
+            swap ? l : w
         );
     };
 
@@ -100,22 +117,8 @@ class BaseShape {
 
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
 
-        if (this.dimensions.width > 0 && this.dimensions.length > 0) {
-            return this._drawMe();
-        }
+        return null;
     };
-
-    _drawMe() {
-        var swap = this._absoluteRotation % 180;
-        return {
-            pos: this._absolutePosition,
-            size: new Measure(
-                swap ? this._dimensions.width  : this._dimensions.length,
-                swap ? this._dimensions.length : this._dimensions.width
-            ),
-            color: 0x156289
-        }
-    }
 }
 
 module.exports = BaseShape;

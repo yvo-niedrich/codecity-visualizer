@@ -200,7 +200,6 @@ class StreetContainer extends BaseContainer {
         var t = s.concat(hl, hr, bl, br);
 
         return t;
-
     };
 }
 

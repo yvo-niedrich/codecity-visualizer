@@ -9,27 +9,13 @@ var Measure   = require("../geometry/measure.js");
 class House extends BaseShape {
     constructor(key) {
         super(key);
-        this._margin = 4;
-        this.dimensions.length = 20;
-        this.dimensions.width  = 20;
     };
-
-    get displayDimensions() {
-        var d = super.displayDimensions;
-        d.length += this._margin * 2;
-        d.width  += this._margin * 2;
-        return d;
-    };
-
-    set margin(margin) {
-        this._margin = margin;
-    }
 
     draw(parentPosition, parentRotation) {
         // TODO
         super.draw(parentPosition, parentRotation);
         return this._drawMe();
-    };
+    }
 
     _drawMe() {
         var swap = this._absoluteRotation % 180;
