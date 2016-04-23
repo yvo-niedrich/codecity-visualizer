@@ -70,8 +70,10 @@ class Evostreet extends BaseIllustrator {
 
     _createHouse(node, version) {
         var house = new ShapeHouse(node);
+        var size = this._getOption('houseLength', node, version);
         house.margin = this._getOption('houseMargin', node, version);
-        house.size   = this._getOption('houseLength', node, version);
+        house.dimensions.length = size;
+        house.dimensions.width  = size;
         return house;
     };
 

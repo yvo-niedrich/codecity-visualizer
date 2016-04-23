@@ -10,31 +10,24 @@ class House extends BaseShape {
     constructor(key) {
         super(key);
         this._margin = 4;
-        this._house = new Measure(20, 20);
-        this._updateDimensions();
+        this.dimensions.length = 20;
+        this.dimensions.width  = 20;
     };
 
-    _updateDimensions() {
-        this.dimensions.length = this._house.length + (2 * this._margin),
-        this.dimensions.width  = this._house.width  + (2 * this._margin)
+    get displayDimensions() {
+        var d = super.displayDimensions;
+        d.length += this._margin * 2;
+        d.width  += this._margin * 2;
+        return d;
     };
 
-    set margin(val) {
-        this._margin = val;
-        this._updateDimensions();
+    set margin(margin) {
+        this._margin = margin;
     }
-
-    set size(val) {
-        this._house.length = val;
-        this._house.width  = val;
-        this._updateDimensions();
-    };
 
     draw(parentPosition, parentRotation) {
         // TODO
         super.draw(parentPosition, parentRotation);
-
-        // console.log(this.key, parentPosition);
         return this._drawMe();
     };
 
@@ -44,8 +37,8 @@ class House extends BaseShape {
             key: this.key,
             pos: this._absolutePosition,
             size: new Measure(
-                swap ? this._house.width  : this._house.length,
-                swap ? this._house.length : this._house.width
+                swap ? this.dimensions.width  : this.dimensions.length,
+                swap ? this.dimensions.length : this.dimensions.width
             ),
             color: 0x1A212E,
             height: (Math.floor(Math.random() * (8 - 2 + 1)) + 2) * 4
