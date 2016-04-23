@@ -20,7 +20,7 @@ class StreetContainer extends BaseContainer {
         this._configuration = {
             initialMargin: 40,
             containerMargin: 40,
-            conclusiveMargin: 8,
+            conclusiveMargin: 4,
             elementRotation: 90,
             branchRotation: 90
         };
@@ -81,12 +81,12 @@ class StreetContainer extends BaseContainer {
         // containersBottom
 
         if (this._houses.length) {
-            if (this._structure.houses.left.countElements) {
+            if (this._structure.houses.left.count) {
                 this._structure.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.houses.left.centroid.x;
                 this._structure.houses.left.relativePosition.y = containersTop - this._structure.houses.left.centroid.y;
             }
 
-            if (this._structure.houses.right.countElements) {
+            if (this._structure.houses.right.count) {
                 this._structure.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.houses.right.centroid.x;
                 this._structure.houses.right.relativePosition.y = containersTop - this._structure.houses.right.centroid.y;
             }
@@ -95,12 +95,12 @@ class StreetContainer extends BaseContainer {
         }
 
         if (this._branches.length) {
-            if (this._structure.branches.left.countElements) {
+            if (this._structure.branches.left.count) {
                 this._structure.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.branches.left.centroid.x;
                 this._structure.branches.left.relativePosition.y = containersTop - this._structure.branches.left.centroid.y;
             }
 
-            if (this._structure.branches.right.countElements) {
+            if (this._structure.branches.right.count) {
                 this._structure.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.branches.right.centroid.x;
                 this._structure.branches.right.relativePosition.y = containersTop - this._structure.branches.right.centroid.y;
             }
