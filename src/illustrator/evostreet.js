@@ -17,42 +17,65 @@ class Evostreet extends BaseIllustrator {
         this._model = model;
         this._options = options;
 
-        // TODO: Apply options
+        var defaults = {
+            highwayLength: function() { return 44; },
+            streetLength: function() { return 20; },
+            houseLength: function() { return 12 + Math.floor(Math.random() * 16) * 4; },
+            houseMargin: function() { return 4; }
+        }
 
-        this._spatial = this._createSpatialModel(this._model.tree);
+        for (var key in defaults) {
+            if (key in this._options) continue;
+            this._options[key] = defaults[key];
+        }
     };
 
-    _createSpatialModel(tree) {
+    _createSpatialModel(tree, version) {
         if (!tree.children.length) {
-            return this._createHouse(tree);
+            return this._createHouse(tree, version);
         }
+        this._tmp = 0;
 
         var container = new ShapeContainer(tree + 'container');
         for (var child of tree.children) {
-            container.add(this._createSpatialModel(child));
+            container.add(this._createSpatialModel(child, version));
         }
 
         if (tree.parent === null) {
-            var highway = new ShapeHighway(tree);
-            container.add(highway);
+            container.add(this._createHighway(tree, version));
         } else {
-            var street = new ShapeStreet(tree);
-            container.add(street);
+            container.add(this._createStreet(tree, version));
         }
 
         container.finalize();
         return container;
     };
 
-    _createHouse(node) {
+    _createHighway(node, version) {
+        var highway = new ShapeHighway(node);
+        highway.dimensions.length = this._options.highwayLength(node, version);
+        return highway;
+    };
+
+    _createStreet(node, version) {
+        var street = new ShapeStreet(node);
+        street.dimensions.length = this._options.streetLength(node, version);
+        return street;
+    };
+
+    _createHouse(node, version) {
         var house = new ShapeHouse(node);
+        house.margin = this._options.houseMargin(node, version);
+        house.size   = this._options.houseLength(node, version);
         return house;
     };
 
-    draw() {
+    draw(version) {
+        var spatialModel = this._createSpatialModel(this._model.tree, version);
         var origin = new Point(0, 0);
         var rotation = 0;
-        return this._spatial.draw(origin, rotation);
+        
+        return spatialModel.draw(origin, rotation);
     }
 }
 

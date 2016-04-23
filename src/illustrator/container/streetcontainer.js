@@ -69,7 +69,7 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
 
-        var containersBottom = this._configuration.initialMargin - (this.dimensions.width / 2);
+        var containersTop = (this.dimensions.width / 2) - this._configuration.conclusiveMargin;
         var halfTheRoadLength = (this._road.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
 
@@ -78,48 +78,48 @@ class StreetContainer extends BaseContainer {
         this._structure.road.relativePosition.x = middleOfTheRoad;
         this._structure.road.relativePosition.y = 0;
 
-        if (this._branches.length) {
-            if (this._structure.branches.left.countElements) {
-                this._structure.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.branches.left.centroid.x;
-                this._structure.branches.left.relativePosition.y = containersBottom + this._structure.branches.left.centroid.y;
-            }
-
-            if (this._structure.branches.right.countElements) {
-                this._structure.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.branches.right.centroid.x;
-                this._structure.branches.right.relativePosition.y = containersBottom + this._structure.branches.right.centroid.y;
-            }
-
-            containersBottom += this._getMaxBranchContainerWidth() + this._configuration.containerMargin;
-        }
+        // containersBottom
 
         if (this._houses.length) {
             if (this._structure.houses.left.countElements) {
                 this._structure.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.houses.left.centroid.x;
-                this._structure.houses.left.relativePosition.y = containersBottom + this._structure.houses.left.centroid.y;
+                this._structure.houses.left.relativePosition.y = containersTop - this._structure.houses.left.centroid.y;
             }
 
             if (this._structure.houses.right.countElements) {
                 this._structure.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.houses.right.centroid.x;
-                this._structure.houses.right.relativePosition.y = containersBottom + this._structure.houses.right.centroid.y;
+                this._structure.houses.right.relativePosition.y = containersTop - this._structure.houses.right.centroid.y;
             }
+
+            containersTop -= this._getMaxHouseContainerWidth() + this._configuration.containerMargin;
+        }
+
+        if (this._branches.length) {
+            if (this._structure.branches.left.countElements) {
+                this._structure.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._structure.branches.left.centroid.x;
+                this._structure.branches.left.relativePosition.y = containersTop - this._structure.branches.left.centroid.y;
+            }
+
+            if (this._structure.branches.right.countElements) {
+                this._structure.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._structure.branches.right.centroid.x;
+                this._structure.branches.right.relativePosition.y = containersTop - this._structure.branches.right.centroid.y;
+            }
+
         }
     };
 
     _addHousesToStructure() {
-        // Sort Houses by size (smallest first), to optimize space
+        // Sort Houses by size (biggest first), to optimize space
         this._houses.sort(function (a, b) {
-            return a.dimensions.length - b.dimensions.length;
+            return b.dimensions.length - a.dimensions.length;
         });
 
-        this._houses.forEach(function(house, index) {
-            if (index%2) {
-                house.rotate(-this._configuration.elementRotation);
-                this._structure.houses.left.add(house);
-            } else {
-                house.rotate(this._configuration.elementRotation);
-                this._structure.houses.right.add(house);
-            }
-        }.bind(this));
+        for (var house of this._houses) {
+            var rightRowIsShorter = (this._structure.houses.right.displayDimensions.width < this._structure.houses.left.displayDimensions.width);
+            var c = rightRowIsShorter ? this._structure.houses.right : this._structure.houses.left;
+            house.rotate(this._configuration.elementRotation * c.alignment);
+            c.add(house);
+        }
 
         this._structure.houses.left.finalize();
         this._structure.houses.right.finalize();

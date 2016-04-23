@@ -23,10 +23,15 @@ class RowContainer extends BaseContainer {
     }
 
     add(shape) {
+        // this._shapeList.unshift(shape);
         this._shapeList.push(shape);
         this._updateDimensions(shape.displayDimensions)
 
     };
+
+    get alignment() {
+        return this._alignment;
+    }
 
     get countElements() {
         return this._shapeList.length;
@@ -38,20 +43,18 @@ class RowContainer extends BaseContainer {
         }
 
         var barrierXAxis = (this.dimensions.length / 2) * this._alignment;
-        var firstFreePosition = - (this.dimensions.width / 2);
+        var firstFreePosition = this.dimensions.width / 2;
 
         this._shapeList.forEach(function(shape) {
             shape.relativePosition.x = barrierXAxis - (shape.centroid.x * this._alignment);
-            shape.relativePosition.y = firstFreePosition + shape.centroid.y;
-            firstFreePosition += shape.displayDimensions.width;
+            shape.relativePosition.y = firstFreePosition - shape.centroid.y;
+            firstFreePosition -= shape.displayDimensions.width;
         }.bind(this));
     };
 
     draw(parentPosition, parentRotation) {
         // TODO
         super.draw(parentPosition, parentRotation);
-
-        // console.log(this.key, this._relativePosition, parentPosition);
 
         var s = [];
         for (var shape of this._shapeList) {
