@@ -29,8 +29,6 @@ var result = illustrator.draw('alpha');
  * ## Dirty Code for POC ########### *
  * ################################# */
 
-var renderWidth  = window.innerWidth;
-var renderHeight = window.innerHeight;
 var renderWidth  = 1200;
 var renderHeight = 600;
 
@@ -72,7 +70,9 @@ function addCube (element) {
         height: 1
     }
 
-    for (var attr in element) { defaults[attr] = element[attr]; }
+    for (var attr in element) {
+        defaults[attr] = element[attr];
+    }
     var z = Math.floor(defaults.height / 2);
 
     var geometry = new THREE.BoxGeometry( defaults.size.length, defaults.size.width, defaults.height, 0, 0, 0 );

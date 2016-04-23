@@ -60,8 +60,9 @@ class RowContainer extends BaseContainer {
         for (var shape of this._shapeList) {
 
             var res = shape.draw(this._absolutePosition, this._absoluteRotation);
-            if (Object.prototype.toString.call( res ) !== '[object Array]') { s.push(res); }
-            else {
+            if (Object.prototype.toString.call( res ) !== '[object Array]') {
+                s.push(res);
+            } else {
                 for(var o of res) {
                     s.push(o);
                 }

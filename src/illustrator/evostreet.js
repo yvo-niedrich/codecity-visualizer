@@ -2,7 +2,6 @@ var BaseIllustrator = require("./base.js");
 var Point           = require("./geometry/point.js");
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
-var ShapeHighway    = require("./shapes/highway.js");
 var ShapeContainer  = require("./container/streetcontainer.js");
 
 /**
@@ -25,7 +24,10 @@ class Evostreet extends BaseIllustrator {
         }
 
         for (var key in defaults) {
-            if (key in this._options) continue;
+            if (key in this._options) {
+                continue;
+            }
+
             this._options[key] = defaults[key];
         }
     };
@@ -55,7 +57,7 @@ class Evostreet extends BaseIllustrator {
     };
 
     _createHighway(node, version) {
-        var highway = new ShapeHighway(node);
+        var highway = new ShapeStreet(node);
         highway.dimensions.length = this._getOption('highwayLength', node, version)
         return highway;
     };
