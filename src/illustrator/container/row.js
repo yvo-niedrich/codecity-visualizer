@@ -1,5 +1,5 @@
 var BaseContainer = require("./base.js");
-var Point         = require("../geometry/point.js");
+var Point         = require("../components/point.js");
 
 /**
  * Rows Elements one after the other
