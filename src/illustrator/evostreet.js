@@ -52,7 +52,6 @@ class Evostreet extends BaseIllustrator {
             container.add(this._createStreet(tree, version));
         }
 
-        container.finalize();
         return container;
     };
 
@@ -83,8 +82,8 @@ class Evostreet extends BaseIllustrator {
         var origin = new Point(0, 0);
         var rotation = 0;
         spatialModel.draw(origin, rotation);
-
-        return spatialModel.getSpatialInformation();
+        
+        return spatialModel.getSpatialInformation();;
     }
 }
 
