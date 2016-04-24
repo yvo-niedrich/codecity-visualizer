@@ -68,7 +68,9 @@ class BaseContainer extends BaseShape {
      * and calculate the containers final dimensions
      * @TODO: Design -  Can i get rid of this?
      */
-    finalize() {};
+    finalize() {
+        this._finalized = true;
+    };
 }
 
 module.exports = BaseContainer;
