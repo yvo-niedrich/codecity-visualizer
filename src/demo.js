@@ -23,7 +23,7 @@ var options = {
 
 
 var illustrator = new Illustrator(model, options);
-var result = illustrator.draw('alpha');
+var illustration = illustrator.draw('alpha');
 
 /* ################################# *
  * ## Dirty Code for POC ########### *
@@ -50,8 +50,8 @@ light.position.y = 200;
 light.position.z = 500;
 scene.add( light );
 
-for (var res of result) {
-    addCube(res);
+for (var shape of illustration.shapes) {
+    addCube(shape);
 }
 
 
