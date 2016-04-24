@@ -11,11 +11,11 @@ class BaseIllustration {
 
     get version() {
         return this._version;
-    }
+    };
 
     get shapes() {
         return this._shapes;
-    }
+    };
 
     addShape(shape) {
         this._shapes.push(shape);

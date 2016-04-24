@@ -1,5 +1,6 @@
 var BaseIllustrator = require("./base.js");
 var Point           = require("./components/point.js");
+var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
 var ShapeContainer  = require("./container/streetcontainer.js");
@@ -82,8 +83,13 @@ class Evostreet extends BaseIllustrator {
         var origin = new Point(0, 0);
         var rotation = 0;
         spatialModel.draw(origin, rotation);
+
+        var illustration = new Illustration(version);
+        for (var shape of spatialModel.getSpatialInformation()) {
+            illustration.addShape(shape);
+        }
         
-        return spatialModel.getSpatialInformation();;
+        return illustration;
     }
 }
 
