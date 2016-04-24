@@ -29,7 +29,7 @@ var result = illustrator.draw('alpha');
  * ## Dirty Code for POC ########### *
  * ################################# */
 
-var renderWidth  = 1200;
+var renderWidth  = 1180;
 var renderHeight = 600;
 
 var scene = new THREE.Scene();

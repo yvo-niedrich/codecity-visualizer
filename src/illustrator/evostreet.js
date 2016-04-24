@@ -6,7 +6,7 @@ var ShapeContainer  = require("./container/streetcontainer.js");
 
 /**
  * Create an evostreet city
- * 
+ *
  * @implements BaseIllustrator
  */
 class Evostreet extends BaseIllustrator {
@@ -79,10 +79,12 @@ class Evostreet extends BaseIllustrator {
 
     draw(version) {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
+
         var origin = new Point(0, 0);
         var rotation = 0;
+        spatialModel.draw(origin, rotation);
 
-        return spatialModel.draw(origin, rotation);
+        return spatialModel.getSpatialInformation();
     }
 }
 

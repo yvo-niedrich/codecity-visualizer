@@ -15,21 +15,41 @@ class BaseShape {
         this._rotation = 0;
         this._marginH = 0;
         this._marginV = 0;
+
+        this._hasBeenDrawn = false;
+        this._absolutePosition = null;
+        this._absoluteRotation = 0;
     };
 
+    /**
+     * The shapes (and it's associated model nodes) identifier
+     * @return {String}
+     */
     get key() {
         return this._key;
     };
 
+    /**
+     * Set the margin for this Shape
+     * @param  {int} margin
+     */
     set margin(margin) {
         this._marginH = margin;
         this._marginV = margin;
     }
 
+    /**
+     * Set the horizontal margin for this Shape (does not increase width)
+     * @param  {int} margin
+     */
     set marginHorizontal(margin) {
         this._marginH = margin;
     }
 
+    /**
+     * Set the vertical margin for this Shape (does not increase length)
+     * @param  {int} margin
+     */
     set marginVertical(margin) {
         this._marginV = margin;
     }
@@ -43,7 +63,7 @@ class BaseShape {
     }
 
     /**
-     * Get the Shape's qubic size
+     * Get the Shape's qubic measurements (before any rotation)
      * @return {Measure}
      */
     get dimensions() {
@@ -51,7 +71,7 @@ class BaseShape {
     };
 
     /**
-     * Get the shape's qubic size (after possible rotations)
+     * Get the shape's qubic measurements
      * @return {Measure}
      */
     get displayDimensions() {
@@ -65,7 +85,7 @@ class BaseShape {
     };
 
     /**
-     * Get the shapes centroid
+     * Get the shapes centroid (with relative rotation)
      * @return {Point}
      */
     get centroid () {
@@ -76,8 +96,8 @@ class BaseShape {
     };
 
     /**
-     * Get the 
-     * @return {[type]} [description]
+     * Get the relative rotation
+     * @return {int}
      */
     get rotation() {
         return this._rotation;
@@ -96,11 +116,9 @@ class BaseShape {
     };
 
     /**
-     * Draw the Shape
-     * @TODO: Type?!?
-     * @param  {Point} parentPosition [description]
+     * Draw the Shape (calculate final absolute position and rotation)
+     * @param  {Point} parentPosition
      * @param  {int}   parentRotation [description]
-     * @return {[type]}                [description]
      */
     draw(parentPosition, parentRotation) {
         var a = (720 - parentRotation) % 360;
@@ -117,7 +135,28 @@ class BaseShape {
 
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
 
-        return null;
+        this._hasBeenDrawn = true;
+    };
+
+    /**
+     * Draw the Shape
+     * @TODO: Type?!?
+     * @return {SpatialNodes}
+     */
+    getSpatialInformation() {
+        if (!this._hasBeenDrawn) {
+            throw 'Node has not been drawn yet';
+        }
+
+        var swap = this._absoluteRotation % 180;
+        return {
+            key: this.key,
+            pos: this._absolutePosition,
+            size: new Measure(
+                swap ? this.dimensions.width  : this.dimensions.length,
+                swap ? this.dimensions.length : this.dimensions.width
+            )
+        }
     };
 }
 

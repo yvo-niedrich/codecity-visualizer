@@ -11,16 +11,12 @@ var Point         = require("../geometry/point.js");
  * @implements BaseShape
  */
 class StreetContainer extends BaseContainer {
-    static get S_TYPE_HOUSE() { return 'house'; }
-    static get S_TYPE_BRANCH() { return 'branch'; }
-    static get S_TYPE_STREET() { return 'street'; }
-
     constructor(key) {
         super(key);
 
         this._configuration = {
-            initialMargin: 40,
-            containerMargin: 40,
+            initialMargin: 25,
+            containerMargin: 30,
             conclusiveMargin: 4,
             elementRotation: 90,
             branchRotation: 90
