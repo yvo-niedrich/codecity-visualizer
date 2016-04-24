@@ -1,9 +1,8 @@
 var BaseShape = require("../shapes/base.js");
 
 /**
- * A Shape-Container
- * Will store shapes and place them (relative to the containers origin).
- * A Shape-Container also implements the BaseShape-Interface
+ * A Shape-Container stores shapes and place them (relative to the containers origin).
+ * The container will automaticly finalize, once it is drawn or it's dimensions are requested.
  * 
  * @implements BaseShape
  * @interface
@@ -12,22 +11,30 @@ class BaseContainer extends BaseShape {
     constructor(key) {
         super(key);
         this._elements = [];
+        this._finalized = false;
     };
 
+
     /**
-     * Get the amount of elements in this container will draw
-     * @return {int}
+     * No more Shapes will be added to the Container. Place the available shapes,
+     * and calculate the containers final dimensions
      */
-    get count() {
-        return this._elements.length;
-    };
+    _finalize() { };
 
     /**
-     * Add a shape to the container's category
+     * Add a shape to the container
      * @param {BaseShape} shape
      */
     add(shape) {
         this._elements.push(shape);
+    };
+
+    /**
+     * Get the amount of elements, this container will draw
+     * @return {int}
+     */
+    get shapeCount() {
+        return this._elements.length;
     };
 
     /**
@@ -39,21 +46,8 @@ class BaseContainer extends BaseShape {
     };
 
     /**
-     * Draws the container and all of it's shapes
-     * @param  {Point} parentPosition
-     * @param  {int}   parentRotation
-     */
-    draw(parentPosition, parentRotation) {
-        super.draw(parentPosition, parentRotation);
-
-        for (var shape of this._elements) {
-            shape.draw(this._absolutePosition, this._absoluteRotation);
-        }
-    }
-
-    /**
      * Get the spatial information for container and it's content
-     * @return {Array} [description]
+     * @return {Array}
      */
     getSpatialInformation() {
         var result = [];
@@ -64,13 +58,38 @@ class BaseContainer extends BaseShape {
     };
 
     /**
-     * No more Shapes will be added to the Container. Place the available shapes,
-     * and calculate the containers final dimensions
-     * @TODO: Design -  Can i get rid of this?
+     * Draws the container and all of it's shapes (after initiating _finalizeOnce)
+     * @param  {Point} parentPosition
+     * @param  {int}   parentRotation
      */
-    finalize() {
-        this._finalized = true;
+    draw(parentPosition, parentRotation) {
+        this._finalizeOnce();
+        super.draw(parentPosition, parentRotation);
+
+        for (var shape of this._elements) {
+            shape.draw(this._absolutePosition, this._absoluteRotation);
+        }
+    }
+
+    /**
+     * Get the containers dimensions (after initiating _finalizeOnce)
+     * @return {Measure}
+     */
+    get displayDimensions() {
+        this._finalizeOnce();
+        return super.displayDimensions;
     };
+
+    /**
+     * Will initiate the finalization (if it has not been called already)
+     */
+    _finalizeOnce() {
+        if (!this._finalized) {
+            this._finalize();
+        }
+
+        this._finalized = true;
+    }
 }
 
 module.exports = BaseContainer;

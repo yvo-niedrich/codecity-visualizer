@@ -60,7 +60,9 @@ class StreetContainer extends BaseContainer {
         }
     };
 
-    finalize() {
+    _finalize() {
+        super._finalize();
+
         if (this._shapes.road === null) {
             throw 'StreetContainer requires a primary street'
         }
@@ -78,14 +80,13 @@ class StreetContainer extends BaseContainer {
         mainRoad.relativePosition.x = middleOfTheRoad;
         mainRoad.relativePosition.y = 0;
 
-        // containersBottom
         if (this._shapes.houses.length) {
-            if (this._container.houses.left.count) {
+            if (this._container.houses.left.shapeCount) {
                 this._container.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
                 this._container.houses.left.relativePosition.y = containersTop - this._container.houses.left.centroid.y;
             }
 
-            if (this._container.houses.right.count) {
+            if (this._container.houses.right.shapeCount) {
                 this._container.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
                 this._container.houses.right.relativePosition.y = containersTop - this._container.houses.right.centroid.y;
             }
@@ -94,12 +95,12 @@ class StreetContainer extends BaseContainer {
         }
 
         if (this._shapes.branches.length) {
-            if (this._container.branches.left.count) {
+            if (this._container.branches.left.shapeCount) {
                 this._container.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
                 this._container.branches.left.relativePosition.y = containersTop - this._container.branches.left.centroid.y;
             }
 
-            if (this._container.branches.right.count) {
+            if (this._container.branches.right.shapeCount) {
                 this._container.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
                 this._container.branches.right.relativePosition.y = containersTop - this._container.branches.right.centroid.y;
             }
@@ -127,9 +128,6 @@ class StreetContainer extends BaseContainer {
             c.add(house);
             diff += house.displayDimensions.width * c.alignment;
         }
-
-        this._container.houses.left.finalize();
-        this._container.houses.right.finalize();
     };
 
     _addBranchesToStructure() {
@@ -144,9 +142,6 @@ class StreetContainer extends BaseContainer {
                 this._container.branches.right.add(branch);
             }
         }.bind(this));
-
-        this._container.branches.left.finalize();
-        this._container.branches.right.finalize();
     };
 
     _getContainerWidth() {

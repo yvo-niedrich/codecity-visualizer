@@ -28,8 +28,10 @@ class RowContainer extends BaseContainer {
         return this._alignment;
     }
 
-    finalize() {
-        if (!this.count) {
+    _finalize() {
+        super._finalize();
+        
+        if (!this.shapeCount) {
             return;
         }
 
