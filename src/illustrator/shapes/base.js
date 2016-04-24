@@ -1,5 +1,5 @@
-var Measure = require("../geometry/measure.js");
-var Point   = require("../geometry/point.js");
+var Measure = require("../components/measure.js");
+var Point   = require("../components/point.js");
 /**
  * All shapes occupy a square area.
  * It's dimensions described by the vector `dimensions`.

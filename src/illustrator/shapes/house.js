@@ -1,5 +1,5 @@
 var BaseShape = require("./base.js");
-var Measure   = require("../geometry/measure.js");
+var Measure   = require("../components/measure.js");
 
 /**
  * Draw a House
