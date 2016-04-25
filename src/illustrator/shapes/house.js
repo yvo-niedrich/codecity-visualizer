@@ -1,5 +1,5 @@
 var BaseShape = require("./base.js");
-var Measure   = require("../geometry/measure.js");
+var Measure   = require("../components/measure.js");
 
 /**
  * Draw a House
@@ -14,8 +14,13 @@ class House extends BaseShape {
     getSpatialInformation() {
         var i = super.getSpatialInformation();
 
-        i.color = 0x1A212E;
-        i.height = (Math.floor(Math.random() * (8 - 2 + 1)) + 2) * 4;
+        if (!('color' in i)) {
+            i.color = 0x1A212E;
+        }
+
+        if (!('height' in i)) {
+            i.height = 1;
+        }
 
         return i;
     };

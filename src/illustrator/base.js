@@ -12,6 +12,13 @@ class BaseIllustrator {
     constructor(model, options) {};
 
     /**
+     * Add a Metric-Rule, which will create or alter the attributes
+     * of the SpatialNodes.
+     * @param {function} rule
+     */
+    addRule(rule) {};
+
+    /**
      * Create the 2D spatial model, using the available information
      * for the chosen version.
      * Returns a list of SpatialNodes, which can be rendered in

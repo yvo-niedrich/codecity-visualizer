@@ -2,7 +2,7 @@ var BaseContainer = require("./base.js");
 var RowContainer  = require("./row.js");
 var ShapeHouse    = require("../shapes/house.js");
 var ShapeStreet   = require("../shapes/street.js");
-var Point         = require("../geometry/point.js");
+var Point         = require("../components/point.js");
 
 /**
  * Create an evostreet city
