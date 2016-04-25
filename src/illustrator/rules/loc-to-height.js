@@ -1,4 +1,4 @@
-rule = function (options = {}) {
+module.exports = function (options = {}) {
     this.options = options;
     var defaults = {
         'metric': 'loc',
@@ -42,5 +42,3 @@ rule = function (options = {}) {
         return newAttributes;
     };
 };
-
-module.exports = rule;

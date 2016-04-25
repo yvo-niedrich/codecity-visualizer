@@ -1,7 +1,6 @@
 module.exports = {
     entry: {
-        bundle: "./src/main.js",
-        demo: "./src/demo.js"
+        bundle: "./src/main.js"
     },
     output: {
         path: __dirname + "/app",

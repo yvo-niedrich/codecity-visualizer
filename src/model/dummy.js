@@ -57,8 +57,6 @@ class ZooModel extends BaseModel {
             this._attributes[String(v)] = {};
             this._createAttributes(this._tree, v);
         }
-
-        console.log(this._attributes);
     };
 
     _createAttributes(tree, version) {
