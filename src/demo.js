@@ -1,3 +1,5 @@
+var THREE         = require("three");
+var OrbitControls = require('three-orbit-controls')(THREE);
 var SoftwareModel = require("./model/dummy.js");
 var Illustrator   = require("./illustrator/evostreet.js");
 
@@ -35,12 +37,13 @@ var renderHeight = 600;
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
 camera.position.z = 350;
-var controls = new THREE.OrbitControls( camera );
+var controls = new OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setClearColor( 0xffffff );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(renderWidth, renderHeight);
-document.getElementById("city").appendChild(renderer.domElement);
+// document.getElementById("city").appendChild(renderer.domElement);
+document.body.appendChild(renderer.domElement);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
