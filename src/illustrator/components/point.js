@@ -1,11 +1,12 @@
 class Point {
-    constructor(x, y) {
+    constructor(x = 0, y = 0, z = 0) {
         this._x = x;
         this._y = y;
+        this._z = z;
     };
 
     toString() {
-        return `[${this._x}:${this.y}]`;
+        return `[${this._x}:${this._y}:${this._z}]`;
     };
 
     get x() {
@@ -16,12 +17,20 @@ class Point {
         return this._y;
     };
 
+    get z() {
+        return this._z;
+    };
+
     set x(x) {
         this._x = x;
     };
 
     set y(y) {
         this._y = y;
+    };
+
+    set z(z) {
+        this._z = z;
     };
 }
 

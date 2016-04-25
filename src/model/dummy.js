@@ -43,14 +43,51 @@ class ZooModel extends BaseModel {
         this._graph = [
             new Dependency('marmoset', 'tortoise')
             // Because the marmoset likes to ride on a tortoise
-        ]
+        ];
 
         /* Step 3: Create versions */
         this._versions = [
             new Version('alpha', 'Two Weeks before Opening'),
             new Version('v1.0',  'Opening Day')
-        ]
+        ];
+
+        /* Step 4: Create Attributes */
+        this._attributes = {};
+        for (var v of this._versions) {
+            this._attributes[String(v)] = {};
+            this._createAttributes(this._tree, v);
+        }
+
+        console.log(this._attributes);
     };
+
+    _createAttributes(tree, version) {
+        if (!tree.children.length) {
+            if (this.exists(tree, version)) {
+                var t = String(tree);
+                var v = String(version);
+                this._attributes[v][t] = {
+                    'name': t,
+                    'loc' : this._hashString('loc' + t + v) % 1502
+                }
+            }
+            return;
+        }
+
+        for (var c of tree.children) {
+            this._createAttributes(c, version);
+        }
+    }
+
+    _hashString(str) {
+        // https://github.com/darkskyapp/string-hash
+        var hash = 17,
+            i    = str.length
+        while(i) {
+            hash = (hash * 11) ^ str.charCodeAt(--i)
+        }
+        return hash >>> 0;
+    }
 
     /**
      * Get all observed animal interactions
@@ -98,8 +135,15 @@ class ZooModel extends BaseModel {
      * @return {null|object}
      */
     attributes(node, version) {
-        // TODO: Implement Attributes
-        throw 'not yet implemented';
+        var n = String(node);
+        var v = String(version);
+
+        if (!this._attributes[v]
+            || !this._attributes[v][n]) {
+            return {};
+        }
+
+        return this._attributes[v][n];
     };
 }
 

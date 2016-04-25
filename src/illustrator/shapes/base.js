@@ -11,7 +11,7 @@ class BaseShape {
     constructor(key) {
         this._key = String(key);
         this._dimensions = new Measure(0, 0);
-        this._relativePosition = new Point(0, 0);
+        this._relativePosition = new Point();
         this._rotation = 0;
         this._marginH = 0;
         this._marginV = 0;
@@ -19,6 +19,14 @@ class BaseShape {
         this._hasBeenDrawn = false;
         this._absolutePosition = null;
         this._absoluteRotation = 0;
+
+        this._attributes = {
+            key: key,
+            position: new Point(),
+            rotation: 0,
+            dimensions: new Measure(0, 0),
+            height: 1
+        }
     };
 
     /**
@@ -140,8 +148,7 @@ class BaseShape {
 
     /**
      * Draw the Shape
-     * @TODO: Type?!?
-     * @return {SpatialNodes}
+     * @return {Object}
      */
     getSpatialInformation() {
         if (!this._hasBeenDrawn) {
@@ -149,15 +156,23 @@ class BaseShape {
         }
 
         var swap = this._absoluteRotation % 180;
-        return {
-            key: this.key,
-            pos: this._absolutePosition,
-            size: new Measure(
-                swap ? this.dimensions.width  : this.dimensions.length,
-                swap ? this.dimensions.length : this.dimensions.width
-            )
-        }
+        var rotatedDimensions = new Measure(
+            swap ? this.dimensions.width  : this.dimensions.length,
+            swap ? this.dimensions.length : this.dimensions.width
+        );
+
+        this._attributes.position.x += this._absolutePosition.x;
+        this._attributes.position.y += this._absolutePosition.y;
+        this._attributes.rotation = this._absoluteRotation;
+        this._attributes.dimensions.length = rotatedDimensions.length;
+        this._attributes.dimensions.width = rotatedDimensions.width;
+
+        return this._attributes;
     };
+
+    updateAttributes(attributes) {
+        Object.assign(this._attributes, attributes);
+    }
 }
 
 module.exports = BaseShape;

@@ -25,6 +25,10 @@ var options = {
 
 
 var illustrator = new Illustrator(model, options);
+illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
+
+
+
 var illustration = illustrator.draw('alpha');
 
 /* ################################# *
@@ -36,13 +40,12 @@ var renderHeight = 600;
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
-camera.position.z = 350;
+camera.position.z = 300;
 var controls = new OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setClearColor( 0xffffff );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(renderWidth, renderHeight);
-// document.getElementById("city").appendChild(renderer.domElement);
 document.body.appendChild(renderer.domElement);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
@@ -67,8 +70,8 @@ render();
 
 function addCube (element) {
     var defaults = {
-        pos: {x: 0, y: 0},
-        size: {length: 50, width: 50},
+        position: {x: 0, y: 0},
+        dimensions: {length: 50, width: 50},
         color: 0x156289,
         height: 1
     }
@@ -78,17 +81,17 @@ function addCube (element) {
     }
     var z = Math.floor(defaults.height / 2);
 
-    var geometry = new THREE.BoxGeometry( defaults.size.length, defaults.size.width, defaults.height, 0, 0, 0 );
-    var material = new THREE.MeshPhongMaterial( {
+    var geometry = new THREE.BoxGeometry( defaults.dimensions.length, defaults.dimensions.width, defaults.height, 0, 0, 0 );
+    var material = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         emissive: defaults.color,
         side: THREE.DoubleSide,
         shading: THREE.FlatShading
-    } )
+    });
 
     var cube = new THREE.Mesh( geometry, material );
-    cube.position.setX(defaults.pos.x);  
-    cube.position.setY(defaults.pos.y); 
+    cube.position.setX(defaults.position.x);  
+    cube.position.setY(defaults.position.y); 
     cube.position.setZ(z); 
     scene.add(cube);
 }

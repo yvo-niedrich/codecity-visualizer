@@ -5,7 +5,6 @@
  */
 class BaseRenderer {
     constructor(model, illustration, options) {};
-    addRule(rule) {};
     render(target) {};
 }
 
