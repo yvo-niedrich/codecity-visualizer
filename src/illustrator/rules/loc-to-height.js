@@ -1,5 +1,4 @@
 module.exports = function (options = {}) {
-    this.options = options;
     var defaults = {
         'metric': 'loc',
         'attribute': 'height',
@@ -11,11 +10,11 @@ module.exports = function (options = {}) {
     };
 
     for (var key in defaults) {
-        if (key in this.options) {
+        if (key in options) {
             continue;
         }
 
-        this.options[key] = defaults[key];
+        options[key] = defaults[key];
     }
 
     return function (node, version, model) {
@@ -25,20 +24,20 @@ module.exports = function (options = {}) {
         }
 
         var attributes = model.attributes(node, version);
-        if (!(this.options.metric in attributes)) {
+        if (!(options.metric in attributes)) {
             return;
         }
 
-        var loc = attributes[this.options.metric];
+        var loc = attributes[options.metric];
 
-        if (this.options.logarithmic) {
-            loc = Math.log(loc * this.options.logscale);
+        if (options.logarithmic) {
+            loc = Math.log(loc * options.logscale);
         }
 
-        loc *= this.options.factor;
+        loc *= options.factor;
 
         var newAttributes = {};
-        newAttributes[this.options.attribute] = Math.min(Math.max(loc, this.options.min), this.options.max);
+        newAttributes[options.attribute] = Math.min(Math.max(loc, options.min), options.max);
         return newAttributes;
     };
 };
