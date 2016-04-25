@@ -4,7 +4,6 @@ rule = function (shape, version, model) {
         return;
     }
 
-
     // Model has Attribute LOC?
     // get LOC for Version/Node (shape.key)
     // 
