@@ -5,9 +5,9 @@ module.exports = function (options = {}) {
         'min': 10,
         'max': 180,
         'logarithmic': true,
-        'logscale' : 0.08,
-        'logsbase' : 1.2,
-        'factor': 4
+        'logexp' : 2.75,
+        'logsbase' : 3,
+        'factor': 1
     };
 
     for (var key in defaults) {
@@ -32,7 +32,7 @@ module.exports = function (options = {}) {
         var loc = attributes[options.metric];
 
         if (options.logarithmic) {
-            loc = Math.log((loc * options.logscale) + 1) / Math.log(options.logsbase);
+            loc = Math.pow(Math.log(loc + 1) / Math.log(options.logsbase), options.logexp);
         }
 
         loc *= options.factor;
