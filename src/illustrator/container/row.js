@@ -31,7 +31,7 @@ class RowContainer extends BaseContainer {
     _finalize() {
         super._finalize();
         
-        if (!this.shapeCount) {
+        if (!this.size) {
             return;
         }
 

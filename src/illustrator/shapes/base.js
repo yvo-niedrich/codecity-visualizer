@@ -10,23 +10,25 @@ var Point   = require("../components/point.js");
 class BaseShape {
     constructor(key) {
         this._key = String(key);
-        this._dimensions = new Measure(0, 0);
-        this._relativePosition = new Point();
-        this._rotation = 0;
-        this._marginH = 0;
-        this._marginV = 0;
 
         this._hasBeenDrawn = false;
         this._absolutePosition = null;
         this._absoluteRotation = 0;
 
         this._attributes = {
+            dimensions: new Measure(0, 0),
+            relativePosition: new Point(),
+            rotation: 0,
+            margin: 0
+        };
+
+        this._informations = {
             key: key,
             position: new Point(),
             rotation: 0,
             dimensions: new Measure(0, 0),
             height: 1
-        }
+        };
     };
 
     /**
@@ -42,24 +44,15 @@ class BaseShape {
      * @param  {int} margin
      */
     set margin(margin) {
-        this._marginH = margin;
-        this._marginV = margin;
-    }
+        this._attributes.margin = margin;
+    };
 
     /**
-     * Set the horizontal margin for this Shape (does not increase width)
+     * Set the margin for this Shape
      * @param  {int} margin
      */
-    set marginHorizontal(margin) {
-        this._marginH = margin;
-    }
-
-    /**
-     * Set the vertical margin for this Shape (does not increase length)
-     * @param  {int} margin
-     */
-    set marginVertical(margin) {
-        this._marginV = margin;
+    get margin() {
+        return this._attributes.margin;
     }
 
     /**
@@ -67,7 +60,7 @@ class BaseShape {
      * @return {Point}
      */
     get relativePosition() {
-        return this._relativePosition;
+        return this._attributes.relativePosition;
     }
 
     /**
@@ -75,7 +68,7 @@ class BaseShape {
      * @return {Measure}
      */
     get dimensions() {
-        return this._dimensions;
+        return this._attributes.dimensions;
     };
 
     /**
@@ -84,8 +77,8 @@ class BaseShape {
      */
     get displayDimensions() {
         var swap = this.rotation % 180;
-        var l = this._dimensions.length + 2 * this._marginH;
-        var w = this._dimensions.width + 2 * this._marginV;
+        var l = this.dimensions.length + 2 * this.margin;
+        var w = this.dimensions.width  + 2 * this.margin;
         return new Measure(
             swap ? w  : l,
             swap ? l : w
@@ -108,7 +101,7 @@ class BaseShape {
      * @return {int}
      */
     get rotation() {
-        return this._rotation;
+        return this._attributes.rotation;
     };
 
     /**
@@ -120,7 +113,7 @@ class BaseShape {
             throw 'Only 90° rotations allowed'
         }
 
-        this._rotation = (360 + degrees) % 360;
+        this._attributes.rotation = (360 + degrees) % 360;
     };
 
     /**
@@ -161,17 +154,36 @@ class BaseShape {
             swap ? this.dimensions.length : this.dimensions.width
         );
 
-        this._attributes.position.x += this._absolutePosition.x;
-        this._attributes.position.y += this._absolutePosition.y;
-        this._attributes.rotation = this._absoluteRotation;
-        this._attributes.dimensions.length = rotatedDimensions.length;
-        this._attributes.dimensions.width = rotatedDimensions.width;
+        this._informations.position.x += this._absolutePosition.x;
+        this._informations.position.y += this._absolutePosition.y;
+        this._informations.rotation = this._absoluteRotation;
+        this._informations.dimensions.length = rotatedDimensions.length;
+        this._informations.dimensions.width = rotatedDimensions.width;
 
-        return this._attributes;
+        return this._informations;
     };
 
+    /**
+     * Updates the internal Attributes for the SpatialInformation.
+     * Also applies Spatial Data for this Shape directly.
+     * @param  {Object} attributes
+     */
     updateAttributes(attributes) {
-        Object.assign(this._attributes, attributes);
+        Object.assign(this._informations, attributes);
+
+        if ('dimensions' in attributes) {
+            if ('length' in attributes.dimensions) {
+                this.dimensions.length = attributes.dimensions.length;
+            }
+
+            if ('width' in attributes.dimensions) {
+                this.dimensions.width = attributes.dimensions.width;
+            }
+        }
+
+        if ('margin' in attributes) {
+            this.margin = attributes.margin;
+        }
     }
 }
 

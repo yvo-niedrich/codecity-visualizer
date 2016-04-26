@@ -36,10 +36,7 @@ module.exports = function (options = {}) {
         }
 
         loc *= options.factor;
-
-
-        console.log(attributes[options.metric], ' => ', loc);
-
+        
         var newAttributes = {};
         newAttributes[options.attribute] = Math.min(Math.max(loc, options.min), options.max);
         return newAttributes;

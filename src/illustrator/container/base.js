@@ -33,7 +33,7 @@ class BaseContainer extends BaseShape {
      * Get the amount of elements, this container will draw
      * @return {int}
      */
-    get shapeCount() {
+    get size() {
         return this._elements.length;
     };
 

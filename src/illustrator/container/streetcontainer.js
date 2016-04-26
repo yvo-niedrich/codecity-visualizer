@@ -81,12 +81,12 @@ class StreetContainer extends BaseContainer {
         mainRoad.relativePosition.y = 0;
 
         if (this._shapes.houses.length) {
-            if (this._container.houses.left.shapeCount) {
+            if (this._container.houses.left.size) {
                 this._container.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
                 this._container.houses.left.relativePosition.y = containersTop - this._container.houses.left.centroid.y;
             }
 
-            if (this._container.houses.right.shapeCount) {
+            if (this._container.houses.right.size) {
                 this._container.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
                 this._container.houses.right.relativePosition.y = containersTop - this._container.houses.right.centroid.y;
             }
@@ -95,12 +95,12 @@ class StreetContainer extends BaseContainer {
         }
 
         if (this._shapes.branches.length) {
-            if (this._container.branches.left.shapeCount) {
+            if (this._container.branches.left.size) {
                 this._container.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
                 this._container.branches.left.relativePosition.y = containersTop - this._container.branches.left.centroid.y;
             }
 
-            if (this._container.branches.right.shapeCount) {
+            if (this._container.branches.right.size) {
                 this._container.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
                 this._container.branches.right.relativePosition.y = containersTop - this._container.branches.right.centroid.y;
             }
