@@ -32,14 +32,19 @@ var illustration = illustrator.draw('alpha');
  * ## Dirty Code for POC ########### *
  * ################################# */
 
+document.body.style.margin = '3px';
 var renderWidth  = 1180;
-var renderHeight = 600;
+var renderHeight = 650;
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
 camera.position.z = 300;
 var controls = new OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.domElement.style.border = '1px solid #555';
+renderer.domElement.style.display = 'block';
+renderer.domElement.style['margin-left'] = 'auto';
+renderer.domElement.style['margin-right'] = 'auto';
 renderer.setClearColor( 0xffffff );
 renderer.setPixelRatio( window.devicePixelRatio );
 renderer.setSize(renderWidth, renderHeight);
@@ -56,7 +61,7 @@ light2.position.set( -400, -250, 350 );
 scene.add( light2 );
 
 for (var shape of illustration.shapes) {
-    addCube(shape);
+    addShape(shape);
 }
 
 
@@ -67,7 +72,7 @@ function render() {
 render();
 
 
-function addCube (element) {
+function addShape (element) {
     var defaults = {
         position: {x: 0, y: 0},
         dimensions: {length: 50, width: 50},
