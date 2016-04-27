@@ -47,11 +47,13 @@ document.body.appendChild(renderer.domElement);
 renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
-var light = new THREE.DirectionalLight( 0x555555, 0.1 );
-light.position.x = 200;
-light.position.y = 200;
-light.position.z = 500;
-scene.add( light );
+var light1 = new THREE.PointLight( 0xffffff, 0.1 );
+light1.position.set( 200, 200, 300 );
+scene.add( light1 );
+
+var light2 = new THREE.PointLight( 0xdddddd, 0.1 );
+light2.position.set( -400, -250, 350 );
+scene.add( light2 );
 
 for (var shape of illustration.shapes) {
     addCube(shape);
