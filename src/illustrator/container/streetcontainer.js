@@ -19,7 +19,9 @@ class StreetContainer extends BaseContainer {
             containerMargin: 30,
             conclusiveMargin: 4,
             elementRotation: 90,
-            branchRotation: 90
+            branchRotation: 90,
+            houseContainer: RowContainer,
+            rectanglePackaging: ''
         };
 
         this._shapes = {
@@ -30,8 +32,8 @@ class StreetContainer extends BaseContainer {
 
         this._container = {
             houses: {
-                left:  new RowContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
-                right: new RowContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
+                left:  new this._configuration.houseContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
+                right: new this._configuration.houseContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
             },
             branches: {
                 left:  new RowContainer(key + '_bl', RowContainer.ALIGNMENT_RIGHT),
@@ -118,7 +120,7 @@ class StreetContainer extends BaseContainer {
         var houses = this._shapes.houses;
         // Sort Houses by size (biggest first), to optimize space
         houses.sort(function (a, b) {
-            return b.dimensions.length - a.dimensions.length;
+            return b.dimensions.base - a.dimensions.base;
         });
 
         var diff = 0;

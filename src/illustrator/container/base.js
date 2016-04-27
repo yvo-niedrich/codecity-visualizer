@@ -73,7 +73,7 @@ class BaseContainer extends BaseShape {
 
     /**
      * Get the containers dimensions (after initiating _finalizeOnce)
-     * @return {Measure}
+     * @return {Cuboid}
      */
     get displayDimensions() {
         this._finalizeOnce();

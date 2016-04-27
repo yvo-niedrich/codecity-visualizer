@@ -1,4 +1,4 @@
-var Measure = require("../components/measure.js");
+var Cuboid = require("../components/cuboid.js");
 var Point   = require("../components/point.js");
 /**
  * All shapes occupy a square area.
@@ -16,7 +16,7 @@ class BaseShape {
         this._absoluteRotation = 0;
 
         this._attributes = {
-            dimensions: new Measure(0, 0),
+            dimensions: new Cuboid(0, 0),
             relativePosition: new Point(),
             rotation: 0,
             margin: 0
@@ -26,7 +26,7 @@ class BaseShape {
             key: key,
             position: new Point(),
             rotation: 0,
-            dimensions: new Measure(0, 0),
+            dimensions: new Cuboid(0, 0),
             height: 1
         };
     };
@@ -64,22 +64,22 @@ class BaseShape {
     }
 
     /**
-     * Get the Shape's qubic measurements (before any rotation)
-     * @return {Measure}
+     * Get the Shape's qubic cuboidments (before any rotation)
+     * @return {Cuboid}
      */
     get dimensions() {
         return this._attributes.dimensions;
     };
 
     /**
-     * Get the shape's qubic measurements
-     * @return {Measure}
+     * Get the shape's qubic cuboidments
+     * @return {Cuboid}
      */
     get displayDimensions() {
         var swap = this.rotation % 180;
         var l = this.dimensions.length + 2 * this.margin;
         var w = this.dimensions.width  + 2 * this.margin;
-        return new Measure(
+        return new Cuboid(
             swap ? w  : l,
             swap ? l : w
         );
@@ -149,7 +149,7 @@ class BaseShape {
         }
 
         var swap = this._absoluteRotation % 180;
-        var rotatedDimensions = new Measure(
+        var rotatedDimensions = new Cuboid(
             swap ? this.dimensions.width  : this.dimensions.length,
             swap ? this.dimensions.length : this.dimensions.width
         );
