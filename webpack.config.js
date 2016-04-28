@@ -4,13 +4,8 @@ var webpack = require('webpack'),
     minimize = process.argv.indexOf('--minimize') !== -1,
     plugins = [];
 
-plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    name: "vendor",
-    filename:"vendor.js",
-    minChunks: Infinity
-}));
-
 if (minimize) {
+    plugins.push(new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename:"vendor.js", minChunks: Infinity}));
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
     babel = 'babel';
 }
