@@ -22,9 +22,11 @@ class StreetContainer extends BaseContainer {
             branchRotation: 90,
             houseContainer: RowContainer,
             assignHouse: function(shapes, left, right) {
-                for (key in shapes) {
-                    var c = (key%2) ? left : right;
-                    c.add(shapes[key]);
+                for (var key in shapes) {
+                    if(shapes.hasOwnProperty(key) {
+                        var c = (key%2) ? left : right;
+                        c.add(shapes[key]);
+                    }
                 }
             },
             assignHouseSorted: function(shapes, left, right) {

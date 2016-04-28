@@ -18,10 +18,6 @@ class RowContainer extends MirrorContainer {
         super.add(shape);
     }
 
-    _alignOnXAxis(shapeWidth) {
-        return ;
-    };
-
     _finalize() {
         super._finalize();
         
@@ -43,7 +39,6 @@ class RowContainer extends MirrorContainer {
 
     _positionShapes() {
         var firstFreePosition = -(this.dimensions.length / 2);
-        var middleAlignment = -(this.dimensions.width / 2);
 
         for (var shape of this.shapes) {
             shape.position.x = firstFreePosition + (shape.displayDimensions.length / 2);
