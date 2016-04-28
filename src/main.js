@@ -19,10 +19,12 @@ console.clear();
 var options = {
     houseLength: function() {
         // Could use the three parameters (node, version, model) to calculate specific values
-        return 10 + Math.floor(Math.random() * 6) * 4;
+        return 24;
+        return 10 + Math.floor(Math.random() * 8) * 4;
     }
 };
 
+console.log(model);
 
 var illustrator = new Illustrator(model, options);
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());

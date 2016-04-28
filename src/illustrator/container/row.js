@@ -8,25 +8,10 @@ var Point         = require("../components/point.js");
  * @implements BaseShape
  */
 class RowContainer extends BaseContainer {
-    static get ALIGNMENT_LEFT() { return -1; }
-    static get ALIGNMENT_RIGHT() { return 1; }
 
-    constructor(key, alignment) {
+    constructor(key) {
         super(key);
-        this._shapeList = [];
-        this._alignment = alignment;
     };
-
-    _updateDimensions() {
-        for (var shape of this.shapes) {
-            this.dimensions.length = Math.max(shape.displayDimensions.length, this.dimensions.length);
-            this.dimensions.width += shape.displayDimensions.width;
-        }
-    }
-
-    get alignment() {
-        return this._alignment;
-    }
 
     _finalize() {
         super._finalize();
@@ -35,15 +20,28 @@ class RowContainer extends BaseContainer {
             return;
         }
 
-        this._updateDimensions();
-        
-        var barrierXAxis = (this.dimensions.length / 2) * this._alignment;
-        var firstFreePosition = this.dimensions.width / 2;
+        this._calcualteFinalDimensions();
+        this._positionShapes();
+    };
+
+    _calcualteFinalDimensions() {
+        for (var shape of this.shapes) {
+            this.dimensions.length += shape.displayDimensions.length;
+            this.dimensions.width   = Math.max(shape.displayDimensions.width, this.dimensions.width);
+            this.dimensions.height  = Math.max(shape.displayDimensions.height, this.dimensions.height);
+        }
+    };
+
+    _positionShapes() {
+        var firstFreePosition = -(this.dimensions.length / 2);
+        var middleAlignment = -(this.dimensions.width / 2);
 
         for (var shape of this.shapes) {
-            shape.position.x = barrierXAxis - (shape.centroid.x * this._alignment);
-            shape.position.y = firstFreePosition - shape.centroid.y;
-            firstFreePosition -= shape.displayDimensions.width;
+            shape.position.x = firstFreePosition + (shape.displayDimensions.length / 2);
+            shape.position.y = middleAlignment + shape.displayDimensions.width / 2;
+            // shape.position.z = shape.displayDimensions.height / 2; // TODO !!!
+
+            firstFreePosition += shape.displayDimensions.length;
         }
     };
 }

@@ -15,9 +15,9 @@ class StreetContainer extends BaseContainer {
         super(key);
 
         this._configuration = {
-            initialMargin: 25,
+            initialMargin: 30,
             containerMargin: 30,
-            conclusiveMargin: 4,
+            conclusiveMargin: 0,
             elementRotation: 90,
             branchRotation: 90,
             houseContainer: RowContainer
@@ -31,14 +31,19 @@ class StreetContainer extends BaseContainer {
 
         this._container = {
             houses: {
-                left:  new this._configuration.houseContainer(key + '_hl', RowContainer.ALIGNMENT_RIGHT),
-                right: new this._configuration.houseContainer(key + '_hr', RowContainer.ALIGNMENT_LEFT)
+                left:  new this._configuration.houseContainer(key + '_hl'),
+                right: new this._configuration.houseContainer(key + '_hr')
             },
             branches: {
-                left:  new RowContainer(key + '_bl', RowContainer.ALIGNMENT_RIGHT),
-                right: new RowContainer(key + '_br', RowContainer.ALIGNMENT_LEFT)
+                left:  new RowContainer(key + '_bl'),
+                right: new RowContainer(key + '_br')
             }
         };
+
+        this._container.houses.left.rotate(90);
+        this._container.houses.right.rotate(90);
+        this._container.branches.left.rotate(90);
+        this._container.branches.right.rotate(90);
     };
 
     _updateDimensions() {
@@ -72,7 +77,6 @@ class StreetContainer extends BaseContainer {
         this._addHousesToStructure();
         this._addBranchesToStructure();
         this._updateDimensions();
-
         var containersTop = (this.dimensions.width / 2) - this._configuration.conclusiveMargin;
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
@@ -119,15 +123,14 @@ class StreetContainer extends BaseContainer {
         var houses = this._shapes.houses;
         // Sort Houses by size (biggest first), to optimize space
         houses.sort(function (a, b) {
-            return b.dimensions.base - a.dimensions.base;
+            return b.displayDimensions.base - a.displayDimensions.base;
         });
 
         var diff = 0;
         for (var house of houses) {
-            var c = (diff > 0) ? this._container.houses.right : this._container.houses.left;
-            house.rotate(this._configuration.elementRotation * c.alignment);
-            c.add(house);
-            diff += house.displayDimensions.width * c.alignment;
+            var direction = (diff > 0) ? 'right' : 'left';
+            this._container.houses[direction].add(house);
+            diff += house.displayDimensions.length * (direction === 'right' ? -1 : 1);
         }
     };
 
@@ -136,10 +139,8 @@ class StreetContainer extends BaseContainer {
         var branches = this._shapes.branches;
         branches.forEach(function(branch, index) {
             if (index%2) {
-                branch.rotate(-this._configuration.branchRotation);
                 this._container.branches.left.add(branch);
             } else {
-                branch.rotate(this._configuration.branchRotation);
                 this._container.branches.right.add(branch);
             }
         }.bind(this));
@@ -178,6 +179,7 @@ class StreetContainer extends BaseContainer {
             this._container.houses.left.displayDimensions.length,
             this._container.branches.left.displayDimensions.length
         );
+
     };
 
     _getMaxContainerRightLength() {

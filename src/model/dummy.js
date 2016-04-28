@@ -57,6 +57,8 @@ class ZooModel extends BaseModel {
             this._attributes[String(v)] = {};
             this._createAttributes(this._tree, v);
         }
+
+        console.log(this._attributes);
     };
 
     _createAttributes(tree, version) {
@@ -120,7 +122,8 @@ class ZooModel extends BaseModel {
     exists(node, version) {
         // Since Reptiles were acquired later, they are first available on opening day
         if (String(version) === 'alpha') {
-            return this._tree.find('mammals').find(node) ? true :false;
+            var mammals = this._tree.find('mammals');
+            return mammals && mammals.find(node) ? true :false;
         }
 
         return true;
