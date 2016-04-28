@@ -12,12 +12,15 @@ class Street extends BaseShape {
     };
 
     getSpatialInformation() {
-        var i = super.getSpatialInformation();
+        var shapes = super.getSpatialInformation();
 
-        i.color = 0x156289;
-        i.height = 1;
+        for (var shape of shapes) {
+            if (!('color' in shape)) {
+                shape.color = 0x156289;
+            }
+        }
 
-        return i;
+        return shapes;
     };
 }
 

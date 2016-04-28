@@ -19,7 +19,7 @@ console.clear();
 var options = {
     houseLength: function() {
         // Could use the three parameters (node, version, model) to calculate specific values
-        return 10 + Math.floor(Math.random() * 6) * 3;
+        return 10 + Math.floor(Math.random() * 6) * 4;
     }
 };
 
@@ -75,7 +75,7 @@ render();
 function addShape (element) {
     var defaults = {
         position: {x: 0, y: 0},
-        dimensions: {length: 40, width: 40, height: 40},
+        dimensions: {length: 1, width: 1, height: 1},
         color: 0x156289
     }
 

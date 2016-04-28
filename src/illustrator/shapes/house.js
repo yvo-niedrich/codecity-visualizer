@@ -12,17 +12,15 @@ class House extends BaseShape {
     };
 
     getSpatialInformation() {
-        var i = super.getSpatialInformation();
+        var shapes = super.getSpatialInformation();
 
-        if (!('color' in i)) {
-            i.color = 0x1A212E;
+        for (var shape of shapes) {
+            if (!('color' in shape)) {
+                shape.color = 0x1A212E;
+            }
         }
 
-        if (!('height' in i)) {
-            i.height = 1;
-        }
-
-        return i;
+        return shapes;
     };
 }
 

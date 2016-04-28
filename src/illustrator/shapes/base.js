@@ -157,7 +157,7 @@ class BaseShape {
         spatialInformation.position = this._absolutePosition;
         spatialInformation.rotation = this._absolutePosition;
 
-        return spatialInformation;
+        return [ spatialInformation ];
     };
 
     /**
@@ -177,6 +177,9 @@ class BaseShape {
         if (!keys.length) {
             obj[k] = value;
         } else {
+            if(!(k in obj)) {
+                obj[k] = {};
+            }
             this._updateAttribute(obj[k], keys, value);
         }
     }

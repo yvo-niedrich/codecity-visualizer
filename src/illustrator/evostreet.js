@@ -41,7 +41,7 @@ class Evostreet extends BaseIllustrator {
     draw(version) {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
 
-        var origin = new Point(0, 0);
+        var origin = new Point(0, 0, 0);
         var rotation = 0;
         spatialModel.draw(origin, rotation);
 
