@@ -17,7 +17,7 @@ class ZooModel extends BaseModel {
         tree.add('mammals');
         tree.find('mammals').add('fennecfox');
         tree.find('mammals').add('armadillo');
-        tree.find('mammals').add('bengaltiger');
+        tree.find('mammals').add('bentaltiger');
         tree.find('mammals').add('monkeys');
         tree.find('monkeys').add('marmoset');
         tree.find('monkeys').add('chimp');
@@ -28,6 +28,26 @@ class ZooModel extends BaseModel {
         tree.find('monkeys').add('langur');
         tree.find('monkeys').add('baboon');
         tree.find('monkeys').add('douc');
+        tree.find('mammals').add('cats');
+        tree.find('cats').add('lynx');
+        tree.find('cats').add('silvestris');
+        tree.find('cats').add('cafra');
+        tree.find('cats').add('caucasica');
+        tree.find('cats').add('caudata');
+        tree.find('cats').add('chutuchta');
+        tree.find('cats').add('cretensis');
+        tree.find('cats').add('gordoni');
+        tree.find('cats').add('grampia');
+        tree.find('cats').add('griselda');
+        tree.find('cats').add('hausa');
+        tree.find('cats').add('jordansi');
+        tree.find('cats').add('lybica');
+        tree.find('cats').add('nesterovi');
+        tree.find('cats').add('ornata');
+        tree.find('cats').add('reyi');
+        tree.find('cats').add('rubida');
+        tree.find('cats').add('tristrami');
+        tree.find('cats').add('ugandae');
         tree.find('mammals').add('marsupials');
         tree.find('marsupials').add('opossum');
         tree.find('marsupials').add('mole');
@@ -57,8 +77,6 @@ class ZooModel extends BaseModel {
             this._attributes[String(v)] = {};
             this._createAttributes(this._tree, v);
         }
-
-        console.log(this._attributes);
     };
 
     _createAttributes(tree, version) {
@@ -68,7 +86,8 @@ class ZooModel extends BaseModel {
                 var v = String(version);
                 this._attributes[v][t] = {
                     'name': t,
-                    'loc' : this._hashString('loc' + t + v) % 687
+                    'loc' : this._hashString('loc' + t + v) % 687,
+                    'editors' : 1 + this._hashString('edit' + t + v) % 14
                 }
             }
             return;

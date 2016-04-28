@@ -19,15 +19,14 @@ console.clear();
 var options = {
     houseLength: function() {
         // Could use the three parameters (node, version, model) to calculate specific values
-        return 24;
-        return 10 + Math.floor(Math.random() * 8) * 4;
+        // return 24;
+        return 16;
     }
 };
 
-console.log(model);
-
 var illustrator = new Illustrator(model, options);
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
+illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 var illustration = illustrator.draw('alpha');
 
 /* ################################# *
@@ -40,7 +39,10 @@ var renderHeight = 650;
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
-camera.position.z = 300;
+camera.position.set( -50, -100, 550 );
+camera.rotation.y = -90 * (Math.PI / 180);
+
+
 var controls = new OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.domElement.style.border = '1px solid #555';
@@ -55,7 +57,7 @@ renderer.gammaInput = true;
 renderer.gammaOutput = true;
 
 var light1 = new THREE.PointLight( 0xffffff, 0.1 );
-light1.position.set( 200, 200, 300 );
+light1.position.set( 300, 300, 300 );
 scene.add( light1 );
 
 var light2 = new THREE.PointLight( 0xdddddd, 0.1 );
@@ -76,7 +78,7 @@ render();
 
 function addShape (element) {
     var defaults = {
-        position: {x: 0, y: 0},
+        position: {x: 0, y: 0, z: 0},
         dimensions: {length: 1, width: 1, height: 1},
         color: 0x156289
     }
@@ -84,7 +86,7 @@ function addShape (element) {
     for (var attr in element) {
         defaults[attr] = element[attr];
     }
-    var z = Math.floor(defaults.dimensions.height / 2);
+    var z = defaults.position.z + Math.floor(defaults.dimensions.height / 2);
 
     var geometry = new THREE.BoxGeometry( defaults.dimensions.length, defaults.dimensions.width, defaults.dimensions.height, 0, 0, 0 );
     var material = new THREE.MeshPhongMaterial({

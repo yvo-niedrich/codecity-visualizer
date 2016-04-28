@@ -20,7 +20,26 @@ class StreetContainer extends BaseContainer {
             conclusiveMargin: 0,
             elementRotation: 90,
             branchRotation: 90,
-            houseContainer: RowContainer
+            houseContainer: RowContainer,
+            assignHouse: function(shapes, left, right) {
+                for (key in shapes) {
+                    var c = (key%2) ? left : right;
+                    c.add(shapes[key]);
+                }
+            },
+            assignHouseSorted: function(shapes, left, right) {
+                shapes.sort(function (a, b) { return b.displayDimensions.base - a.displayDimensions.base; });
+                var diff = 0;
+                for (var s of shapes) {
+                    if(diff <= 0) {
+                        left.add(s);
+                        diff += s.displayDimensions.base;
+                    } else {
+                        right.add(s);
+                        diff -= s.displayDimensions.base;
+                    }
+                }
+            }
         };
 
         this._shapes = {
@@ -31,11 +50,11 @@ class StreetContainer extends BaseContainer {
 
         this._container = {
             houses: {
-                left:  new this._configuration.houseContainer(key + '_hl'),
+                left:  new this._configuration.houseContainer(key + '_hl', true),
                 right: new this._configuration.houseContainer(key + '_hr')
             },
             branches: {
-                left:  new RowContainer(key + '_bl'),
+                left:  new RowContainer(key + '_bl', true),
                 right: new RowContainer(key + '_br')
             }
         };
@@ -77,6 +96,7 @@ class StreetContainer extends BaseContainer {
         this._addHousesToStructure();
         this._addBranchesToStructure();
         this._updateDimensions();
+        
         var containersTop = (this.dimensions.width / 2) - this._configuration.conclusiveMargin;
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
@@ -120,18 +140,13 @@ class StreetContainer extends BaseContainer {
     };
 
     _addHousesToStructure() {
-        var houses = this._shapes.houses;
-        // Sort Houses by size (biggest first), to optimize space
-        houses.sort(function (a, b) {
-            return b.displayDimensions.base - a.displayDimensions.base;
-        });
 
-        var diff = 0;
-        for (var house of houses) {
-            var direction = (diff > 0) ? 'right' : 'left';
-            this._container.houses[direction].add(house);
-            diff += house.displayDimensions.length * (direction === 'right' ? -1 : 1);
-        }
+        this._configuration.assignHouse(
+        // this._configuration.assignHouseSorted(
+            this._shapes.houses,
+            this._container.houses.left,
+            this._container.houses.right
+        );
     };
 
     _addBranchesToStructure() {
