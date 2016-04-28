@@ -167,8 +167,10 @@ class BaseShape {
      */
     updateAttributes(attributes) {
         for (var key in attributes) {
-            var value = attributes[key];
-            this._updateAttribute(this._attributes, key.split('.'), value);
+            if (attributes.hasOwnProperty(key)) {
+                var value = attributes[key];
+                this._updateAttribute(this._attributes, key.split('.'), value);
+            }
         }
     }
 

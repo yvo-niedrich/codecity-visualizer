@@ -18,9 +18,7 @@ console.clear();
  */
 var options = {
     houseLength: function() {
-        // Could use the three parameters (node, version, model) to calculate specific values
-        // return 24;
-        return 16;
+        return 18;
     }
 };
 
