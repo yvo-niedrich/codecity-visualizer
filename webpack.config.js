@@ -4,15 +4,21 @@ var webpack = require('webpack'),
     minimize = process.argv.indexOf('--minimize') !== -1,
     plugins = [];
 
+plugins.push(new webpack.optimize.CommonsChunkPlugin({
+    name: "vendor",
+    filename:"vendor.js",
+    minChunks: Infinity
+}));
+
 if (minimize) {
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
-    // devtool = '#source-map';
     babel = 'babel';
 }
 
 module.exports = {
     entry: {
-        bundle: "./src/main.js"
+        bundle: "./src/main.js",
+        vendor: ['three', 'three-orbit-controls']
     },
     output: {
         path: __dirname + "/app",
