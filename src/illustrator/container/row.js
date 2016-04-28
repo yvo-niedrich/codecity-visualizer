@@ -14,10 +14,6 @@ class RowContainer extends MirrorContainer {
         super(key, mirror);
     };
 
-    add(shape) {
-        super.add(shape);
-    }
-
     _finalize() {
         super._finalize();
         

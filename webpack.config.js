@@ -2,19 +2,20 @@ var webpack = require('webpack'),
     devtool = '#eval',
     babel = 'babel-loader',
     minimize = process.argv.indexOf('--minimize') !== -1,
-    plugins = [];
+    plugins = [],
+    entries = {};
+
+entries['bundle'] = './src/main.js';
 
 if (minimize) {
+    entries['vendor'] = ['three', 'three-orbit-controls'];
     plugins.push(new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename:"vendor.js", minChunks: Infinity}));
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
     babel = 'babel';
 }
 
 module.exports = {
-    entry: {
-        bundle: "./src/main.js",
-        vendor: ['three', 'three-orbit-controls']
-    },
+    entry: entries,
     output: {
         path: __dirname + "/app",
         filename: "[name].js"
