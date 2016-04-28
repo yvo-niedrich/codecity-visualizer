@@ -84,8 +84,6 @@ function addShape (element) {
     }
     var z = Math.floor(defaults.dimensions.height / 2);
 
-    console.log(element.dimensions)
-
     var geometry = new THREE.BoxGeometry( defaults.dimensions.length, defaults.dimensions.width, defaults.dimensions.height, 0, 0, 0 );
     var material = new THREE.MeshPhongMaterial({
         color: 0xffffff,
