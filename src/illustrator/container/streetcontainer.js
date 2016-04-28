@@ -20,8 +20,7 @@ class StreetContainer extends BaseContainer {
             conclusiveMargin: 4,
             elementRotation: 90,
             branchRotation: 90,
-            houseContainer: RowContainer,
-            rectanglePackaging: ''
+            houseContainer: RowContainer
         };
 
         this._shapes = {
@@ -79,18 +78,18 @@ class StreetContainer extends BaseContainer {
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
 
         mainRoad.dimensions.width = this.dimensions.width;
-        mainRoad.relativePosition.x = middleOfTheRoad;
-        mainRoad.relativePosition.y = 0;
+        mainRoad.position.x = middleOfTheRoad;
+        mainRoad.position.y = 0;
 
         if (this._shapes.houses.length) {
             if (this._container.houses.left.size) {
-                this._container.houses.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
-                this._container.houses.left.relativePosition.y = containersTop - this._container.houses.left.centroid.y;
+                this._container.houses.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
+                this._container.houses.left.position.y = containersTop - this._container.houses.left.centroid.y;
             }
 
             if (this._container.houses.right.size) {
-                this._container.houses.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
-                this._container.houses.right.relativePosition.y = containersTop - this._container.houses.right.centroid.y;
+                this._container.houses.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
+                this._container.houses.right.position.y = containersTop - this._container.houses.right.centroid.y;
             }
 
             containersTop -= this._getMaxHouseContainerWidth() + this._configuration.containerMargin;
@@ -98,13 +97,13 @@ class StreetContainer extends BaseContainer {
 
         if (this._shapes.branches.length) {
             if (this._container.branches.left.size) {
-                this._container.branches.left.relativePosition.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
-                this._container.branches.left.relativePosition.y = containersTop - this._container.branches.left.centroid.y;
+                this._container.branches.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
+                this._container.branches.left.position.y = containersTop - this._container.branches.left.centroid.y;
             }
 
             if (this._container.branches.right.size) {
-                this._container.branches.right.relativePosition.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
-                this._container.branches.right.relativePosition.y = containersTop - this._container.branches.right.centroid.y;
+                this._container.branches.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
+                this._container.branches.right.position.y = containersTop - this._container.branches.right.centroid.y;
             }
 
         }

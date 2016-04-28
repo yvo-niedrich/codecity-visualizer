@@ -41,8 +41,8 @@ class RowContainer extends BaseContainer {
         var firstFreePosition = this.dimensions.width / 2;
 
         for (var shape of this.shapes) {
-            shape.relativePosition.x = barrierXAxis - (shape.centroid.x * this._alignment);
-            shape.relativePosition.y = firstFreePosition - shape.centroid.y;
+            shape.position.x = barrierXAxis - (shape.centroid.x * this._alignment);
+            shape.position.y = firstFreePosition - shape.centroid.y;
             firstFreePosition -= shape.displayDimensions.width;
         }
     };

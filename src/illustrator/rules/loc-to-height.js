@@ -1,7 +1,7 @@
 module.exports = function (options = {}) {
     var defaults = {
         'metric': 'loc',
-        'attribute': 'height',
+        'attribute': 'dimensions.height',
         'min': 10,
         'max': 180,
         'logarithmic': true,

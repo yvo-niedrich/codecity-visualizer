@@ -16,18 +16,11 @@ class BaseShape {
         this._absoluteRotation = 0;
 
         this._attributes = {
-            dimensions: new Cuboid(0, 0),
-            relativePosition: new Point(),
-            rotation: 0,
-            margin: 0
-        };
-
-        this._informations = {
             key: key,
+            dimensions: new Cuboid(),
             position: new Point(),
             rotation: 0,
-            dimensions: new Cuboid(0, 0),
-            height: 1
+            margin: 0
         };
     };
 
@@ -59,8 +52,8 @@ class BaseShape {
      * Get this shapes position, relative to it's parents centroid
      * @return {Point}
      */
-    get relativePosition() {
-        return this._attributes.relativePosition;
+    get position() {
+        return this._attributes.position;
     }
 
     /**
@@ -125,13 +118,15 @@ class BaseShape {
         var a = (720 - parentRotation) % 360;
         var rad = a * (Math.PI / 180);
         var transformedRelativePosition = new Point(
-            Math.cos(rad) * this.relativePosition.x - Math.sin(rad) * this.relativePosition.y,
-            Math.sin(rad) * this.relativePosition.x + Math.cos(rad) * this.relativePosition.y
+            Math.cos(rad) * this.position.x - Math.sin(rad) * this.position.y,
+            Math.sin(rad) * this.position.x + Math.cos(rad) * this.position.y,
+            this.position.z
         );
 
         this._absolutePosition = new Point(
             parentPosition.x + transformedRelativePosition.x,
-            parentPosition.y + transformedRelativePosition.y
+            parentPosition.y + transformedRelativePosition.y,
+            transformedRelativePosition.z
         );
 
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
@@ -151,16 +146,18 @@ class BaseShape {
         var swap = this._absoluteRotation % 180;
         var rotatedDimensions = new Cuboid(
             swap ? this.dimensions.width  : this.dimensions.length,
-            swap ? this.dimensions.length : this.dimensions.width
+            swap ? this.dimensions.length : this.dimensions.width,
+            this.dimensions.height
         );
 
-        this._informations.position.x += this._absolutePosition.x;
-        this._informations.position.y += this._absolutePosition.y;
-        this._informations.rotation = this._absoluteRotation;
-        this._informations.dimensions.length = rotatedDimensions.length;
-        this._informations.dimensions.width = rotatedDimensions.width;
+        var spatialInformation = {};
+        Object.assign(spatialInformation, this._attributes);
 
-        return this._informations;
+        spatialInformation.dimensions = rotatedDimensions;
+        spatialInformation.position = this._absolutePosition;
+        spatialInformation.rotation = this._absolutePosition;
+
+        return spatialInformation;
     };
 
     /**
@@ -169,20 +166,18 @@ class BaseShape {
      * @param  {Object} attributes
      */
     updateAttributes(attributes) {
-        Object.assign(this._informations, attributes);
-
-        if ('dimensions' in attributes) {
-            if ('length' in attributes.dimensions) {
-                this.dimensions.length = attributes.dimensions.length;
-            }
-
-            if ('width' in attributes.dimensions) {
-                this.dimensions.width = attributes.dimensions.width;
-            }
+        for (var key in attributes) {
+            var value = attributes[key];
+            this._updateAttribute(this._attributes, key.split('.'), value);
         }
+    }
 
-        if ('margin' in attributes) {
-            this.margin = attributes.margin;
+    _updateAttribute(obj, keys, value) {
+        var k = keys.shift();
+        if (!keys.length) {
+            obj[k] = value;
+        } else {
+            this._updateAttribute(obj[k], keys, value);
         }
     }
 }

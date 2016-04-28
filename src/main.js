@@ -75,17 +75,18 @@ render();
 function addShape (element) {
     var defaults = {
         position: {x: 0, y: 0},
-        dimensions: {length: 50, width: 50},
-        color: 0x156289,
-        height: 1
+        dimensions: {length: 40, width: 40, height: 40},
+        color: 0x156289
     }
 
     for (var attr in element) {
         defaults[attr] = element[attr];
     }
-    var z = Math.floor(defaults.height / 2);
+    var z = Math.floor(defaults.dimensions.height / 2);
 
-    var geometry = new THREE.BoxGeometry( defaults.dimensions.length, defaults.dimensions.width, defaults.height, 0, 0, 0 );
+    console.log(element.dimensions)
+
+    var geometry = new THREE.BoxGeometry( defaults.dimensions.length, defaults.dimensions.width, defaults.dimensions.height, 0, 0, 0 );
     var material = new THREE.MeshPhongMaterial({
         color: 0xffffff,
         emissive: defaults.color,
