@@ -141,7 +141,6 @@ function doLegend(target, model) {
             colorbox.style['background-color'] = '#' + intToRGB(color);
 
             var entry = document.createElement('div');
-            // entry.style['clear'] = 'both';
             entry.style['padding'] = '2px';
             entry.style['margin-left'] = (2 + (depth * 12)) + 'px';
             if (depth >= 2) {

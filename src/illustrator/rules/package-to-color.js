@@ -20,7 +20,7 @@ module.exports = function (options = {}) {
         return hash;
     }
 
-    return function (node, version, model) {
+    return function (node) {
         // Applies only to classes
         if (node.children.length || !node.parent) {
             return;
