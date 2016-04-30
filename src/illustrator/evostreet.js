@@ -32,8 +32,8 @@ class Evostreet extends BaseIllustrator {
             'evostreet.options': {},
         }
 
-        for (var key in options) {
-            this._options[key] = options[key];
+        for (var i in options) {
+            this._options[i] = options[i];
         }
     };
 

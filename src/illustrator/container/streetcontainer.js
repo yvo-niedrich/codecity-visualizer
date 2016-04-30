@@ -23,8 +23,8 @@ class StreetContainer extends BaseContainer {
             'branch.distribution': 'default'
         };
 
-        for (var key in options) {
-            this._options[key] = options[key];
+        for (var i in options) {
+            this._options[i] = options[i];
         }
 
         this._shapes = {
