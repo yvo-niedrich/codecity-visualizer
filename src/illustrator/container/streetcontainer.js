@@ -35,19 +35,19 @@ class StreetContainer extends BaseContainer {
 
         this._container = {
             houses: {
-                left:  new this._options['house.container'](key + '_hl', true),
-                right: new this._options['house.container'](key + '_hr')
+                left:  new this._options['house.container'](key + '_hl'),
+                right: new this._options['house.container'](key + '_hr', true)
             },
             branches: {
-                left:  new this._options['branch.container'](key + '_bl', true),
-                right: new this._options['branch.container'](key + '_br')
+                left:  new this._options['branch.container'](key + '_bl'),
+                right: new this._options['branch.container'](key + '_br', true)
             }
         };
 
-        this._container.houses.left.rotate(90);
-        this._container.houses.right.rotate(90);
-        this._container.branches.left.rotate(90);
-        this._container.branches.right.rotate(90);
+        this._container.houses.left.rotate(-90);
+        this._container.houses.right.rotate(-90);
+        this._container.branches.left.rotate(-90);
+        this._container.branches.right.rotate(-90);
     };
 
     _updateDimensions() {
@@ -83,6 +83,7 @@ class StreetContainer extends BaseContainer {
         this._updateDimensions();
         
         var containersTop = (this.dimensions.width / 2) - this._options['spacer.conclusive'];
+        var containersBottom = this._options['spacer.initial'] - (this.dimensions.width / 2)
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
 
@@ -107,12 +108,12 @@ class StreetContainer extends BaseContainer {
         if (this._shapes.branches.length) {
             if (this._container.branches.left.size) {
                 this._container.branches.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
-                this._container.branches.left.position.y = containersTop - this._container.branches.left.centroid.y;
+                this._container.branches.left.position.y = containersBottom + this._container.branches.left.centroid.y;
             }
 
             if (this._container.branches.right.size) {
                 this._container.branches.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
-                this._container.branches.right.position.y = containersTop - this._container.branches.right.centroid.y;
+                this._container.branches.right.position.y = containersBottom + this._container.branches.right.centroid.y;
             }
 
         }

@@ -126,7 +126,7 @@ function doLegend(target, model) {
         return "00000".substring(0, 6 - c.length) + c;
     }
 
-    function addLegendInfo(legend, tree) {
+    function addLegendInfo(legend, tree, depth = 0) {
         if (tree.children.length) {
             var tName = String(tree);
             var color = 0;
@@ -143,14 +143,18 @@ function doLegend(target, model) {
             colorbox.style['background-color'] = '#' + intToRGB(color);
 
             var entry = document.createElement('div');
-            entry.style['clear'] = 'both';
-            entry.style['margin'] = '2px';
+            // entry.style['clear'] = 'both';
+            entry.style['padding'] = '2px';
+            entry.style['margin-left'] = (2 + (depth * 12)) + 'px';
+            if (depth >= 2) {
+                entry.style['border-left'] = '1px solid #888';
+            }
             entry.appendChild(colorbox);
             entry.appendChild(document.createTextNode(tName));
             legend.appendChild(entry);
 
             for (var i in tree.children) {
-                addLegendInfo(legend, tree.children[i]);
+                addLegendInfo(legend, tree.children[i], depth + 1);
             }
         }
     }
