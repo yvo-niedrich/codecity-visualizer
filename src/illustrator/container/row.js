@@ -12,7 +12,12 @@ class RowContainer extends MirrorContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
+        this._separator = 0;
     };
+
+    set separator(val) {
+        this._separator = val;
+    }
 
     _finalize() {
         super._finalize();
@@ -31,6 +36,10 @@ class RowContainer extends MirrorContainer {
             this.dimensions.width   = Math.max(shape.displayDimensions.width, this.dimensions.width);
             this.dimensions.height  = Math.max(shape.displayDimensions.height, this.dimensions.height);
         }
+
+        if (this.shapes.length > 1) {
+            this.dimensions.length += (this.shapes.length - 1) * this._separator;
+        }
     };
 
     _positionShapes() {
@@ -40,7 +49,7 @@ class RowContainer extends MirrorContainer {
             shape.position.x = firstFreePosition + (shape.displayDimensions.length / 2);
             shape.position.y = this._alignOnXAxis(shape.displayDimensions.width);
 
-            firstFreePosition += shape.displayDimensions.length;
+            firstFreePosition += shape.displayDimensions.length + this._separator;
         }
     };
 

@@ -25,7 +25,7 @@ class Evostreet extends BaseIllustrator {
 
             'house.length': 16,
             'house.width': 16,
-            'house.margin': 4,
+            'house.margin': 2,
             'house.color': 0x1A212E,
 
             'evostreet.container': ShapeContainer,

@@ -14,8 +14,9 @@ class StreetContainer extends BaseContainer {
     constructor(key, options = {}) {
         super(key);
         this._options = {
-            'spacer.initial': 30,
-            'spacer.container': 30,
+            'spacer.initial': 15,
+            'spacer.branches': 10,
+            'spacer.terranullius': 20,
             'spacer.conclusive': 0,
             'house.container': RowContainer,
             'house.distribution': 'default',
@@ -48,6 +49,8 @@ class StreetContainer extends BaseContainer {
         this._container.houses.right.rotate(-90);
         this._container.branches.left.rotate(-90);
         this._container.branches.right.rotate(-90);
+        this._container.branches.left.separator = this._options['spacer.branches'];
+        this._container.branches.right.separator = this._options['spacer.branches'];
     };
 
     _updateDimensions() {
@@ -102,7 +105,7 @@ class StreetContainer extends BaseContainer {
                 this._container.houses.right.position.y = containersTop - this._container.houses.right.centroid.y;
             }
 
-            containersTop -= this._getMaxHouseContainerWidth() + this._options['spacer.container'];
+            containersTop -= this._getMaxHouseContainerWidth() + this._options['spacer.terranullius'];
         }
 
         if (this._shapes.branches.length) {
@@ -172,7 +175,7 @@ class StreetContainer extends BaseContainer {
     _getContainerWidth() {
         var houseWidth = this._getMaxHouseContainerWidth();
         var branchWidth = this._getMaxBranchContainerWidth();
-        var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.container'] : 0;
+        var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.terranullius'] : 0;
         return houseWidth + branchWidth + this._options['spacer.initial'] + containerMargin;
     };
 

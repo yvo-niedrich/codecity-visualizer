@@ -19,11 +19,9 @@ console.clear();
 var options = {
     'highway.color': 0x186f9a,
     'street.color': 0x156289,
-    // 'house.color': 0x663800,
     'evostreet.options' : {
         'spacer.initial': 20,
-        'spacer.container': 5,
-        'spacer.conclusive': 5,
+        'spacer.conclusive': 0,
         'house.distribution': function(s) { return s.displayDimensions.base; }
     }
 };
