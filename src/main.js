@@ -7,7 +7,7 @@ console.clear();
 
 /* Step 1: Create the Model
  *  - Get Data from DataSource
- *  - Insert Data and create a Model
+ *  - Create a Model with the collected Data
  */
  var model = new SoftwareModel();
 
@@ -17,8 +17,14 @@ console.clear();
  * - Insert model and Options to Illustrator
  */
 var options = {
-    houseLength: function() {
-        return 18;
+    'highway.color': 0x186f9a,
+    'street.color': 0x156289,
+    // 'house.color': 0x663800,
+    'evostreet.options' : {
+        'spacer.initial': 20,
+        'spacer.container': 5,
+        'spacer.conclusive': 5,
+        'house.distribution': function(s) { return s.displayDimensions.base; }
     }
 };
 
@@ -38,8 +44,6 @@ var renderHeight = 650;
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, renderWidth/renderHeight, 1, 10000);
 camera.position.set( -50, -100, 550 );
-camera.rotation.y = -90 * (Math.PI / 180);
-
 
 var controls = new OrbitControls( camera );
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -78,7 +82,7 @@ function addShape (element) {
     var defaults = {
         position: {x: 0, y: 0, z: 0},
         dimensions: {length: 1, width: 1, height: 1},
-        color: 0x156289
+        color: 0x000000
     }
 
     for (var attr in element) {

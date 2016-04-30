@@ -72,9 +72,11 @@ class BaseShape {
         var swap = this.rotation % 180;
         var l = this.dimensions.length + 2 * this.margin;
         var w = this.dimensions.width  + 2 * this.margin;
+        var h = this.dimensions.height + 2 * this.margin;
         return new Cuboid(
             swap ? w  : l,
-            swap ? l : w
+            swap ? l : w,
+            h
         );
     };
 

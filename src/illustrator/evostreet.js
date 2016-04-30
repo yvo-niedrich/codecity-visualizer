@@ -11,26 +11,29 @@ var ShapeContainer  = require("./container/streetcontainer.js");
  * @implements BaseIllustrator
  */
 class Evostreet extends BaseIllustrator {
-    constructor(model, options) {
+    constructor(model, options = {}) {
         super(model, options);
 
-        this._model = model;
-        this._options = options;
         this._rules = [];
+        this._model = model;
+        this._options = {
+            'highway.length': 36,
+            'highway.color': 0x156289,
 
-        var defaults = {
-            highwayLength: function() { return 36; },
-            streetLength: function() { return 18; },
-            houseLength: function() { return 16; },
-            houseMargin: function() { return 4; }
+            'street.length': 18,
+            'street.color': 0x156289,
+
+            'house.length': 16,
+            'house.width': 16,
+            'house.margin': 4,
+            'house.color': 0x1A212E,
+
+            'evostreet.container': ShapeContainer,
+            'evostreet.options': {},
         }
 
-        for (var key in defaults) {
-            if (key in this._options) {
-                continue;
-            }
-
-            this._options[key] = defaults[key];
+        for (var key in options) {
+            this._options[key] = options[key];
         }
     };
 
@@ -53,16 +56,12 @@ class Evostreet extends BaseIllustrator {
         return illustration;
     }
 
-    _getOption(reference, tree, version) {
-        return this._options[reference](tree, version, this._model);
-    }
-
     _createSpatialModel(tree, version) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
         }
 
-        var container = new ShapeContainer(tree + 'container');
+        var container = new this._options['evostreet.container'](tree, this._options['evostreet.options']);
         for (var child of tree.children) {
             container.add(this._createSpatialModel(child, version));
         }
@@ -77,29 +76,43 @@ class Evostreet extends BaseIllustrator {
     };
 
     _createHighway(node, version) {
+        var defaultLayout = {
+            'dimensions.length': this._options['highway.length'],
+            'dimensions.height': 1,
+            'color': this._options['highway.color']
+        };
+
         var highway = new ShapeStreet(node);
-        highway.dimensions.length = this._getOption('highwayLength', node, version);
+        highway.updateAttributes(defaultLayout);
         this._applyRules(node, version, highway);
         return highway;
     };
 
     _createStreet(node, version) {
+        var defaultLayout = {
+            'dimensions.length': this._options['street.length'],
+            'dimensions.height': 1,
+            'color': this._options['street.color']
+        };
+
         var street = new ShapeStreet(node);
-        street.dimensions.length = this._getOption('streetLength', node, version);
+        street.updateAttributes(defaultLayout);
         this._applyRules(node, version, street);
         return street;
     };
 
     _createHouse(node, version) {
+
+        var defaultLayout = {
+            'dimensions.length': this._options['house.length'],
+            'dimensions.width': this._options['house.width'],
+            'margin': this._options['house.margin'],
+            'color': this._options['house.color']
+        };
+
         var house = new ShapeHouse(node);
-
-        house.margin = this._getOption('houseMargin', node, version);
-        var size = this._getOption('houseLength', node, version);
-        house.dimensions.length = size;
-        house.dimensions.width  = size;
-
+        house.updateAttributes(defaultLayout);
         this._applyRules(node, version, house);
-
         return house;
     };
 

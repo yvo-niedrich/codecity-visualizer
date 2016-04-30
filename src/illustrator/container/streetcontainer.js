@@ -11,38 +11,21 @@ var Point         = require("../components/point.js");
  * @implements BaseShape
  */
 class StreetContainer extends BaseContainer {
-    constructor(key) {
+    constructor(key, options = {}) {
         super(key);
-
-        this._configuration = {
-            initialMargin: 30,
-            containerMargin: 30,
-            conclusiveMargin: 0,
-            elementRotation: 90,
-            branchRotation: 90,
-            houseContainer: RowContainer,
-            assignHouse: function(shapes, left, right) {
-                for (var key in shapes) {
-                    if(shapes.hasOwnProperty(key)) {
-                        var c = (key%2) ? left : right;
-                        c.add(shapes[key]);
-                    }
-                }
-            },
-            assignHouseSorted: function(shapes, left, right) {
-                shapes.sort(function (a, b) { return b.displayDimensions.base - a.displayDimensions.base; });
-                var diff = 0;
-                for (var s of shapes) {
-                    if(diff <= 0) {
-                        left.add(s);
-                        diff += s.displayDimensions.base;
-                    } else {
-                        right.add(s);
-                        diff -= s.displayDimensions.base;
-                    }
-                }
-            }
+        this._options = {
+            'spacer.initial': 30,
+            'spacer.container': 30,
+            'spacer.conclusive': 0,
+            'house.container': RowContainer,
+            'house.distribution': 'default',
+            'branch.container': RowContainer,
+            'branch.distribution': 'default'
         };
+
+        for (var key in options) {
+            this._options[key] = options[key];
+        }
 
         this._shapes = {
             'road': null,
@@ -52,12 +35,12 @@ class StreetContainer extends BaseContainer {
 
         this._container = {
             houses: {
-                left:  new this._configuration.houseContainer(key + '_hl', true),
-                right: new this._configuration.houseContainer(key + '_hr')
+                left:  new this._options['house.container'](key + '_hl', true),
+                right: new this._options['house.container'](key + '_hr')
             },
             branches: {
-                left:  new RowContainer(key + '_bl', true),
-                right: new RowContainer(key + '_br')
+                left:  new this._options['branch.container'](key + '_bl', true),
+                right: new this._options['branch.container'](key + '_br')
             }
         };
 
@@ -69,7 +52,7 @@ class StreetContainer extends BaseContainer {
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
-        this.dimensions.width  = this._getContainerWidth() + this._configuration.conclusiveMargin;
+        this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
     };
 
     add(shape) {
@@ -99,7 +82,7 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
         
-        var containersTop = (this.dimensions.width / 2) - this._configuration.conclusiveMargin;
+        var containersTop = (this.dimensions.width / 2) - this._options['spacer.conclusive'];
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
 
@@ -118,7 +101,7 @@ class StreetContainer extends BaseContainer {
                 this._container.houses.right.position.y = containersTop - this._container.houses.right.centroid.y;
             }
 
-            containersTop -= this._getMaxHouseContainerWidth() + this._configuration.containerMargin;
+            containersTop -= this._getMaxHouseContainerWidth() + this._options['spacer.container'];
         }
 
         if (this._shapes.branches.length) {
@@ -142,32 +125,54 @@ class StreetContainer extends BaseContainer {
     };
 
     _addHousesToStructure() {
-
-        this._configuration.assignHouse(
-        // this._configuration.assignHouseSorted(
-            this._shapes.houses,
-            this._container.houses.left,
-            this._container.houses.right
-        );
+        if (typeof this._options['house.distribution'] === 'function') {
+            this._distributeShapesEquallyByAttribute(
+                this._shapes.houses,
+                this._options['house.distribution'],
+                this._container.houses.left,
+                this._container.houses.right
+            );
+        } else {
+            this._distributeShapesInOrder(
+                this._shapes.houses,
+                this._container.houses.left,
+                this._container.houses.right
+            );
+        }
     };
 
     _addBranchesToStructure() {
-        // Don't sort branches, as we want to keep them consistent over developement cycles
-        var branches = this._shapes.branches;
-        branches.forEach(function(branch, index) {
-            if (index%2) {
-                this._container.branches.left.add(branch);
-            } else {
-                this._container.branches.right.add(branch);
-            }
-        }.bind(this));
+        this._distributeShapesInOrder(this._shapes.branches, this._container.branches.left, this._container.branches.right);
     };
+
+    _distributeShapesInOrder(shapes, left, right) {
+        for (var key in shapes) {
+            if(shapes.hasOwnProperty(key)) {
+                var c = (key%2) ? left : right;
+                c.add(shapes[key]);
+            }
+        }
+    };
+
+    _distributeShapesEquallyByAttribute(shapes, attr, left, right) {
+        shapes.sort(function (a, b) { return attr(b) - attr(a); });
+        var diff = 0;
+        for (var s of shapes) {
+            if(diff <= 0) {
+                left.add(s);
+                diff += attr(s);
+            } else {
+                right.add(s);
+                diff -= attr(s);
+            }
+        }
+    }
 
     _getContainerWidth() {
         var houseWidth = this._getMaxHouseContainerWidth();
         var branchWidth = this._getMaxBranchContainerWidth();
-        var containerMargin = (branchWidth && houseWidth) ? this._configuration.containerMargin : 0;
-        return houseWidth + branchWidth + this._configuration.initialMargin + containerMargin;
+        var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.container'] : 0;
+        return houseWidth + branchWidth + this._options['spacer.initial'] + containerMargin;
     };
 
     _getMaxHouseContainerWidth(){
