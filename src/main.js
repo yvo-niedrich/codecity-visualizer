@@ -31,11 +31,15 @@ var options = {
 var illustrator = new Illustrator(model, options);
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
 illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
+illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
 var illustration = illustrator.draw('alpha');
 
 /* ################################# *
  * ## Dirty Code for POC ########### *
  * ################################# */
+
+
+doLegend(document.body, model);
 
 document.body.style.margin = '3px';
 var renderWidth  = 1180;
@@ -103,4 +107,53 @@ function addShape (element) {
     cube.position.setY(defaults.position.y); 
     cube.position.setZ(z); 
     scene.add(cube);
+}
+
+
+/* ################################# *
+ * ## CREATE LEGEND ################ *
+ * ################################# */
+function doLegend(target, model) {
+    var legend = document.createElement('div');
+    legend.style['float'] = 'left';
+    legend.style['margin'] = '20px 5px';
+
+    function intToRGB(i){
+        var c = (i & 0x00FFFFFF)
+            .toString(16)
+            .toUpperCase();
+
+        return "00000".substring(0, 6 - c.length) + c;
+    }
+
+    function addLegendInfo(legend, tree) {
+        if (tree.children.length) {
+            var tName = String(tree);
+            var color = 0;
+            for (var j = 0; j < tName.length; j++) {
+               color = tName.charCodeAt(j) + ((color << 5) - color);
+            }
+
+            var colorbox = document.createElement('div');
+            colorbox.style['float'] = 'left';
+            colorbox.style['width'] = '10px';
+            colorbox.style['height'] = '10px';
+            colorbox.style['margin'] = '5px';
+            colorbox.style['border'] = '1px solid rgba(0, 0, 0, .2)';
+            colorbox.style['background-color'] = '#' + intToRGB(color);
+
+            var entry = document.createElement('div');
+            entry.style['clear'] = 'both';
+            entry.style['margin'] = '2px';
+            entry.appendChild(colorbox);
+            entry.appendChild(document.createTextNode(tName));
+            legend.appendChild(entry);
+
+            for (var i in tree.children) {
+                addLegendInfo(legend, tree.children[i]);
+            }
+        }
+    }
+    addLegendInfo(legend, model.tree);
+    target.appendChild(legend);
 }
