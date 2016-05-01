@@ -18,6 +18,7 @@ class GridContainer extends MirrorContainer {
         this._shapes = [];
         this._strips = [];
         this._activeStrip = -1;
+        this._optimalAspectRatio = 1.0;
     };
 
     add(shape) {
@@ -45,43 +46,41 @@ class GridContainer extends MirrorContainer {
 
 
     _calculateGrid() {
-        var backupCounter = 0;
         while (this._shapes.length) {
             var strip = this._strips[this._activeStrip];
             var shape = this._shapes.shift();
 
-            // 1. If a new Strip was just created, add the shape
+            // 1) If a new Strip was just created, add the shape
             //    And then return the pointer to the first strip
             if (!strip.dimensions.length) {
                 strip.add(shape);
                 this._activeStrip = 0;
-
                 continue;
             }
 
-            // 2. Will the new shape impare the aspect ratio?
+            // 2) Will the new shape impare the aspect ratio?
             var currentDimensions = this._getCurrentDimensions();
             var newLength = strip.dimensions.length + shape.displayDimensions.length;
-            if (newLength / currentDimensions.width > 1) {
-                // => Insert would impare aspect ratio
+            if (newLength / currentDimensions.width > this._optimalAspectRatio) {
+                // 2.1) Inserting the Shape would impare aspect ratio
+                //      Try again on the next strip
                 
                 // If this is the last strip, create a new strip
                 if (this._activeStrip + 1 === this._strips.length) {
                     this._createNewStrip();
                 }
 
-                // try inserting at the next strip
                 this._shapes.unshift(shape);
                 this._activeStrip++;
-                continue;
-            }
 
-            // 3. The Shape will not impair the aspect ratio on 
-            //    the current strip. Insert the shape.
-            var updateOffsets = strip.add(shape);
+            } else {
+                // 2.2) The Shape will not impair the aspect ratio on 
+                //    the current strip. Insert the shape.
+                var updateOffsets = strip.add(shape);
 
-            if(updateOffsets) {
-                this._recalculateStripOffsets();
+                if(updateOffsets) {
+                    this._recalculateStripOffsets();
+                }
             }
         }
     };

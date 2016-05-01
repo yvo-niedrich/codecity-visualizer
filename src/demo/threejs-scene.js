@@ -21,7 +21,7 @@ class Renderer {
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
 
-        var controls = new OrbitControls( camera, renderer.domElement );
+        new OrbitControls( camera, renderer.domElement );
 
         var light1 = new THREE.PointLight( 0xffffff, 0.1 );
         light1.position.set( 300, 300, 300 );

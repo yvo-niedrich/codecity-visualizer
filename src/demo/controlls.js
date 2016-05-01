@@ -69,7 +69,7 @@ class Controlls {
             };
 
             if (document.getElementById('l_sort').checked) options['evostreet.options']['house.distribution'] = function(s) { return s.displayDimensions.base; };
-            if (document.getElementById('l_pack').value == 'grid') options['evostreet.options']['house.container'] = require('../illustrator/container/grid.js');
+            if (document.getElementById('l_pack').value === 'grid') options['evostreet.options']['house.container'] = require('../illustrator/container/grid.js');
             if (document.getElementById('l_margin')) options['house.margin'] = parseInt(document.getElementById('l_margin').value);
 
             var rules = [];
