@@ -1,5 +1,5 @@
 var MirrorContainer = require("./base-mirror.js");
-var Row             = require("./row.js");
+var Strip           = require("./helper/strip.js");
 var Cuboid          = require("../components/cuboid.js");
 
 /**
@@ -39,7 +39,7 @@ class GridContainer extends MirrorContainer {
         this._positionStrips();
 
         for (var s of this._strips) {
-            super.add(s.row);
+            super.add(s.container);
         }
     };
 
@@ -47,15 +47,13 @@ class GridContainer extends MirrorContainer {
     _calculateGrid() {
         var backupCounter = 0;
         while (this._shapes.length) {
-            if (++backupCounter === 100) throw 'LOOP EXCEPTION!';
-
-            var c = this._strips[this._activeStrip];
-            var s = this._shapes.shift();
+            var strip = this._strips[this._activeStrip];
+            var shape = this._shapes.shift();
 
             // 1. If a new Strip was just created, add the shape
             //    And then return the pointer to the first strip
-            if (!c.length) {
-                this._addShapeToStrip(s, c);
+            if (!strip.dimensions.length) {
+                strip.add(shape);
                 this._activeStrip = 0;
 
                 continue;
@@ -63,7 +61,7 @@ class GridContainer extends MirrorContainer {
 
             // 2. Will the new shape impare the aspect ratio?
             var currentDimensions = this._getCurrentDimensions();
-            var newLength = c.length + s.displayDimensions.length;
+            var newLength = strip.dimensions.length + shape.displayDimensions.length;
             if (newLength / currentDimensions.width > 1) {
                 // => Insert would impare aspect ratio
                 
@@ -73,60 +71,42 @@ class GridContainer extends MirrorContainer {
                 }
 
                 // try inserting at the next strip
-                this._shapes.unshift(s);
+                this._shapes.unshift(shape);
                 this._activeStrip++;
                 continue;
             }
 
             // 3. The Shape will not impair the aspect ratio on 
             //    the current strip. Insert the shape.
-            this._addShapeToStrip(s, c);
+            var updateOffsets = strip.add(shape);
+
+            if(updateOffsets) {
+                this._recalculateStripOffsets();
+            }
         }
     };
 
     _createNewStrip() {
         var rowName = this.key + '_r' + this._strips.length;
-        var s = {
-            start: 0,
-            width: 0,
-            length: 0,
-            height: 0,
-            row: new Row(rowName, this.isMirrored)
-        };
-
-        for (var strip of this._strips) {
-            s.start += strip.width;
-        }
-
-        this._strips.push(s);
+        this._strips.push(new Strip(rowName, this.isMirrored));
+        this._recalculateStripOffsets();
     };
 
-    _addShapeToStrip(shape, strip) {
-        var widthChanged = (strip.width < shape.displayDimensions.width);
-
-        strip.length += shape.displayDimensions.length;
-        strip.width  = Math.max(strip.width, shape.displayDimensions.width);
-        strip.height = Math.max(strip.height, shape.displayDimensions.height);
-        strip.row.add(shape);
-
-        if (!widthChanged) {
-            return;
-        }
-
-        var start = 0;
+    _recalculateStripOffsets() {
+        var offset = 0;
         for (var i = 0; i < this._strips.length; i++) {
-            this._strips[i].start = start;
-            start += this._strips[i].width;
+            this._strips[i].offset = offset;
+            offset += this._strips[i].dimensions.width;
         }
-    };
+    }
 
     _getCurrentDimensions() {
         var d = new Cuboid();
 
         for (var s of this._strips) {
-            d.length = Math.max(d.length, s.length);
-            d.width += s.width;
-            d.height = Math.max(d.height, s.height);
+            d.length = Math.max(d.length, s.dimensions.length);
+            d.width += s.dimensions.width;
+            d.height = Math.max(d.height, s.dimensions.height);
         }
 
         return d;
@@ -141,17 +121,17 @@ class GridContainer extends MirrorContainer {
 
     _positionStrips() {
         for (var strip of this._strips) {
-            strip.row.position.x = (strip.length - this.dimensions.length) / 2
-            strip.row.position.y = this._calcuateYAxisPosition(strip.start, strip.width);
+            strip.container.position.x = (strip.dimensions.length - this.dimensions.length) / 2
+            strip.container.position.y = this._calcuateYAxisPosition(strip.offset, strip.dimensions.width);
         }
     };
 
     _calcuateYAxisPosition(offset, width) {
-        var alignment = this.isMirrored ? 1 : -1;
-        var origin = this.dimensions.width / 2 * alignment;
-        var start = origin - (offset * alignment);
-        return start - (width / 2 * alignment)
+        var rowPosOffset = offset + (width / 2);
+        var origin = this.dimensions.width / 2;
+
+        return this.isMirrored ? (origin - rowPosOffset) : (rowPosOffset - origin);
     };
-}
+};
 
 module.exports = GridContainer;

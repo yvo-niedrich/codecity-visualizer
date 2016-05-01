@@ -15,11 +15,11 @@ class MirrorContainer extends BaseContainer {
     };
 
     add(shape) {
+        super.add(shape);
+
         if (this._mirrored) {
             shape.rotate(180);
         }
-
-        super.add(shape);
     };
 
     get isMirrored() {

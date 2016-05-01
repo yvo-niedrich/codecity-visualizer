@@ -9,7 +9,8 @@ var MirrorContainer = require("./base-mirror.js");
 class RowContainer extends MirrorContainer {
 
     constructor(key, mirror = false) {
-        super(key, mirror);    };
+        super(key, mirror);
+    };
 
     _finalize() {
         super._finalize();

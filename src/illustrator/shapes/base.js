@@ -108,7 +108,7 @@ class BaseShape {
             throw 'Only 90° rotations allowed'
         }
 
-        this._attributes.rotation = (360 + degrees) % 360;
+        this._attributes.rotation = (720 + this.rotation + degrees) % 360;
     };
 
     /**
