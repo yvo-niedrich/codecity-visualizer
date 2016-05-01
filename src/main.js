@@ -2,6 +2,7 @@ var THREE         = require("three");
 var OrbitControls = require('three-orbit-controls')(THREE);
 var SoftwareModel = require("./model/dummy.js");
 var Illustrator   = require("./illustrator/evostreet.js");
+var GridContainer = require("./illustrator/container/grid.js");
 
 console.clear();
 
@@ -19,9 +20,12 @@ console.clear();
 var options = {
     'highway.color': 0x186f9a,
     'street.color': 0x156289,
+    'house.margin': 4,
     'evostreet.options' : {
         'spacer.initial': 20,
         'spacer.conclusive': 0,
+        'spacer.branches': 20,
+        'house.container': GridContainer,
         'house.distribution': function(s) { return s.displayDimensions.base; }
     }
 };

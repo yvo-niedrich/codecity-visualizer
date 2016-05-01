@@ -1,6 +1,4 @@
 var MirrorContainer = require("./base-mirror.js");
-var Point           = require("../components/point.js");
-
 /**
  * Rows Elements one after the other
  * 
@@ -11,13 +9,7 @@ var Point           = require("../components/point.js");
 class RowContainer extends MirrorContainer {
 
     constructor(key, mirror = false) {
-        super(key, mirror);
-        this._separator = 0;
-    };
-
-    set separator(val) {
-        this._separator = val;
-    }
+        super(key, mirror);    };
 
     _finalize() {
         super._finalize();
@@ -38,7 +30,7 @@ class RowContainer extends MirrorContainer {
         }
 
         if (this.shapes.length > 1) {
-            this.dimensions.length += (this.shapes.length - 1) * this._separator;
+            this.dimensions.length += (this.shapes.length - 1) * this.separator;
         }
     };
 
@@ -49,7 +41,7 @@ class RowContainer extends MirrorContainer {
             shape.position.x = firstFreePosition + (shape.displayDimensions.length / 2);
             shape.position.y = this._alignOnXAxis(shape.displayDimensions.width);
 
-            firstFreePosition += shape.displayDimensions.length + this._separator;
+            firstFreePosition += shape.displayDimensions.length + this.separator;
         }
     };
 

@@ -11,6 +11,7 @@ class MirrorContainer extends BaseContainer {
     constructor(key, mirror = false) {
         super(key);
         this._mirrored = mirror;
+        this._separator = 0;
     };
 
     add(shape) {
@@ -19,11 +20,19 @@ class MirrorContainer extends BaseContainer {
         }
 
         super.add(shape);
-    }
+    };
 
     get isMirrored() {
         return this._mirrored;
-    }
-}
+    };
+
+    set separator(val) {
+        this._separator = val;
+    };
+
+    get separator() {
+        return this._separator;
+    };
+};
 
 module.exports = MirrorContainer;
