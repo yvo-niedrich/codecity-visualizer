@@ -1,7 +1,5 @@
 var SoftwareModel = require("./model/dummy.js");
 var Illustrator   = require("./illustrator/evostreet.js");
-var GridContainer = require("./illustrator/container/grid.js");
-
 console.clear();
 
 /* Step 1: Create the Model
@@ -11,9 +9,9 @@ console.clear();
  var model = new SoftwareModel();
 
 /* Step 2: Generate a CodeCity from Model
- * - Decide on Metrics to use
- * - Decide on other stuff (Scaling factor, margins, angles, ...)
- * - Insert model and Options to Illustrator
+ * - Configure Illustrator Layout (Options)
+ * - Decide on Metrics to use (Rules)
+ * - Draw a specific Version of the City
  */
 var options = {
     'highway.color': 0x186f9a,
@@ -23,26 +21,25 @@ var options = {
         'spacer.initial': 20,
         'spacer.conclusive': 0,
         'spacer.branches': 20,
-        'house.container': GridContainer,
+        'house.container': require("./illustrator/container/grid.js"),
         'house.distribution': function(s) { return s.displayDimensions.base; }
     }
 };
 
 var illustrator = new Illustrator(model, options);
+
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
 illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
+
 var illustration = illustrator.draw('alpha');
 
-/* ################################# *
- * ## Dirty Code for POC ########### *
- * ################################# */
+/* Step 3: Draw the Illustration
+ * - Just do it
+ */
 
 document.body.style.margin = '0px';
-
 require('./demo/legend.js')(document.body, model);
 
-var Renderer = require('./demo/threejs-scene.js');
-
-var renderer = new Renderer(document.body);
+var renderer = new (require('./demo/threejs-scene.js'))(document.body);
 renderer.renderIllustration(illustration);

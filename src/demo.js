@@ -3,15 +3,7 @@ var Illustrator   = require("./illustrator/evostreet.js");
 
 console.clear();
 
-/* Step 1: Create the Model
- *  - Get Data from DataSource
- *  - Create a Model with the collected Data
- */
  var model = new SoftwareModel();
-
-/* ################################# *
- * ## Dirty Code for POC ########### *
- * ################################# */
 
 document.body.style.margin = '0px';
 
