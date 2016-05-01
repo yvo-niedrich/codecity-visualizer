@@ -6,6 +6,7 @@ var webpack = require('webpack'),
     entries = {};
 
 entries['bundle'] = './src/main.js';
+entries['demo']   = './src/demo.js';
 
 if (minimize) {
     entries['vendor'] = ['three', 'three-orbit-controls'];
