@@ -16,13 +16,13 @@ console.clear();
 var options = {
     'highway.color': 0x186f9a,
     'street.color': 0x156289,
-    'house.margin': 4,
+    'house.margin': 2,
     'evostreet.options' : {
         'spacer.initial': 20,
         'spacer.conclusive': 0,
         'spacer.branches': 20,
-        'house.container': require("./illustrator/container/grid.js"),
-        'house.distribution': function(s) { return s.displayDimensions.base; }
+        'house.container': require("./illustrator/container/lightmap.js"),
+        'house.distribution': 'left'
     }
 };
 
@@ -32,7 +32,7 @@ illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
 illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
 
-var illustration = illustrator.draw('alpha');
+var illustration = illustrator.draw('v1.0');
 
 /* Step 3: Draw the Illustration
  * - Just do it

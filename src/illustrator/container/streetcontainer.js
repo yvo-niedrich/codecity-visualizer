@@ -136,6 +136,18 @@ class StreetContainer extends BaseContainer {
                 this._container.houses.left,
                 this._container.houses.right
             );
+
+            return;
+        }
+
+        if (typeof this._options['house.distribution'] !== 'string') {
+            throw 'Unknown option for `house.distribution`';
+        }
+
+        if (this._options['house.distribution'].toLowerCase() === 'left') {
+            this._distributeShapes(this._shapes.houses, this._container.houses.left);
+        } else if (this._options['house.distribution'].toLowerCase() === 'right') {
+            this._distributeShapes(this._shapes.houses, this._container.houses.right);
         } else {
             this._distributeShapesInOrder(
                 this._shapes.houses,
@@ -147,6 +159,12 @@ class StreetContainer extends BaseContainer {
 
     _addBranchesToStructure() {
         this._distributeShapesInOrder(this._shapes.branches, this._container.branches.left, this._container.branches.right);
+    };
+
+    _distributeShapes(shapes, container) {
+        for (var s of shapes) {
+            container.add(s);
+        }
     };
 
     _distributeShapesInOrder(shapes, left, right) {

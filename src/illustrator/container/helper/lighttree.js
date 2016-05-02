@@ -11,11 +11,15 @@ class Lighttree {
 
     get origin() {
         return this._origin;
-    }
+    };
 
     get dimensions() {
         return this._dimensions;
-    }
+    };
+
+    get content() {
+        return this._content;
+    };
 
     contentFits(measurements) {
         if (this._content) {
@@ -23,7 +27,7 @@ class Lighttree {
         }
 
         return (this.dimensions.length >= measurements.length && this.dimensions.width >= measurements.width);
-    }
+    };
 
     collectCandidates(collection, measurements) {
         if (this._children.length) {
@@ -33,7 +37,7 @@ class Lighttree {
         } else if (this.contentFits(measurements)) {
             collection.push(this);
         }
-    }
+    };
 
     collectNodesWithContent(collection) {
         if (this._children.length) {
@@ -43,10 +47,10 @@ class Lighttree {
         } else if (this._content) {
             collection.push(this);
         }
-    }
+    };
 
-    insertObject(measurements, object) {
-        if (!contentFits) {
+    insert(measurements, object) {
+        if (!this.contentFits(measurements)) {
             throw 'Already holding contents.'
         }
 
@@ -68,7 +72,7 @@ class Lighttree {
 
             var o2 = new Point(
                 this.origin.x,
-                measurements.width,
+                this.origin.y + measurements.width,
                 this.origin.z
             );
             var d2 = new Cuboid(
@@ -78,7 +82,7 @@ class Lighttree {
             );
             this._children.push(new Lighttree(o2, d2));
 
-            return this._children[0].insertObject(measurements, object);
+            return this._children[0].insert(measurements, object);
         }
 
         // The Objects length, does not perfectly fit the available length.
@@ -98,7 +102,7 @@ class Lighttree {
             this._children.push(new Lighttree(o1, d1));
 
             var o2 = new Point(
-                measurements.length
+                this.origin.x + measurements.length,
                 this.origin.y,
                 this.origin.z
             );
@@ -109,11 +113,13 @@ class Lighttree {
             );
             this._children.push(new Lighttree(o2, d2));
 
-            return this._children[0].insertObject(measurements, object);
+            return this._children[0].insert(measurements, object);
         }
 
         // Object fits perfectly
         this._content = object;
         return this;
-    }
-}
+    };
+};
+
+module.exports = Lighttree;

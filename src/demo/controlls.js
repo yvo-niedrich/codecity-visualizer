@@ -22,7 +22,15 @@ class Controlls {
     appendLayout() {
         var layouts = [
             {key: 'grid', label: 'GRID'},
-            {key: 'linear', label: 'Linear'}
+            {key: 'linear', label: 'Linear'},
+            {key: 'light', label: 'Lightmap'}
+        ];
+
+        var positions = [
+            {key: 'left', label: 'Left'},
+            {key: 'right', label: 'Right'},
+            {key: 'default', label: 'Alternating (Age)'},
+            {key: 'size', label: 'Alternating (Size)'}
         ];
 
         var margins = [];
@@ -31,9 +39,9 @@ class Controlls {
         }
 
         this.appendHeader('Layout');
-        this.appendCheckbox('l_sort', 'Sort Houses by Size', 1);
+        this.appendSelectBox('l_sort', 'House Position', positions, 'default');
         this.appendSelectBox('l_margin', 'House Margin', margins, 4);
-        this.appendSelectBox('l_pack', 'House-Packing: ', layouts);
+        this.appendSelectBox('l_pack', 'House Packing: ', layouts);
 
     }
 
@@ -68,9 +76,14 @@ class Controlls {
                 }
             };
 
-            if (document.getElementById('l_sort').checked) options['evostreet.options']['house.distribution'] = function(s) { return s.displayDimensions.base; };
-            if (document.getElementById('l_pack').value === 'grid') options['evostreet.options']['house.container'] = require('../illustrator/container/grid.js');
             if (document.getElementById('l_margin')) options['house.margin'] = parseInt(document.getElementById('l_margin').value);
+
+            if (document.getElementById('l_sort').value === 'size') options['evostreet.options']['house.distribution'] = function(s) { return s.displayDimensions.base; };
+            else options['evostreet.options']['house.distribution'] = document.getElementById('l_sort').value;
+
+            if (document.getElementById('l_pack').value === 'linear') options['evostreet.options']['house.container'] = require('../illustrator/container/row.js');
+            if (document.getElementById('l_pack').value === 'grid') options['evostreet.options']['house.container'] = require('../illustrator/container/grid.js');
+            if (document.getElementById('l_pack').value === 'light') options['evostreet.options']['house.container'] = require('../illustrator/container/lightmap.js');
 
             var rules = [];
             if(document.getElementById('r_loc').checked) rules.push(require('../illustrator/rules/loc-to-height.js')());

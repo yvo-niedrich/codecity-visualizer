@@ -23,7 +23,7 @@ class GridContainer extends MirrorContainer {
 
     add(shape) {
         this._shapes.push(shape);
-    }
+    };
 
     _finalize() {
         super._finalize();
