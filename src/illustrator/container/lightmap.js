@@ -49,8 +49,8 @@ class Lightmap extends MirrorContainer {
 
         var tree = new Lighttree(origin, worstDimensions);
 
-        for (var shape of this.shapes) {
-            this._addShapeToTree(shape, tree);
+        for (var s of this.shapes) {
+            this._addShapeToTree(s, tree);
         }
 
 
