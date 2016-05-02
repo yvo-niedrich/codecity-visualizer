@@ -49,76 +49,95 @@ class Lighttree {
         }
     };
 
-    insert(measurements, object) {
+    insert(measurements, object, cutHorizontalFirst = true) {
         if (!this.contentFits(measurements)) {
-            throw 'Already holding contents.'
+            throw 'Object does not fit!'
         }
 
-        // The Objects width, does not perfectly fit the available width.
-        // Split the plane in two and insert the object into the fitting one
-        if (this.dimensions.width > measurements.width) {
+        var cutOrder = [
+            { 'method' : this.cutIfWidthDoesNotFit.bind(this),  'value' : measurements.width },
+            { 'method' : this.cutIfLengthDoesNotFit.bind(this), 'value' : measurements.length }
+        ];
 
-            var o1 = new Point(
-                this.origin.x,
-                this.origin.y,
-                this.origin.z
-            );
-            var d1 = new Cuboid(
-                this.dimensions.length,
-                measurements.width,
-                this.dimensions.height
-            );
-            this._children.push(new Lighttree(o1, d1));
-
-            var o2 = new Point(
-                this.origin.x,
-                this.origin.y + measurements.width,
-                this.origin.z
-            );
-            var d2 = new Cuboid(
-                this.dimensions.length,
-                this.dimensions.width - measurements.width,
-                this.dimensions.height
-            );
-            this._children.push(new Lighttree(o2, d2));
-
-            return this._children[0].insert(measurements, object);
+        if(!cutHorizontalFirst) {
+            cutOrder.reverse();
         }
 
-        // The Objects length, does not perfectly fit the available length.
-        // Split the plane in two and insert the object into the fitting one
-        if (this.dimensions.length > measurements.length) {
+        // If the object would not fit perfectly, we need to cut the
+        // area in up to three new (smaller) areas
+        for (var cut of cutOrder) {
+            cut['method'](cut['value']);
 
-            var o1 = new Point(
-                this.origin.x,
-                this.origin.y,
-                this.origin.z
-            );
-            var d1 = new Cuboid(
-                measurements.length,
-                this.dimensions.width,
-                this.dimensions.height
-            );
-            this._children.push(new Lighttree(o1, d1));
-
-            var o2 = new Point(
-                this.origin.x + measurements.length,
-                this.origin.y,
-                this.origin.z
-            );
-            var d2 = new Cuboid(
-                this.dimensions.length - measurements.length,
-                this.dimensions.width,
-                this.dimensions.height
-            );
-            this._children.push(new Lighttree(o2, d2));
-
-            return this._children[0].insert(measurements, object);
+            if (this._children.length) {
+                return this._children[0].insert(measurements, object, cutHorizontalFirst);
+            }
         }
 
         // Object fits perfectly
         this._content = object;
         return this;
+    };
+
+    cutIfWidthDoesNotFit(width) {
+        // The Objects width, does not perfectly fit the available width.
+        // Split the plane in two and insert the object into the fitting one
+        if (this.dimensions.width > width) {
+
+            var o1 = new Point(
+                this.origin.x,
+                this.origin.y,
+                this.origin.z
+            );
+            var d1 = new Cuboid(
+                this.dimensions.length,
+                width,
+                this.dimensions.height
+            );
+            this._children.push(new Lighttree(o1, d1));
+
+            var o2 = new Point(
+                this.origin.x,
+                this.origin.y + width,
+                this.origin.z
+            );
+            var d2 = new Cuboid(
+                this.dimensions.length,
+                this.dimensions.width - width,
+                this.dimensions.height
+            );
+            this._children.push(new Lighttree(o2, d2));
+        }
+    };
+
+    cutIfLengthDoesNotFit(length) {
+        // The Objects length, does not perfectly fit the available length.
+        // Split the plane in two and insert the object into the fitting one
+        if (this.dimensions.length > length) {
+
+            var o1 = new Point(
+                this.origin.x,
+                this.origin.y,
+                this.origin.z
+            );
+            var d1 = new Cuboid(
+                length,
+                this.dimensions.width,
+                this.dimensions.height
+            );
+            this._children.push(new Lighttree(o1, d1));
+
+            var o2 = new Point(
+                this.origin.x + length,
+                this.origin.y,
+                this.origin.z
+            );
+            var d2 = new Cuboid(
+                this.dimensions.length - length,
+                this.dimensions.width,
+                this.dimensions.height
+            );
+            this._children.push(new Lighttree(o2, d2));
+        }
     };
 };
 

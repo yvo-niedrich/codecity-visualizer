@@ -18,6 +18,7 @@ class Lightmap extends MirrorContainer {
         super(key, mirror);
         this._optimalAspectRatio = 1.0;
         this._currentDimensions = null;
+        this._cutHorizontal = true;
     };
 
     _finalize() {
@@ -29,7 +30,13 @@ class Lightmap extends MirrorContainer {
         this._currentDimensions = new Cuboid();
 
         var shapes = this.shapes;
-        shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width});
+
+        if (this._cutHorizontal) {
+            shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width});
+        } else {
+            shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length});
+        }
+        
 
         var origin = new Point();
         var worstDimensions = new Cuboid();
@@ -57,26 +64,51 @@ class Lightmap extends MirrorContainer {
         tree.collectCandidates(candidates, shapeDimensions);
         
         // Find the best possible Candidate
+        // 
+        // Preserver => If possible preserve the current Dimensions and 
+        //              choose the candidate, that would be the most perfect fit
+        // 
+        // Expander => If an Expansion is required, prefer the candidate that would result
+        //             in the best aspect ratio
         var bestPossibleRatio = Infinity;
-        var winner;
+        var bestPossibleSpace = Infinity;
+        var expander = null;
+        var preserver = null;
 
         for (var c of candidates) {
             var newLength = Math.max(c.origin.x + shapeDimensions.length, this._currentDimensions.length);
             var newWidth  = Math.max(c.origin.y + shapeDimensions.width,  this._currentDimensions.width);
-            var candidatesAspectRatio = Math.max(newLength, newWidth) / Math.min(newLength, newWidth);
 
-            if (candidatesAspectRatio < bestPossibleRatio) {
-                bestPossibleRatio = candidatesAspectRatio;
-                winner = c;
+            var canPreserveDimensions = (newLength === this._currentDimensions.length && newWidth === this._currentDimensions.width);
 
-                if(newLength === this._currentDimensions.length && newWidth === this._currentDimensions.width) {
-                    // break;
+            if (preserver && !canPreserveDimensions) {
+                continue;
+            }
+
+            if (canPreserveDimensions) {
+                var candidateLength = Math.min(c.dimensions.length, this._currentDimensions.length - c.origin.x);
+                var candidateWidth  = Math.min(c.dimensions.width, this._currentDimensions.width - c.origin.y);
+                var wastedSpace = (candidateWidth * candidateLength) - (shapeDimensions.length * shapeDimensions.width);
+
+                if (wastedSpace < bestPossibleSpace) {
+                    bestPossibleSpace = wastedSpace;
+                    preserver = c;
+                }
+
+            } else {
+                var candidatesAspectRatio = Math.max(newLength, newWidth) / Math.min(newLength, newWidth);
+
+                if (candidatesAspectRatio < bestPossibleRatio) {
+                    bestPossibleRatio = candidatesAspectRatio;
+                    expander = c;
                 }
             }
         }
 
+        var winner = preserver ? preserver : expander;
+
         // Insert Shape into the candidate and update current dimensions
-        winner.insert(shapeDimensions, shape);
+        winner.insert(shapeDimensions, shape, this._cutHorizontal);
         this._currentDimensions.length = Math.max(winner.origin.x + shapeDimensions.length, this._currentDimensions.length);
         this._currentDimensions.width  = Math.max(winner.origin.y + shapeDimensions.width,  this._currentDimensions.width);
         this._currentDimensions.height = Math.max(winner.origin.z + shapeDimensions.height, this._currentDimensions.height);
