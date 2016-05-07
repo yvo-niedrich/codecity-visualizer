@@ -19,7 +19,7 @@ class BaseSoftwareModel {
     get tree() {};
 
     /**
-     * Get the List of versions.
+     * Get an ordered List of all versions.
      * @return {array<Version>}
      */
     get versions() {};
