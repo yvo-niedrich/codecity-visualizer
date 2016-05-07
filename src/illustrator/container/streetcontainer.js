@@ -85,28 +85,13 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
         
-        var containersTop = (this.dimensions.width / 2) - this._options['spacer.conclusive'];
         var containersBottom = this._options['spacer.initial'] - (this.dimensions.width / 2)
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
-        var middleOfTheRoad = (this.dimensions.length / 2) - this._getMaxContainerRightLength() - halfTheRoadLength;
+        var middleOfTheRoad = (this.dimensions.length / 2) - this._getRightBlockLength() - halfTheRoadLength;
 
         mainRoad.dimensions.width = this.dimensions.width;
         mainRoad.position.x = middleOfTheRoad;
         mainRoad.position.y = 0;
-
-        if (this._shapes.houses.length) {
-            if (this._container.houses.left.size) {
-                this._container.houses.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
-                this._container.houses.left.position.y = containersTop - this._container.houses.left.centroid.y;
-            }
-
-            if (this._container.houses.right.size) {
-                this._container.houses.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
-                this._container.houses.right.position.y = containersTop - this._container.houses.right.centroid.y;
-            }
-
-            containersTop -= this._getMaxHouseContainerWidth() + this._options['spacer.terranullius'];
-        }
 
         if (this._shapes.branches.length) {
             if (this._container.branches.left.size) {
@@ -119,6 +104,19 @@ class StreetContainer extends BaseContainer {
                 this._container.branches.right.position.y = containersBottom + this._container.branches.right.centroid.y;
             }
 
+            containersBottom += this._getBranchesBlockTotalWidth() + this._options['spacer.terranullius'];
+        }
+
+        if (this._shapes.houses.length) {
+            if (this._container.houses.left.size) {
+                this._container.houses.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
+                this._container.houses.left.position.y = containersBottom + this._container.houses.left.centroid.y;
+            }
+
+            if (this._container.houses.right.size) {
+                this._container.houses.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
+                this._container.houses.right.position.y = containersBottom + this._container.houses.right.centroid.y;
+            }
         }
 
         super.add(this._shapes.road)
@@ -191,20 +189,20 @@ class StreetContainer extends BaseContainer {
     }
 
     _getContainerWidth() {
-        var houseWidth = this._getMaxHouseContainerWidth();
-        var branchWidth = this._getMaxBranchContainerWidth();
+        var houseWidth = this._getHousesBlockTotalWidth();
+        var branchWidth = this._getBranchesBlockTotalWidth();
         var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.terranullius'] : 0;
         return houseWidth + branchWidth + this._options['spacer.initial'] + containerMargin;
     };
 
-    _getMaxHouseContainerWidth(){
+    _getHousesBlockTotalWidth(){
         return Math.max(
             this._container.houses.left.displayDimensions.width,
             this._container.houses.right.displayDimensions.width
         );
     }
 
-    _getMaxBranchContainerWidth(){
+    _getBranchesBlockTotalWidth(){
         return Math.max(
             this._container.branches.left.displayDimensions.width,
             this._container.branches.right.displayDimensions.width
@@ -212,13 +210,13 @@ class StreetContainer extends BaseContainer {
     }
 
     _getContainerLength() {
-        var leftLength  = this._getMaxContainerLeftLength();
-        var rightLength = this._getMaxContainerRightLength();
+        var leftLength  = this._getLeftBlockLength();
+        var rightLength = this._getRightBlockLength();
         
         return leftLength + this._shapes.road.displayDimensions.length + rightLength;
     };
 
-    _getMaxContainerLeftLength() {
+    _getLeftBlockLength() {
         return Math.max(
             this._container.houses.left.displayDimensions.length,
             this._container.branches.left.displayDimensions.length
@@ -226,7 +224,7 @@ class StreetContainer extends BaseContainer {
 
     };
 
-    _getMaxContainerRightLength() {
+    _getRightBlockLength() {
         return Math.max(
             this._container.houses.right.displayDimensions.length,
             this._container.branches.right.displayDimensions.length

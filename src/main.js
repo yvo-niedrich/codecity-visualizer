@@ -22,7 +22,7 @@ var options = {
         'spacer.conclusive': 0,
         'spacer.branches': 20,
         'house.container': require("./illustrator/container/lightmap.js"),
-        'house.distribution': 'left'
+        // 'house.distribution': 'left'
     }
 };
 
