@@ -127,45 +127,49 @@ class StreetContainer extends BaseContainer {
     };
 
     _addHousesToStructure() {
-        if (typeof this._options['house.distribution'] === 'function') {
-            this._distributeShapesEquallyByAttribute(
-                this._shapes.houses,
-                this._options['house.distribution'],
-                this._container.houses.left,
-                this._container.houses.right
-            );
-
-            return;
-        }
-
-        if (typeof this._options['house.distribution'] !== 'string') {
-            throw 'Unknown option for `house.distribution`';
-        }
-
-        if (this._options['house.distribution'].toLowerCase() === 'left') {
-            this._distributeShapes(this._shapes.houses, this._container.houses.left);
-        } else if (this._options['house.distribution'].toLowerCase() === 'right') {
-            this._distributeShapes(this._shapes.houses, this._container.houses.right);
-        } else {
-            this._distributeShapesInOrder(
-                this._shapes.houses,
-                this._container.houses.left,
-                this._container.houses.right
-            );
-        }
+        this._distributeShapes(
+            this._shapes.houses,
+            this._options['house.distribution'],
+            this._container.houses.left,
+            this._container.houses.right
+        );
     };
 
     _addBranchesToStructure() {
-        this._distributeShapesInOrder(this._shapes.branches, this._container.branches.left, this._container.branches.right);
+        this._distributeShapes(
+            this._shapes.branches,
+            this._options['branch.distribution'],
+            this._container.branches.left,
+            this._container.branches.right
+        );
     };
 
-    _distributeShapes(shapes, container) {
+    _distributeShapes(shapes, method, left, right) {
+        if (typeof method === 'function') {
+            this._distributeShapesEquallyByAttribute(shapes, method, left, right);
+            return;
+        }
+
+        if (typeof method !== 'string') {
+            throw 'Unknown type of distribution';
+        }
+
+        if (method.toLowerCase() === 'left') {
+            this._distributeShapesToContainer(shapes, left);
+        } else if (method.toLowerCase() === 'right') {
+            this._distributeShapesToContainer(shapes, right);
+        } else {
+            this._distributeShapesInDefaultOrder(shapes, left, right);
+        }
+    }
+
+    _distributeShapesToContainer(shapes, container) {
         for (var s of shapes) {
             container.add(s);
         }
     };
 
-    _distributeShapesInOrder(shapes, left, right) {
+    _distributeShapesInDefaultOrder(shapes, left, right) {
         for (var key in shapes) {
             if(shapes.hasOwnProperty(key)) {
                 var c = (key%2) ? left : right;
