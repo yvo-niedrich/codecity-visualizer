@@ -38,11 +38,11 @@ model.tree = rootNode;
 ```
 
 ## List of Software-Versions (R)
-An ordered List of all Versions. A Version consists have unique `key` and it's `label`.
+An ordered List of all Versions. A Version consists of an unique `key`, it's `label` and the order-value.
 ```JS
 model.versions = [
-  new Version('hashV1key', 'v0.1'),
-  new Version('hashV2key', 'v0.2')
+  new Version('hashV1key', 'v0.1', 1462060800), // Created on 2016-05-01
+  new Version('hashV2key', 'v0.2', 1463216400)  // Created on 2016-05-14
 ]
 ```
 

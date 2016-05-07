@@ -14,13 +14,13 @@ class BaseSoftwareModel {
 
     /**
      * Get the Root-Node of the tree.
-     * @return {components/TreeNode}
+     * @return {TreeNode}
      */
     get tree() {};
 
     /**
-     * Get the List of versions.
-     * @return {array<components/Version>}
+     * Get an ordered List of all versions.
+     * @return {array<Version>}
      */
     get versions() {};
 
