@@ -187,6 +187,13 @@ class BaseShape {
             this._updateAttribute(obj[k], keys, value);
         }
     }
+
+    getAttribute(key) {
+        var keys = key.split('.');
+        var attr = this._attributes;
+        while(keys.length && (attr = attr[keys.shift()]));
+        return attr;
+    }
 }
 
 module.exports = BaseShape;

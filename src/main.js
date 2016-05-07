@@ -22,7 +22,8 @@ var options = {
         'spacer.conclusive': 0,
         'spacer.branches': 20,
         'house.container': require("./illustrator/container/lightmap.js"),
-        'house.distribution': 'left'
+        'house.distribution': 'left',
+        'house.segmentation': 'versions.first'
     }
 };
 
@@ -31,8 +32,9 @@ var illustrator = new Illustrator(model, options);
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
 illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
+illustrator.addRule(require('./illustrator/rules/apply-first-appearance.js')());
 
-var versionToDraw = model.versions[0];
+var versionToDraw = model.versions[1];
 var illustration = illustrator.draw(versionToDraw);
 
 /* Step 3: Draw the Illustration

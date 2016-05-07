@@ -24,9 +24,9 @@ class ZooModel extends BaseModel {
         tree.find('monkeys').add('callitrichidae');
         tree.find('callitrichidae').add('marmoset');
         tree.find('callitrichidae').add('tamarin');
-        tree.find('monkeys').add('cebidae');
-        tree.find('cebidae').add('squirrelmonkey');
-        tree.find('cebidae').add('capuchin');
+        tree.find('monkeys').add('cebidae ');
+        tree.find('cebidae ').add('squirrelmonkey');
+        tree.find('cebidae ').add('capuchin');
         tree.find('monkeys').add('chimp');
         tree.find('monkeys').add('macaque');
         tree.find('monkeys').add('orangutan');
@@ -159,8 +159,16 @@ class ZooModel extends BaseModel {
      * @return {boolean}
      */
     exists(node, version) {
-        // Since Reptiles were acquired later, they are first available on opening day
+        // In Alpha-Version, some animals were missing
         if (String(version) === 'alpha') {
+
+            // Only Cats, whose name began with 'a-i' were available
+            var cats = this._tree.find('cats');
+            if (cats && cats.find(node)) {
+                return String(node)[0] <= 'i';
+            }
+
+            // Since Reptiles were acquired later, they are first available on opening day
             var mammals = this._tree.find('mammals');
             return mammals && mammals.find(node) ? true :false;
         }

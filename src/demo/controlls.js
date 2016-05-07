@@ -34,7 +34,7 @@ class Controlls {
         ];
 
         var margins = [];
-        for (var i=0; i<=10; i++) {
+        for (var i=0; i <= 10; i++) {
             margins.push({label: i, key: i});
         }
 
@@ -54,7 +54,7 @@ class Controlls {
 
     appendVersions(v) {
         this.appendHeader('Versions');
-        this.appendSelectBox('version', '', v);
+        this.appendSelectBox('version', '', v, v[v.length - 1]);
     }
 
     appendDrawButton(renderFunction) {
@@ -134,7 +134,7 @@ class Controlls {
         this._controllDiv.appendChild(container);
     }
 
-    appendSelectBox(id, label, contents, defaultValue) {
+    appendSelectBox(id, label, contents, defaultValue = '') {
 
         var s = document.createElement('select');
         s.setAttribute('name', id);
@@ -146,7 +146,7 @@ class Controlls {
             o.setAttribute('value', option.key);
             o.appendChild(document.createTextNode(option.label));
 
-            if (defaultValue === option.key) {
+            if (String(option.key) === String(defaultValue)) {
                 o.setAttribute('selected', true);
             }
 
