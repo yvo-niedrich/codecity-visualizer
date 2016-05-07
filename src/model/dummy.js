@@ -86,8 +86,8 @@ class ZooModel extends BaseModel {
 
         /* Step 3: Create versions */
         this._versions = [
-            new Version('alpha', 'Two Weeks before Opening'),
-            new Version('v1.0',  'Opening Day')
+            new Version('alpha', 'Two Weeks before Opening', 1462060800),
+            new Version('v1.0',  'Opening Day', 1463216400)
         ];
 
         /* Step 4: Create Attributes */
