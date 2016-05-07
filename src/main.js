@@ -32,7 +32,8 @@ var illustrator = new Illustrator(model, options);
 illustrator.addRule(require('./illustrator/rules/loc-to-height.js')());
 illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
-illustrator.addRule(require('./illustrator/rules/apply-first-appearance.js')());
+illustrator.addRule(require('./illustrator/rules/save-first-version.js')());
+illustrator.addRule(require('./illustrator/rules/opacity-if-not-in-version.js')());
 
 var versionToDraw = model.versions[1];
 var illustration = illustrator.draw(versionToDraw);

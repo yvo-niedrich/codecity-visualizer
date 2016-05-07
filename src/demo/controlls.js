@@ -50,6 +50,7 @@ class Controlls {
         this.appendCheckbox('r_loc', 'LOC -> Height', 1);
         this.appendCheckbox('r_edit', 'Changes -> Width', 1);
         this.appendCheckbox('r_pack', 'Package -> Color', 1);
+        this.appendCheckbox('r_opac', 'Existence -> Opacity', 1);
     }
 
     appendVersions(v) {
@@ -68,6 +69,9 @@ class Controlls {
 
         b.addEventListener('click', function(){
             var options = {
+                'house.length': 32,
+                'house.width': 32,
+                'house.height': 26,
                 'house.margin': 4,
                 'evostreet.options' : {
                     'spacer.initial': 20,
@@ -86,9 +90,11 @@ class Controlls {
             if (document.getElementById('l_pack').value === 'light') options['evostreet.options']['house.container'] = require('../illustrator/container/lightmap.js');
 
             var rules = [];
+            rules.push(require('../illustrator/rules/save-first-version.js')());
             if(document.getElementById('r_loc').checked) rules.push(require('../illustrator/rules/loc-to-height.js')());
             if(document.getElementById('r_edit').checked) rules.push(require('../illustrator/rules/editor-to-width.js')());
             if(document.getElementById('r_pack').checked) rules.push(require('../illustrator/rules/package-to-color.js')());
+            if(document.getElementById('r_opac').checked) rules.push(require('../illustrator/rules/opacity-if-not-in-version.js')());
 
             var version = document.getElementById('version').value;
 

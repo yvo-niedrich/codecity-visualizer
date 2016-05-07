@@ -7,7 +7,8 @@ module.exports = function (options = {}) {
         'logarithmic': true,
         'logexp' : 2.75,
         'logsbase' : 3,
-        'factor': 1
+        'factor': 1,
+        'fallback': true
     };
 
     for (var key in defaults) {
@@ -24,7 +25,22 @@ module.exports = function (options = {}) {
             return;
         }
 
-        var attributes = model.attributes(node, version);
+        var attributes = {};
+        if (model.exists(node, version)) {
+            attributes = model.attributes(node, version);
+        } else {
+            if (!options.fallback) {
+                return;
+            }
+
+            for (var v of model.versions) {
+                if (model.exists(node, v)) {
+                    attributes = model.attributes(node, v);
+                    break;
+                }
+            }
+        }
+
         if (!(options.metric in attributes)) {
             return;
         }
