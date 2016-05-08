@@ -17,7 +17,7 @@ module.exports = function (options = {}) {
             return;
         }
 
-        var versions = model.versions;
+        var versions = model.versions,
             result = null;
 
         for(var v of versions) {

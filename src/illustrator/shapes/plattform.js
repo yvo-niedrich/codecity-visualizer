@@ -1,14 +1,14 @@
 var BaseShape = require("./base.js");
 
 /**
- * Draw a House
+ * Draw a Plattform
  * 
  * @implements BaseShape
  */
-class House extends BaseShape {
+class Plattform extends BaseShape {
     constructor(key) {
         super(key);
     };
 }
 
-module.exports = House;
+module.exports = Plattform;

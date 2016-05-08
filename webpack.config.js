@@ -5,8 +5,9 @@ var webpack = require('webpack'),
     plugins = [],
     entries = {};
 
-entries['bundle'] = './src/main.js';
-entries['demo']   = './src/demo.js';
+entries['bundle']  = './src/main.js';
+entries['demo']    = './src/demo.js';
+entries['district'] = './src/district.js';
 
 if (minimize) {
     entries['vendor'] = ['three', 'three-orbit-controls'];

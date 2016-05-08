@@ -2,8 +2,8 @@ var Cuboid = require("../components/cuboid.js");
 var Point   = require("../components/point.js");
 /**
  * All shapes occupy a square area.
- * It's dimensions described by the vector `dimensions`.
- * It can be placed on and rotated around the shapes centroid.
+ * It's dimensions are described by the vector `dimensions`.
+ * It can be placed and rotated around the shapes centroid.
  * 
  * @interface
  */
@@ -128,7 +128,7 @@ class BaseShape {
         this._absolutePosition = new Point(
             parentPosition.x + transformedRelativePosition.x,
             parentPosition.y + transformedRelativePosition.y,
-            transformedRelativePosition.z
+            parentPosition.z + transformedRelativePosition.z
         );
 
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
@@ -157,7 +157,7 @@ class BaseShape {
 
         spatialInformation.dimensions = rotatedDimensions;
         spatialInformation.position = this._absolutePosition;
-        spatialInformation.rotation = this._absolutePosition;
+        spatialInformation.rotation = this._absoluteRotation;
 
         return [ spatialInformation ];
     };
