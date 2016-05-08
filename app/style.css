@@ -1,0 +1,11 @@
+#layout-switcher
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    padding: 5px 10px;
+    background: #fff;
+    border: 1px solid #000;
+    margin: 5px;
+}
