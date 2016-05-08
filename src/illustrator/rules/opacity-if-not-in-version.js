@@ -21,7 +21,6 @@ module.exports = function (options = {}) {
         if(!model.exists(node, version)) {
             var newAttributes = {};
             newAttributes[options.attribute] = options.opacity;
-            console.log(newAttributes)
             return newAttributes;
         }
     };

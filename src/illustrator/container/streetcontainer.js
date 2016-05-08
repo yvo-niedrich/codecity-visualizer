@@ -170,10 +170,10 @@ class StreetContainer extends BaseContainer {
         }
         
         // Place Houses, Segment by Segment
-        for (var bSeg of this._container.houses.segments) {
-            var bKey = String(bSeg),
-                leftHouse = this._container.houses.left[bKey],
-                rightHouse = this._container.houses.right[bKey];
+        for (var hSeg of this._container.houses.segments) {
+            var hKey = String(hSeg),
+                leftHouse = this._container.houses.left[hKey],
+                rightHouse = this._container.houses.right[hKey];
 
             if (leftHouse.size) {
                 leftHouse.position.x = middleOfTheRoad - halfTheRoadLength - leftHouse.centroid.x;
