@@ -1,5 +1,4 @@
 var BaseShape = require("./base.js");
-var Cuboid   = require("../components/cuboid.js");
 
 /**
  * Draw a Street
