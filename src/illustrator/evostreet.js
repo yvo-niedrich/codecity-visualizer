@@ -103,7 +103,6 @@ class Evostreet extends BaseIllustrator {
     };
 
     _createHouse(node, version) {
-
         var defaultLayout = {
             'dimensions.length': this._options['house.length'],
             'dimensions.width': this._options['house.width'],
