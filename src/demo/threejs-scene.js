@@ -62,7 +62,8 @@ class Renderer {
         var defaults = {
             position: {x: 0, y: 0, z: 0},
             dimensions: {length: 1, width: 1, height: 1},
-            color: 0x000000
+            color: 0x000000,
+            opacity: 1
         }
 
         for (var attr in element) {
@@ -75,7 +76,9 @@ class Renderer {
             color: 0xffffff,
             emissive: defaults.color,
             side: THREE.DoubleSide,
-            shading: THREE.FlatShading
+            shading: THREE.FlatShading,
+            transparent: true,
+            opacity: defaults.opacity
         });
 
         var cube = new THREE.Mesh( geometry, material );

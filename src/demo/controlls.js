@@ -34,7 +34,7 @@ class Controlls {
         ];
 
         var margins = [];
-        for (var i=0; i<=10; i++) {
+        for (var i=0; i <= 10; i++) {
             margins.push({label: i, key: i});
         }
 
@@ -50,11 +50,12 @@ class Controlls {
         this.appendCheckbox('r_loc', 'LOC -> Height', 1);
         this.appendCheckbox('r_edit', 'Changes -> Width', 1);
         this.appendCheckbox('r_pack', 'Package -> Color', 1);
+        this.appendCheckbox('r_opac', 'Existence -> Opacity', 1);
     }
 
     appendVersions(v) {
         this.appendHeader('Versions');
-        this.appendSelectBox('version', '', v);
+        this.appendSelectBox('version', '', v, v[v.length - 1]);
     }
 
     appendDrawButton(renderFunction) {
@@ -68,6 +69,9 @@ class Controlls {
 
         b.addEventListener('click', function(){
             var options = {
+                'house.length': 32,
+                'house.width': 32,
+                'house.height': 26,
                 'house.margin': 4,
                 'evostreet.options' : {
                     'spacer.initial': 20,
@@ -86,9 +90,11 @@ class Controlls {
             if (document.getElementById('l_pack').value === 'light') options['evostreet.options']['house.container'] = require('../illustrator/container/lightmap.js');
 
             var rules = [];
+            rules.push(require('../illustrator/rules/save-first-version.js')());
             if(document.getElementById('r_loc').checked) rules.push(require('../illustrator/rules/loc-to-height.js')());
             if(document.getElementById('r_edit').checked) rules.push(require('../illustrator/rules/editor-to-width.js')());
             if(document.getElementById('r_pack').checked) rules.push(require('../illustrator/rules/package-to-color.js')());
+            if(document.getElementById('r_opac').checked) rules.push(require('../illustrator/rules/opacity-if-not-in-version.js')());
 
             var version = document.getElementById('version').value;
 
@@ -134,7 +140,7 @@ class Controlls {
         this._controllDiv.appendChild(container);
     }
 
-    appendSelectBox(id, label, contents, defaultValue) {
+    appendSelectBox(id, label, contents, defaultValue = '') {
 
         var s = document.createElement('select');
         s.setAttribute('name', id);
@@ -146,7 +152,7 @@ class Controlls {
             o.setAttribute('value', option.key);
             o.appendChild(document.createTextNode(option.label));
 
-            if (defaultValue === option.key) {
+            if (String(option.key) === String(defaultValue)) {
                 o.setAttribute('selected', true);
             }
 

@@ -25,6 +25,7 @@ class Evostreet extends BaseIllustrator {
 
             'house.length': 16,
             'house.width': 16,
+            'house.height': 16,
             'house.margin': 3,
             'house.color': 0x1A212E,
 
@@ -102,10 +103,10 @@ class Evostreet extends BaseIllustrator {
     };
 
     _createHouse(node, version) {
-
         var defaultLayout = {
             'dimensions.length': this._options['house.length'],
             'dimensions.width': this._options['house.width'],
+            'dimensions.height': this._options['house.height'],
             'margin': this._options['house.margin'],
             'color': this._options['house.color']
         };

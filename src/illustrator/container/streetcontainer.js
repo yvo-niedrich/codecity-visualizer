@@ -18,39 +18,37 @@ class StreetContainer extends BaseContainer {
             'spacer.branches': 10,
             'spacer.terranullius': 20,
             'spacer.conclusive': 0,
+
             'house.container': RowContainer,
             'house.distribution': 'default',
+            'house.segmentation': null,
+            'house.segmentorder': null,
+
             'branch.container': RowContainer,
-            'branch.distribution': 'default'
+            'branch.distribution': 'default',
+            'branch.segmentation': null,
+            'branch.segmentorder': null
         };
 
         for (var i in options) {
             this._options[i] = options[i];
         }
 
-        this._shapes = {
-            'road': null,
-            'houses': [],
-            'branches': []
-        }
-
         this._container = {
+            road: null,
             houses: {
-                left:  new this._options['house.container'](key + '_hl'),
-                right: new this._options['house.container'](key + '_hr', true)
+                segments: [],
+                segmented: {},
+                left: {},
+                right: {}
             },
             branches: {
-                left:  new this._options['branch.container'](key + '_bl'),
-                right: new this._options['branch.container'](key + '_br', true)
+                segments: [],
+                segmented: {},
+                left: {},
+                right: {}
             }
         };
-
-        this._container.houses.left.rotate(-90);
-        this._container.houses.right.rotate(-90);
-        this._container.branches.left.rotate(-90);
-        this._container.branches.right.rotate(-90);
-        this._container.branches.left.separator = this._options['spacer.branches'];
-        this._container.branches.right.separator = this._options['spacer.branches'];
     };
 
     _updateDimensions() {
@@ -60,27 +58,78 @@ class StreetContainer extends BaseContainer {
 
     add(shape) {
         if (shape instanceof StreetContainer) {
-            this._shapes.branches.push(shape);
+            this._addBranch(shape);
         } else if (shape instanceof ShapeHouse) {
-            this._shapes.houses.push(shape);
+            this._addHouse(shape);
         } else if (shape instanceof ShapeStreet) {
-            if (this._shapes.road !== null) {
+            if (this._container.road !== null) {
                 throw 'StreetContainer can only have one road.'
             }
-            this._shapes.road = shape;
+            this._container.road = shape;
         } else {
             throw 'Unknown Shape';
         }
     };
 
+    _addHouse(shape) {
+        var segment, segmentIndex;
+
+        if (this._options['house.segmentation']) {
+            segment = shape.getAttribute(this._options['house.segmentation']);
+        }
+
+        segment = segment !== null ? segment : 'default';
+        segmentIndex = String(segment);
+
+        // TODO: Polyfill
+        // http://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-an-object-in-javascript
+        if (this._container.houses.segments.indexOf(segment) < 0) {
+            this._container.houses.segments.push(segment);
+            this._container.houses.segmented[segmentIndex] = [];
+            this._container.houses.left[segmentIndex]  = new this._options['house.container'](this.key + '_' + segmentIndex + '_hl');
+            this._container.houses.right[segmentIndex] = new this._options['house.container'](this.key + '_' + segmentIndex + '_hr', true);
+            this._container.houses.left[segmentIndex].rotate(-90);
+            this._container.houses.right[segmentIndex].rotate(-90);
+        }
+
+        this._container.houses.segmented[segmentIndex].push(shape);
+    };
+
+    _addBranch(shape) {
+        var segment, segmentIndex;
+
+        if (this._options['branch.segmentation']) {
+            segment = shape.getAttribute(this._options['branch.segmentation']);
+        }
+
+        segment = segment !== null ? segment : 'default';
+        segmentIndex = String(segment);
+
+        // TODO: Polyfill
+        // http://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-an-object-in-javascript
+        if (this._container.branches.segments.indexOf(segment) < 0) {
+            this._container.branches.segments.push(segment);
+            this._container.branches.segmented[segmentIndex] = [];
+            this._container.branches.left[segmentIndex]  = new this._options['branch.container'](this.key + '_' + segmentIndex + '_bl');
+            this._container.branches.right[segmentIndex] = new this._options['branch.container'](this.key + '_' + segmentIndex + '_br', true);
+            this._container.branches.left[segmentIndex].rotate(-90);
+            this._container.branches.right[segmentIndex].rotate(-90);
+            this._container.branches.left[segmentIndex].separator = this._options['spacer.branches'];
+            this._container.branches.right[segmentIndex].separator = this._options['spacer.branches'];
+        }
+
+        this._container.branches.segmented[segmentIndex].push(shape);
+    };
+
     _finalize() {
         super._finalize();
 
-        if (this._shapes.road === null) {
+        if (this._container.road === null) {
             throw 'StreetContainer requires a primary street'
         }
-        var mainRoad = this._shapes.road;
+        var mainRoad = this._container.road;
 
+        this._prepareSegments();
         this._addHousesToStructure();
         this._addBranchesToStructure();
         this._updateDimensions();
@@ -92,56 +141,87 @@ class StreetContainer extends BaseContainer {
         mainRoad.dimensions.width = this.dimensions.width;
         mainRoad.position.x = middleOfTheRoad;
         mainRoad.position.y = 0;
+        super.add(this._container.road);
 
-        if (this._shapes.branches.length) {
-            if (this._container.branches.left.size) {
-                this._container.branches.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.branches.left.centroid.x;
-                this._container.branches.left.position.y = containersBottom + this._container.branches.left.centroid.y;
+        // Place Branches, Segment by Segment
+        for (var bSeg of this._container.branches.segments) {
+            var bKey = String(bSeg),
+                leftBranch = this._container.branches.left[bKey],
+                rightBranch = this._container.branches.right[bKey];
+
+            if (leftBranch.size) {
+                leftBranch.position.x = middleOfTheRoad - halfTheRoadLength - leftBranch.centroid.x;
+                leftBranch.position.y = containersBottom + leftBranch.centroid.y;
+                super.add(leftBranch);
             }
 
-            if (this._container.branches.right.size) {
-                this._container.branches.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.branches.right.centroid.x;
-                this._container.branches.right.position.y = containersBottom + this._container.branches.right.centroid.y;
+            if (rightBranch.size) {
+                rightBranch.position.x = middleOfTheRoad + halfTheRoadLength + rightBranch.centroid.x;
+                rightBranch.position.y = containersBottom + rightBranch.centroid.y;
+                super.add(rightBranch);
             }
 
-            containersBottom += this._getBranchesBlockTotalWidth() + this._options['spacer.terranullius'];
+            containersBottom += Math.max(leftBranch.displayDimensions.width, rightBranch.displayDimensions.width);
         }
 
-        if (this._shapes.houses.length) {
-            if (this._container.houses.left.size) {
-                this._container.houses.left.position.x = middleOfTheRoad - halfTheRoadLength - this._container.houses.left.centroid.x;
-                this._container.houses.left.position.y = containersBottom + this._container.houses.left.centroid.y;
-            }
-
-            if (this._container.houses.right.size) {
-                this._container.houses.right.position.x = middleOfTheRoad + halfTheRoadLength + this._container.houses.right.centroid.x;
-                this._container.houses.right.position.y = containersBottom + this._container.houses.right.centroid.y;
-            }
+        // Add Terra Nullius (if required)
+        if (this._container.branches.segments.length) {
+            containersBottom += this._options['spacer.terranullius'];
         }
+        
+        // Place Houses, Segment by Segment
+        for (var bSeg of this._container.houses.segments) {
+            var bKey = String(bSeg),
+                leftHouse = this._container.houses.left[bKey],
+                rightHouse = this._container.houses.right[bKey];
 
-        super.add(this._shapes.road)
-        super.add(this._container.houses.left)
-        super.add(this._container.houses.right)
-        super.add(this._container.branches.left)
-        super.add(this._container.branches.right)
+            if (leftHouse.size) {
+                leftHouse.position.x = middleOfTheRoad - halfTheRoadLength - leftHouse.centroid.x;
+                leftHouse.position.y = containersBottom + leftHouse.centroid.y;
+                super.add(leftHouse);
+            }
+
+            if (rightHouse.size) {
+                rightHouse.position.x = middleOfTheRoad + halfTheRoadLength + rightHouse.centroid.x;
+                rightHouse.position.y = containersBottom + rightHouse.centroid.y;
+                super.add(rightHouse);
+            }
+
+            containersBottom += Math.max(leftHouse.displayDimensions.width, rightHouse.displayDimensions.width);
+        }
     };
 
+    _prepareSegments() {
+        var houseOrder = typeof this._options['house.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
+        var branchOrder = typeof this._options['branch.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
+        this._container.houses.segments.sort(houseOrder);
+        this._container.branches.segments.sort(branchOrder);
+    }
+
     _addHousesToStructure() {
-        this._distributeShapes(
-            this._shapes.houses,
-            this._options['house.distribution'],
-            this._container.houses.left,
-            this._container.houses.right
-        );
+        for (var segment of this._container.houses.segments) {
+            var key = String(segment);
+
+            this._distributeShapes(
+                this._container.houses.segmented[key],
+                this._options['house.distribution'],
+                this._container.houses.left[key],
+                this._container.houses.right[key]
+            );
+        }
     };
 
     _addBranchesToStructure() {
-        this._distributeShapes(
-            this._shapes.branches,
-            this._options['branch.distribution'],
-            this._container.branches.left,
-            this._container.branches.right
-        );
+        for (var segment of this._container.branches.segments) {
+            var key = String(segment);
+
+            this._distributeShapes(
+                this._container.branches.segmented[key],
+                this._options['branch.distribution'],
+                this._container.branches.left[key],
+                this._container.branches.right[key]
+            );
+        }
     };
 
     _distributeShapes(shapes, method, left, right) {
@@ -200,39 +280,98 @@ class StreetContainer extends BaseContainer {
     };
 
     _getHousesBlockTotalWidth(){
-        return Math.max(
-            this._container.houses.left.displayDimensions.width,
-            this._container.houses.right.displayDimensions.width
-        );
+        var maxLeftHouses = 0,
+            maxRightHouses = 0,
+            tmp;
+
+        for (var l in this._container.houses.left) {
+            tmp = this._container.houses.left[l].displayDimensions.width;
+            if (maxLeftHouses < tmp) {
+                maxLeftHouses = tmp;
+            }
+        }
+
+        for (var r in this._container.houses.right) {
+            tmp = this._container.houses.right[r].displayDimensions.width;
+            if (maxRightHouses < tmp) {
+                maxRightHouses = tmp;
+            }
+        }
+
+        return Math.max(maxLeftHouses, maxRightHouses);
     }
 
     _getBranchesBlockTotalWidth(){
-        return Math.max(
-            this._container.branches.left.displayDimensions.width,
-            this._container.branches.right.displayDimensions.width
-        );
+        var maxLeftBranches = 0,
+            maxRightBranches = 0,
+            tmp;
+
+        for (var l in this._container.branches.left) {
+            tmp = this._container.branches.left[l].displayDimensions.width;
+            if (maxLeftBranches < tmp) {
+                maxLeftBranches = tmp;
+            }
+        }
+
+        for (var r in this._container.branches.right) {
+            tmp = this._container.branches.right[r].displayDimensions.width;
+            if (maxRightBranches < tmp) {
+                maxRightBranches = tmp;
+            }
+        }
+
+        return Math.max(maxLeftBranches, maxRightBranches);
     }
 
     _getContainerLength() {
         var leftLength  = this._getLeftBlockLength();
         var rightLength = this._getRightBlockLength();
         
-        return leftLength + this._shapes.road.displayDimensions.length + rightLength;
+        return leftLength + this._container.road.displayDimensions.length + rightLength;
     };
 
     _getLeftBlockLength() {
-        return Math.max(
-            this._container.houses.left.displayDimensions.length,
-            this._container.branches.left.displayDimensions.length
-        );
+        var maxLeftHouses = 0,
+            maxLeftBranches = 0,
+            tmp;
 
+        for (var h in this._container.houses.left) {
+            tmp = this._container.houses.left[h].displayDimensions.length;
+            if (maxLeftHouses < tmp) {
+                maxLeftHouses = tmp;
+            }
+        }
+
+        for (var b in this._container.branches.left) {
+            tmp = this._container.branches.left[b].displayDimensions.length;
+            if (maxLeftBranches < tmp) {
+                maxLeftBranches = tmp;
+            }
+        }
+
+        return Math.max(maxLeftHouses, maxLeftBranches);
     };
 
     _getRightBlockLength() {
-        return Math.max(
-            this._container.houses.right.displayDimensions.length,
-            this._container.branches.right.displayDimensions.length
-        );
+        var maxRightHouses = 0,
+            maxRightBranches = 0,
+            tmp;
+
+        for (var h in this._container.houses.right) {
+            tmp = this._container.houses.right[h].displayDimensions.length;
+            if (maxRightHouses < tmp) {
+                maxRightHouses = tmp;
+            }
+        }
+
+        for (var b in this._container.branches.right) {
+            tmp = this._container.branches.right[b].displayDimensions.length;
+            if (maxRightBranches < tmp) {
+                maxRightBranches = tmp;
+            }
+        }
+
+        return Math.max(maxRightHouses, maxRightBranches);
     };
 }
 
