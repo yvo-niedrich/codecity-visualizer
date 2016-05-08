@@ -1,7 +1,7 @@
 var BaseContainer     = require("./base.js");
 var LightmapContainer = require("./lightmap.js");
 var ShapeHouse        = require("../shapes/house.js");
-var ShapePlattform    = require("../shapes/plattform.js");
+var ShapePlatform     = require("../shapes/platform.js");
 var Point             = require("../components/point.js");
 
 /**
@@ -17,10 +17,12 @@ class DistrictContainer extends BaseContainer {
             'spacer.margin': 10,
             'spacer.padding': 5,
 
-            'container': LightmapContainer,
-            'container.options': false,
+            'platform.height': 10,
 
-            'houses': LightmapContainer,
+            'district.container': LightmapContainer,
+            'district.options': false,
+
+            'houses.container': LightmapContainer,
             'houses.options': {}
         };
 
@@ -28,9 +30,12 @@ class DistrictContainer extends BaseContainer {
             this._options[i] = options[i];
         }
 
-        this._houses = new this._options['houses'](this.key + '_d', this._options['houses.options']);
-        this._container = new this._options['container'](this.key + '_d', this._options['container.options']);
-        super.add(this._container);
+        this._container = {
+            'houses': new this._options['houses.container'](this.key + '_d', this._options['houses.options']),
+            'districts': new this._options['district.container'](this.key + '_d', this._options['district.options']),
+            'platform': null
+        }
+        super.add(this._container.districts);
     };
 
     _updateDimensions() {
@@ -40,9 +45,15 @@ class DistrictContainer extends BaseContainer {
 
     add(shape) {
         if (shape instanceof BaseContainer) {
-            this._container.add(shape);
+            this._container.districts.add(shape);
         } else if (shape instanceof ShapeHouse) {
-            this._houses.add(shape);
+            this._container.houses.add(shape);
+        } else if (shape instanceof ShapePlatform) {
+            if (this._container.platform !== null) {
+                throw 'StreetContainer can only have one road.'
+            }
+
+            this._container.platform = shape;
         } else {
             throw 'Unbekannter Shape-Typ'
         }
@@ -52,25 +63,35 @@ class DistrictContainer extends BaseContainer {
     _finalize() {
         super._finalize();
 
-        this._container.add(this._houses);
+        this._container.districts.add(this._container.houses);
 
         var padding = 2 * this._options['spacer.padding'];
-        this.dimensions.length = this._container.displayDimensions.length + padding;
-        this.dimensions.width  = this._container.displayDimensions.width + padding;
-        this.dimensions.height  = this._container.displayDimensions.height;
+        this.dimensions.length = this._container.districts.displayDimensions.length + padding;
+        this.dimensions.width  = this._container.districts.displayDimensions.width + padding;
+        this.dimensions.height  = this._container.districts.displayDimensions.height;
 
-        var plattform = new ShapePlattform(this.key + '_p');
-        plattform.dimensions.length = this.dimensions.length;
-        plattform.dimensions.width = this.dimensions.width;
-        plattform.dimensions.height = 10;
-        plattform.position.z = -10;
+        this._createPlatform();
 
         var margin = 2 * this._options['spacer.margin'];
         this.dimensions.length += margin;
         this.dimensions.width  += margin;
-
-        super.add(plattform);
     };
+
+    _createPlatform() {
+        if (!this._container.platform) {
+            this._container.platform = new ShapePlatform(this.key + '_p');
+        }
+
+        this._container.platform.dimensions.length = this.dimensions.length;
+        this._container.platform.dimensions.width = this.dimensions.width;
+        this._container.platform.dimensions.height = this._options['platform.height'];
+        this._container.platform.position.z = -this._options['platform.height'];
+
+        // Lift everything else above the platform
+        this.position.z += this._options['platform.height'];
+
+        super.add(this._container.platform);
+    }
 }
 
 module.exports = DistrictContainer;

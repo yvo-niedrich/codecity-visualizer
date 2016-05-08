@@ -14,16 +14,12 @@ console.clear();
  * - Draw a specific Version of the City
  */
 var options = {
-    'highway.color': 0x186f9a,
-    'street.color': 0x156289,
-    'house.margin': 2,
-    'evostreet.options' : {
-        'spacer.initial': 20,
-        'spacer.conclusive': 0,
-        'spacer.branches': 20,
-        'house.container': require("./illustrator/container/lightmap.js"),
-        'house.distribution': 'left',
-        'house.segmentation': 'versions.first'
+
+    'district.options' : {
+        'spacer.margin': 20,
+        'spacer.padding': 10,
+        // 'district.container': require("./illustrator/container/grid.js"),
+        // 'houses.container': require("./illustrator/container/grid.js")
     }
 };
 
@@ -34,11 +30,13 @@ illustrator.addRule(require('./illustrator/rules/editor-to-width.js')());
 illustrator.addRule(require('./illustrator/rules/package-to-color.js')());
 illustrator.addRule(require('./illustrator/rules/save-first-version.js')());
 illustrator.addRule(require('./illustrator/rules/opacity-if-not-in-version.js')());
+illustrator.addRule(require('./illustrator/rules/lighten-platform-with-level.js')({
+    lighten: 0x202020,
+    maxsteps: 8
+}));
 
 var versionToDraw = model.versions[1];
 var illustration = illustrator.draw(versionToDraw);
-
-console.log(illustration);
 
 
 /* Step 3: Draw the Illustration
