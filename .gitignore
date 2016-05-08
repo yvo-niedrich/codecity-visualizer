@@ -1,8 +1,6 @@
 node_modules
 npm-debug.log
-app/vendor.js
-app/bundle.js
-app/demo.js
+app/*.js
 
 # Windows image file caches
 Thumbs.db
