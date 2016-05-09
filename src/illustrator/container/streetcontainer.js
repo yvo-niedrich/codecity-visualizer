@@ -81,8 +81,6 @@ class StreetContainer extends BaseContainer {
         segment = segment !== null ? segment : 'default';
         segmentIndex = String(segment);
 
-        // TODO: Polyfill
-        // http://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-an-object-in-javascript
         if (this._container.houses.segments.indexOf(segment) < 0) {
             this._container.houses.segments.push(segment);
             this._container.houses.segmented[segmentIndex] = [];
@@ -105,8 +103,6 @@ class StreetContainer extends BaseContainer {
         segment = segment !== null ? segment : 'default';
         segmentIndex = String(segment);
 
-        // TODO: Polyfill
-        // http://stackoverflow.com/questions/237104/how-do-i-check-if-an-array-includes-an-object-in-javascript
         if (this._container.branches.segments.indexOf(segment) < 0) {
             this._container.branches.segments.push(segment);
             this._container.branches.segmented[segmentIndex] = [];
