@@ -14,23 +14,17 @@ module.exports = function (options = {}) {
         options[i] = defaults[i];
     }
 
-
-    function hashCode(str) {
-        var hash = 0;
-        for (var i = 0; i < str.length; i++) {
-           hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return hash;
-    }
-
     return function (node) {
-        // Applies only to classes
+        // Does not apply to classes
         if (!node.children.length) {
             return;
         }
 
         var level = 0;
-        while(node = node.parent) level++;
+        while(node = node.parent) {
+            level++;
+        }
+
         level = Math.min(level, options.maxsteps);
 
         var newAttributes = {};

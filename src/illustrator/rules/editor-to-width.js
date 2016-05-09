@@ -17,27 +17,27 @@ module.exports = function (options = {}) {
         options[key] = defaults[key];
     }
 
+    function getAttributes(node, version, model) {
+        if (!options.fallback || model.exists(node, version)) {
+            return model.attributes(node, version);
+        }
+
+        for (var v of model.versions) {
+            if (model.exists(node, v)) {
+                return model.attributes(node, v);
+            }
+        }
+
+        return {};
+    }
+
     return function (node, version, model) {
         // Applies only to classes
         if (node.children.length) {
             return;
         }
-        var attributes = {};
-        if (model.exists(node, version)) {
-            attributes = model.attributes(node, version);
-        } else {
-            if (!options.fallback) {
-                return;
-            }
 
-            for (var v of model.versions) {
-                if (model.exists(node, v)) {
-                    attributes = model.attributes(node, v);
-                    break;
-                }
-            }
-        }
-
+        var attributes = getAttributes(node, version, model);
         if (!(options.metric in attributes)) {
             return;
         }
