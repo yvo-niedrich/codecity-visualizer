@@ -38,6 +38,8 @@ illustrator.addRule(require('./illustrator/rules/opacity-if-not-in-version.js')(
 var versionToDraw = model.versions[1];
 var illustration = illustrator.draw(versionToDraw);
 
+console.log(illustration);
+
 /* Step 3: Draw the Illustration
  * - Just do it
  */

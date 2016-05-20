@@ -1,21 +1,25 @@
 {
   "name": "code-city-visualizer",
   "version": "0.0.1",
-  "description": "@TODO",
+  "description": "Fully Configurable Code Visualisation Tool",
   "main": "index.js",
+  "author": "Yvo Niedrich",
+  "license": "MIT",
+  "keywords": [
+    "codecity",
+    "visualisation"
+  ],
   "scripts": {
     "build": "webpack --progress --colors --minimize",
     "watch": "webpack --progress --colors --watch",
     "start": "webpack-dev-server --progress --colors --content-base app/",
-    "dev-win": "start http://localhost:8080/webpack-dev-server/bundle & npm run start",
-    "dev-osx": "open http://localhost:8080/webpack-dev-server/bundle & npm run start"
+    "dev-win": "start http://localhost:8080/webpack-dev-server/main & npm run start",
+    "dev-osx": "open http://localhost:8080/webpack-dev-server/main & npm run start"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/Ungolianth/CodeCityVisualizer.git"
   },
-  "author": "Yvo Niedrich",
-  "license": "MIT",
   "dependencies": {
     "webpack": "^1.13.0",
     "babel-core": "^6.7.6",
