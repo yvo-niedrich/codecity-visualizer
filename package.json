@@ -1,6 +1,6 @@
 {
   "name": "codecity-visualizer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fully Configurable Code Visualisation Tool",
   "main": "bundle.js",
   "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
@@ -21,8 +21,7 @@
     "type": "git",
     "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "webpack": "^1.13.0",
     "babel-core": "^6.7.6",
