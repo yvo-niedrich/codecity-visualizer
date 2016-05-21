@@ -1,7 +1,10 @@
 node_modules
-npm-debug.log
-app/*.js
-bundle.js
+*.log
+src/demo*
+src/main.js
+src/district.js
+app/*
+
 
 # Windows image file caches
 Thumbs.db

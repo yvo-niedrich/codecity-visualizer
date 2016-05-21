@@ -33,6 +33,11 @@ module.exports = {
 
     // TODO!
     'rules': {
-        // ....
+        'editor-to-width':             require("./illustrator/rules/editor-to-width.js"),
+        'lighten-platform-with-level': require("./illustrator/rules/lighten-platform-with-level.js"),
+        'loc-to-height':               require("./illustrator/rules/loc-to-height.js"),
+        'opacity-if-not-in-version':   require("./illustrator/rules/opacity-if-not-in-version.js"),
+        'package-to-color':            require("./illustrator/rules/package-to-color.js"),
+        'save-first-version':          require("./illustrator/rules/save-first-version.js")
     }
 }

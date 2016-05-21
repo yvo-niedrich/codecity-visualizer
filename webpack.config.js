@@ -6,12 +6,12 @@ var webpack = require('webpack'),
     entries = {};
 
 entries['bundle']   = './src/index.js';
-entries['main']     = './src/main.js';
-entries['demo']     = './src/demo.js';
-entries['district'] = './src/district.js';
+entries['app/main']     = './src/main.js';
+entries['app/demo']     = './src/demo.js';
+entries['app/district'] = './src/district.js';
 
 if (minimize) {
-    entries['vendor'] = ['three', 'three-orbit-controls'];
+    entries['app/vendor'] = ['three', 'three-orbit-controls'];
     plugins.push(new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename:"vendor.js", minChunks: Infinity}));
     plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
     babel = 'babel';
@@ -20,7 +20,7 @@ if (minimize) {
 module.exports = {
     entry: entries,
     output: {
-        path: __dirname + "/app",
+        path: __dirname,
         filename: "[name].js"
     },
     module: {
