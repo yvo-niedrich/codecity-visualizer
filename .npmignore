@@ -1,5 +1,7 @@
 node_modules
+*.tgz
 *.log
+lib/demo*
 src/demo*
 src/main.js
 src/district.js
