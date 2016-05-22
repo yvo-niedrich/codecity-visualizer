@@ -17,15 +17,15 @@ class Evostreet extends BaseIllustrator {
         this._rules = [];
         this._model = model;
         this._options = {
-            'highway.length': 36,
+            'highway.length': 40,
             'highway.color': 0x156289,
 
-            'street.length': 18,
+            'street.length': 20,
             'street.color': 0x156289,
 
-            'house.length': 16,
-            'house.width': 16,
-            'house.height': 16,
+            'house.length': 12,
+            'house.width': 12,
+            'house.height': 12,
             'house.margin': 3,
             'house.color': 0x1A212E,
 
