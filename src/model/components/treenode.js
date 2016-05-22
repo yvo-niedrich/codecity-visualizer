@@ -8,7 +8,7 @@ class TreeNode {
      * @return {function}     Get a fresh TreeNode-Object
      */
     constructor(key) {
-        this._key       = key;
+        this._key      = key;
         this._children = [];
         this._parent   = null;
     };
@@ -18,20 +18,23 @@ class TreeNode {
      * @return {string}
      */
     toString() {
-        return this._key;
+        return String(this._key);
     };
 
     /**
      * Add a new Child to this node
      * @param {string|function} child Give a key (string) or an already configured node
+     * @return {TreeNode}       returns childnode
      */
     add(child) {
-        if (typeof child !== 'function') {
+        if (!(child instanceof TreeNode)) {
             child = new TreeNode(child);
         }
 
         child.parent = this;
         this._children.push(child);
+
+        return child;
     };
 
     /**
