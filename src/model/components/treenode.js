@@ -11,7 +11,7 @@ class TreeNode {
         this._key      = key;
         this._children = [];
         this._parent   = null;
-    };
+    }
 
     /**
      * Convert Object to String (it's key)
@@ -19,7 +19,7 @@ class TreeNode {
      */
     toString() {
         return String(this._key);
-    };
+    }
 
     /**
      * Add a new Child to this node
@@ -35,7 +35,7 @@ class TreeNode {
         this._children.push(child);
 
         return child;
-    };
+    }
 
     /**
      * Find recursivly finds the node. If it is not part of the tree, return false [depth-first search]
@@ -55,7 +55,7 @@ class TreeNode {
         }
 
         return false;
-    };
+    }
 
     /**
      * Get All children
@@ -63,7 +63,7 @@ class TreeNode {
      */
     get children() {
         return this._children;
-    };
+    }
 
     /**
      * Get this node's parent. Returns null, if none is available 
@@ -71,7 +71,7 @@ class TreeNode {
      */
     get parent() {
         return this._parent;
-    };
+    }
 
     /**
      * Set this node's parent
@@ -79,7 +79,7 @@ class TreeNode {
      */
     set parent(node) {
         this._parent = node;
-    };
+    }
 }
 
 module.exports = TreeNode;

@@ -25,6 +25,11 @@ module.exports = {
     module: {
         loaders: [
             {
+                test: /\.js$/,
+                exclude: [/dist/, /node_modules/],
+                loader: 'jshint'
+            },
+            {
                 test: /src\/.*\.js$/,
                 loader: babel,
                 query: { presets: ['es2015'] }

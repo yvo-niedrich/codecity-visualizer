@@ -12,14 +12,13 @@ class BaseContainer extends BaseShape {
         super(key);
         this._elements = [];
         this._finalized = false;
-    };
-
+    }
 
     /**
      * No more Shapes will be added to the Container. Place the available shapes,
      * and calculate the containers final dimensions
      */
-    _finalize() { };
+    _finalize() { }
 
     /**
      * Add a shape to the container
@@ -27,7 +26,7 @@ class BaseContainer extends BaseShape {
      */
     add(shape) {
         this._elements.push(shape);
-    };
+    }
 
     /**
      * Get the amount of elements, this container will draw
@@ -35,7 +34,7 @@ class BaseContainer extends BaseShape {
      */
     get size() {
         return this._elements.length;
-    };
+    }
 
     /**
      * Get all shapes of this container
@@ -43,7 +42,7 @@ class BaseContainer extends BaseShape {
      */
     get shapes() {
         return this._elements;
-    };
+    }
 
     /**
      * Get the spatial information for container and it's content
@@ -55,7 +54,7 @@ class BaseContainer extends BaseShape {
             result = result.concat(shape.getSpatialInformation());
         }
         return result;
-    };
+    }
 
     /**
      * Draws the container and all of it's shapes (after initiating _finalizeOnce)
@@ -78,7 +77,7 @@ class BaseContainer extends BaseShape {
     get displayDimensions() {
         this._finalizeOnce();
         return super.displayDimensions;
-    };
+    }
 
     /**
      * Will initiate the finalization (if it has not been called already)

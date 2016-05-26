@@ -12,7 +12,7 @@ class MirrorContainer extends BaseContainer {
         super(key);
         this._mirrored = mirror;
         this._separator = 0;
-    };
+    }
 
     add(shape) {
         super.add(shape);
@@ -20,19 +20,19 @@ class MirrorContainer extends BaseContainer {
         if (this._mirrored) {
             shape.rotate(180);
         }
-    };
+    }
 
     get isMirrored() {
         return this._mirrored;
-    };
+    }
 
     set separator(val) {
         this._separator = val;
-    };
+    }
 
     get separator() {
         return this._separator;
-    };
-};
+    }
+}
 
 module.exports = MirrorContainer;

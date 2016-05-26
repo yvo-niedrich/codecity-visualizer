@@ -10,7 +10,7 @@ class RowContainer extends MirrorContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
-    };
+    }
 
     _finalize() {
         super._finalize();
@@ -21,7 +21,7 @@ class RowContainer extends MirrorContainer {
 
         this._calcualteFinalDimensions();
         this._positionShapes();
-    };
+    }
 
     _calcualteFinalDimensions() {
         for (var shape of this.shapes) {
@@ -33,7 +33,7 @@ class RowContainer extends MirrorContainer {
         if (this.shapes.length > 1) {
             this.dimensions.length += (this.shapes.length - 1) * this.separator;
         }
-    };
+    }
 
     _positionShapes() {
         var firstFreePosition = -(this.dimensions.length / 2);
@@ -44,12 +44,12 @@ class RowContainer extends MirrorContainer {
 
             firstFreePosition += shape.displayDimensions.length + this.separator;
         }
-    };
+    }
 
     _alignOnXAxis(shapeWidth) {
         var p = this.isMirrored ? (this.dimensions.width - shapeWidth) : (shapeWidth - this.dimensions.width);
         return p / 2;
-    };
+    }
 }
 
 module.exports = RowContainer;

@@ -3,31 +3,31 @@ class Cuboid {
         this._length = length;
         this._width  = width;
         this._height = height;
-    };
+    }
 
     toString() {
         return `[${this._width} x ${this.length} x ${this.height}]`;
-    };
+    }
 
     set length(length) {
         this._length = length;
-    };
+    }
 
     set width(width) {
         this._width = width;
-    };
+    }
 
     set height(height) {
         this._height = height;
-    };
+    }
 
     get length() {
         return this._length;
-    };
+    }
 
     get width() {
         return this._width;
-    };
+    }
 
     get height() {
         return this._height;

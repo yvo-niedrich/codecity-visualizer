@@ -14,23 +14,23 @@ class Strip {
         if (mirrored) {
             this._container.rotate(180);
         }
-    };
+    }
 
     get container() {
         return this._container;
-    };
+    }
 
     get dimensions() {
         return this._dimensions;
-    };
+    }
 
     get offset() {
         return this._offset;
-    };
+    }
 
     set offset(val) {
         this._offset = val;
-    };
+    }
 
     add(shape) {
         var recommendOffsetRecalculation = this.dimensions.length && this.dimensions.width < shape.displayDimensions.width;
@@ -42,7 +42,7 @@ class Strip {
         this._container.add(shape);
 
         return recommendOffsetRecalculation;
-    };
-};
+    }
+}
 
 module.exports = Strip;

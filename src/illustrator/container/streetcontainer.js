@@ -49,12 +49,12 @@ class StreetContainer extends BaseContainer {
                 right: {}
             }
         };
-    };
+    }
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
         this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
-    };
+    }
 
     add(shape) {
         if (shape instanceof StreetContainer) {
@@ -63,13 +63,13 @@ class StreetContainer extends BaseContainer {
             this._addHouse(shape);
         } else if (shape instanceof ShapeStreet) {
             if (this._container.road !== null) {
-                throw 'StreetContainer can only have one road.'
+                throw 'StreetContainer can only have one road.';
             }
             this._container.road = shape;
         } else {
             throw 'Unknown Shape';
         }
-    };
+    }
 
     _addHouse(shape) {
         var segment, segmentIndex;
@@ -91,7 +91,7 @@ class StreetContainer extends BaseContainer {
         }
 
         this._container.houses.segmented[segmentIndex].push(shape);
-    };
+    }
 
     _addBranch(shape) {
         var segment, segmentIndex;
@@ -115,13 +115,13 @@ class StreetContainer extends BaseContainer {
         }
 
         this._container.branches.segmented[segmentIndex].push(shape);
-    };
+    }
 
     _finalize() {
         super._finalize();
 
         if (this._container.road === null) {
-            throw 'StreetContainer requires a primary street'
+            throw 'StreetContainer requires a primary street';
         }
         var mainRoad = this._container.road;
 
@@ -130,7 +130,7 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
         
-        var containersBottom = this._options['spacer.initial'] - (this.dimensions.width / 2)
+        var containersBottom = this._options['spacer.initial'] - (this.dimensions.width / 2);
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getRightBlockLength() - halfTheRoadLength;
 
@@ -185,7 +185,7 @@ class StreetContainer extends BaseContainer {
 
             containersBottom += Math.max(leftHouse.displayDimensions.width, rightHouse.displayDimensions.width);
         }
-    };
+    }
 
     _prepareSegments() {
         var houseOrder = typeof this._options['house.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
@@ -205,7 +205,7 @@ class StreetContainer extends BaseContainer {
                 this._container.houses.right[key]
             );
         }
-    };
+    }
 
     _addBranchesToStructure() {
         for (var segment of this._container.branches.segments) {
@@ -218,7 +218,7 @@ class StreetContainer extends BaseContainer {
                 this._container.branches.right[key]
             );
         }
-    };
+    }
 
     _distributeShapes(shapes, method, left, right) {
         if (typeof method === 'function') {
@@ -243,7 +243,7 @@ class StreetContainer extends BaseContainer {
         for (var s of shapes) {
             container.add(s);
         }
-    };
+    }
 
     _distributeShapesInDefaultOrder(shapes, left, right) {
         for (var key in shapes) {
@@ -252,7 +252,7 @@ class StreetContainer extends BaseContainer {
                 c.add(shapes[key]);
             }
         }
-    };
+    }
 
     _distributeShapesEquallyByAttribute(shapes, attr, left, right) {
         shapes.sort(function (a, b) { return attr(b) - attr(a); });
@@ -273,7 +273,7 @@ class StreetContainer extends BaseContainer {
         var branchWidth = this._getBranchesBlockTotalWidth();
         var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.terranullius'] : 0;
         return houseWidth + branchWidth + this._options['spacer.initial'] + containerMargin;
-    };
+    }
 
     _getHousesBlockTotalWidth(){
         var maxLeftHouses = 0,
@@ -324,7 +324,7 @@ class StreetContainer extends BaseContainer {
         var rightLength = this._getRightBlockLength();
         
         return leftLength + this._container.road.displayDimensions.length + rightLength;
-    };
+    }
 
     _getLeftBlockLength() {
         var maxLeftHouses = 0,
@@ -346,7 +346,7 @@ class StreetContainer extends BaseContainer {
         }
 
         return Math.max(maxLeftHouses, maxLeftBranches);
-    };
+    }
 
     _getRightBlockLength() {
         var maxRightHouses = 0,
@@ -368,7 +368,7 @@ class StreetContainer extends BaseContainer {
         }
 
         return Math.max(maxRightHouses, maxRightBranches);
-    };
+    }
 }
 
 module.exports = StreetContainer;

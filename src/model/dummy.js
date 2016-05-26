@@ -97,7 +97,7 @@ class ZooModel extends BaseModel {
             this._attributes[String(v)] = {};
             this._createAttributes(this._tree, v);
         }
-    };
+    }
 
     _createAttributes(tree, version) {
         if (!tree.children.length) {
@@ -108,7 +108,7 @@ class ZooModel extends BaseModel {
                     'name': t,
                     'loc' : this._hashString('loc' + t + v) % 687,
                     'editors' : 1 + this._hashString('edit' + t + v) % 14
-                }
+                };
             }
             return;
         }
@@ -121,9 +121,9 @@ class ZooModel extends BaseModel {
     _hashString(str) {
         // https://github.com/darkskyapp/string-hash
         var hash = 17,
-            i    = str.length
+            i    = str.length;
         while(i) {
-            hash = (hash * 11) ^ str.charCodeAt(--i)
+            hash = (hash * 11) ^ str.charCodeAt(--i);
         }
         return hash >>> 0;
     }
@@ -134,7 +134,7 @@ class ZooModel extends BaseModel {
      */
     get graph() {
         return this._graph;
-    };
+    }
 
     /**
      * Get the Structure of the zoo
@@ -142,15 +142,15 @@ class ZooModel extends BaseModel {
      */
     get tree() {
         return this._tree;
-    };
+    }
 
     /**
      * Get the observed Zoo Snapshots
-     * @return {array}
+     * @return {Array}
      */
     get versions() {
         return this._versions;
-    };
+    }
 
     /**
      * Existence Function for Animals on Snapshots
@@ -174,7 +174,7 @@ class ZooModel extends BaseModel {
         }
 
         return true;
-    };
+    }
 
     /**
      * Property function
@@ -186,13 +186,12 @@ class ZooModel extends BaseModel {
         var n = String(node);
         var v = String(version);
 
-        if (!this._attributes[v]
-            || !this._attributes[v][n]) {
+        if (!this._attributes[v] || !this._attributes[v][n]) {
             return {};
         }
 
         return this._attributes[v][n];
-    };
+    }
 }
 
 module.exports = ZooModel;

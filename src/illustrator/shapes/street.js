@@ -8,7 +8,7 @@ var BaseShape = require("./base.js");
 class Street extends BaseShape {
     constructor(key) {
         super(key);
-    };
+    }
 }
 
 module.exports = Street;

@@ -4,25 +4,25 @@
  * @interface
  */
 class BaseSoftwareModel {
-    constructor() {};
+    constructor() {}
 
     /**
      * Get the Models Graph. A List of Objects, connecting `source` and `target`.
      * @return {object}
      */
-    get graph() {};
+    get graph() {}
 
     /**
      * Get the Root-Node of the tree.
      * @return {TreeNode}
      */
-    get tree() {};
+    get tree() {}
 
     /**
      * Get an ordered List of all versions.
      * @return {array<Version>}
      */
-    get versions() {};
+    get versions() {}
 
     /**
      * Existence Function
@@ -30,7 +30,7 @@ class BaseSoftwareModel {
      * @param  {Version}  version Version-Object
      * @return {boolean}
      */
-    exists(node, version) {};
+    exists(node, version) {}
 
     /**
      * Property function
@@ -38,7 +38,7 @@ class BaseSoftwareModel {
      * @param  {Version}  version Version-Object
      * @return {null|object}
      */
-    attributes(node, version) {};
+    attributes(node, version) {}
 }
 
 module.exports = BaseSoftwareModel;

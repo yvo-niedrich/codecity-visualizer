@@ -13,7 +13,7 @@ class Version {
         this._key   = key;
         this._label = label;
         this._value = parseInt(order);
-    };
+    }
 
     /**
      * Convert Object to String (it's key)
@@ -21,7 +21,7 @@ class Version {
      */
     toString() {
         return this._key;
-    };
+    }
 
     /**
      * Value of this version (for comparison)
@@ -37,7 +37,7 @@ class Version {
      */
     get key() {
         return this._key;
-    };
+    }
 
     /**
      * Get this versions Label
@@ -45,7 +45,7 @@ class Version {
      */
     get label() {
         return this._label;
-    };
+    }
 }
 
 module.exports = Version;

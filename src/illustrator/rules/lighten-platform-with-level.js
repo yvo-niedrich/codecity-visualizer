@@ -21,7 +21,8 @@ module.exports = function (options = {}) {
         }
 
         var level = 0;
-        while(node = node.parent) {
+        while(node.parent) {
+            node = node.parent;
             level++;
         }
 

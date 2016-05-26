@@ -22,7 +22,7 @@ class BaseShape {
             rotation: 0,
             margin: 0
         };
-    };
+    }
 
     /**
      * The shapes (and it's associated model nodes) identifier
@@ -30,7 +30,7 @@ class BaseShape {
      */
     get key() {
         return this._key;
-    };
+    }
 
     /**
      * Set the margin for this Shape
@@ -38,7 +38,7 @@ class BaseShape {
      */
     set margin(margin) {
         this._attributes.margin = margin;
-    };
+    }
 
     /**
      * Set the margin for this Shape
@@ -62,7 +62,7 @@ class BaseShape {
      */
     get dimensions() {
         return this._attributes.dimensions;
-    };
+    }
 
     /**
      * Get the shape's qubic cuboidments
@@ -78,7 +78,7 @@ class BaseShape {
             swap ? l : w,
             h
         );
-    };
+    }
 
     /**
      * Get the shapes centroid (with relative rotation)
@@ -89,7 +89,7 @@ class BaseShape {
             this.displayDimensions.length / 2,
             this.displayDimensions.width / 2
         );
-    };
+    }
 
     /**
      * Get the relative rotation
@@ -97,7 +97,7 @@ class BaseShape {
      */
     get rotation() {
         return this._attributes.rotation;
-    };
+    }
 
     /**
      * Rotation the shape around the it's centroid.
@@ -105,11 +105,11 @@ class BaseShape {
      */
     rotate(degrees){
         if (degrees % 90) {
-            throw 'Only 90° rotations allowed'
+            throw 'Only 90° rotations allowed';
         }
 
         this._attributes.rotation = (720 + this.rotation + degrees) % 360;
-    };
+    }
 
     /**
      * Draw the Shape (calculate final absolute position and rotation)
@@ -134,7 +134,7 @@ class BaseShape {
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
 
         this._hasBeenDrawn = true;
-    };
+    }
 
     /**
      * Draw the Shape
@@ -160,7 +160,7 @@ class BaseShape {
         spatialInformation.rotation = this._absoluteRotation;
 
         return [ spatialInformation ];
-    };
+    }
 
     /**
      * Updates the internal Attributes for the SpatialInformation.

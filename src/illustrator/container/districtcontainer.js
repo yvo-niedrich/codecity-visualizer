@@ -34,14 +34,14 @@ class DistrictContainer extends BaseContainer {
             'houses': new this._options['houses.container'](this.key + '_d', this._options['houses.options']),
             'districts': new this._options['district.container'](this.key + '_d', this._options['district.options']),
             'platform': null
-        }
+        };
         super.add(this._container.districts);
-    };
+    }
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
         this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
-    };
+    }
 
     add(shape) {
         if (shape instanceof BaseContainer) {
@@ -50,15 +50,14 @@ class DistrictContainer extends BaseContainer {
             this._container.houses.add(shape);
         } else if (shape instanceof ShapePlatform) {
             if (this._container.platform !== null) {
-                throw 'StreetContainer can only have one road.'
+                throw 'StreetContainer can only have one road.';
             }
 
             this._container.platform = shape;
         } else {
-            throw 'Unbekannter Shape-Typ'
+            throw 'Unbekannter Shape-Typ';
         }
-        
-    };
+    }
 
     _finalize() {
         super._finalize();
@@ -75,7 +74,7 @@ class DistrictContainer extends BaseContainer {
         var margin = 2 * this._options['spacer.margin'];
         this.dimensions.length += margin;
         this.dimensions.width  += margin;
-    };
+    }
 
     _createPlatform() {
         if (!this._container.platform) {

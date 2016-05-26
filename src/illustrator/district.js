@@ -27,16 +27,16 @@ class District extends BaseIllustrator {
 
             'district.container': ShapeContainer,
             'district.options': {},
-        }
+        };
 
         for (var i in options) {
             this._options[i] = options[i];
         }
-    };
+    }
 
     addRule(rule) {
         this._rules.push(rule);
-    };
+    }
 
     draw(version) {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
@@ -68,7 +68,7 @@ class District extends BaseIllustrator {
         }
 
         return container;
-    };
+    }
 
     _createHouse(node, version) {
         var defaultLayout = {
@@ -83,7 +83,7 @@ class District extends BaseIllustrator {
         house.updateAttributes(defaultLayout);
         this._applyRules(node, version, house);
         return house;
-    };
+    }
 
     _createPlatform(node, version) {
         var defaultLayout = {
@@ -94,12 +94,12 @@ class District extends BaseIllustrator {
         platform.updateAttributes(defaultLayout);
         this._applyRules(node, version, platform);
         return platform;
-    };
+    }
 
     _applyRules(node, version, shape) {
         var attributes = {};
         for (var rule of this._rules) {
-            Object.assign(attributes, rule(node, version, this._model))
+            Object.assign(attributes, rule(node, version, this._model));
         }
 
         shape.updateAttributes(attributes);

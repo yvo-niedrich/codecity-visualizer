@@ -19,11 +19,11 @@ class GridContainer extends MirrorContainer {
         this._strips = [];
         this._activeStrip = -1;
         this._optimalAspectRatio = 1.0;
-    };
+    }
 
     add(shape) {
         this._shapes.push(shape);
-    };
+    }
 
     _finalize() {
         super._finalize();
@@ -42,7 +42,7 @@ class GridContainer extends MirrorContainer {
         for (var s of this._strips) {
             super.add(s.container);
         }
-    };
+    }
 
 
     _calculateGrid() {
@@ -83,13 +83,13 @@ class GridContainer extends MirrorContainer {
                 }
             }
         }
-    };
+    }
 
     _createNewStrip() {
         var rowName = this.key + '_r' + this._strips.length;
         this._strips.push(new Strip(rowName, this.isMirrored));
         this._recalculateStripOffsets();
-    };
+    }
 
     _recalculateStripOffsets() {
         var offset = 0;
@@ -116,21 +116,21 @@ class GridContainer extends MirrorContainer {
         this.dimensions.length = d.length;
         this.dimensions.width  = d.width;
         this.dimensions.height = d.height;
-    };
+    }
 
     _positionStrips() {
         for (var strip of this._strips) {
-            strip.container.position.x = (strip.dimensions.length - this.dimensions.length) / 2
+            strip.container.position.x = (strip.dimensions.length - this.dimensions.length) / 2;
             strip.container.position.y = this._calcuateYAxisPosition(strip.offset, strip.dimensions.width);
         }
-    };
+    }
 
     _calcuateYAxisPosition(offset, width) {
         var rowPosOffset = offset + (width / 2);
         var origin = this.dimensions.width / 2;
 
         return this.isMirrored ? (origin - rowPosOffset) : (rowPosOffset - origin);
-    };
-};
+    }
+}
 
 module.exports = GridContainer;

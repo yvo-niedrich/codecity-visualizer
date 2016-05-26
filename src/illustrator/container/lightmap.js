@@ -19,7 +19,7 @@ class Lightmap extends MirrorContainer {
         this._optimalAspectRatio = 1.0;
         this._currentDimensions = null;
         this._cutHorizontal = true;
-    };
+    }
 
     _finalize() {
         super._finalize();
@@ -32,9 +32,9 @@ class Lightmap extends MirrorContainer {
         var shapes = this.shapes;
 
         if (this._cutHorizontal) {
-            shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width});
+            shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width; });
         } else {
-            shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length});
+            shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length; });
         }
         
 
@@ -53,10 +53,9 @@ class Lightmap extends MirrorContainer {
             this._addShapeToTree(s, tree);
         }
 
-
         this._calcualteFinalDimensions();
         this._positionShapes(tree);
-    };
+    }
 
     _addShapeToTree(shape, tree) {
         var shapeDimensions = shape.displayDimensions;
@@ -112,12 +111,12 @@ class Lightmap extends MirrorContainer {
         this._currentDimensions.length = Math.max(winner.origin.x + shapeDimensions.length, this._currentDimensions.length);
         this._currentDimensions.width  = Math.max(winner.origin.y + shapeDimensions.width,  this._currentDimensions.width);
         this._currentDimensions.height = Math.max(winner.origin.z + shapeDimensions.height, this._currentDimensions.height);
-    };
+    }
 
     _calcualteFinalDimensions() {
-        this.dimensions.length = this._currentDimensions.length
-        this.dimensions.width  = this._currentDimensions.width
-        this.dimensions.height = this._currentDimensions.height
+        this.dimensions.length = this._currentDimensions.length;
+        this.dimensions.width  = this._currentDimensions.width;
+        this.dimensions.height = this._currentDimensions.height;
     }
 
     _positionShapes(tree) {
@@ -133,7 +132,7 @@ class Lightmap extends MirrorContainer {
             shape.position.x = node.origin.x + (shape.displayDimensions.length - this.dimensions.length) / 2;
             shape.position.y = this.isMirrored ? (containerYCentroid - relativeYPos) : (relativeYPos - containerYCentroid);
         }
-    };
-};
+    }
+}
 
 module.exports = Lightmap;
