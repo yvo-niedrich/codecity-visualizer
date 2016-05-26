@@ -26,11 +26,12 @@ module.exports = {
         loaders: [
             {
                 test: /\.js$/,
-                exclude: [/dist/, /node_modules/],
+                exclude: /node_modules/,
                 loader: 'jshint'
             },
             {
                 test: /src\/.*\.js$/,
+                exclude: /node_modules/,
                 loader: babel,
                 query: { presets: ['es2015'] }
             }
