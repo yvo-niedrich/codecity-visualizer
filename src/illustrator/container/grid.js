@@ -4,8 +4,6 @@ var Cuboid          = require("../components/cuboid.js");
 
 /**
  * Rows Elements one after the other
- *
- * @todo seperator-attribut!
  * 
  * @implements MirrorContainer
  * @implements BaseContainer
@@ -25,8 +23,8 @@ class GridContainer extends MirrorContainer {
         this._shapes.push(shape);
     }
 
-    _finalize() {
-        super._finalize();
+    finalize() {
+        super.finalize();
         
         if (!this._shapes.length) {
             return;

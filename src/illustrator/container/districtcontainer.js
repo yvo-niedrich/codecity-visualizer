@@ -59,8 +59,8 @@ class DistrictContainer extends BaseContainer {
         }
     }
 
-    _finalize() {
-        super._finalize();
+    finalize() {
+        super.finalize();
 
         this._container.districts.add(this._container.houses);
 

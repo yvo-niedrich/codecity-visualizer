@@ -18,7 +18,7 @@ class BaseContainer extends BaseShape {
      * No more Shapes will be added to the Container. Place the available shapes,
      * and calculate the containers final dimensions
      */
-    _finalize() { }
+    finalize() { }
 
     /**
      * Add a shape to the container
@@ -84,7 +84,7 @@ class BaseContainer extends BaseShape {
      */
     _finalizeOnce() {
         if (!this._finalized) {
-            this._finalize();
+            this.finalize();
         }
 
         this._finalized = true;

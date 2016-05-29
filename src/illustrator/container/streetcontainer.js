@@ -14,8 +14,8 @@ class StreetContainer extends BaseContainer {
     constructor(key, options = {}) {
         super(key);
         this._options = {
-            'spacer.initial': 15,
-            'spacer.branches': 10,
+            'spacer.initial': 20,
+            'spacer.branches': 15,
             'spacer.terranullius': 20,
             'spacer.conclusive': 0,
 
@@ -34,6 +34,9 @@ class StreetContainer extends BaseContainer {
             this._options[i] = options[i];
         }
 
+        this._leftBranchSpacer = 0;
+        this._rightBranchSpacer = 0;
+
         this._container = {
             road: null,
             houses: {
@@ -51,9 +54,12 @@ class StreetContainer extends BaseContainer {
         };
     }
 
-    _updateDimensions() {
-        this.dimensions.length = this._getContainerLength();
-        this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
+    setBranchSpacingLeft(spacing) {
+        this._leftBranchSpacer = spacing;
+    }
+
+    setBranchSpacingRight(spacing) {
+        this._rightBranchSpacer = spacing;
     }
 
     add(shape) {
@@ -110,15 +116,13 @@ class StreetContainer extends BaseContainer {
             this._container.branches.right[segmentIndex] = new this._options['branch.container'](this.key + '_' + segmentIndex + '_br', true);
             this._container.branches.left[segmentIndex].rotate(-90);
             this._container.branches.right[segmentIndex].rotate(-90);
-            this._container.branches.left[segmentIndex].separator = this._options['spacer.branches'];
-            this._container.branches.right[segmentIndex].separator = this._options['spacer.branches'];
         }
 
         this._container.branches.segmented[segmentIndex].push(shape);
     }
 
-    _finalize() {
-        super._finalize();
+    finalize() {
+        super.finalize();
 
         if (this._container.road === null) {
             throw 'StreetContainer requires a primary street';
@@ -187,6 +191,11 @@ class StreetContainer extends BaseContainer {
         }
     }
 
+    _updateDimensions() {
+        this.dimensions.length = this._getContainerLength();
+        this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
+    }
+
     _prepareSegments() {
         var houseOrder = typeof this._options['house.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
         var branchOrder = typeof this._options['branch.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
@@ -208,6 +217,27 @@ class StreetContainer extends BaseContainer {
     }
 
     _addBranchesToStructure() {
+        var branchSpacer = this._options['spacer.branches'],
+            initialLeft = true,
+            initialRight = true;
+
+        var addSpacerLeft = function(s) {
+            if(initialLeft) {
+                initialLeft = false;
+            } else {
+               s.setBranchSpacingLeft(branchSpacer); 
+           }
+        };
+
+        var addSpacerRight = function(s) {
+            if(initialRight) {
+                initialRight = false;
+            } else {
+                s.setBranchSpacingRight(branchSpacer);
+            }
+        };
+
+
         for (var segment of this._container.branches.segments) {
             var key = String(segment);
 
@@ -217,6 +247,9 @@ class StreetContainer extends BaseContainer {
                 this._container.branches.left[key],
                 this._container.branches.right[key]
             );
+
+            this._container.branches.left[key].shapes.forEach(addSpacerLeft);
+            this._container.branches.right[key].shapes.forEach(addSpacerRight);
         }
     }
 
@@ -281,6 +314,10 @@ class StreetContainer extends BaseContainer {
             tmp;
 
         for (var l in this._container.houses.left) {
+            if (!this._container.houses.left.hasOwnProperty(l)) {
+                continue;
+            }
+
             tmp = this._container.houses.left[l].displayDimensions.width;
             if (maxLeftHouses < tmp) {
                 maxLeftHouses = tmp;
@@ -288,6 +325,10 @@ class StreetContainer extends BaseContainer {
         }
 
         for (var r in this._container.houses.right) {
+            if (!this._container.houses.right.hasOwnProperty(r)) {
+                continue;
+            }
+
             tmp = this._container.houses.right[r].displayDimensions.width;
             if (maxRightHouses < tmp) {
                 maxRightHouses = tmp;
@@ -303,6 +344,10 @@ class StreetContainer extends BaseContainer {
             tmp;
 
         for (var l in this._container.branches.left) {
+            if (!this._container.branches.left.hasOwnProperty(l)) {
+                continue;
+            }
+
             tmp = this._container.branches.left[l].displayDimensions.width;
             if (maxLeftBranches < tmp) {
                 maxLeftBranches = tmp;
@@ -310,6 +355,10 @@ class StreetContainer extends BaseContainer {
         }
 
         for (var r in this._container.branches.right) {
+            if (!this._container.branches.right.hasOwnProperty(r)) {
+                continue;
+            }
+
             tmp = this._container.branches.right[r].displayDimensions.width;
             if (maxRightBranches < tmp) {
                 maxRightBranches = tmp;
@@ -332,6 +381,10 @@ class StreetContainer extends BaseContainer {
             tmp;
 
         for (var h in this._container.houses.left) {
+            if (!this._container.houses.left.hasOwnProperty(h)) {
+                continue;
+            }
+
             tmp = this._container.houses.left[h].displayDimensions.length;
             if (maxLeftHouses < tmp) {
                 maxLeftHouses = tmp;
@@ -339,13 +392,17 @@ class StreetContainer extends BaseContainer {
         }
 
         for (var b in this._container.branches.left) {
+            if (!this._container.branches.left.hasOwnProperty(b)) {
+                continue;
+            }
+
             tmp = this._container.branches.left[b].displayDimensions.length;
             if (maxLeftBranches < tmp) {
                 maxLeftBranches = tmp;
             }
         }
 
-        return Math.max(maxLeftHouses, maxLeftBranches);
+        return Math.max(maxLeftHouses, maxLeftBranches) + this._leftBranchSpacer;
     }
 
     _getRightBlockLength() {
@@ -354,6 +411,10 @@ class StreetContainer extends BaseContainer {
             tmp;
 
         for (var h in this._container.houses.right) {
+            if (!this._container.houses.right.hasOwnProperty(h)) {
+                continue;
+            }
+
             tmp = this._container.houses.right[h].displayDimensions.length;
             if (maxRightHouses < tmp) {
                 maxRightHouses = tmp;
@@ -361,13 +422,17 @@ class StreetContainer extends BaseContainer {
         }
 
         for (var b in this._container.branches.right) {
+            if (!this._container.branches.right.hasOwnProperty(b)) {
+                continue;
+            }
+
             tmp = this._container.branches.right[b].displayDimensions.length;
             if (maxRightBranches < tmp) {
                 maxRightBranches = tmp;
             }
         }
 
-        return Math.max(maxRightHouses, maxRightBranches);
+        return Math.max(maxRightHouses, maxRightBranches) + this._rightBranchSpacer;
     }
 }
 

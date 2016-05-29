@@ -5,8 +5,6 @@ var Point           = require("../components/point.js");
 
 /**
  * Rows Elements one after the other
- *
- * @todo seperator-attribut!
  * 
  * @implements MirrorContainer
  * @implements BaseContainer
@@ -21,8 +19,8 @@ class Lightmap extends MirrorContainer {
         this._cutHorizontal = true;
     }
 
-    _finalize() {
-        super._finalize();
+    finalize() {
+        super.finalize();
         
         if (!this.size) {
             return;
