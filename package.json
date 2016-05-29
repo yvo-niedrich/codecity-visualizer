@@ -16,6 +16,7 @@
   "scripts": {
     "build": "npm run lint && babel src --out-dir lib",
     "lint": "jshint src",
+    "publish-patch": "npm run build && npm version patch && npm publish",
     "test": "echo \" No Tests... \" && exit 1"
   },
   "dependencies": {
