@@ -13,6 +13,7 @@
     "type": "git",
     "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
   },
+
   "scripts": {
     "clean": "rimraf lib",
     "lint": "eslint src",
@@ -20,6 +21,7 @@
     "publish-patch": "npm run build && npm version patch && npm publish",
     "test": "echo \" No Tests... \" && exit 1"
   },
+
   "dependencies": {
     "core-js": "^2.4.0"
   },
@@ -30,11 +32,13 @@
     "jasmine": "^2.4.1",
     "rimraf": "latest"
   },
+
   "babel": {
     "presets": [
       "es2015"
     ]
   },
+
   "eslintConfig": {
     "parserOptions": {
       "ecmaVersion": 6,
@@ -45,6 +49,10 @@
       "node": true
     },
     "extends": "eslint:recommended",
-    "rules": {}
+    "rules": {
+      "yoda": ["error", "never", { "exceptRange": true }],
+      "no-eval": "error",
+      "no-self-compare": "error"
+    }
   }
 }
