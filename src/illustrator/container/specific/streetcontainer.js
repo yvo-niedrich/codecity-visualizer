@@ -264,13 +264,13 @@ class StreetContainer extends SpecificContainer {
         }
     }
 
-    _distributeShapesToContainer(shapes, container) {
+    static _distributeShapesToContainer(shapes, container) {
         for (var s of shapes) {
             container.add(s);
         }
     }
 
-    _distributeShapesInDefaultOrder(shapes, left, right) {
+    static _distributeShapesInDefaultOrder(shapes, left, right) {
         for (var key in shapes) {
             if(shapes.hasOwnProperty(key)) {
                 var c = (key%2) ? left : right;
@@ -279,7 +279,7 @@ class StreetContainer extends SpecificContainer {
         }
     }
 
-    _distributeShapesEquallyByAttribute(shapes, attr, left, right) {
+    static _distributeShapesEquallyByAttribute(shapes, attr, left, right) {
         shapes.sort(function (a, b) { return attr(b) - attr(a); });
         var diff = 0;
         for (var s of shapes) {

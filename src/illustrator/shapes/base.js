@@ -34,7 +34,7 @@ class BaseShape {
 
     /**
      * Set the margin for this Shape
-     * @param  {int} margin
+     * @param  {number} margin
      */
     set margin(margin) {
         this._attributes.margin = margin;
@@ -42,7 +42,7 @@ class BaseShape {
 
     /**
      * Set the margin for this Shape
-     * @param  {int} margin
+     * @return {number}
      */
     get margin() {
         return this._attributes.margin;
@@ -101,7 +101,7 @@ class BaseShape {
 
     /**
      * Rotation the shape around the it's centroid.
-     * @param  {int} degrees clockwise rotation
+     * @param {number} degrees clockwise rotation
      */
     rotate(degrees){
         if (degrees % 90) {
@@ -113,8 +113,8 @@ class BaseShape {
 
     /**
      * Draw the Shape (calculate final absolute position and rotation)
-     * @param  {Point} parentPosition
-     * @param  {int}   parentRotation [description]
+     * @param  {Point}  parentPosition
+     * @param  {number} parentRotation [description]
      */
     draw(parentPosition, parentRotation) {
         var a = (720 - parentRotation) % 360;

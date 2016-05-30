@@ -2,7 +2,7 @@ var Row    = require("../universal/row.js");
 var Cuboid = require("../../components/cuboid.js");
 
 /**
- * Strip is a helperclass for the GRID-Algorithm. 
+ * Strip is a helper class for the GRID-Algorithm. 
  * It's contents shall not be shared. with other classes.
  */
 class Strip {

@@ -58,8 +58,8 @@ class DistrictContainer extends SpecificContainer {
         this._createPlatform();
 
         var margin = 2 * this.getOption('spacer.margin');
-        this.dimensions.length += margin;
-        this.dimensions.width  += margin;
+        this.dimensions.length = margin + this.dimensions.length;
+        this.dimensions.width  = margin + this.dimensions.width;
     }
 
     _createPlatform() {
@@ -73,7 +73,7 @@ class DistrictContainer extends SpecificContainer {
         // Lift everything else above the platform
         var platformHeight = this._container.platform.dimensions.height;
         this._container.platform.position.z = -platformHeight;
-        this.position.z += platformHeight;
+        this.position.z = platformHeight + this.position.z;
 
         super.add(this._container.platform);
     }

@@ -63,7 +63,7 @@ model.attributes(node2, version2); // Returns an Attribute Object
 
 
 # Model Extension in CCV
-```
+```JS
 @TODO
  * Liste für Messungen/Attribute + Label
  * Welche Messungen/Attribute sind Pflicht?

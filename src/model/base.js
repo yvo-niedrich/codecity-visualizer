@@ -22,13 +22,13 @@ class BaseSoftwareModel {
 
     /**
      * Get an ordered List of all versions.
-     * @return {array<Version>}
+     * @return {Array<Version>}
      */
     get versions() {}
 
     /**
      * Existence Function
-     * @param  {Treenode} node    Node-Object
+     * @param  {TreeNode} node    Node-Object
      * @param  {Version}  version Version-Object
      * @return {boolean}
      */
@@ -36,9 +36,9 @@ class BaseSoftwareModel {
 
     /**
      * Property function
-     * @param  {Treenode} node    Node-Object
+     * @param  {TreeNode} node    Node-Object
      * @param  {Version}  version Version-Object
-     * @return {null|object}
+     * @return {null|Object}
      */
     attributes(node, version) {}
 }

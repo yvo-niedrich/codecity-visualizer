@@ -3,9 +3,6 @@ var BaseShape = require("../shapes/base.js");
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
  * The container will automaticly finalize, once it is drawn or it's dimensions are requested.
- * 
- * @implements BaseShape
- * @interface
  */
 class BaseContainer extends BaseShape {
     constructor(key) {
@@ -58,8 +55,8 @@ class BaseContainer extends BaseShape {
 
     /**
      * Draws the container and all of it's shapes (after initiating _finalizeOnce)
-     * @param  {Point} parentPosition
-     * @param  {int}   parentRotation
+     * @param  {Point}  parentPosition
+     * @param  {number} parentRotation
      */
     draw(parentPosition, parentRotation) {
         this._finalizeOnce();
