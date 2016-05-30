@@ -1,15 +1,11 @@
-var MirrorContainer = require("./base-mirror.js");
-var Strip           = require("./helper/strip.js");
-var Cuboid          = require("../components/cuboid.js");
+var UniversalContainer = require("../base-universal.js");
+var Strip              = require("../helper/strip.js");
+var Cuboid             = require("../../components/cuboid.js");
 
 /**
  * Rows Elements one after the other
- * 
- * @implements MirrorContainer
- * @implements BaseContainer
- * @implements BaseShape
  */
-class GridContainer extends MirrorContainer {
+class GridContainer extends UniversalContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);

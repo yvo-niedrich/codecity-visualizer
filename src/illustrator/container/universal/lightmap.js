@@ -1,16 +1,12 @@
-var MirrorContainer = require("./base-mirror.js");
-var Lighttree       = require("./helper/lighttree.js");
-var Cuboid          = require("../components/cuboid.js");
-var Point           = require("../components/point.js");
+var UniversalContainer = require("../base-universal.js");
+var LightmapTree       = require("../helper/lighttree.js");
+var Cuboid             = require("../../components/cuboid.js");
+var Point              = require("../../components/point.js");
 
 /**
  * Rows Elements one after the other
- * 
- * @implements MirrorContainer
- * @implements BaseContainer
- * @implements BaseShape
  */
-class Lightmap extends MirrorContainer {
+class Lightmap extends UniversalContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
@@ -45,13 +41,13 @@ class Lightmap extends MirrorContainer {
             worstDimensions.height = Math.max(shape.displayDimensions.height, worstDimensions.height);
         }
 
-        var tree = new Lighttree(origin, worstDimensions);
+        var tree = new LightmapTree(origin, worstDimensions);
 
         for (var s of this.shapes) {
             this._addShapeToTree(s, tree);
         }
 
-        this._calcualteFinalDimensions();
+        this._calculateFinalDimensions();
         this._positionShapes(tree);
     }
 
@@ -111,7 +107,7 @@ class Lightmap extends MirrorContainer {
         this._currentDimensions.height = Math.max(winner.origin.z + shapeDimensions.height, this._currentDimensions.height);
     }
 
-    _calcualteFinalDimensions() {
+    _calculateFinalDimensions() {
         this.dimensions.length = this._currentDimensions.length;
         this.dimensions.width  = this._currentDimensions.width;
         this.dimensions.height = this._currentDimensions.height;

@@ -4,8 +4,8 @@
 class TreeNode {
     /**
      * Create a new TreeNode
-     * @param  {string}   key Identifier for this node
-     * @return {function}     Get a fresh TreeNode-Object
+     * @param  {String}   key Identifier for this node
+     * @return {TreeNode}     Get a fresh TreeNode-Object
      */
     constructor(key) {
         this._key      = key;
@@ -15,7 +15,7 @@ class TreeNode {
 
     /**
      * Convert Object to String (it's key)
-     * @return {string}
+     * @return {String}
      */
     toString() {
         return String(this._key);
@@ -23,8 +23,8 @@ class TreeNode {
 
     /**
      * Add a new Child to this node
-     * @param {string|function} child Give a key (string) or an already configured node
-     * @return {TreeNode}       returns childnode
+     * @param  {string|TreeNode} child Give a key (string) or an already configured node
+     * @return {TreeNode}        returns the newly created child
      */
     add(child) {
         if (!(child instanceof TreeNode)) {
@@ -38,9 +38,9 @@ class TreeNode {
     }
 
     /**
-     * Find recursivly finds the node. If it is not part of the tree, return false [depth-first search]
+     * Find recursively finds the node. If it is not part of the tree, return false [depth-first search]
      * @param  {string} key Item to find
-     * @return {boolean|function}
+     * @return {boolean|TreeNode}
      */
     find(key) {
         if (this._key == key) {
@@ -67,7 +67,7 @@ class TreeNode {
 
     /**
      * Get this node's parent. Returns null, if none is available 
-     * @return {function|null}
+     * @return {TreeNode}
      */
     get parent() {
         return this._parent;
@@ -75,7 +75,7 @@ class TreeNode {
 
     /**
      * Set this node's parent
-     * @param  {function} node
+     * @param  {TreeNode} node
      */
     set parent(node) {
         this._parent = node;

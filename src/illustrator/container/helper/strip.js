@@ -1,4 +1,4 @@
-var Row    = require("../row.js");
+var Row    = require("../universal/row.js");
 var Cuboid = require("../../components/cuboid.js");
 
 /**

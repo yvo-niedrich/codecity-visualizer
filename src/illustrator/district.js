@@ -3,7 +3,7 @@ var Point           = require("./components/point.js");
 var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./shapes/house.js");
 var ShapePlatform   = require("./shapes/platform.js");
-var ShapeContainer  = require("./container/districtcontainer.js");
+var ShapeContainer  = require("./container/specific/districtcontainer.js");
 
 /**
  * Create an evostreet city
@@ -26,7 +26,7 @@ class District extends BaseIllustrator {
             'platform.color': 0x000000,
 
             'district.container': ShapeContainer,
-            'district.options': {},
+            'district.options': {}
         };
 
         for (var i in options) {

@@ -1,19 +1,15 @@
-var BaseContainer = require("./base.js");
-var RowContainer  = require("./row.js");
-var ShapeHouse    = require("../shapes/house.js");
-var ShapeStreet   = require("../shapes/street.js");
-var Point         = require("../components/point.js");
+var SpecificContainer = require("./../base-specific.js");
+var RowContainer      = require("./../universal/row.js");
+var ShapeHouse        = require("../../shapes/house.js");
+var ShapeStreet       = require("../../shapes/street.js");
 
 /**
- * Create an evostreet city
- * 
- * @implements BaseContainer
- * @implements BaseShape
+ * Create an Evostreet Layout City Container
  */
-class StreetContainer extends BaseContainer {
+class StreetContainer extends SpecificContainer {
     constructor(key, options = {}) {
-        super(key);
-        this._options = {
+        super(key, options);
+        this.defaults = {
             'spacer.initial': 20,
             'spacer.branches': 15,
             'spacer.terranullius': 20,
@@ -29,10 +25,6 @@ class StreetContainer extends BaseContainer {
             'branch.segmentation': null,
             'branch.segmentorder': null
         };
-
-        for (var i in options) {
-            this._options[i] = options[i];
-        }
 
         this._leftBranchSpacer = 0;
         this._rightBranchSpacer = 0;
@@ -80,18 +72,18 @@ class StreetContainer extends BaseContainer {
     _addHouse(shape) {
         var segment, segmentIndex;
 
-        if (this._options['house.segmentation']) {
-            segment = shape.getAttribute(this._options['house.segmentation']);
+        if (this.getOption('house.segmentation')) {
+            segment = shape.getAttribute(this.getOption('house.segmentation'));
         }
 
-        segment = segment !== null ? segment : 'default';
+        segment = segment != null ? segment : 'default';
         segmentIndex = String(segment);
 
         if (this._container.houses.segments.indexOf(segment) < 0) {
             this._container.houses.segments.push(segment);
             this._container.houses.segmented[segmentIndex] = [];
-            this._container.houses.left[segmentIndex]  = new this._options['house.container'](this.key + '_' + segmentIndex + '_hl');
-            this._container.houses.right[segmentIndex] = new this._options['house.container'](this.key + '_' + segmentIndex + '_hr', true);
+            this._container.houses.left[segmentIndex]  = new (this.getOption('house.container'))(this.key + '_' + segmentIndex + '_hl');
+            this._container.houses.right[segmentIndex] = new (this.getOption('house.container'))(this.key + '_' + segmentIndex + '_hr', true);
             this._container.houses.left[segmentIndex].rotate(-90);
             this._container.houses.right[segmentIndex].rotate(-90);
         }
@@ -102,18 +94,18 @@ class StreetContainer extends BaseContainer {
     _addBranch(shape) {
         var segment, segmentIndex;
 
-        if (this._options['branch.segmentation']) {
-            segment = shape.getAttribute(this._options['branch.segmentation']);
+        if (this.getOption('branch.segmentation')) {
+            segment = shape.getAttribute(this.getOption('branch.segmentation'));
         }
 
-        segment = segment !== null ? segment : 'default';
+        segment = segment != null ? segment : 'default';
         segmentIndex = String(segment);
 
         if (this._container.branches.segments.indexOf(segment) < 0) {
             this._container.branches.segments.push(segment);
             this._container.branches.segmented[segmentIndex] = [];
-            this._container.branches.left[segmentIndex]  = new this._options['branch.container'](this.key + '_' + segmentIndex + '_bl');
-            this._container.branches.right[segmentIndex] = new this._options['branch.container'](this.key + '_' + segmentIndex + '_br', true);
+            this._container.branches.left[segmentIndex]  = new (this.getOption('branch.container'))(this.key + '_' + segmentIndex + '_bl');
+            this._container.branches.right[segmentIndex] = new (this.getOption('branch.container'))(this.key + '_' + segmentIndex + '_br', true);
             this._container.branches.left[segmentIndex].rotate(-90);
             this._container.branches.right[segmentIndex].rotate(-90);
         }
@@ -134,7 +126,7 @@ class StreetContainer extends BaseContainer {
         this._addBranchesToStructure();
         this._updateDimensions();
         
-        var containersBottom = this._options['spacer.initial'] - (this.dimensions.width / 2);
+        var containersBottom = this.getOption('spacer.initial') - (this.dimensions.width / 2);
         var halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         var middleOfTheRoad = (this.dimensions.length / 2) - this._getRightBlockLength() - halfTheRoadLength;
 
@@ -166,7 +158,7 @@ class StreetContainer extends BaseContainer {
 
         // Add Terra Nullius (if required)
         if (this._container.branches.segments.length) {
-            containersBottom += this._options['spacer.terranullius'];
+            containersBottom += this.getOption('spacer.terranullius');
         }
         
         // Place Houses, Segment by Segment
@@ -193,12 +185,12 @@ class StreetContainer extends BaseContainer {
 
     _updateDimensions() {
         this.dimensions.length = this._getContainerLength();
-        this.dimensions.width  = this._getContainerWidth() + this._options['spacer.conclusive'];
+        this.dimensions.width  = this._getContainerWidth() + this.getOption('spacer.conclusive');
     }
 
     _prepareSegments() {
-        var houseOrder = typeof this._options['house.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
-        var branchOrder = typeof this._options['branch.segmentorder'] === 'function' ? this._options['branch.segmentorder'] : function(a, b) {return a - b; };
+        var houseOrder = typeof this.getOption('house.segmentorder') === 'function' ? this.getOption('branch.segmentorder') : function(a, b) {return a - b; };
+        var branchOrder = typeof this.getOption('branch.segmentorder') === 'function' ? this.getOption('branch.segmentorder') : function(a, b) {return a - b; };
         this._container.houses.segments.sort(houseOrder);
         this._container.branches.segments.sort(branchOrder);
     }
@@ -209,7 +201,7 @@ class StreetContainer extends BaseContainer {
 
             this._distributeShapes(
                 this._container.houses.segmented[key],
-                this._options['house.distribution'],
+                this.getOption('house.distribution'),
                 this._container.houses.left[key],
                 this._container.houses.right[key]
             );
@@ -217,7 +209,7 @@ class StreetContainer extends BaseContainer {
     }
 
     _addBranchesToStructure() {
-        var branchSpacer = this._options['spacer.branches'],
+        var branchSpacer = this.getOption('spacer.branches'),
             initialLeft = true,
             initialRight = true;
 
@@ -243,7 +235,7 @@ class StreetContainer extends BaseContainer {
 
             this._distributeShapes(
                 this._container.branches.segmented[key],
-                this._options['branch.distribution'],
+                this.getOption('branch.distribution'),
                 this._container.branches.left[key],
                 this._container.branches.right[key]
             );
@@ -304,8 +296,8 @@ class StreetContainer extends BaseContainer {
     _getContainerWidth() {
         var houseWidth = this._getHousesBlockTotalWidth();
         var branchWidth = this._getBranchesBlockTotalWidth();
-        var containerMargin = (branchWidth && houseWidth) ? this._options['spacer.terranullius'] : 0;
-        return houseWidth + branchWidth + this._options['spacer.initial'] + containerMargin;
+        var containerMargin = (branchWidth && houseWidth) ? this.getOption('spacer.terranullius') : 0;
+        return houseWidth + branchWidth + this.getOption('spacer.initial') + containerMargin;
     }
 
     _getHousesBlockTotalWidth(){

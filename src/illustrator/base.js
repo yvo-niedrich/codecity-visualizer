@@ -1,7 +1,7 @@
+/* eslint no-unused-vars: "off" */
+
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
- * 
- * @interface
  */
 class BaseIllustrator {
     /**

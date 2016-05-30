@@ -4,20 +4,23 @@
 // * Chrome 50
 // * Firefox 45
 
-var requiredPolyfills = [
-    function() { require('core-js/fn/set'); },
-    function() { require('core-js/fn/array/index-of.js'); },
-    function() { require('core-js/fn/object/get-own-property-descriptor.js'); },
-    function() { require('core-js/fn/object/get-own-property-descriptors.js'); },
-    function() { require('core-js/fn/object/get-own-property-names.js'); },
-    function() { require('core-js/fn/object/get-own-property-symbols.js'); }
-];
+var requiredPolyfill = [];
 
-for (var poly of requiredPolyfills) {
+var isBrowser = new Function("try {return this===window;}catch(e){ return false;}");
+if (isBrowser()) {
+    requiredPolyfill.push(function() { require('core-js/fn/set'); });
+    requiredPolyfill.push(function() { require('core-js/fn/array/index-of.js'); });
+    requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-descriptor.js'); });
+    requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-descriptors.js'); });
+    requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-names.js'); });
+    requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-symbols.js'); });
+}
+
+for (var poly of requiredPolyfill) {
     try {
         poly();
     } catch (err) {
-        console.log('Could not load polyfill: ' + poly);
-        console.log(err);
+        // Assume you did your best,
+        // but you encountered IE
     }
 }

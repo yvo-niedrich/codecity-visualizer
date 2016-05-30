@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: "off" */
+
 /**
  * This is what a SoftwareModel has to look like
  * 

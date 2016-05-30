@@ -3,7 +3,7 @@ var Point           = require("./components/point.js");
 var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
-var ShapeContainer  = require("./container/streetcontainer.js");
+var ShapeContainer  = require("./container/specific/streetcontainer.js");
 
 /**
  * Create an evostreet city
@@ -30,7 +30,7 @@ class Evostreet extends BaseIllustrator {
             'house.color': 0x1A212E,
 
             'evostreet.container': ShapeContainer,
-            'evostreet.options': {},
+            'evostreet.options': {}
         };
 
         for (var i in options) {

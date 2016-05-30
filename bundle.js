@@ -19,10 +19,10 @@ module.exports = {
     },
 
     'containers': {
-        'base':     require("./lib/illustrator/container/base.js"),
-        'row':      require("./lib/illustrator/container/row.js"),
-        'lightmap': require("./lib/illustrator/container/lightmap.js"),
-        'grid':     require("./lib/illustrator/container/grid.js")
+        'base':     require("./lib/illustrator/container/base-universal.js"),
+        'row':      require("./lib/illustrator/container/universal/row.js"),
+        'lightmap': require("./lib/illustrator/container/universal/lightmap.js"),
+        'grid':     require("./lib/illustrator/container/universal/grid.js")
     },
 
     // TODO: Brauche ich wirklich Shapes???

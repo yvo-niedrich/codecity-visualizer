@@ -1,12 +1,8 @@
-var MirrorContainer = require("./base-mirror.js");
+var UniversalContainer = require("../base-universal.js");
 /**
  * Rows Elements one after the other
- * 
- * @implements MirrorContainer
- * @implements BaseContainer
- * @implements BaseShape
  */
-class RowContainer extends MirrorContainer {
+class RowContainer extends UniversalContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
@@ -19,11 +15,11 @@ class RowContainer extends MirrorContainer {
             return;
         }
 
-        this._calcualteFinalDimensions();
+        this._calculateFinalDimensions();
         this._positionShapes();
     }
 
-    _calcualteFinalDimensions() {
+    _calculateFinalDimensions() {
         for (var shape of this.shapes) {
             this.dimensions.length += shape.displayDimensions.length;
             this.dimensions.width   = Math.max(shape.displayDimensions.width, this.dimensions.width);
