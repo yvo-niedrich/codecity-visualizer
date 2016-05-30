@@ -1,8 +1,8 @@
 node_modules
 *.tgz
 *.log
-app/*
 *.bat
+*.png
 
 # IDE
 .idea
