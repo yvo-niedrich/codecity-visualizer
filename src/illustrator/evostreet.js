@@ -7,8 +7,6 @@ var ShapeContainer  = require("./container/specific/streetcontainer.js");
 
 /**
  * Create an evostreet city
- *
- * @implements BaseIllustrator
  */
 class Evostreet extends BaseIllustrator {
     constructor(model, options = {}) {

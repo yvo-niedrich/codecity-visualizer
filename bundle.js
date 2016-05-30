@@ -15,7 +15,7 @@ module.exports = {
     'illustrators': {
         'base':      require("./lib/illustrator/base.js"),
         'evostreet': require("./lib/illustrator/evostreet.js"),
-        'districts': require("./lib/illustrator/district.js")
+        'district': require("./lib/illustrator/district.js")
     },
 
     'containers': {
@@ -25,7 +25,6 @@ module.exports = {
         'grid':     require("./lib/illustrator/container/universal/grid.js")
     },
 
-    // TODO: Brauche ich wirklich Shapes???
     'shapes': {
         'base':     require("./lib/illustrator/shapes/base.js"),
         'house':    require("./lib/illustrator/shapes/house.js"),

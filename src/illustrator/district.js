@@ -6,9 +6,7 @@ var ShapePlatform   = require("./shapes/platform.js");
 var ShapeContainer  = require("./container/specific/districtcontainer.js");
 
 /**
- * Create an evostreet city
- *
- * @implements BaseIllustrator
+ * Create an District Layout City
  */
 class District extends BaseIllustrator {
     constructor(model, options = {}) {
@@ -17,12 +15,13 @@ class District extends BaseIllustrator {
         this._rules = [];
         this._model = model;
         this._options = {
-            'house.length': 16,
-            'house.width': 16,
-            'house.height': 16,
+            'house.length': 12,
+            'house.width': 12,
+            'house.height': 12,
             'house.margin': 3,
             'house.color': 0x1A212E,
 
+            'platform.height': 10,
             'platform.color': 0x000000,
 
             'district.container': ShapeContainer,
@@ -87,7 +86,8 @@ class District extends BaseIllustrator {
 
     _createPlatform(node, version) {
         var defaultLayout = {
-            'color': this._options['platform.color']
+            'color': this._options['platform.color'],
+            'dimensions.height': this._options['platform.height']
         };
 
         var platform = new ShapePlatform(this.key + '_p');

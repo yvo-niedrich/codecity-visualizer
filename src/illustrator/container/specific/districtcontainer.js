@@ -14,13 +14,11 @@ class DistrictContainer extends SpecificContainer {
             'spacer.margin': 10,
             'spacer.padding': 5,
 
-            'platform.height': 10,
-
             'district.container': LightmapContainer,
             'district.options': false,
 
             'houses.container': LightmapContainer,
-            'houses.options': {}
+            'houses.options': false
         };
 
         this._container = {
@@ -38,7 +36,7 @@ class DistrictContainer extends SpecificContainer {
             this._container.houses.add(shape);
         } else if (shape instanceof ShapePlatform) {
             if (this._container.platform !== null) {
-                throw 'StreetContainer can only have one road.';
+                throw 'DistrictContainer can only have one platform.';
             }
 
             this._container.platform = shape;
@@ -71,11 +69,11 @@ class DistrictContainer extends SpecificContainer {
 
         this._container.platform.dimensions.length = this.dimensions.length;
         this._container.platform.dimensions.width = this.dimensions.width;
-        this._container.platform.dimensions.height = this.getOption('platform.height');
-        this._container.platform.position.z = -this.getOption('platform.height');
 
         // Lift everything else above the platform
-        this.position.z += this.getOption('platform.height');
+        var platformHeight = this._container.platform.dimensions.height;
+        this._container.platform.position.z = -platformHeight;
+        this.position.z += platformHeight;
 
         super.add(this._container.platform);
     }

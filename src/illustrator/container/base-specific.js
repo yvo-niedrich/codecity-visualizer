@@ -1,7 +1,8 @@
 var BaseContainer = require("./base.js");
 
 /**
- * TODO: Containers are able to mirror the placement algorithm on the X-Axis.
+ * These containers are use for specific Layout Algorithms.
+ * They implement a basic interface for setting and getting options
  */
 class SpecificContainer extends BaseContainer {
 
