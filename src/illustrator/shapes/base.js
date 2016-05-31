@@ -3,7 +3,7 @@ var Point   = require("../components/point.js");
 /**
  * All shapes occupy a square area.
  * It's dimensions are described by the vector `dimensions`.
- * It can be placed and rotated around the shapes centroid.
+ * It can be placed and rotated around the shape's centroid.
  */
 class BaseShape {
     constructor(key) {
@@ -23,7 +23,7 @@ class BaseShape {
     }
 
     /**
-     * The shapes (and it's associated model nodes) identifier
+     * The shape's (and it's associated model node's) identifier
      * @return {String}
      */
     get key() {
@@ -31,7 +31,7 @@ class BaseShape {
     }
 
     /**
-     * Set the margin for this Shape
+     * Set the margin for this shape
      * @param  {number} margin
      */
     set margin(margin) {
@@ -39,7 +39,7 @@ class BaseShape {
     }
 
     /**
-     * Set the margin for this Shape
+     * Set the margin for this shape
      * @return {number}
      */
     get margin() {
@@ -47,7 +47,7 @@ class BaseShape {
     }
 
     /**
-     * Get this shapes position, relative to it's parents centroid
+     * Get this shapes position, relative to it's parent's centroid
      * @return {Point}
      */
     get position() {
@@ -55,7 +55,7 @@ class BaseShape {
     }
 
     /**
-     * Get the Shape's qubic cuboidments (before any rotation)
+     * Get the shape's qubic footprint (before any rotation)
      * @return {Cuboid}
      */
     get dimensions() {
@@ -63,7 +63,7 @@ class BaseShape {
     }
 
     /**
-     * Get the shape's qubic cuboidments
+     * Get the shape's qubic footprint (after any possible relative rotations)
      * @return {Cuboid}
      */
     get displayDimensions() {
@@ -91,7 +91,7 @@ class BaseShape {
 
     /**
      * Get the relative rotation
-     * @return {int}
+     * @return {number} degrees
      */
     get rotation() {
         return this._attributes.rotation;
