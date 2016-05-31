@@ -186,6 +186,11 @@ class BaseShape {
         }
     }
 
+    /**
+     * Returns the attribute recorded for key
+     * @param {String} key
+     * @returns {*}
+     */
     getAttribute(key) {
         var keys = key.split('.');
         var attr = this._attributes;
