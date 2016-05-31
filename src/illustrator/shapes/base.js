@@ -4,8 +4,6 @@ var Point   = require("../components/point.js");
  * All shapes occupy a square area.
  * It's dimensions are described by the vector `dimensions`.
  * It can be placed and rotated around the shapes centroid.
- * 
- * @interface
  */
 class BaseShape {
     constructor(key) {
@@ -191,7 +189,9 @@ class BaseShape {
     getAttribute(key) {
         var keys = key.split('.');
         var attr = this._attributes;
-        while(keys.length && (attr = attr[keys.shift()]));
+        while (keys.length && attr) {
+            attr = attr[keys.shift()];
+        }
         return attr;
     }
 }
