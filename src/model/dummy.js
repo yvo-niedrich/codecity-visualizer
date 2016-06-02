@@ -118,7 +118,7 @@ class ZooModel extends BaseModel {
         }
     }
 
-    _hashString(str) {
+    static _hashString(str) {
         // https://github.com/darkskyapp/string-hash
         var hash = 17,
             i    = str.length;
