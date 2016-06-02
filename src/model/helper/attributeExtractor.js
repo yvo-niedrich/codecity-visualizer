@@ -48,9 +48,10 @@ class AttributeExtractor {
     static attrFallbackFirstAvailablePredecessor(model, node, version) {
         var vIndex = model.versions.indexOf(version);
 
-        for (let i = vIndex; i <= 0; i--) {
-            if (model.exists(node, model.versions[i])) {
-                return model.attributes(node, model.versions[i]);
+        while (vIndex >= 0) {
+            let v = model.versions[vIndex--];
+            if (model.exists(node, v)) {
+                return model.attributes(node, v);
             }
         }
 
