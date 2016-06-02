@@ -34,11 +34,11 @@ module.exports = {
 
     // TODO!
     'rules': {
-        'editor-to-width':             require("./lib/illustrator/rules/editor-to-width.js"),
-        'lighten-platform-with-level': require("./lib/illustrator/rules/lighten-platform-with-level.js"),
-        'loc-to-height':               require("./lib/illustrator/rules/loc-to-height.js"),
-        'opacity-if-not-in-version':   require("./lib/illustrator/rules/opacity-if-not-in-version.js"),
-        'package-to-color':            require("./lib/illustrator/rules/package-to-color.js"),
-        'save-first-version':          require("./lib/illustrator/rules/save-first-version.js")
+        'editor-to-width':             require("./lib/illustrator/rules/old/editor-to-width.js"),
+        'lighten-platform-with-level': require("./lib/illustrator/rules/old/lighten-platform-with-level.js"),
+        'loc-to-height':               require("./lib/illustrator/rules/old/loc-to-height.js"),
+        'opacity-if-not-in-version':   require("./lib/illustrator/rules/old/opacity-if-not-in-version.js"),
+        'package-to-color':            require("./lib/illustrator/rules/old/package-to-color.js"),
+        'save-first-version':          require("./lib/illustrator/rules/old/save-first-version.js")
     }
 };

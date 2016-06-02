@@ -1,5 +1,7 @@
 /* eslint no-unused-vars: "off" */
 
+var ConfigurableInterface = require('../interfaces/configurable.js');
+
 /**
  * TODO
  */
@@ -11,7 +13,7 @@ class BaseRule {
     constructor(options) {}
 
     /**
-     *
+     * @abstract
      * @param {TreeNode}  node
      * @param {Version}   version
      * @param {BaseModel} model
@@ -19,4 +21,4 @@ class BaseRule {
     execute(node, version, model) {}
 }
 
-module.exports = BaseRule;
+module.exports = ConfigurableInterface(BaseRule);

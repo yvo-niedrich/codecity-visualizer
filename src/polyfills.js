@@ -10,6 +10,7 @@ var isBrowser = new Function("try {return this===window;}catch(e){ return false;
 if (isBrowser()) {
     requiredPolyfill.push(function() { require('core-js/fn/set'); });
     requiredPolyfill.push(function() { require('core-js/fn/array/index-of.js'); });
+    requiredPolyfill.push(function() { require('core-js/fn/array/is-array.js'); });
     requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-descriptor.js'); });
     requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-descriptors.js'); });
     requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-names.js'); });

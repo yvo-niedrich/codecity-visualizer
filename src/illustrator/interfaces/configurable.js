@@ -38,6 +38,7 @@ module.exports = function (SuperClass = Object) {
         }
 
         /**
+         * Get the content for an option. return null, if no value was set.
          * @param key
          * @returns {*|null}
          */
@@ -51,6 +52,24 @@ module.exports = function (SuperClass = Object) {
             }
 
             return null;
+        }
+
+        /**
+         * Require an option to be set. Throws an exception
+         * @param key
+         * @return {boolean}
+         * @throws Exception if key is not set
+         */
+        requireOption(key) {
+            if (typeof(this._ic_options) !== 'undefined' && this._ic_options !== null && key in this._ic_options) {
+                return true;
+            }
+
+            if (typeof(this._ic_defaults) !== 'undefined' && this._ic_defaults !== null && key in this._ic_defaults) {
+                return true;
+            }
+
+            throw 'Option ' + key + 'was not set.';
         }
     }
 };
