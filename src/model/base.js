@@ -2,8 +2,6 @@
 
 /**
  * This is what a SoftwareModel has to look like
- * 
- * @interface
  */
 class BaseSoftwareModel {
     constructor() {}

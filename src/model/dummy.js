@@ -5,8 +5,6 @@ var Dependency = require("./components/dependency.js");
 
 /**
  * ZooModel returning animals
- *
- * @implements BaseSoftwareModel
  */
 class ZooModel extends BaseModel {
     constructor() {
