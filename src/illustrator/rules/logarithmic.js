@@ -78,7 +78,7 @@ class LogarithmicRule extends BaseRule {
             attributes = [attributes];
         }
 
-        for (let key of attributes) {
+        for (const key of attributes) {
             result[String(key)] = newValue;
         }
 

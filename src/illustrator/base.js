@@ -48,7 +48,7 @@ class BaseIllustrator {
      */
     applyRules(node, model, version) {
         var attributes = {};
-        for (let rule of this._rules) {
+        for (const rule of this._rules) {
             Object.assign(attributes, rule(node, version, model));
         }
 

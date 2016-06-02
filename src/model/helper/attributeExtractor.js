@@ -46,10 +46,10 @@ class AttributeExtractor {
      * @throws Exception if no data is available
      */
     static attrFallbackFirstAvailablePredecessor(model, node, version) {
-        var vIndex = model.versions.indexOf(version);
+        let vIndex = model.versions.indexOf(version);
 
         while (vIndex >= 0) {
-            let v = model.versions[vIndex--];
+            const v = model.versions[vIndex--];
             if (model.exists(node, v)) {
                 return model.attributes(node, v);
             }
@@ -66,7 +66,7 @@ class AttributeExtractor {
      * @throws Exception if no data is available
      */
     static attrFirstAvailableVersion(model, node) {
-        for (let v of model.versions) {
+        for (const v of model.versions) {
             if (model.exists(node, v)) {
                 return model.attributes(node, v);
             }
