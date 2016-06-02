@@ -8,24 +8,28 @@ class BaseSoftwareModel {
 
     /**
      * Get the Models Graph. A List of Objects, connecting `source` and `target`.
+     * @abstract
      * @return {object}
      */
     get graph() {}
 
     /**
      * Get the Root-Node of the tree.
+     * @abstract
      * @return {TreeNode}
      */
     get tree() {}
 
     /**
      * Get an ordered List of all versions.
+     * @abstract
      * @return {Array<Version>}
      */
     get versions() {}
 
     /**
      * Existence Function
+     * @abstract
      * @param  {TreeNode} node    Node-Object
      * @param  {Version}  version Version-Object
      * @return {boolean}
@@ -34,6 +38,7 @@ class BaseSoftwareModel {
 
     /**
      * Property function
+     * @abstract
      * @param  {TreeNode} node    Node-Object
      * @param  {Version}  version Version-Object
      * @return {null|Object}

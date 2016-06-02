@@ -1,7 +1,7 @@
 /**
  * This is what a SoftwareModel has to look like
  */
-class BaseIllustration {
+class Illustration {
 
     /**
      * @param {Version} version
@@ -33,4 +33,4 @@ class BaseIllustration {
     }
 }
 
-module.exports = BaseIllustration;
+module.exports = Illustration;

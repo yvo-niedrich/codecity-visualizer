@@ -30,10 +30,6 @@ class District extends BaseIllustrator {
         });
     }
 
-    addRule(rule) {
-        this._rules.push(rule);
-    }
-
     draw(version) {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
 
@@ -49,7 +45,7 @@ class District extends BaseIllustrator {
         return illustration;
     }
 
-    _createSpatialModel(tree, version, depth = 0) {
+    _createSpatialModel(tree, version) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
         }
@@ -60,7 +56,7 @@ class District extends BaseIllustrator {
         container.add(this._createPlatform(tree, version));
 
         for (var child of tree.children) {
-            container.add(this._createSpatialModel(child, version, depth + 1));
+            container.add(this._createSpatialModel(child, version));
         }
 
         return container;
@@ -76,8 +72,8 @@ class District extends BaseIllustrator {
         };
 
         var house = new ShapeHouse(node);
-        house.updateAttributes(defaultLayout);
-        this._applyRules(node, version, house);
+        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+
         return house;
     }
 
@@ -87,19 +83,10 @@ class District extends BaseIllustrator {
             'dimensions.height': this.getOption('platform.height')
         };
 
-        var platform = new ShapePlatform(this.key + '_p');
-        platform.updateAttributes(defaultLayout);
-        this._applyRules(node, version, platform);
+        var platform = new ShapePlatform(node.key + '_p');
+        platform.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+
         return platform;
-    }
-
-    _applyRules(node, version, shape) {
-        var attributes = {};
-        for (var rule of this._rules) {
-            Object.assign(attributes, rule(node, version, this._model));
-        }
-
-        shape.updateAttributes(attributes);
     }
 }
 

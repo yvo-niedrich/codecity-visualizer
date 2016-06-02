@@ -33,10 +33,6 @@ class Evostreet extends BaseIllustrator {
         });
     }
 
-    addRule(rule) {
-        this._rules.push(rule);
-    }
-
     draw(version) {
         var spatialModel = this._createSpatialModel(this._model.tree, version);
 
@@ -81,8 +77,7 @@ class Evostreet extends BaseIllustrator {
         };
 
         var highway = new ShapeStreet(node);
-        highway.updateAttributes(defaultLayout);
-        this._applyRules(node, version, highway);
+        highway.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
         return highway;
     }
 
@@ -94,8 +89,7 @@ class Evostreet extends BaseIllustrator {
         };
 
         var street = new ShapeStreet(node);
-        street.updateAttributes(defaultLayout);
-        this._applyRules(node, version, street);
+        street.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
         return street;
     }
 
@@ -109,18 +103,8 @@ class Evostreet extends BaseIllustrator {
         };
 
         var house = new ShapeHouse(node);
-        house.updateAttributes(defaultLayout);
-        this._applyRules(node, version, house);
+        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
         return house;
-    }
-
-    _applyRules(node, version, shape) {
-        var attributes = {};
-        for (var rule of this._rules) {
-            Object.assign(attributes, rule(node, version, this._model));
-        }
-
-        shape.updateAttributes(attributes);
     }
 }
 

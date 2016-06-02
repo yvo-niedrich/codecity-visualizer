@@ -19,6 +19,7 @@ class BaseContainer extends BaseShape {
     /**
      * No more Shapes will be added to the Container. Place the available shapes,
      * and calculate the containers final dimensions
+     * @abstract
      */
     finalize() { }
 
