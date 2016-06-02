@@ -1,3 +1,5 @@
+/* eslint no-unused-vars: "off" */
+
 var BaseContainer = require("./base.js");
 
 /**
@@ -10,6 +12,10 @@ class MirrorContainer extends BaseContainer {
         this._mirrored = mirror
     }
 
+    /**
+     * Adds shape to the container and honors mirroring
+     * @param {BaseShape} shape
+     */
     add(shape) {
         super.add(shape);
 

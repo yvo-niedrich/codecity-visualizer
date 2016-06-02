@@ -10,7 +10,9 @@ var ShapePlatform     = require("../../shapes/platform.js");
 class DistrictContainer extends SpecificContainer {
     constructor(key, options = {}) {
         super(key, options);
-        this.defaults = {
+
+        this.setOptions(options);
+        this.setDefaults({
             'spacer.margin': 10,
             'spacer.padding': 5,
 
@@ -19,7 +21,7 @@ class DistrictContainer extends SpecificContainer {
 
             'houses.container': LightmapContainer,
             'houses.options': false
-        };
+        });
 
         this._container = {
             'houses': new (this.getOption('houses.container'))(this.key + '_d', this.getOption('houses.options')),

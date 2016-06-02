@@ -10,9 +10,12 @@ class Lightmap extends UniversalContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
-        this._optimalAspectRatio = 1.0;
+
+        this.setDefaults({
+            "cutHorizontalFirst": true
+        });
+
         this._currentDimensions = null;
-        this._cutHorizontal = true;
     }
 
     finalize() {
@@ -25,7 +28,7 @@ class Lightmap extends UniversalContainer {
 
         var shapes = this.shapes;
 
-        if (this._cutHorizontal) {
+        if (this.getOption('cutHorizontalFirst')) {
             shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width; });
         } else {
             shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length; });
@@ -101,7 +104,7 @@ class Lightmap extends UniversalContainer {
         var winner = preserver ? preserver : expander;
 
         // Insert Shape into the candidate and update current dimensions
-        winner.insert(shapeDimensions, shape, this._cutHorizontal);
+        winner.insert(shapeDimensions, shape, this.getOption('cutHorizontalFirst'));
         this._currentDimensions.length = Math.max(winner.origin.x + shapeDimensions.length, this._currentDimensions.length);
         this._currentDimensions.width  = Math.max(winner.origin.y + shapeDimensions.width,  this._currentDimensions.width);
         this._currentDimensions.height = Math.max(winner.origin.z + shapeDimensions.height, this._currentDimensions.height);

@@ -1,8 +1,13 @@
+/* eslint no-unused-vars: "off" */
+
 var BaseShape = require("../shapes/base.js");
+var ConfigurableInterface = require('../interfaces/configurable.js');
 
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
- * The container will automaticly finalize, once it is drawn or it's dimensions are requested.
+ * The container will automatically finalize, once it is drawn or it's dimensions are requested.
+ *
+ * @implements Configurable
  */
 class BaseContainer extends BaseShape {
     constructor(key) {
@@ -88,4 +93,5 @@ class BaseContainer extends BaseShape {
     }
 }
 
-module.exports = BaseContainer;
+
+module.exports = ConfigurableInterface(BaseContainer);

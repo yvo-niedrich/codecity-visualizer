@@ -57,7 +57,8 @@ Districts implements the original Code City Layout approach by [Richard Wettel][
 <br />
 
 # Container
-Container-Overview
+Groups of shape-elements (usually all elements of the same level in a software) are stored in containers until they are drawn by the illustrator. Containers extend the Shape-Class themselfs, so they can even store any other container. Once the `draw` command is called, the container and all underlying elements will be finalized before they are drawn.
+Every container implements the `Configurable`-interface and some can be configured. Options can be set with `container.setOption('optionKey', newValue);`.
 
 ## Universal Container
 
@@ -68,10 +69,12 @@ Can be mirrored along the x-axis, so the shapes are *below* the axis. If the con
 ### Grid
 Arranges the shapes in a rectangle with the as introduced in the [Strip Treemap Approach][StripTreemaps]. The input order is not changed, therefore it's use of available space can be subpar.
 an be mirrored along the x-axis, so the shapes are *below* the axis. If the container should be mirrored, the `mirrored` flag needs to be `true` on initialisation.
+ * `optimalAspectRatio` --  _(Default: `1.0`)_
 
 ### Lightmap
 The Lightmap-Approach aims to create a small rectangle with the best aspect ratio, filled with all the shapes. It was introduced to code cities by [Richard Wettel][WettelPub]. These shapes will be sorted, so consistency can not be guaranteed.
 Can be mirrored along the x-axis, so the shapes are *below* the axis. If the container should be mirrored, the `mirrored` flag needs to be `true` on initialisation.
+ * `cutHorizontalFirst` --  _(Default: `true`)_
 
 ------------------------
 

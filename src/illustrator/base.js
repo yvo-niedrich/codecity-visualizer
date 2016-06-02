@@ -1,7 +1,11 @@
 /* eslint no-unused-vars: "off" */
 
+var ConfigurableInterface = require('./interfaces/configurable.js');
+
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
+ *
+ * @implements Configurable
  */
 class BaseIllustrator {
     /**
@@ -29,4 +33,4 @@ class BaseIllustrator {
     draw(version) {}
 }
 
-module.exports = BaseIllustrator;
+module.exports = ConfigurableInterface(BaseIllustrator);

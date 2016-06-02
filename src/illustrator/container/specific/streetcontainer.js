@@ -9,7 +9,9 @@ var ShapeStreet       = require("../../shapes/street.js");
 class StreetContainer extends SpecificContainer {
     constructor(key, options = {}) {
         super(key, options);
-        this.defaults = {
+
+        this.setOptions(options);
+        this.setDefaults({
             'spacer.initial': 20,
             'spacer.branches': 15,
             'spacer.terranullius': 20,
@@ -24,7 +26,8 @@ class StreetContainer extends SpecificContainer {
             'branch.distribution': 'default',
             'branch.segmentation': null,
             'branch.segmentorder': null
-        };
+        });
+
 
         this._leftBranchSpacer = 0;
         this._rightBranchSpacer = 0;
@@ -199,7 +202,7 @@ class StreetContainer extends SpecificContainer {
         for (var segment of this._container.houses.segments) {
             var key = String(segment);
 
-            this._distributeShapes(
+            StreetContainer._distributeShapes(
                 this._container.houses.segmented[key],
                 this.getOption('house.distribution'),
                 this._container.houses.left[key],
@@ -233,7 +236,7 @@ class StreetContainer extends SpecificContainer {
         for (var segment of this._container.branches.segments) {
             var key = String(segment);
 
-            this._distributeShapes(
+            StreetContainer._distributeShapes(
                 this._container.branches.segmented[key],
                 this.getOption('branch.distribution'),
                 this._container.branches.left[key],
@@ -245,9 +248,9 @@ class StreetContainer extends SpecificContainer {
         }
     }
 
-    _distributeShapes(shapes, method, left, right) {
+    static _distributeShapes(shapes, method, left, right) {
         if (typeof method === 'function') {
-            this._distributeShapesEquallyByAttribute(shapes, method, left, right);
+            StreetContainer._distributeShapesEquallyByAttribute(shapes, method, left, right);
             return;
         }
 
@@ -256,11 +259,11 @@ class StreetContainer extends SpecificContainer {
         }
 
         if (method.toLowerCase() === 'left') {
-            this._distributeShapesToContainer(shapes, left);
+            StreetContainer._distributeShapesToContainer(shapes, left);
         } else if (method.toLowerCase() === 'right') {
-            this._distributeShapesToContainer(shapes, right);
+            StreetContainer._distributeShapesToContainer(shapes, right);
         } else {
-            this._distributeShapesInDefaultOrder(shapes, left, right);
+            StreetContainer._distributeShapesInDefaultOrder(shapes, left, right);
         }
     }
 

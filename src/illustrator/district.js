@@ -14,7 +14,8 @@ class District extends BaseIllustrator {
 
         this._rules = [];
         this._model = model;
-        this._options = {
+        this.setOptions(options);
+        this.setDefaults({
             'house.length': 12,
             'house.width': 12,
             'house.height': 12,
@@ -26,11 +27,7 @@ class District extends BaseIllustrator {
 
             'district.container': ShapeContainer,
             'district.options': {}
-        };
-
-        for (var i in options) {
-            this._options[i] = options[i];
-        }
+        });
     }
 
     addRule(rule) {
@@ -58,8 +55,8 @@ class District extends BaseIllustrator {
         }
 
 
-
-        var container = new this._options['district.container'](tree, this._options['district.options']);
+        var cClass = this.getOption('district.container');
+        var container = new cClass(tree, this.getOption('district.options'));
         container.add(this._createPlatform(tree, version));
 
         for (var child of tree.children) {
@@ -71,11 +68,11 @@ class District extends BaseIllustrator {
 
     _createHouse(node, version) {
         var defaultLayout = {
-            'dimensions.length': this._options['house.length'],
-            'dimensions.width': this._options['house.width'],
-            'dimensions.height': this._options['house.height'],
-            'margin': this._options['house.margin'],
-            'color': this._options['house.color']
+            'dimensions.length': this.getOption('house.length'),
+            'dimensions.width': this.getOption('house.width'),
+            'dimensions.height': this.getOption('house.height'),
+            'margin': this.getOption('house.margin'),
+            'color': this.getOption('house.color')
         };
 
         var house = new ShapeHouse(node);
@@ -86,8 +83,8 @@ class District extends BaseIllustrator {
 
     _createPlatform(node, version) {
         var defaultLayout = {
-            'color': this._options['platform.color'],
-            'dimensions.height': this._options['platform.height']
+            'color': this.getOption('platform.color'),
+            'dimensions.height': this.getOption('platform.height')
         };
 
         var platform = new ShapePlatform(this.key + '_p');

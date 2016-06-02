@@ -9,10 +9,14 @@ class GridContainer extends UniversalContainer {
 
     constructor(key, mirror = false) {
         super(key, mirror);
+
+        this.setDefaults({
+            optimalAspectRatio: 1.0
+        });
+
         this._shapes = [];
         this._strips = [];
         this._activeStrip = -1;
-        this._optimalAspectRatio = 1.0;
     }
 
     add(shape) {
@@ -55,7 +59,7 @@ class GridContainer extends UniversalContainer {
             // 2) Will the new shape impare the aspect ratio?
             var currentDimensions = this._getCurrentDimensions();
             var newLength = strip.dimensions.length + shape.displayDimensions.length;
-            if (newLength / currentDimensions.width > this._optimalAspectRatio) {
+            if (newLength / currentDimensions.width > this.getOption('optimalAspectRatio')) {
                 // 2.1) Inserting the Shape would impare aspect ratio
                 //      Try again on the next strip
                 

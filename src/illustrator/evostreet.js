@@ -4,17 +4,19 @@ var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
 var ShapeContainer  = require("./container/specific/streetcontainer.js");
+// var ConfigurableInterface = require('./interfaces/configurable.js');
 
 /**
- * Create an evostreet city
+ * Create an Evostreet Layout city
  */
 class Evostreet extends BaseIllustrator {
     constructor(model, options = {}) {
-        super(model, options);
+        super();
 
         this._rules = [];
         this._model = model;
-        this._options = {
+        this.setOptions(options);
+        this.setDefaults({
             'highway.length': 40,
             'highway.color': 0x156289,
 
@@ -29,11 +31,7 @@ class Evostreet extends BaseIllustrator {
 
             'evostreet.container': ShapeContainer,
             'evostreet.options': {}
-        };
-
-        for (var i in options) {
-            this._options[i] = options[i];
-        }
+        });
     }
 
     addRule(rule) {
@@ -60,7 +58,8 @@ class Evostreet extends BaseIllustrator {
             return this._createHouse(tree, version);
         }
 
-        var container = new this._options['evostreet.container'](tree, this._options['evostreet.options']);
+        var cClass = this.getOption('evostreet.container');
+        var container = new cClass(tree, this.getOption('evostreet.options'));
 
         for (var child of tree.children) {
             container.add(this._createSpatialModel(child, version));
@@ -77,9 +76,9 @@ class Evostreet extends BaseIllustrator {
 
     _createHighway(node, version) {
         var defaultLayout = {
-            'dimensions.length': this._options['highway.length'],
+            'dimensions.length': this.getOption('highway.length'),
             'dimensions.height': 1,
-            'color': this._options['highway.color']
+            'color': this.getOption('highway.color')
         };
 
         var highway = new ShapeStreet(node);
@@ -90,9 +89,9 @@ class Evostreet extends BaseIllustrator {
 
     _createStreet(node, version) {
         var defaultLayout = {
-            'dimensions.length': this._options['street.length'],
+            'dimensions.length': this.getOption('street.length'),
             'dimensions.height': 1,
-            'color': this._options['street.color']
+            'color': this.getOption('street.color')
         };
 
         var street = new ShapeStreet(node);
@@ -103,11 +102,11 @@ class Evostreet extends BaseIllustrator {
 
     _createHouse(node, version) {
         var defaultLayout = {
-            'dimensions.length': this._options['house.length'],
-            'dimensions.width': this._options['house.width'],
-            'dimensions.height': this._options['house.height'],
-            'margin': this._options['house.margin'],
-            'color': this._options['house.color']
+            'dimensions.length': this.getOption('house.length'),
+            'dimensions.width': this.getOption('house.width'),
+            'dimensions.height': this.getOption('house.height'),
+            'margin': this.getOption('house.margin'),
+            'color': this.getOption('house.color')
         };
 
         var house = new ShapeHouse(node);

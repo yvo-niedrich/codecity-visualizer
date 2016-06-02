@@ -104,8 +104,8 @@ class ZooModel extends BaseModel {
                 var v = String(version);
                 this._attributes[v][t] = {
                     'name': t,
-                    'loc' : this._hashString('loc' + t + v) % 687,
-                    'editors' : 1 + this._hashString('edit' + t + v) % 14
+                    'loc' : ZooModel._hashString('loc' + t + v) % 687,
+                    'editors' : 1 + ZooModel._hashString('edit' + t + v) % 14
                 };
             }
             return;
