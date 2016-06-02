@@ -4,7 +4,6 @@ var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./shapes/house.js");
 var ShapeStreet     = require("./shapes/street.js");
 var ShapeContainer  = require("./container/specific/streetcontainer.js");
-// var ConfigurableInterface = require('./interfaces/configurable.js');
 
 /**
  * Create an Evostreet Layout city

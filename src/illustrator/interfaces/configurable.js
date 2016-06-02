@@ -9,7 +9,7 @@ module.exports = function (SuperClass = Object) {
          * @param {Object} defaults
          */
         setDefaults(defaults = {}) {
-            if (typeof(this._ic_defaults) == 'undefined' || this._ic_defaults == null) {
+            if (typeof(this._ic_defaults) === 'undefined' || this._ic_defaults === null) {
                 this._ic_defaults = defaults;
             } else {
                 throw 'Default values are already set';
@@ -30,7 +30,7 @@ module.exports = function (SuperClass = Object) {
          * @param {*} value
          */
         setOption(key, value) {
-            if (typeof(this._ic_options) == 'undefined' || this._ic_options == null) {
+            if (typeof(this._ic_options) === 'undefined' || this._ic_options === null) {
                 this._ic_options = {};
             }
 
@@ -42,11 +42,11 @@ module.exports = function (SuperClass = Object) {
          * @returns {*|null}
          */
         getOption(key) {
-            if (typeof(this._ic_options) != 'undefined' && this._ic_options != null && key in this._ic_options) {
+            if (typeof(this._ic_options) !== 'undefined' && this._ic_options !== null && key in this._ic_options) {
                 return this._ic_options[key];
             }
 
-            if (typeof(this._ic_defaults) != 'undefined' && this._ic_defaults != null && key in this._ic_defaults) {
+            if (typeof(this._ic_defaults) !== 'undefined' && this._ic_defaults !== null && key in this._ic_defaults) {
                 return this._ic_defaults[key];
             }
 
