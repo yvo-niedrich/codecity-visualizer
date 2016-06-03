@@ -17,10 +17,10 @@ class LogarithmicRule extends BaseRule {
             'method': Helper.attrFallbackFirstAvailablePredecessor,
             'fallback': 0
         });
+        /* eslint-enable no-unused-vars */
 
         this.requireOption('metric');
         this.requireOption('attributes');
-        /* eslint-enable no-unused-vars */
     }
 
     /**

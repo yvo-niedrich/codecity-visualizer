@@ -37,6 +37,7 @@ class ExponentialRule extends BaseRule {
      * @param {BaseSoftwareModel} model
      * @param {TreeNode}  node
      * @param {Version}   version
+     * @returns {Object}
      */
     execute(model, node, version) {
         var nodeValue = parseInt(this._extractAttribute(model, node, version));
@@ -45,15 +46,15 @@ class ExponentialRule extends BaseRule {
     }
 
     /**
-     * @param node
-     * @param version
-     * @param model
+     * @param {BaseSoftwareModel} model
+     * @param {TreeNode}  node
+     * @param {Version}   version
      * @returns {*}
      * @private
      */
-    _extractAttribute(node, version, model) {
+    _extractAttribute(model, node, version) {
         try {
-            var attributes = this.getOption('method')(node, version, model);
+            var attributes = this.getOption('method')(model, node, version);
             var metric = String(this.getOption('metric'));
             if (attributes && metric in attributes) {
                 return attributes[metric];
