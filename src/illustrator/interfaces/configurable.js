@@ -65,10 +65,6 @@ module.exports = function (SuperClass = Object) {
                 return true;
             }
 
-            if (typeof(this._ic_defaults) !== 'undefined' && this._ic_defaults !== null && key in this._ic_defaults) {
-                return true;
-            }
-
             throw 'Option ' + key + 'was not set.';
         }
     }

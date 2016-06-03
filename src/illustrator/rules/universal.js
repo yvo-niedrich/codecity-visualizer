@@ -1,6 +1,6 @@
-var BaseRule = require('./../base.js');
+var BaseRule = require('./base.js');
 
-class LogarithmicRule extends BaseRule {
+class UniversalRule extends BaseRule {
     constructor(options) {
         super(options);
 
@@ -9,15 +9,10 @@ class LogarithmicRule extends BaseRule {
         this.setDefaults({
             'condition': function(model, node, version) { return true; },
             'metric': function(model, node, version) { return 0; },
-            'min': 0,
-            'max': Infinity,
-            'logexp' : 1,
-            'logbase' : 2,
-            'factor': 1
+            'applyRule': function(metricValue) { return metricValue; }
         });
         /* eslint-enable no-unused-vars */
 
-        this.requireOption('metric');
         this.requireOption('attributes');
     }
 
@@ -35,27 +30,12 @@ class LogarithmicRule extends BaseRule {
      * @param {BaseSoftwareModel} model
      * @param {TreeNode}  node
      * @param {Version}   version
-     * @returns {Object}
      */
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);
-        var newValue = this._logarithmicFunction(parseInt(nodeValue));
-        return BaseRule.createTraits(this.getOption('attributes'), newValue);
-    }
-
-    /**
-     * @param {number} value
-     * @returns {number}
-     * @private
-     */
-    _logarithmicFunction(value) {
-        var result = Math.pow(
-            Math.log(value + 1) / Math.log(this.getOption('logbase')),
-            this.getOption('logexp')
-        ) * this.getOption('factor');
-
-        return Math.max(Math.min(result, this.getOption('max')), this.getOption('min'));
+        var newValue = this.getOption('applyRule')(nodeValue);
+        return BaseRule.createTraits(this.getOption('attribute'), newValue);
     }
 }
 
-module.exports = LogarithmicRule;
+module.exports = UniversalRule;

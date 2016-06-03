@@ -3,7 +3,8 @@
 var ConfigurableInterface = require('../interfaces/configurable.js');
 
 /**
- * TODO
+ * Rules will be executed for every node, before it is drawn and finalized. Rules describe and set the attributes,
+ * reflected in the SpatialNode. It may define new properties, the renderer can take advantage of.
  * @implements Configurable
  */
 class BaseRule {

@@ -1,5 +1,4 @@
 var BaseRule = require('./../base.js');
-var Helper = require('../../../model/helper/attributeExtractor.js');
 
 class LinearRule extends BaseRule {
     constructor(options) {
@@ -9,12 +8,11 @@ class LinearRule extends BaseRule {
         this.setOptions(options);
         this.setDefaults({
             'condition': function(model, node, version) { return true; },
+            'metric': function(model, node, version) { return 0; },
             'min': 0,
             'max': Infinity,
             'initial': 0,
-            'factor': 1,
-            'method': Helper.attrFallbackFirstAvailablePredecessor,
-            'fallback': 0
+            'factor': 1
         });
         /* eslint-enable no-unused-vars */
 
@@ -38,30 +36,9 @@ class LinearRule extends BaseRule {
      * @param {Version}   version
      */
     execute(model, node, version) {
-        var nodeValue = parseInt(this._extractAttribute(model, node, version));
+        var nodeValue = this.getOption('metric')(model, node, version);
         var newValue = this._linearFunction(nodeValue);
         return BaseRule.createTraits(this.getOption('attribute'), newValue);
-    }
-
-    /**
-     * @param model
-     * @param node
-     * @param version
-     * @returns {*}
-     * @private
-     */
-    _extractAttribute(model, node, version) {
-        try {
-            var attributes = this.getOption('method')(model, node, version);
-            var metric = String(this.getOption('metric'));
-            if (attributes && metric in attributes) {
-                return attributes[metric];
-            }
-
-            return this.getOption('fallback');
-        } catch (err) {
-            return this.getOption('fallback');
-        }
     }
 
     /**

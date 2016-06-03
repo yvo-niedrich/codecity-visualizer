@@ -1,5 +1,4 @@
 var BaseRule = require('./../base.js');
-var Helper = require('../../../model/helper/attributeExtractor.js');
 
 class ExponentialRule extends BaseRule {
     constructor(options) {
@@ -9,13 +8,12 @@ class ExponentialRule extends BaseRule {
         this.setOptions(options);
         this.setDefaults({
             'condition': function(model, node, version) { return true; },
+            'metric': function(model, node, version) { return 0; },
             'min': 0,
             'max': Infinity,
             'baseScale' : 1,
             'power' : 2,
-            'factor': 1,
-            'method': Helper.attrFallbackFirstAvailablePredecessor,
-            'fallback': 0
+            'factor': 1
         });
         /* eslint-enable no-unused-vars */
 
@@ -40,30 +38,9 @@ class ExponentialRule extends BaseRule {
      * @returns {Object}
      */
     execute(model, node, version) {
-        var nodeValue = parseInt(this._extractAttribute(model, node, version));
+        var nodeValue = this.getOption('metric')(model, node, version);
         var newValue = this._expFunction(nodeValue);
-        return BaseRule.createTraits(this.getOption('attribute'), newValue);
-    }
-
-    /**
-     * @param {BaseSoftwareModel} model
-     * @param {TreeNode}  node
-     * @param {Version}   version
-     * @returns {*}
-     * @private
-     */
-    _extractAttribute(model, node, version) {
-        try {
-            var attributes = this.getOption('method')(model, node, version);
-            var metric = String(this.getOption('metric'));
-            if (attributes && metric in attributes) {
-                return attributes[metric];
-            }
-
-            return this.getOption('fallback');
-        } catch (err) {
-            return this.getOption('fallback');
-        }
+        return BaseRule.createTraits(this.getOption('attributes'), newValue);
     }
 
     /**

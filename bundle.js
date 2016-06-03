@@ -39,6 +39,9 @@ module.exports = {
             'logarithmic': require('./lib/illustrator/rules/math/logarithmic.js'),
             'exponential': require('./lib/illustrator/rules/math/exponential.js')
         },
+        'color': {
+            'gradient'   : require('./lib/illustrator/rules/color/gradient.js')
+        },
 
         // TODO: Refactor and remove
         'editor-to-width':             require("./lib/illustrator/rules/old/editor-to-width.js"),
@@ -47,5 +50,9 @@ module.exports = {
         'opacity-if-not-in-version':   require("./lib/illustrator/rules/old/opacity-if-not-in-version.js"),
         'package-to-color':            require("./lib/illustrator/rules/old/package-to-color.js"),
         'save-first-version':          require("./lib/illustrator/rules/old/save-first-version.js")
+    },
+
+    'helper': {
+        'attribute-extractor': require('./lib/model/helper/attributeExtractor.js')
     }
 };
