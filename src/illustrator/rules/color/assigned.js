@@ -1,6 +1,6 @@
-var BaseRule = require('./base.js');
+var BaseRule = require('./../base.js');
 
-class UniversalRule extends BaseRule {
+class AssignedRule extends BaseRule {
     constructor(options) {
         super(options);
 
@@ -9,10 +9,12 @@ class UniversalRule extends BaseRule {
         this.setDefaults({
             'condition': function(model, node, version) { return true; },
             'metric': function(model, node, version) { return 0; },
-            'applyRule': function(metricValue) { return metricValue; }
+            'salt': 6717153,
+            'shift': 23
         });
         /* eslint-enable no-unused-vars */
 
+        this.requireOption('metric');
         this.requireOption('attributes');
     }
 
@@ -34,9 +36,24 @@ class UniversalRule extends BaseRule {
      */
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);
-        var newValue = this.getOption('applyRule')(nodeValue);
-        return BaseRule.createTraits(this.getOption('attribute'), newValue);
+        var newValue = this._calculateColor(String(nodeValue));
+        return BaseRule.createTraits(this.getOption('attributes'), newValue);
+    }
+
+    /**
+     * @param {String} value
+     * @returns {number}
+     * @private
+     */
+    _calculateColor(value) {
+        var hash = this.getOption('salt');
+        for (let i = 0; i < value.length; i++) {
+            hash = value.charCodeAt(i) + ((hash >> this.getOption('shift')) - hash);
+            hash *= value.charCodeAt(value.length - i - 1);
+            hash &= 0xFFFFFF;
+        }
+        return hash;
     }
 }
 
-module.exports = UniversalRule;
+module.exports = AssignedRule;

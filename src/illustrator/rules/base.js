@@ -40,7 +40,7 @@ class BaseRule {
     static createTraits(attributes, value) {
         var result = {};
 
-        var attr = Array.isArray(attributes) ? attributes : [attributes];
+        const attr = Array.isArray(attributes) ? attributes : [attributes];
         for (const key of attr) {
             result[String(key)] = value;
         }

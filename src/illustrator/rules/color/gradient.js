@@ -12,8 +12,7 @@ class GradientRule extends BaseRule {
             'min': 0,
             'max': 100,
             'minColor': 0xFFFFFF,
-            'maxColor': 0xFF0000,
-            'fallback': 0
+            'maxColor': 0xFF0000
         });
         /* eslint-enable no-unused-vars */
 
@@ -35,6 +34,7 @@ class GradientRule extends BaseRule {
      * @param {BaseSoftwareModel} model
      * @param {TreeNode}  node
      * @param {Version}   version
+     * @returns {Object}
      */
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);

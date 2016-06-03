@@ -34,6 +34,7 @@ class LinearRule extends BaseRule {
      * @param {BaseSoftwareModel} model
      * @param {TreeNode}  node
      * @param {Version}   version
+     * @returns {Object}
      */
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);

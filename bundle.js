@@ -40,7 +40,8 @@ module.exports = {
             'exponential': require('./lib/illustrator/rules/math/exponential.js')
         },
         'color': {
-            'gradient'   : require('./lib/illustrator/rules/color/gradient.js')
+            'gradient'   : require('./lib/illustrator/rules/color/gradient.js'),
+            'assigned'   : require('./lib/illustrator/rules/color/assigned.js')
         },
 
         // TODO: Refactor and remove
