@@ -32,8 +32,15 @@ module.exports = {
         'platform': require("./lib/illustrator/shapes/platform.js")
     },
 
-    // TODO!
     'rules': {
+        'base' : require('./lib/illustrator/rules/base.js'),
+        'math': {
+            'linear'     : require('./lib/illustrator/rules/math/linear.js'),
+            'logarithmic': require('./lib/illustrator/rules/math/logarithmic.js'),
+            'exponential': require('./lib/illustrator/rules/math/exponential.js')
+        },
+
+        // TODO: Refactor and remove
         'editor-to-width':             require("./lib/illustrator/rules/old/editor-to-width.js"),
         'lighten-platform-with-level': require("./lib/illustrator/rules/old/lighten-platform-with-level.js"),
         'loc-to-height':               require("./lib/illustrator/rules/old/loc-to-height.js"),

@@ -4,6 +4,7 @@ var ConfigurableInterface = require('../interfaces/configurable.js');
 
 /**
  * TODO
+ * @implements Configurable
  */
 class BaseRule {
     /**
@@ -14,11 +15,37 @@ class BaseRule {
 
     /**
      * @abstract
+     * @param {BaseSoftwareModel} model
      * @param {TreeNode}  node
      * @param {Version}   version
-     * @param {BaseModel} model
+     * @returns {boolean}
      */
-    execute(node, version, model) {}
+    condition(model, node, version) {}
+
+    /**
+     * @abstract
+     * @param {BaseSoftwareModel} model
+     * @param {TreeNode}  node
+     * @param {Version}   version
+     * @returns {Object}
+     */
+    execute(model, node, version) {}
+
+    /**
+     * @param attributes
+     * @param value
+     * @returns {Object}
+     */
+    static createTraits(attributes, value) {
+        var result = {};
+
+        var attr = Array.isArray(attributes) ? attributes : [attributes];
+        for (const key of attr) {
+            result[String(key)] = value;
+        }
+
+        return result;
+    }
 }
 
 module.exports = ConfigurableInterface(BaseRule);

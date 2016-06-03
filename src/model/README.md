@@ -1,6 +1,6 @@
 # A Model for Evolving Software Systems
 For the independent representation of the Attributes and Structure of the Software, the '_Model for Evolving Software Systems_' is used.
-It was introduced in "Consistent Software Cities" by Frank Steinbrückner in 2012. [Source][ConsitentCitiesPaper]
+It was introduced in "Consistent Software Cities" by Frank Steinbrückner in 2012. [Source][ConsistentCitiesPaper]
 
 ## Short Explanation
 The Model consists of the 5-tuple _(G, T, R, fe, A)_.
@@ -63,7 +63,7 @@ model.attributes(node2, version2); // Returns an Attribute Object
 
 
 # Model Extension in CCV
-```JS
+```
 @TODO
  * Liste für Messungen/Attribute + Label
  * Welche Messungen/Attribute sind Pflicht?
@@ -71,6 +71,6 @@ model.attributes(node2, version2); // Returns an Attribute Object
 ```
 
 [//]: #
-   [ConsitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
+   [ConsistentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
    [TreeNodeFile]: <components/treenode.js>
    [ZooExample]: <dummy.js>

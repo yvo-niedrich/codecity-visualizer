@@ -12,7 +12,7 @@ class Lightmap extends UniversalContainer {
         super(key, mirror);
 
         this.setDefaults({
-            "cutHorizontalFirst": true
+            'cutHorizontalFirst': true
         });
 
         this._currentDimensions = null;

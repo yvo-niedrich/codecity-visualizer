@@ -1,12 +1,12 @@
 # Creating a City
-As there are many different approaches to Code Citys, any of them can be implemented as long as the model supports all the required information.
+As there are many different approaches to Code Cities, any of them can be implemented as long as the model supports all the required information.
 
 <br />
 
 # Illustrator
 
-## Evostreets
-The main focus of the [Evostreet][ConsitentCitiesPaper] approach is long term consistency. All features introduced in the paper are implemented, but as many of these also increase the complexity and impair the general view, they can be configured and disabled (in the StreetContainer).
+## Evostreet
+The main focus of the [Evostreet][ConsistentCitiesPaper] approach is long term consistency. All features introduced in the paper are implemented, but as many of these also increase the complexity and impair the general view, they can be configured and disabled (in the StreetContainer).
 
  * `highway.length` _(Default: `40`)_ <br />
     Length of the main highway in pixels
@@ -32,7 +32,7 @@ The main focus of the [Evostreet][ConsitentCitiesPaper] approach is long term co
     Every container instance will be initialised with these options
 
 
-## Districts
+## District
 Districts implements the original Code City Layout approach by [Richard Wettel][WettelCodeCitieIO]. A platform element will be created for every node of the models hierarchy tree. It will be inserted in the `district.container` on initialisation.
 
  * `house.length` _(Default: `12`)_ <br />
@@ -134,7 +134,7 @@ District-Container accepts:
 <br />
 
 [//]: #
-   [ConsitentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
+   [ConsistentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
    [WettelCodeCitieIO]: <http://wettel.github.io/codecity.html>
    [StripTreemaps]: <http://hcil2.cs.umd.edu/trs/2001-18/2001-18.html>
    [WettelPub]: <http://wettel.github.io/publications.html>

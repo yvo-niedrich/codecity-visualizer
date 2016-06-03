@@ -6,7 +6,7 @@ module.exports = function (options = {}) {
         'max': 180,
         'logarithmic': true,
         'logexp' : 2.75,
-        'logsbase' : 3,
+        'logbase' : 3,
         'factor': 1,
         'fallback': true
     };
@@ -47,11 +47,11 @@ module.exports = function (options = {}) {
         var loc = attributes[options.metric];
 
         if (options.logarithmic) {
-            loc = Math.pow(Math.log(loc + 1) / Math.log(options.logsbase), options.logexp);
+            loc = Math.pow(Math.log(loc + 1) / Math.log(options.logbase), options.logexp);
         }
 
         loc *= options.factor;
-        
+
         var newAttributes = {};
         newAttributes[options.attribute] = Math.min(Math.max(loc, options.min), options.max);
         return newAttributes;

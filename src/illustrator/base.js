@@ -1,6 +1,7 @@
 /* eslint no-unused-vars: "off" */
 
 var ConfigurableInterface = require('./interfaces/configurable.js');
+var BaseRule = require('./rules/base.js');
 
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
@@ -49,7 +50,19 @@ class BaseIllustrator {
     applyRules(node, model, version) {
         var attributes = {};
         for (const rule of this._rules) {
-            Object.assign(attributes, rule(node, version, model));
+
+            let ruleAttr;
+            if (rule instanceof BaseRule) {
+                if (!rule.condition(model, node, version)) {
+                    continue;
+                }
+                ruleAttr = rule.execute(model, node, version);
+            } else {
+                // TODO: backwards compatible! (Finish & remove)
+                ruleAttr = rule(node, version, model)
+            }
+
+            Object.assign(attributes, ruleAttr);
         }
 
         return attributes;

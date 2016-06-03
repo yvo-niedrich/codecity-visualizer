@@ -98,10 +98,10 @@ class BaseShape {
     }
 
     /**
-     * Rotation the shape around the it's centroid.
-     * @param {number} degrees clockwise rotation
+     * Rotate the shape around the it's centroid.
+     * @param {number} degrees for a clockwise rotation
      */
-    rotate(degrees){
+    rotate (degrees) {
         if (degrees % 90) {
             throw 'Only 90° rotations allowed';
         }
