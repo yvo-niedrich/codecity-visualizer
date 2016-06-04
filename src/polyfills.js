@@ -17,9 +17,9 @@ if (isBrowser()) {
     requiredPolyfill.push(function() { require('core-js/fn/object/get-own-property-symbols.js'); });
 }
 
-for (var poly of requiredPolyfill) {
+for (let i = 0; i < requiredPolyfill.length; i++) {
     try {
-        poly();
+        requiredPolyfill[i]();
     } catch (err) {
         // Assume you did your best,
         // but you encountered IE
