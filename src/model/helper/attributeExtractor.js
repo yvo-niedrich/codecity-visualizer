@@ -22,7 +22,8 @@ class AttributeExtractor {
     }
 
     /**
-     * Returns the attributes for the Node in the Version. If it does not exist, get the attributes if the node's first appearance
+     * Returns the attributes for the Node in the Version. If it does not exist, get the attributes of the node's
+     * first appearance
      * @param {BaseSoftwareModel} model
      * @param {TreeNode} node
      * @param {Version}  version
@@ -38,12 +39,13 @@ class AttributeExtractor {
     }
 
     /**
-     * Returns the attributes for the Node in the Version. If it does not exist, get the attributes if the node's first appearance
+     * Returns the attributes for the Node in the Version. If it does not exist, get the attributes of the node's
+     * first appearance on a preceding version
      * @param {BaseSoftwareModel} model
      * @param {TreeNode} node
      * @param {Version}  version
      * @returns {Object|null}
-     * @throws Exception if no data is available
+     * @throws Exception if no data is available in range
      */
     static attrFallbackFirstAvailablePredecessor(model, node, version) {
         let vIndex = model.versions.indexOf(version);
@@ -55,8 +57,58 @@ class AttributeExtractor {
             }
         }
 
-        throw 'No data for Node ' + node + ' exist before Version ' + version;
+        throw 'No data for Node ' + node + ' existing before Version ' + version;
     }
+
+    /**
+     * Returns the attributes for the Node in the Version. If it does not exist, get the attributes if the node's
+     * first appearance on a succeeding version
+     * @param {BaseSoftwareModel} model
+     * @param {TreeNode} node
+     * @param {Version}  version
+     * @returns {Object|null}
+     * @throws Exception if no data is available in range
+     */
+    static attrFallbackFirstAvailableSuccessor(model, node, version) {
+        let vIndex = model.versions.indexOf(version);
+        let versions = model.versions.length;
+
+        while (vIndex < versions) {
+            const v = model.versions[vIndex++];
+            if (model.exists(node, v)) {
+                return model.attributes(node, v);
+            }
+        }
+
+        throw 'No data for Node ' + node + ' existing after Version ' + version;
+    }
+
+
+    /**
+     * Returns the attributes for the Node in the Version. If it does not exist, try the if the node's preceding
+     * versions, then the succeeding versions.
+     * @param {BaseSoftwareModel} model
+     * @param {TreeNode} node
+     * @param {Version}  version
+     * @returns {Object|null}
+     * @throws Exception if no data is available
+     */
+    static attrFallbackSweep(model, node, version) {
+        try {
+            return AttributeExtractor.attrFallbackFirstAvailablePredecessor(model, node, version);
+        } catch (err) {
+            // No Data available before version
+        }
+
+        try {
+            return AttributeExtractor.attrFallbackFirstAvailableSuccessor(model, node, version);
+        } catch (err) {
+            // No Data available after version
+        }
+
+        throw 'No data for Node ' + node + ' existing';
+    }
+
 
     /**
      * Returns the attributes of the node's first appearance
@@ -72,7 +124,7 @@ class AttributeExtractor {
             }
         }
 
-        throw 'No data for Node ' + node + ' exist';
+        throw 'No data for Node ' + node + ' existing';
     }
 }
 

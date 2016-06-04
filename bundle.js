@@ -34,6 +34,8 @@ module.exports = {
 
     'rules': {
         'base' : require('./lib/illustrator/rules/base.js'),
+        'universal': require('./lib/illustrator/rules/universal.js'),
+
         'math': {
             'linear'     : require('./lib/illustrator/rules/math/linear.js'),
             'logarithmic': require('./lib/illustrator/rules/math/logarithmic.js'),

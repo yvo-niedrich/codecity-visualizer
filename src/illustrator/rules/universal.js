@@ -35,7 +35,7 @@ class UniversalRule extends BaseRule {
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);
         var newValue = this.getOption('applyRule')(nodeValue);
-        return BaseRule.createTraits(this.getOption('attribute'), newValue);
+        return BaseRule.createTraits(this.getOption('attributes'), newValue);
     }
 }
 
