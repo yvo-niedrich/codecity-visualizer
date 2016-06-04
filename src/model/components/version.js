@@ -16,7 +16,7 @@ class Version {
     }
 
     /**
-     * Convert Object to String (it's key)
+     * Convert Version to String (it's key)
      * @return {string}
      */
     toString() {

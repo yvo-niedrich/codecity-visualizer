@@ -68,7 +68,7 @@ class StreetContainer extends SpecificContainer {
             }
             this._container.road = shape;
         } else {
-            throw 'Unknown Shape';
+            throw 'Unknown Shape-Type: ' + shape;
         }
     }
 

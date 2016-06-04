@@ -23,6 +23,14 @@ class BaseShape {
     }
 
     /**
+     * Convert Shape to String (it's key/name)
+     * @return {String}
+     */
+    toString() {
+        return String(this._key);
+    }
+
+    /**
      * The shape's (and it's associated model node's) identifier
      * @return {String}
      */
@@ -39,7 +47,7 @@ class BaseShape {
     }
 
     /**
-     * Set the margin for this shape
+     * Get the margin for this shape
      * @return {number}
      */
     get margin() {
@@ -56,7 +64,9 @@ class BaseShape {
 
     /**
      * Get the shape's qubic footprint (before any rotation)
+     * Intended only for private/protected use.
      * @return {Cuboid}
+     * @protected
      */
     get dimensions() {
         return this._attributes.dimensions;

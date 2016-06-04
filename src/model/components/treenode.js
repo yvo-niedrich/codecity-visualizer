@@ -14,7 +14,7 @@ class TreeNode {
     }
 
     /**
-     * Convert Object to String (it's key)
+     * Convert Node to String (it's key)
      * @return {String}
      */
     toString() {

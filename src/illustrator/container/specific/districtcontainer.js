@@ -43,7 +43,7 @@ class DistrictContainer extends SpecificContainer {
 
             this._container.platform = shape;
         } else {
-            throw 'Unbekannter Shape-Typ';
+            throw 'Unknown Shape Type: ' + shape;
         }
     }
 
@@ -58,10 +58,7 @@ class DistrictContainer extends SpecificContainer {
         this.dimensions.height  = this._container.districts.displayDimensions.height;
 
         this._createPlatform();
-
-        var margin = 2 * this.getOption('spacer.margin');
-        this.dimensions.length = margin + this.dimensions.length;
-        this.dimensions.width  = margin + this.dimensions.width;
+        this.margin = this.getOption('spacer.margin');
     }
 
     _createPlatform() {

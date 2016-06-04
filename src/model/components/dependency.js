@@ -8,7 +8,7 @@ class Dependency {
     }
 
     /**
-     * Convert Object to String
+     * Convert Dependency to String
      * @return {string}
      */
     toString() {
