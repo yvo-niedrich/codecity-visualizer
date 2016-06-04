@@ -71,7 +71,7 @@ class AttributeExtractor {
      */
     static attrFallbackFirstAvailableSuccessor(model, node, version) {
         let vIndex = model.versions.indexOf(version);
-        let versions = model.versions.length;
+        const versions = model.versions.length;
 
         while (vIndex < versions) {
             const v = model.versions[vIndex++];
