@@ -6,7 +6,7 @@ var ConfigurableInterface = require('../interfaces/configurable.js');
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
  * The container will automatically finalize, once it is drawn or it's dimensions are requested.
- *
+ * All Containers implement the Configurable Feature
  * @implements Configurable
  */
 class BaseContainer extends BaseShape {

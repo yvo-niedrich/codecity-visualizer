@@ -65,7 +65,7 @@ module.exports = function (SuperClass = Object) {
                 return true;
             }
 
-            throw 'Option ' + key + 'was not set.';
+            throw 'Option `' + key + '` was not set.';
         }
     }
 };

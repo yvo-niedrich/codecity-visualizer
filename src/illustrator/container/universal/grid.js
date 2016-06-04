@@ -25,7 +25,7 @@ class GridContainer extends UniversalContainer {
 
     finalize() {
         super.finalize();
-        
+
         if (!this._shapes.length) {
             return;
         }
@@ -34,14 +34,13 @@ class GridContainer extends UniversalContainer {
         this._activeStrip = 0;
 
         this._calculateGrid();
-        this._calcualteFinalDimensions();
+        this._calculateFinalDimensions();
         this._positionStrips();
 
         for (var s of this._strips) {
             super.add(s.container);
         }
     }
-
 
     _calculateGrid() {
         while (this._shapes.length) {
@@ -62,7 +61,7 @@ class GridContainer extends UniversalContainer {
             if (newLength / currentDimensions.width > this.getOption('optimalAspectRatio')) {
                 // 2.1) Inserting the Shape would impare aspect ratio
                 //      Try again on the next strip
-                
+
                 // If this is the last strip, create a new strip
                 if (this._activeStrip + 1 === this._strips.length) {
                     this._createNewStrip();
@@ -109,7 +108,7 @@ class GridContainer extends UniversalContainer {
         return d;
     }
     
-    _calcualteFinalDimensions() {
+    _calculateFinalDimensions() {
         var d = this._getCurrentDimensions();
         this.dimensions.length = d.length;
         this.dimensions.width  = d.width;
@@ -119,11 +118,11 @@ class GridContainer extends UniversalContainer {
     _positionStrips() {
         for (var strip of this._strips) {
             strip.container.position.x = (strip.dimensions.length - this.dimensions.length) / 2;
-            strip.container.position.y = this._calcuateYAxisPosition(strip.offset, strip.dimensions.width);
+            strip.container.position.y = this._calculateYAxisPosition(strip.offset, strip.dimensions.width);
         }
     }
 
-    _calcuateYAxisPosition(offset, width) {
+    _calculateYAxisPosition(offset, width) {
         var rowPosOffset = offset + (width / 2);
         var origin = this.dimensions.width / 2;
 

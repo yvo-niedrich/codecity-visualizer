@@ -20,7 +20,7 @@ class Lightmap extends UniversalContainer {
 
     finalize() {
         super.finalize();
-        
+
         if (!this.size) {
             return;
         }
@@ -58,7 +58,7 @@ class Lightmap extends UniversalContainer {
         var shapeDimensions = shape.displayDimensions;
         var candidates = [];
         tree.collectCandidates(candidates, shapeDimensions);
-        
+
         // Find the best possible Candidate
         // 
         // Preserver => If possible preserve the current Dimensions and 

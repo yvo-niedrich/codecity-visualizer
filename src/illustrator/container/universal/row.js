@@ -10,7 +10,7 @@ class RowContainer extends UniversalContainer {
 
     finalize() {
         super.finalize();
-        
+
         if (!this.size) {
             return;
         }
