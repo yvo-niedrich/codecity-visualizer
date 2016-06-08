@@ -1,6 +1,6 @@
 {
   "name": "codecity-visualizer",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Fully Configurable Code Visualisation Tool",
   "main": "bundle.js",
   "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
@@ -14,9 +14,10 @@
     "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
   },
   "scripts": {
-    "clean": "rimraf lib",
-    "lint": "eslint src",
-    "build": "npm run lint --silent && npm run clean && babel src --out-dir lib",
+    "clean": "rimraf lib && echo \" Cleaning successful \" ",
+    "lint": "eslint src && echo \" Linting successful \"",
+    "babel": "babel src --out-dir lib && echo \" ES6-Conversion successful \"",
+    "build": "npm run lint --silent && npm run clean --silent && npm run babel --silent",
     "publish-patch": "npm run build && npm version patch && npm publish",
     "test": "echo \" No Tests... \" && exit 1"
   },

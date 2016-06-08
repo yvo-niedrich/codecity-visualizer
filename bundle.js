@@ -44,18 +44,10 @@ module.exports = {
         'color': {
             'gradient'   : require('./lib/illustrator/rules/color/gradient.js'),
             'assigned'   : require('./lib/illustrator/rules/color/assigned.js')
-        },
-
-        // TODO: Refactor and remove
-        'editor-to-width':             require("./lib/illustrator/rules/old/editor-to-width.js"),
-        'lighten-platform-with-level': require("./lib/illustrator/rules/old/lighten-platform-with-level.js"),
-        'loc-to-height':               require("./lib/illustrator/rules/old/loc-to-height.js"),
-        'opacity-if-not-in-version':   require("./lib/illustrator/rules/old/opacity-if-not-in-version.js"),
-        'package-to-color':            require("./lib/illustrator/rules/old/package-to-color.js"),
-        'save-first-version':          require("./lib/illustrator/rules/old/save-first-version.js")
+        }
     },
 
     'helper': {
-        'attribute-extractor': require('./lib/model/helper/attributeExtractor.js')
+        'attributes': require('./lib/model/helper/attributeExtractor.js')
     }
 };
