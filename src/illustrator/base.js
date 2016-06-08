@@ -50,19 +50,9 @@ class BaseIllustrator {
     applyRules(node, model, version) {
         var attributes = {};
         for (const rule of this._rules) {
-
-            let ruleAttr;
-            if (rule instanceof BaseRule) {
-                if (!rule.condition(model, node, version)) {
-                    continue;
-                }
-                ruleAttr = rule.execute(model, node, version);
-            } else {
-                // TODO: backwards compatible! (Finish & remove)
-                ruleAttr = rule(node, version, model)
+            if (rule instanceof BaseRule && rule.condition(model, node, version)) {
+                Object.assign(attributes, rule.execute(model, node, version));
             }
-
-            Object.assign(attributes, ruleAttr);
         }
 
         return attributes;
