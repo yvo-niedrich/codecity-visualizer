@@ -17,7 +17,6 @@ class ZooModel extends BaseModel {
         tree.find('mammals').add('bentaltiger');
         tree.find('mammals').add('zebra');
         tree.find('mammals').add('elephant');
-        tree.find('mammals').add('hyena');
         tree.find('mammals').add('monkeys');
         tree.find('monkeys').add('callitrichidae');
         tree.find('callitrichidae').add('marmoset');
@@ -71,6 +70,8 @@ class ZooModel extends BaseModel {
         tree.find('marine').add('manatee');
         tree.find('marine').add('sealion');
         tree.find('marine').add('otter');
+        tree.find('mammals').add('hyena');
+        tree.find('hyena').add('spottedhyena');
         tree.add('reptiles');
         tree.find('reptiles').add('gecko');
         tree.find('reptiles').add('tortoise');
