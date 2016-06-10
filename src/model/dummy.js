@@ -71,7 +71,9 @@ class ZooModel extends BaseModel {
         tree.find('marine').add('sealion');
         tree.find('marine').add('otter');
         tree.find('mammals').add('hyena');
-        tree.find('hyena').add('spottedhyena');
+        tree.find('hyena').add('hyena1');
+        tree.find('hyena1').add('hyena2');
+        tree.find('hyena2').add('spottedhyena');
         tree.add('reptiles');
         tree.find('reptiles').add('gecko');
         tree.find('reptiles').add('tortoise');

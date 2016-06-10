@@ -52,7 +52,9 @@ class District extends BaseIllustrator {
             return this._createHouse(tree, version);
         }
 
-        if (tree.children.length === 1 && !this.getOption('layout.towers')) {
+        if (!this.getOption('layout.towers') &&
+            tree.children.length === 1 &&
+            tree.children[0].children.length) {
             return this._createSpatialModel(tree.children[0], version)
         }
 

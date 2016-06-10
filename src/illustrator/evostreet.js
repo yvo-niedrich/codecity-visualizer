@@ -16,6 +16,8 @@ class Evostreet extends BaseIllustrator {
         this._model = model;
         this.setOptions(options);
         this.setDefaults({
+            'layout.snail': true,
+
             'highway.length': 40,
             'highway.color': 0x156289,
 
@@ -51,6 +53,12 @@ class Evostreet extends BaseIllustrator {
     _createSpatialModel(tree, version) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
+        }
+
+        if (!this.getOption('layout.snail') &&
+            tree.children.length === 1 &&
+            tree.children[0].children.length) {
+            return this._createSpatialModel(tree.children[0], version)
         }
 
         var cClass = this.getOption('evostreet.container');

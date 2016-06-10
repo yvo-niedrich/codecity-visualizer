@@ -8,6 +8,8 @@ As there are many different approaches to Code Cities, any of them can be implem
 ## Evostreet
 The main focus of the [Evostreet][ConsistentCitiesPaper] approach is long term consistency. All features introduced in the paper are implemented, but as many of these also increase the complexity and impair the general view, they can be configured and disabled (in the StreetContainer).
 
+ * `layout.snail` _(Default: `true`)_<br />
+    Will prevent "Snails" If set to `false`. _(A snail is a series of winding streets, without houses.)_
  * `highway.length` _(Default: `40`)_ <br />
     Length of the main highway in pixels
  * `highway.color` _(Default: `0x156289`)_ <br />
@@ -36,8 +38,7 @@ The main focus of the [Evostreet][ConsistentCitiesPaper] approach is long term c
 Districts implements the original Code City Layout approach by [Richard Wettel][WettelCodeCitieIO]. A platform element will be created for every node of the models hierarchy tree. It will be inserted in the `district.container` on initialisation.
 
  * `layout.towers` _(Default: `true`)_<br />
-    Will prevent "Towers" If set to `false`. <br />
-    _A Tower is a structure, containing only single Element._
+    Will prevent "Towers" If set to `false`. _(A Tower is a stack of platforms.)_
  * `house.length` _(Default: `12`)_ <br />
     Length of the the houses in pixels
  * `house.width` _(Default: `12`)_ <br />
