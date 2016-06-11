@@ -50,7 +50,7 @@ class Evostreet extends BaseIllustrator {
         return illustration;
     }
 
-    _createSpatialModel(tree, version) {
+    _createSpatialModel(tree, version, skipedRoot = false) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
         }
@@ -58,7 +58,7 @@ class Evostreet extends BaseIllustrator {
         if (!this.getOption('layout.snail') &&
             tree.children.length === 1 &&
             tree.children[0].children.length) {
-            return this._createSpatialModel(tree.children[0], version)
+            return this._createSpatialModel(tree.children[0], version, skipedRoot || tree.parent === null);
         }
 
         var cClass = this.getOption('evostreet.container');
@@ -68,7 +68,7 @@ class Evostreet extends BaseIllustrator {
             container.add(this._createSpatialModel(child, version));
         }
 
-        if (tree.parent === null) {
+        if (tree.parent === null || skipedRoot) {
             container.add(this._createHighway(tree, version));
         } else {
             container.add(this._createStreet(tree, version));
