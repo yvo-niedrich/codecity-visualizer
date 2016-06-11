@@ -59,7 +59,7 @@ class District extends BaseIllustrator {
         }
 
         const cClass = this.getOption('district.container');
-        const container = new cClass(tree, this.getOption('district.options'));
+        const container = new cClass(tree + '_c', this.getOption('district.options'));
         container.add(this._createPlatform(tree, version));
 
         for (const child of tree.children) {
@@ -90,7 +90,7 @@ class District extends BaseIllustrator {
             'dimensions.height': this.getOption('platform.height')
         };
 
-        var platform = new ShapePlatform(node.key + '_p');
+        var platform = new ShapePlatform(node);
         platform.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
 
         return platform;
