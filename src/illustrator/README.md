@@ -37,7 +37,7 @@ The main focus of the [Evostreet][ConsistentCitiesPaper] approach is long term c
 ## District
 Districts implements the original Code City Layout approach by [Richard Wettel][WettelCodeCitieIO]. A platform element will be created for every node of the models hierarchy tree. It will be inserted in the `district.container` on initialisation.
 
- * `layout.towers` _(Default: `true`)_<br />
+ * `layout.tower` _(Default: `true`)_<br />
     Will prevent "Towers" If set to `false`. _(A Tower is a stack of platforms.)_
  * `house.length` _(Default: `12`)_ <br />
     Length of the the houses in pixels

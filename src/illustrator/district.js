@@ -16,7 +16,7 @@ class District extends BaseIllustrator {
         this._model = model;
         this.setOptions(options);
         this.setDefaults({
-            'layout.towers': true,
+            'layout.tower': true,
 
             'house.length': 12,
             'house.width': 12,
@@ -52,7 +52,7 @@ class District extends BaseIllustrator {
             return this._createHouse(tree, version);
         }
 
-        if (!this.getOption('layout.towers') &&
+        if (!this.getOption('layout.tower') &&
             tree.children.length === 1 &&
             tree.children[0].children.length) {
             return this._createSpatialModel(tree.children[0], version)
