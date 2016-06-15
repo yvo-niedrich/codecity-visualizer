@@ -47,15 +47,16 @@
     },
     "extends": "eslint:recommended",
     "rules": {
+      "no-eval": "error",
+      "no-self-compare": "error",
+      "complexity" : "error",
       "yoda": [
         "error",
         "never",
         {
           "exceptRange": true
         }
-      ],
-      "no-eval": "error",
-      "no-self-compare": "error"
+      ]
     }
   }
 }

@@ -15,7 +15,7 @@ class BaseIllustrator {
      * @return {BaseIllustrator}
      */
     constructor(model, options) {
-        this._rules = [];
+        this._illustratorRules = [];
     }
 
     /**
@@ -35,7 +35,7 @@ class BaseIllustrator {
      * @param {function} rule
      */
     addRule(rule) {
-        this._rules.push(rule);
+        this._illustratorRules.push(rule);
     }
 
     /**
@@ -49,7 +49,7 @@ class BaseIllustrator {
      */
     applyRules(node, model, version) {
         var attributes = {};
-        for (const rule of this._rules) {
+        for (const rule of this._illustratorRules) {
             if (rule instanceof BaseRule && rule.condition(model, node, version)) {
                 Object.assign(attributes, rule.execute(model, node, version));
             }

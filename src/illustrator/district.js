@@ -12,7 +12,6 @@ class District extends BaseIllustrator {
     constructor(model, options = {}) {
         super(model, options);
 
-        this._rules = [];
         this._model = model;
         this.setOptions(options);
         this.setDefaults({
