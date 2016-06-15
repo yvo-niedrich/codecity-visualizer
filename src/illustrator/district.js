@@ -52,14 +52,11 @@ class District extends BaseIllustrator {
             return this._createHouse(tree, version);
         }
 
-        if (!this.getOption('layout.tower') &&
-            tree.children.length === 1 &&
-            tree.children[0].children.length) {
+        if (this._preventTower(tree)) {
             return this._createSpatialModel(tree.children[0], version)
         }
 
-        const cClass = this.getOption('district.container');
-        const container = new cClass(tree + '_c', this.getOption('district.options'));
+        const container = this._createContainer(tree);
         container.add(this._createPlatform(tree, version));
 
         for (const child of tree.children) {
@@ -67,6 +64,17 @@ class District extends BaseIllustrator {
         }
 
         return container;
+    }
+
+    _preventTower(node) {
+        return !this.getOption('layout.tower') &&
+            node.children.length === 1 &&
+            node.children[0].children.length;
+    }
+
+    _createContainer(name) {
+        var cClass = this.getOption('evostreet.container');
+        return new cClass(name + '_c', this.getOption('evostreet.options'));
     }
 
     _createHouse(node, version) {

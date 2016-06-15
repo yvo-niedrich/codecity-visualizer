@@ -12,7 +12,6 @@ class Evostreet extends BaseIllustrator {
     constructor(model, options = {}) {
         super();
 
-        this._rules = [];
         this._model = model;
         this.setOptions(options);
         this.setDefaults({
@@ -50,31 +49,42 @@ class Evostreet extends BaseIllustrator {
         return illustration;
     }
 
-    _createSpatialModel(tree, version, skipedRoot = false) {
+    _createSpatialModel(tree, version, skippedRoot = false) {
         if (!tree.children.length) {
             return this._createHouse(tree, version);
         }
 
-        if (!this.getOption('layout.snail') &&
-            tree.children.length === 1 &&
-            tree.children[0].children.length) {
-            return this._createSpatialModel(tree.children[0], version, skipedRoot || tree.parent === null);
+        if (this._preventSnail(tree)) {
+            return this._createSpatialModel(tree.children[0], version, skippedRoot || tree.parent === null);
         }
 
-        var cClass = this.getOption('evostreet.container');
-        var container = new cClass(tree, this.getOption('evostreet.options'));
+        const container = this._createContainer(tree);
+        container.add(this._createRoad(tree, version, skippedRoot));
 
         for (var child of tree.children) {
             container.add(this._createSpatialModel(child, version));
         }
 
-        if (tree.parent === null || skipedRoot) {
-            container.add(this._createHighway(tree, version));
-        } else {
-            container.add(this._createStreet(tree, version));
-        }
-
         return container;
+    }
+
+    _preventSnail(node) {
+        return !this.getOption('layout.snail') &&
+            node.children.length === 1 &&
+            node.children[0].children.length;
+    }
+    
+    _createContainer(name) {
+        var cClass = this.getOption('evostreet.container');
+        return new cClass(name + '_c', this.getOption('evostreet.options'));
+    }
+
+    _createRoad(node, version, forceRoot = false) {
+        if (node.parent === null || forceRoot) {
+            return this._createHighway(node, version);
+        } else {
+            return this._createStreet(node, version);
+        }
     }
 
     _createHighway(node, version) {
