@@ -59,7 +59,9 @@ class District extends BaseIllustrator {
         container.add(this._createPlatform(tree, version));
 
         for (const child of tree.children) {
-            container.add(this._createSpatialModel(child, version));
+            if (this._model.exists(child, version)) {
+                container.add(this._createSpatialModel(child, version));
+            }
         }
 
         return container;
