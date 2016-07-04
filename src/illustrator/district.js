@@ -74,8 +74,8 @@ class District extends BaseIllustrator {
     }
 
     _createContainer(name) {
-        var cClass = this.getOption('evostreet.container');
-        return new cClass(name + '_c', this.getOption('evostreet.options'));
+        var cClass = this.getOption('district.container');
+        return new cClass(name + '_c', this.getOption('district.options'));
     }
 
     _createHouse(node, version) {
