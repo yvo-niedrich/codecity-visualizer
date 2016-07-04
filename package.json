@@ -1,6 +1,6 @@
 {
   "name": "codecity-visualizer",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Fully Configurable Code Visualisation Tool",
   "main": "bundle.js",
   "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
