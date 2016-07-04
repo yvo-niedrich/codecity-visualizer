@@ -184,6 +184,13 @@ class BaseShape {
         }
     }
 
+    /**
+     * Updates a single value within the attributes object
+     * @param obj   attributes object
+     * @param keys  exploded, chained key
+     * @param value value to be set
+     * @private
+     */
     _updateAttribute(obj, keys, value) {
         var k = keys.shift();
         if (!keys.length) {
