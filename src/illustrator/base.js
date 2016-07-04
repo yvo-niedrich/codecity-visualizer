@@ -5,7 +5,6 @@ var BaseRule = require('./rules/base.js');
 
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
- *
  * @implements Configurable
  */
 class BaseIllustrator {

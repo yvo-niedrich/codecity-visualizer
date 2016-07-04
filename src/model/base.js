@@ -9,7 +9,7 @@ class BaseSoftwareModel {
     /**
      * Get the Models Graph. A List of Objects, connecting `source` and `target`.
      * @abstract
-     * @return {object}
+     * @return {Array<Dependency>}
      */
     get graph() {}
 
