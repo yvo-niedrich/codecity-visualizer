@@ -1,7 +1,6 @@
 module.exports = function (SuperClass = Object) {
     /**
      * Classes can implement this Feature to become Configurable
-     *
      * @interface Configurable
      */
     return class Configurable extends SuperClass {
