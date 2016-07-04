@@ -1,21 +1,19 @@
 var District = require('../lib/illustrator/district');
 var Evostreet = require('../lib/illustrator/evostreet');
 var attributeHelper = require('../lib/model/helper/attributeExtractor');
-var ExponentRule = require('../lib/illustrator/rules/math/linear');
+var Rule = require('../lib/illustrator/rules/math/linear');
 var Model = require('../lib/model/dummy');
 
 var model = new Model();
-var rule = new ExponentRule({
+var rule = new Rule({
     'condition': function(model, node) { return node.children.length === 0; },
     'metric': function(model, node, version) {
         const attr = attributeHelper.attrFallbackSweep(model, node, version);
-        return ('editors' in attr) ? attr['editors'] : 0;
+        return ('loc' in attr) ? attr['loc'] : 0;
     },
     'attributes': ['dimensions.length', 'dimensions.width'],
-    'min': 10,
-    'max': 65,
-    'logexp': 2.95,
-    'logbase': 2
+    'min': 2,
+    'max': 40
 });
 
 describe("Evostreet", function() {
