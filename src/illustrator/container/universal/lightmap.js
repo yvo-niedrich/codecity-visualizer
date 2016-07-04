@@ -57,7 +57,16 @@ class Lightmap extends UniversalContainer {
     _addShapeToTree(shape, tree) {
         var shapeDimensions = shape.displayDimensions;
         var candidates = [];
+
+        if (!shapeDimensions.length || !shapeDimensions.width) {
+            return;
+        }
+
         tree.collectCandidates(candidates, shapeDimensions);
+
+        if (!candidates.length) {
+            throw "Could not find a single candidate. This should never happen!"
+        }
 
         // Find the best possible Candidate
         // 

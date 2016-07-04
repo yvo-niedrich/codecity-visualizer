@@ -1,7 +1,7 @@
 var Cuboid = require("../../components/cuboid.js");
 var Point  = require("../../components/point.js");
 
-class Lighttree {
+class LightTreeNode {
     constructor(origin, dimensions) {
         this._origin = origin;
         this._dimensions = dimensions;
@@ -93,7 +93,7 @@ class Lighttree {
                 width,
                 this.dimensions.height
             );
-            this._children.push(new Lighttree(o1, d1));
+            this._children.push(new LightTreeNode(o1, d1));
 
             var o2 = new Point(
                 this.origin.x,
@@ -105,7 +105,7 @@ class Lighttree {
                 this.dimensions.width - width,
                 this.dimensions.height
             );
-            this._children.push(new Lighttree(o2, d2));
+            this._children.push(new LightTreeNode(o2, d2));
         }
     }
 
@@ -124,7 +124,7 @@ class Lighttree {
                 this.dimensions.width,
                 this.dimensions.height
             );
-            this._children.push(new Lighttree(o1, d1));
+            this._children.push(new LightTreeNode(o1, d1));
 
             var o2 = new Point(
                 this.origin.x + length,
@@ -136,9 +136,9 @@ class Lighttree {
                 this.dimensions.width,
                 this.dimensions.height
             );
-            this._children.push(new Lighttree(o2, d2));
+            this._children.push(new LightTreeNode(o2, d2));
         }
     }
 }
 
-module.exports = Lighttree;
+module.exports = LightTreeNode;
