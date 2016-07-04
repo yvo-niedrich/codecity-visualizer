@@ -14,10 +14,10 @@
     "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
   },
   "scripts": {
-    "lint": "eslint src",
-    "test": "eslint spec && jasmine",
-    "babel": "rimraf lib && babel src --out-dir lib",
-    "build": "npm run lint --silent && npm run test --silent && npm run babel --silent",
+    "lint": "eslint src && eslint spec",
+    "test": "jasmine",
+    "compile": "rimraf lib && babel src --out-dir lib",
+    "build": "npm run test --silent && npm run lint --silent && npm run compile --silent",
     "publish-patch": "npm run build --silent && npm version patch && npm publish"
   },
   "dependencies": {
