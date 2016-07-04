@@ -9,7 +9,7 @@ class LinearRule extends BaseRule {
         this.setDefaults({
             'condition': function(model, node, version) { return true; },
             'metric': function(model, node, version) { return 0; },
-            'min': 0,
+            'min': 1,
             'max': Infinity,
             'initial': 0,
             'factor': 1
@@ -39,7 +39,7 @@ class LinearRule extends BaseRule {
     execute(model, node, version) {
         var nodeValue = this.getOption('metric')(model, node, version);
         var newValue = this._linearFunction(nodeValue);
-        return BaseRule.createTraits(this.getOption('attribute'), newValue);
+        return BaseRule.createTraits(this.getOption('attributes'), newValue);
     }
 
     /**
