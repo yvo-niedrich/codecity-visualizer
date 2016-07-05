@@ -20,6 +20,8 @@ describe("Color/Assigned", function () {
         expect(res1.testResult).not.toBeUndefined();
         expect(res2.testResult).not.toBeUndefined();
         expect(res1.testResult).not.toBe(res2.testResult);
+        expect(0x000000 <= res1.testResult && res1.testResult <= 0xFFFFFF).toBeTruthy();
+        expect(0x000000 <= res2.testResult && res2.testResult <= 0xFFFFFF).toBeTruthy();
     });
 });
 
@@ -77,5 +79,71 @@ describe("Math/Exponential", function () {
 
         expect(res1.testResult).toBe(0);
         expect(res2.testResult).toBe(10000);
+    });
+});
+
+describe("Math/Logarithmic", function () {
+    it('logarithmic function works', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(1);
+        expect(res2.testResult).toBeCloseTo(5.67, 1);
+    });
+
+    it('logarithmic function works with other bases', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'attributes': 'testResult',
+            'logbase': 3.21
+        };
+
+        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBeCloseTo(0.6, 1);
+        expect(res2.testResult).toBeCloseTo(3.37, 2);
+    });
+});
+
+describe("Math/Linear", function () {
+    it('Linear function works', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(21);
+        expect(res2.testResult).toBe(6);
+    });
+
+    it('Linear function scales', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'attributes': 'testResult',
+            'factor': 1.5
+        };
+
+        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(31.5);
+        expect(res2.testResult).toBe(9);
     });
 });
