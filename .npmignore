@@ -1,4 +1,6 @@
 node_modules
+.gitlab-ci.yml
+
 out
 *.tgz
 *.log
