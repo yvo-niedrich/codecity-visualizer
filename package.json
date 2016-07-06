@@ -2,7 +2,7 @@
   "name": "codecity-visualizer",
   "version": "0.2.11",
   "description": "Fully Configurable Code Visualisation Tool",
-  "main": "bundle.js",
+  "main": "app.js",
   "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
   "license": "MIT",
   "keywords": [
@@ -24,7 +24,7 @@
 
     "test:build": "jasmine",
 
-    "build:prepare": "rimraf lib",
+    "build:prepare": "rimraf lib && npm run build:clean -s",
     "build:compile": "tsc -p src && babel tmp --out-dir lib",
     "build:clean": "rimraf tmp",
 
