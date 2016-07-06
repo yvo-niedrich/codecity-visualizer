@@ -9,13 +9,6 @@ stages:
   - test
   - deploy
 
-## -------------
-## Setup Project
-## -------------
-
-setup:npm:
-  stage: setup
-  script:
 
 ## --------------
 ## Builds Project
