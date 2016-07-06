@@ -5,6 +5,7 @@ cache:
   - node_modules/
 
 stages:
+  - setup
   - build
   - test
   - deploy
@@ -14,6 +15,15 @@ stages:
 ## Builds Project
 ## --------------
 
+setup:npm:
+  stage: setup
+  script:
+    - npm install
+  artifacts:
+    expire_in: 1 day
+    paths:
+      - node_modules/
+
 build:npm:
   stage: build
   script:
@@ -22,8 +32,9 @@ build:npm:
   artifacts:
     expire_in: 1 day
     paths:
-      - node_modules/
       - lib/
+  dependencies:
+    - setup:npm
 
 ## ------------
 ## Test Project
