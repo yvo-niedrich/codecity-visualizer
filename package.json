@@ -14,11 +14,22 @@
     "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
   },
   "scripts": {
-    "lint": "eslint src && eslint spec",
-    "test": "jasmine",
-    "compile": "rimraf lib && babel src --out-dir lib",
-    "build": "npm run test --silent && npm run lint --silent && npm run compile --silent",
-    "publish-patch": "npm run build --silent && npm version patch && npm publish"
+    "lint": "npm run lint:tests -s && npm run lint:source -s",
+    "test": "npm run test:build -s",
+    "build": "npm run build:prepare -s && npm run build:compile -s && npm run build:clean -s",
+    "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
+
+    "lint:tests": "eslint spec",
+    "lint:source": "eslint src",
+
+    "test:build": "jasmine",
+
+    "build:prepare": "rimraf lib",
+    "build:compile": "tsc -p src && babel tmp --out-dir lib",
+    "build:clean": "rimraf tmp",
+
+    "publish:build": "npm run lint -s && npm test -s && npm build -s",
+    "publish:patch": "npm version patch && npm publish"
   },
   "dependencies": {
     "core-js": "^2.4.0"
@@ -29,7 +40,8 @@
     "eslint": "^2.11.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "jasmine": "^2.4.1",
-    "rimraf": "latest"
+    "rimraf": "latest",
+    "typescript": "^1.8.10"
   },
   "babel": {
     "presets": [

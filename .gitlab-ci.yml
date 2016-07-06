@@ -18,7 +18,7 @@ build:npm:
   stage: build
   script:
     - npm install
-    - npm run compile
+    - npm run build
   artifacts:
     expire_in: 1 day
     paths:
