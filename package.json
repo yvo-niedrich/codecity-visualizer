@@ -45,7 +45,6 @@
       "sourceType": "script"
     },
     "env": {
-      "browser": true,
       "node": true,
       "jasmine": true
     },
