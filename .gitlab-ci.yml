@@ -47,6 +47,7 @@ test:lint:
   script:
     - npm run lint
   dependencies:
+    - setup:npm
     - build:npm
 
 
@@ -55,4 +56,5 @@ test:jasmine:
   script:
     - npm run test
   dependencies:
+    - setup:npm
     - build:npm
