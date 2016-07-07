@@ -12,7 +12,7 @@ stages:
 
 
 ## --------------
-## Builds Project
+## Setup Process
 ## --------------
 
 setup:npm:
@@ -23,6 +23,10 @@ setup:npm:
     expire_in: 1 day
     paths:
       - node_modules/
+
+## --------------
+## Build Project
+## --------------
 
 build:npm:
   stage: build
