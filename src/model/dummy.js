@@ -1,7 +1,7 @@
 var BaseModel  = require("./base.js");
-var TreeNode   = require("./components/treenode.js");
-var Version    = require("./components/version.js");
-var Dependency = require("./components/dependency.js");
+var TreeNode   = require("./components/TreeNode");
+var Version    = require("./components/Version");
+var Dependency = require("./components/Dependency");
 
 /**
  * ZooModel returning animals

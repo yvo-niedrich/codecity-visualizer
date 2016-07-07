@@ -7,9 +7,9 @@ module.exports = {
     },
 
     'components': {
-        'dependency': require("./lib/model/components/dependency.js"),
-        'version':    require("./lib/model/components/version.js"),
-        'node':       require("./lib/model/components/treenode.js")
+        'dependency': require("./lib/model/components/Dependency.js"),
+        'version':    require("./lib/model/components/Version.js"),
+        'node':       require("./lib/model/components/TreeNode.js")
     },
 
     'illustrators': {
