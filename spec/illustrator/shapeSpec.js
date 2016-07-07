@@ -1,4 +1,4 @@
-var BaseShape = require('../../lib/illustrator/shapes/base');
+var BaseShape = require('../../app').shapes.base;
 
 describe("Shape", function () {
     it('updates it\'s size', function () {

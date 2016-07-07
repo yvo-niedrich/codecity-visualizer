@@ -1,7 +1,8 @@
-var RowContainer = require('../../lib/illustrator/container/universal/row');
-var GridContainer = require('../../lib/illustrator/container/universal/grid');
-var LightmapContainer = require('../../lib/illustrator/container/universal/lightmap');
-var Shape = require('../../lib/illustrator/shapes/base');
+var CCV = require('../../app');
+var RowContainer = CCV.containers.row;
+var GridContainer = CCV.containers.grid;
+var LightmapContainer = CCV.containers.lightmap;
+var Shape = CCV.shapes.base;
 var Point = require('../../lib/illustrator/components/point');
 
 describe("RowContainer", function () {

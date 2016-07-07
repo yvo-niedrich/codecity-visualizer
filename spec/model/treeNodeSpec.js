@@ -1,4 +1,5 @@
-var TreeNode = require('../../lib/model/components/treenode');
+var CCV = require('../../app');
+var TreeNode = CCV.components.node;
 
 describe("TreeNode", function() {
 

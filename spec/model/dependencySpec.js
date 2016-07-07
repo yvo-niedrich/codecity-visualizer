@@ -1,5 +1,6 @@
-var Dependency = require('../../lib/model/components/dependency');
-var TreeNode = require('../../lib/model/components/treenode');
+var CCV = require('../../app');
+var Dependency = CCV.components.dependency;
+var TreeNode = CCV.components.node;
 
 describe("Dependency", function() {
     it("sets Source and Target as expected", function() {

@@ -1,4 +1,5 @@
 var JasmineRuleModel = require('./helper/jasmineRuleModel');
+var CCV = require('../../app');
 
 const m = new JasmineRuleModel();
 const root = m.tree;
@@ -13,7 +14,7 @@ describe("Color/Assigned", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/assigned'))(options);
+        var rule = new CCV.rules.color.assigned(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
         
@@ -37,7 +38,7 @@ describe("Color/Gradient", function () {
             'maxColor': 0xFF0000
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/gradient'))(options);
+        var rule = new CCV.rules.color.gradient(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -56,7 +57,7 @@ describe("Color/Gradient", function () {
             'maxColor': 0xFF0000
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/gradient'))(options);
+        var rule = new CCV.rules.color.gradient(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -73,7 +74,7 @@ describe("Math/Exponential", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/exponential'))(options);
+        var rule = new CCV.rules.math.exponential(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -90,7 +91,7 @@ describe("Math/Logarithmic", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var rule = new CCV.rules.math.logarithmic(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -106,7 +107,7 @@ describe("Math/Logarithmic", function () {
             'logbase': 3.21
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var rule = new CCV.rules.math.logarithmic(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -123,7 +124,7 @@ describe("Math/Linear", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var rule = new CCV.rules.math.linear(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -139,7 +140,7 @@ describe("Math/Linear", function () {
             'factor': 1.5
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var rule = new CCV.rules.math.linear(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
