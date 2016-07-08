@@ -17,7 +17,7 @@ class Dependency {
      * Convert Dependency to String
      * @return {string}
      */
-    public toString(): String {
+    public toString(): string {
         return this.source + " -> + " + this.target;
     }
 }

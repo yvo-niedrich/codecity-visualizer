@@ -4,9 +4,9 @@ class TreeNode {
 
     // TODO: TypeScript 2.0 -> readonly!
     public children: Array<TreeNode>;
-    private key: String;
+    private key: string;
 
-    constructor(key: String) {
+    constructor(key: string) {
         this.key      = key;
         this.children = [];
         this.parent   = null;
@@ -16,7 +16,7 @@ class TreeNode {
      * Convert Node to String (it's key)
      * @return {String}
      */
-    public toString(): String {
+    public toString(): string {
         return this.key;
     }
 
@@ -39,9 +39,9 @@ class TreeNode {
     /**
      * Find recursively finds the node. If it is not part of the tree, return false [depth-first search]
      * @param  {string} key Item to find
-     * @return {boolean|TreeNode}
+     * @return {TreeNode}
      */
-    public find(key: TreeNode|String): TreeNode|boolean {
+    public find(key: TreeNode|string): TreeNode {
         if (this.toString() === key.toString()) {
             return this;
         }
@@ -53,7 +53,7 @@ class TreeNode {
             }
         }
 
-        return false;
+        return null;
     }
 }
 
