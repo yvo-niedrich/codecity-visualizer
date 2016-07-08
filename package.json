@@ -19,14 +19,16 @@
     "build": "npm run build:prepare -s && npm run build:compile -s && npm run build:clean -s",
     "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
     "lint:js": "npm run lint:js:tests -s && npm run lint:js:source -s",
-    "lint:js:tests": "eslint -c cfg/eslint.json spec",
-    "lint:js:source": "eslint -c cfg/eslint.json src",
+    "lint:js:tests": "eslint -c cfg/.eslintrc spec",
+    "lint:js:source": "eslint -c cfg/.eslintrc src",
     "lint:ts": "npm run lint:ts:tests -s && npm run lint:ts:source -s",
     "lint:ts:tests": "tslint -c cfg/tslint.json 'spec/**/*.ts?(x)'",
     "lint:ts:source": "tslint -c cfg/tslint.json 'src/**/*.ts?(x)'",
     "test:build": "jasmine",
     "build:prepare": "rimraf lib && npm run build:clean -s",
-    "build:compile": "tsc -p src && babel tmp --out-dir lib",
+    "build:compile": "npm run build:compile:typescript -s && npm run build:compile:babel -s",
+    "build:compile:typescript": "tsc -p src --outDir tmp",
+    "build:compile:babel": "babel tmp --out-dir lib",
     "build:clean": "rimraf tmp",
     "publish:build": "npm run build -s && npm run lint -s && npm test -s",
     "publish:patch": "npm version patch && npm publish"
@@ -44,13 +46,5 @@
     "rimraf": "latest",
     "tslint": "^3.13.0",
     "typescript": "^1.8.10"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ],
-    "plugins": [
-      "add-module-exports"
-    ]
   }
 }
