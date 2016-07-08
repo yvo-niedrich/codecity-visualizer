@@ -1,8 +1,9 @@
-var District = require('../lib/illustrator/district');
-var Evostreet = require('../lib/illustrator/evostreet');
-var attributeHelper = require('../lib/model/helper/attributeExtractor');
-var Rule = require('../lib/illustrator/rules/math/linear');
-var Model = require('../lib/model/dummy');
+var CCV = require('../app');
+var District = CCV.illustrators.district;
+var Evostreet = CCV.illustrators.evostreet;
+var attributeHelper = CCV.helper.attributes;
+var Rule = CCV.rules.math.linear;
+var Model = CCV.models.dummy;
 
 var model = new Model();
 var rule = new Rule({
