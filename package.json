@@ -1,50 +1,81 @@
 {
-  "name": "codecity-visualizer",
-  "version": "0.2.11",
-  "description": "Fully Configurable Code Visualisation Tool",
-  "main": "app.js",
-  "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "codecity",
-    "visualisation"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
-  },
-  "scripts": {
-    "lint": "npm run lint:ts -s && npm run lint:js -s",
-    "test": "npm run test:build -s",
-    "build": "npm run build:prepare -s && npm run build:compile -s && npm run build:clean -s",
-    "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
-    "lint:js": "npm run lint:js:tests -s && npm run lint:js:source -s",
-    "lint:js:tests": "eslint -c cfg/.eslintrc spec",
-    "lint:js:source": "eslint -c cfg/.eslintrc src",
-    "lint:ts": "npm run lint:ts:tests -s && npm run lint:ts:source -s",
-    "lint:ts:tests": "tslint -c cfg/tslint.json 'spec/**/*.ts?(x)'",
-    "lint:ts:source": "tslint -c cfg/tslint.json 'src/**/*.ts?(x)'",
-    "test:build": "jasmine",
-    "build:prepare": "rimraf lib && npm run build:clean -s",
-    "build:compile": "npm run build:compile:typescript -s && npm run build:compile:babel -s",
-    "build:compile:typescript": "tsc -p src --outDir tmp",
-    "build:compile:babel": "babel tmp --out-dir lib",
-    "build:clean": "rimraf tmp",
-    "publish:build": "npm run build -s && npm run lint -s && npm test -s",
-    "publish:patch": "npm version patch && npm publish"
-  },
-  "dependencies": {
-    "core-js": "^2.4.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.9.0",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-preset-es2015": "^6.6.0",
-    "eslint": "^2.11.0",
-    "eslint-plugin-jasmine": "^1.8.1",
-    "jasmine": "^2.4.1",
-    "rimraf": "latest",
-    "tslint": "^3.13.0",
-    "typescript": "^1.8.10"
-  }
+    "name": "codecity-visualizer",
+    "version": "0.2.11",
+    "description": "Fully Configurable Code Visualisation Tool",
+    "main": "app.js",
+    "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "codecity",
+        "visualisation"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
+    },
+    "scripts": {
+        "lint": "npm run lint:sources -s && npm run lint:tests -s",
+        "test": "jasmine",
+        "build": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
+        "clean": "rimraf tmp && rimraf lib",
+        "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
+        "lint:sources": "eslint src && tslint 'src/**/*.ts?(x)'",
+        "lint:tests": "eslint spec && tslint 'spec/**/*.ts?(x)'",
+        "prebuild": "npm run lint:sources -s && npm run clean -s",
+        "postbuild": "rimraf tmp",
+        "pretest": "npm run lint:tests -s",
+        "publish:build": "npm run build -s && npm test -s",
+        "publish:patch": "npm version patch && npm publish"
+    },
+    "dependencies": {
+        "core-js": "^2.4.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.9.0",
+        "babel-plugin-add-module-exports": "^0.2.1",
+        "babel-preset-es2015": "^6.6.0",
+        "eslint": "^2.11.0",
+        "eslint-plugin-jasmine": "^1.8.1",
+        "jasmine": "^2.4.1",
+        "rimraf": "latest",
+        "tslint": "^3.13.0",
+        "typescript": "^1.8.10"
+    },
+    "babel": {
+        "presets": [
+            "es2015"
+        ],
+        "plugins": [
+            "add-module-exports"
+        ]
+    },
+    "eslintConfig": {
+        "plugins": [
+            "jasmine"
+        ],
+        "parserOptions": {
+            "ecmaVersion": 6,
+            "sourceType": "script"
+        },
+        "env": {
+            "node": true,
+            "jasmine": true
+        },
+        "extends": [
+            "eslint:recommended",
+            "plugin:jasmine/recommended"
+        ],
+        "rules": {
+            "no-eval": "error",
+            "no-self-compare": "error",
+            "complexity": "error",
+            "yoda": [
+                "error",
+                "never",
+                {
+                    "exceptRange": true
+                }
+            ]
+        }
+    }
 }

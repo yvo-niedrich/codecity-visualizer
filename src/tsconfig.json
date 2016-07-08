@@ -2,11 +2,7 @@
     "compilerOptions": {
         "module": "es6",
         "target": "es6",
-        "sourceMap": false,
-
-        "allowJs": true,
-
-        "outDir": "../tmp"
+        "allowJs": true
     },
     "exclude": [
         "node_modules"

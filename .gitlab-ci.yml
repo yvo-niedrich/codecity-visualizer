@@ -42,14 +42,6 @@ build:npm:
 ## ------------
 ## Test Project
 ## ------------
-test:lint:
-  stage: test
-  script:
-    - npm run lint
-  dependencies:
-    - setup:npm
-    - build:npm
-
 
 test:jasmine:
   stage: test
