@@ -1,6 +1,9 @@
 node_modules
 tmp
+src
+spec
 .gitlab-ci.yml
+tslint.json
 
 out
 *.tgz
