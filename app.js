@@ -2,15 +2,14 @@ require('./lib/polyfills');
 
 module.exports = {
     'models': {
-        'base' : require("./lib/model/base"),
-        'dummy' : require("./lib/model/dummy")
-        // 'dummy' : require("./lib/model/DummyModel")
+        'base' : require("./lib/model/Model").BaseSoftwareModel,
+        'dummy' : require("./lib/model/Model").DummyModel
     },
 
     'components': {
-        'dependency': require("./lib/model/components/Dependency"),
-        'version':    require("./lib/model/components/Version"),
-        'node':       require("./lib/model/components/TreeNode")
+        'dependency': require('./lib/model/Components').Dependency,
+        'version':    require('./lib/model/Components').Version,
+        'node':       require('./lib/model/Components').TreeNode
     },
 
     'illustrators': {

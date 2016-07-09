@@ -1,6 +1,31 @@
-import {Dependency, ISoftwareModel, TreeNode, Version} from "./Components";
+import {Dependency, TreeNode, Version} from "./Components";
 
-class DummyModel implements ISoftwareModel {
+interface ISoftwareModel {
+    /* Get the Models Graph. A List of Dependencies, connecting `source` and `target`. */
+    getGraph(): Array<Dependency>;
+
+    /* Get the Root-Node of the tree. */
+    getTree(): TreeNode;
+
+    /* Get an ordered List of all versions. */
+    getVersions(): Array<Version>;
+
+    /* Existence Function */
+    exists(node: TreeNode, version: Version): Boolean;
+
+    /* Property function */
+    getAttributes(node: TreeNode, version: Version): Object;
+}
+
+export abstract class BaseSoftwareModel implements ISoftwareModel {
+    public abstract getGraph(): Array<Dependency>;
+    public abstract getTree(): TreeNode;
+    public abstract getVersions(): Array<Version>;
+    public abstract exists(node: TreeNode, version: Version): Boolean;
+    public abstract getAttributes(node: TreeNode, version: Version): Object;
+}
+
+export class DummyModel implements ISoftwareModel {
     private pGraph: Array<Dependency>;
     private pTree: TreeNode;
     private pVersions: Array<Version>;
@@ -91,7 +116,6 @@ class DummyModel implements ISoftwareModel {
             new Version('v1.0',  'Opening Day', 1463216400)
         ];
 
-        // TODO: Version <=> number;
         this.pVersions.sort(function(a: any, b: any) { return parseInt(a, 10) - parseInt(b, 10); }); // Ensure order
 
         /* Step 4: Create Attributes */
@@ -102,15 +126,32 @@ class DummyModel implements ISoftwareModel {
         }
     }
 
-    public get graph(): Array<Dependency> {
+    /** @deprecated */
+    public get graph() {
+        return this.getGraph();
+    }
+    /** @deprecated */
+    public get tree() {
+        return this.getTree();
+    }
+    /** @deprecated */
+    public get versions() {
+        return this.getVersions();
+    }
+    /** @deprecated */
+    public attributes(node, version) {
+        return this.getAttributes(node, version);
+    }
+
+    public getGraph(): Array<Dependency> {
         return this.pGraph;
     }
 
-    public get tree(): TreeNode {
+    public getTree(): TreeNode {
         return this.pTree;
     }
 
-    public get versions(): Array<Version> {
+    public getVersions(): Array<Version> {
         return this.pVersions;
     }
 
@@ -132,7 +173,7 @@ class DummyModel implements ISoftwareModel {
         return true;
     }
 
-    public attributes(node: TreeNode, version: Version): Object {
+    public getAttributes(node: TreeNode, version: Version): Object {
         const n = String(node);
         const v = String(version);
 
@@ -172,5 +213,3 @@ class DummyModel implements ISoftwareModel {
         return hash >>> 0;
     }
 }
-
-export default DummyModel;

@@ -1,6 +1,6 @@
 {
     "name": "codecity-visualizer",
-    "version": "0.2.11",
+    "version": "0.3.0",
     "description": "Fully Configurable Code Visualisation Tool",
     "main": "app.js",
     "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
@@ -10,19 +10,21 @@
         "visualisation"
     ],
     "repository": {
-        "type": "git",
-        "url": "http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
+        "type": "http",
+        "url": "git+http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
     },
     "scripts": {
         "lint": "npm run lint:sources -s && npm run lint:tests -s",
         "test": "jasmine",
-        "build": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
+        "build": "npm run build:force -s",
         "clean": "rimraf tmp && rimraf lib",
         "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
         "lint:sources": "eslint src && tslint 'src/**/*.ts?(x)'",
         "lint:tests": "eslint spec && tslint 'spec/**/*.ts?(x)'",
-        "prebuild": "npm run lint:sources -s && npm run clean -s",
-        "postbuild": "rimraf tmp",
+        "prebuild": "npm run lint:sources -s",
+        "prebuild:force": "npm run clean -s",
+        "build:force": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
+        "postbuild:force": "rimraf tmp",
         "pretest": "npm run lint:tests -s",
         "publish:build": "npm run build -s && npm test -s",
         "publish:patch": "npm version patch && npm publish"

@@ -73,4 +73,4 @@ model.attributes(node2, version2); // Returns an Attribute Object
 [//]: #
    [ConsistentCitiesPaper]: <https://opus4.kobv.de/opus4-btu/frontdoor/index/index/docId/1681>
    [TreeNodeFile]: <components/TreeNode.js>
-   [ZooExample]: <dummy.js>
+   [ZooExample]: <Model.ts>
