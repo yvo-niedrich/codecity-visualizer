@@ -1,7 +1,7 @@
 /**
  * A Software Version
  */
-class Version implements Number {
+class Version {
     // TODO: TypeScript 2.0 -> readonly
     public key: string;
     public label: string;
@@ -17,7 +17,7 @@ class Version implements Number {
      * Convert Version to String (it's key)
      * @return {string}
      */
-    public toString(radix?: number): string {
+    public toString(): string {
         return this.key;
     }
 
@@ -27,19 +27,6 @@ class Version implements Number {
      */
     public valueOf(): number {
         return this.order;
-    }
-
-    public toFixed(fractionDigits?: number): string {
-        // TODO
-        return String(this.order);
-    }
-
-    public toExponential(fractionDigits?: number): string {
-        return String(this.order);
-    }
-
-    public toPrecision(precision?: number): string {
-        return String(this.order);
     }
 }
 
