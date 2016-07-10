@@ -17,7 +17,7 @@ interface ISoftwareModel {
     getAttributes(node: TreeNode, version: Version): Object;
 }
 
-export abstract class BaseSoftwareModel implements ISoftwareModel {
+export abstract class Model implements ISoftwareModel {
     public abstract getGraph(): Array<Dependency>;
     public abstract getTree(): TreeNode;
     public abstract getVersions(): Array<Version>;
@@ -25,13 +25,15 @@ export abstract class BaseSoftwareModel implements ISoftwareModel {
     public abstract getAttributes(node: TreeNode, version: Version): Object;
 }
 
-export class DummyModel implements ISoftwareModel {
+export class DummyModel extends Model {
     private pGraph: Array<Dependency>;
     private pTree: TreeNode;
     private pVersions: Array<Version>;
     private pAttributes: Object;
 
     constructor() {
+        super ();
+
         // Prepare
         let marmoset = new TreeNode('marmoset');
         let tortoise = new TreeNode('tortoise');
@@ -116,7 +118,10 @@ export class DummyModel implements ISoftwareModel {
             new Version('v1.0',  'Opening Day', 1463216400)
         ];
 
-        this.pVersions.sort(function(a: any, b: any) { return parseInt(a, 10) - parseInt(b, 10); }); // Ensure order
+        // Ensure order
+        this.pVersions.sort(function(a: any, b: any) {
+            return parseInt(a, 10) - parseInt(b, 10);
+        });
 
         /* Step 4: Create Attributes */
         this.pAttributes = {};

@@ -2,7 +2,7 @@
     "name": "codecity-visualizer",
     "version": "0.3.0",
     "description": "Fully Configurable Code Visualisation Tool",
-    "main": "app.js",
+    "main": "lib/app.js",
     "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
     "license": "MIT",
     "keywords": [
@@ -15,23 +15,18 @@
     },
     "scripts": {
         "lint": "npm run lint:sources -s && npm run lint:tests -s",
-        "test": "jasmine",
         "build": "npm run build:force -s",
-        "clean": "rimraf tmp && rimraf lib",
-        "publish-patch": "npm run publish:build -s && npm run publish:patch -s",
+        "test": "jasmine",
         "lint:sources": "eslint src && tslint 'src/**/*.ts?(x)'",
         "lint:tests": "eslint spec && tslint 'spec/**/*.ts?(x)'",
         "prebuild": "npm run lint:sources -s",
-        "prebuild:force": "npm run clean -s",
+        "prebuild:force": "rimraf tmp lib",
         "build:force": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
         "postbuild:force": "rimraf tmp",
         "pretest": "npm run lint:tests -s",
-        "publish:build": "npm run build -s && npm test -s",
-        "publish:patch": "npm version patch && npm publish"
+        "prepublish": "npm run build -s && npm test -s"
     },
-    "dependencies": {
-        "core-js": "^2.4.0"
-    },
+    "dependencies": {},
     "devDependencies": {
         "babel-cli": "^6.9.0",
         "babel-plugin-add-module-exports": "^0.2.1",
