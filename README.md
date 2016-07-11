@@ -24,7 +24,7 @@ This plugin uses the ES2015-Syntax, but still requires polyfills, depending on t
 
 
 [//]: #
-  [build-travis]: https://travis-ci.org/Ungolianth/CodeCityVisualizer.svg?branch=master
+  [build-travis]: https://travis-ci.org/Ungolianth/codecity-visualizer.svg?branch=master
   [logo-image]: http://git.ungolianth.de/ungolianth/codecity-visualizer/raw/master/ccv.png "CCV-Logo"
   [git-project]: http://git.ungolianth.de/ungolianth/codecity-visualizer.git
   [boot-project]: http://git.ungolianth.de/ungolianth/ccv-bootstrap.git
