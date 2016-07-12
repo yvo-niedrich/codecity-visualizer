@@ -4,9 +4,11 @@ exports.models = {
 };
 
 exports.components = {
-    'dependency': require('./model/Components').Dependency,
-    'version':    require('./model/Components').Version,
-    'node':       require('./model/Components').TreeNode
+    'dependency': require('./components/Dependency').Dependency,
+    'version':    require('./components/Version').Version,
+    'node':       require('./components/TreeNode').TreeNode,
+    'cuboid':     require('./components/Cuboid').Cuboid,
+    'point':      require('./components/Point').Point
 };
 
 exports.illustrators = {

@@ -25,7 +25,7 @@ class TreeNode {
      * @param  {string|TreeNode} child Give a key (string) or an already configured node
      * @return {TreeNode}        returns the newly created child
      */
-    public add(child): TreeNode {
+    public add(child: TreeNode|string): TreeNode {
         if (!(child instanceof TreeNode)) {
             child = new TreeNode(child);
         }
