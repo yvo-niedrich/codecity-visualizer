@@ -1,4 +1,4 @@
-class TreeNode {
+export class TreeNode {
     // TODO: TypeScript 2.0 -> or null!
     public parent: TreeNode;
 
@@ -25,15 +25,19 @@ class TreeNode {
      * @param  {string|TreeNode} child Give a key (string) or an already configured node
      * @return {TreeNode}        returns the newly created child
      */
-    public add(child: TreeNode|string): TreeNode {
-        if (!(child instanceof TreeNode)) {
-            child = new TreeNode(child);
+    public add(child: string | TreeNode): TreeNode {
+        let myChild: TreeNode;
+
+        if (typeof child === 'string') {
+            myChild = new TreeNode(child);
+        } else {
+            myChild = child;
         }
 
-        child.parent = this;
-        this.children.push(child);
+        myChild.parent = this;
+        this.children.push(myChild);
 
-        return child;
+        return myChild;
     }
 
     /**
@@ -56,5 +60,3 @@ class TreeNode {
         return null;
     }
 }
-
-export default TreeNode;

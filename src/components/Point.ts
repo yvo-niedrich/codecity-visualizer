@@ -1,7 +1,7 @@
 export class Point {
-    _y: number;
-    _x: number;
-    _z: number;
+    private _y: number;
+    private _x: number;
+    private _z: number;
 
     constructor(x?: number, y?: number, z?: number) {
         this._x = x ? x : 0;
@@ -9,7 +9,7 @@ export class Point {
         this._z = z ? z : 0;
     }
 
-    toString(): string {
+    public toString(): string {
         return `[${this._x}:${this._y}:${this._z}]`;
     }
 

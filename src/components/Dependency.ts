@@ -1,9 +1,9 @@
-import TreeNode from "./TreeNode";
+import {TreeNode} from "./TreeNode";
 
 /**
  * A Software Dependency
  */
-class Dependency {
+export class Dependency {
     // TODO: TypeScript 2.0 -> readonly
     private _source: TreeNode;
     private _target: TreeNode;
@@ -13,9 +13,15 @@ class Dependency {
         this._target = target;
     }
 
+    get source(): TreeNode {
+        return this._source;
+    }
+
+    get target(): TreeNode {
+        return this._target;
+    }
+
     public toString(): string {
         return this._source + " -> + " + this._target;
     }
 }
-
-export default Dependency;

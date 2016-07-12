@@ -9,7 +9,7 @@ export class Cuboid {
         this._height = height ? height : 0;
     }
 
-    toString(): string {
+    public toString(): string {
         return `[${this._width} x ${this.length} x ${this.height}]`;
     }
 

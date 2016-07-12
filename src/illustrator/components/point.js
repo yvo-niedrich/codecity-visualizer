@@ -1,2 +1,2 @@
-import Point from '../../components/Point';
+var Point = require('../../components/Point').Point;
 module.exports = Point;

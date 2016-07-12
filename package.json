@@ -16,7 +16,7 @@
     "scripts": {
         "lint": "npm run lint:sources -s && npm run lint:tests -s",
         "build": "npm run build:force -s",
-        "test": "jasmine",
+        "test": "npm run test:force -s",
         "lint:sources": "eslint src && tslint 'src/**/*.ts?(x)'",
         "lint:tests": "eslint spec && tslint 'spec/**/*.ts?(x)'",
         "prebuild": "npm run lint:sources -s",
@@ -24,6 +24,7 @@
         "build:force": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
         "postbuild:force": "rimraf tmp",
         "pretest": "npm run lint:tests -s",
+        "test:force": "jasmine",
         "prepublish": "npm run build -s && npm test -s"
     },
     "dependencies": {},

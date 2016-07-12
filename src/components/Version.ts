@@ -1,7 +1,4 @@
-/**
- * A Software Version
- */
-class Version {
+export class Version {
     // TODO: TypeScript 2.0 -> readonly
     public key: string;
     public label: string;
@@ -29,5 +26,3 @@ class Version {
         return this.order;
     }
 }
-
-export default Version;

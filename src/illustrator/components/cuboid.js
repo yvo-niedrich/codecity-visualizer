@@ -1,2 +1,2 @@
-import Cuboid from '../../components/Cuboid';
+var Cuboid = require('../../components/Cuboid').Cuboid;
 module.exports = Cuboid;
