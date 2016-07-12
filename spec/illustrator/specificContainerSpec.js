@@ -3,7 +3,7 @@ var RowContainer = CCV.containers.row;
 var GridContainer = CCV.containers.grid;
 var LightmapContainer = CCV.containers.lightmap;
 var Shape = CCV.shapes.base;
-var Point = require('../../lib/illustrator/components/point');
+var Point = CCV.components.point;
 
 describe("RowContainer", function () {
     it('puts elements on top of each other', function () {
