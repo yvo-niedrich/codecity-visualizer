@@ -1,64 +1,69 @@
-var Cuboid = require("../components/cuboid.js");
-var Point   = require("../components/point.js");
+import {Cuboid} from '../../components/Cuboid';
+import {Point} from '../../components/Point';
+
+type ShapeBaseAttributes = {
+    dimensions: Cuboid,
+    key: string,
+    margin: number,
+    position: Point,
+    rotation: number
+};
+
 /**
  * All shapes occupy a square area.
  * It's dimensions are described by the vector `dimensions`.
  * It can be placed and rotated around the shape's centroid.
  */
-class BaseShape {
-    constructor(key) {
-        this._key = String(key);
+export abstract class Shape {
+    protected _key: String;
+    protected _hasBeenDrawn: boolean;
+    protected _absolutePosition: Point;
+    protected _absoluteRotation: number;
+    private _attributes: ShapeBaseAttributes;
+
+    constructor(key: string) {
+        this._key = key;
 
         this._hasBeenDrawn = false;
         this._absolutePosition = null;
         this._absoluteRotation = 0;
 
         this._attributes = {
-            key: key,
             dimensions: new Cuboid(),
+            key: key,
+            margin: 0,
             position: new Point(),
-            rotation: 0,
-            margin: 0
+            rotation: 0
         };
     }
 
     /**
-     * Convert Shape to String (it's key/name)
-     * @return {String}
-     */
-    toString() {
-        return String(this._key);
-    }
-
-    /**
      * The shape's (and it's associated model node's) identifier
-     * @return {String}
      */
-    get key() {
+    get key(): String {
         return this._key;
     }
 
     /**
      * Set the margin for this shape
-     * @param  {number} margin
      */
-    set margin(margin) {
+    set margin(margin: number) {
         this._attributes.margin = margin;
     }
 
     /**
      * Get the margin for this shape
-     * @return {number}
      */
-    get margin() {
+    get margin(): number {
         return this._attributes.margin;
     }
 
     /**
      * Get this shapes position, relative to it's parent's centroid
-     * @return {Point}
+     * @return {Point}}
+     * @protected
      */
-    get position() {
+    get position(): Point {
         return this._attributes.position;
     }
 
@@ -68,19 +73,18 @@ class BaseShape {
      * @return {Cuboid}
      * @protected
      */
-    get dimensions() {
+    get dimensions(): Cuboid {
         return this._attributes.dimensions;
     }
 
     /**
      * Get the shape's qubic footprint (after any possible relative rotations)
-     * @return {Cuboid}
      */
-    get displayDimensions() {
-        var swap = this.rotation % 180;
-        var l = this.dimensions.length + 2 * this.margin;
-        var w = this.dimensions.width  + 2 * this.margin;
-        var h = this.dimensions.height + 2 * this.margin;
+    get displayDimensions(): Cuboid {
+        const swap = this.rotation % 180;
+        const l = this.dimensions.length + 2 * this.margin;
+        const w = this.dimensions.width  + 2 * this.margin;
+        const h = this.dimensions.height + 2 * this.margin;
         return new Cuboid(
             swap ? w  : l,
             swap ? l : w,
@@ -90,9 +94,8 @@ class BaseShape {
 
     /**
      * Get the shapes centroid (with relative rotation)
-     * @return {Point}
      */
-    get centroid () {
+    get centroid (): Point {
         return new Point(
             this.displayDimensions.length / 2,
             this.displayDimensions.width / 2
@@ -100,18 +103,23 @@ class BaseShape {
     }
 
     /**
-     * Get the relative rotation
-     * @return {number} degrees
+     * Get the relative rotation in degrees
      */
-    get rotation() {
+    get rotation(): number {
         return this._attributes.rotation;
     }
 
     /**
-     * Rotate the shape around the it's centroid.
-     * @param {number} degrees for a clockwise rotation
+     * Convert Shape to String (it's key/name)
      */
-    rotate (degrees) {
+    public toString(): string {
+        return String(this._key);
+    }
+
+    /**
+     * Rotate the shape around the it's centroid (clockwise rotation).
+     */
+    public rotate (degrees: number) {
         if (degrees % 90) {
             throw 'Only 90° rotations allowed';
         }
@@ -121,13 +129,11 @@ class BaseShape {
 
     /**
      * Draw the Shape (calculate final absolute position and rotation)
-     * @param  {Point}  parentPosition
-     * @param  {number} parentRotation [description]
      */
-    draw(parentPosition, parentRotation) {
-        var a = (720 - parentRotation) % 360;
-        var rad = a * (Math.PI / 180);
-        var transformedRelativePosition = new Point(
+    public draw(parentPosition: Point, parentRotation: number) {
+        const a = (720 - parentRotation) % 360;
+        const rad = a * (Math.PI / 180);
+        const transformedRelativePosition = new Point(
             Math.cos(rad) * this.position.x - Math.sin(rad) * this.position.y,
             Math.sin(rad) * this.position.x + Math.cos(rad) * this.position.y,
             this.position.z
@@ -140,28 +146,25 @@ class BaseShape {
         );
 
         this._absoluteRotation = (360 + parentRotation + this.rotation) % 360;
-
         this._hasBeenDrawn = true;
     }
 
     /**
      * Draw the Shape
-     * @return {Object}
      */
-    getSpatialInformation() {
+    public getSpatialInformation(): Array<ShapeBaseAttributes> {
         if (!this._hasBeenDrawn) {
             throw 'Node has not been drawn yet';
         }
 
-        var swap = this._absoluteRotation % 180;
-        var rotatedDimensions = new Cuboid(
+        const swap = this._absoluteRotation % 180;
+        const rotatedDimensions = new Cuboid(
             swap ? this.dimensions.width  : this.dimensions.length,
             swap ? this.dimensions.length : this.dimensions.width,
             this.dimensions.height
         );
 
-        var spatialInformation = {};
-        Object.assign(spatialInformation, this._attributes);
+        let spatialInformation = Object.assign({}, this._attributes);
 
         spatialInformation.dimensions = rotatedDimensions;
         spatialInformation.position = this._absolutePosition;
@@ -173,49 +176,58 @@ class BaseShape {
     /**
      * Updates the internal Attributes for the SpatialInformation.
      * Also applies Spatial Data for this Shape directly.
-     * @param  {Object} attributes
      */
-    updateAttributes(attributes) {
-        for (var key in attributes) {
+    public updateAttributes(attributes: Object) {
+        for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
-                var value = attributes[key];
-                this._updateAttribute(this._attributes, key.split('.'), value);
+                const value = attributes[key];
+                this.updateAttribute(this._attributes, key.split('.'), value);
             }
-        }
-    }
-
-    /**
-     * Updates a single value within the attributes object
-     * @param obj   attributes object
-     * @param keys  exploded, chained key
-     * @param value value to be set
-     * @private
-     */
-    _updateAttribute(obj, keys, value) {
-        var k = keys.shift();
-        if (!keys.length) {
-            obj[k] = value;
-        } else {
-            if(!(k in obj)) {
-                obj[k] = {};
-            }
-            this._updateAttribute(obj[k], keys, value);
         }
     }
 
     /**
      * Returns the attribute recorded for key
-     * @param {String} key
-     * @returns {*}
      */
-    getAttribute(key) {
-        var keys = key.split('.');
-        var attr = this._attributes;
+    public getAttribute(key: string): any {
+        const keys = key.split('.');
+        let attr = this._attributes;
         while (keys.length && attr) {
             attr = attr[keys.shift()];
         }
         return attr;
     }
+
+    /**
+     * Updates a single value within the attributes object
+     */
+    private updateAttribute(obj: Object, keys: Array<string>, value: any) {
+        const k = keys.shift();
+        if (!keys.length) {
+            obj[k] = value;
+        } else {
+            if (!(k in obj)) {
+                obj[k] = {};
+            }
+            this.updateAttribute(obj[k], keys, value);
+        }
+    }
 }
 
-module.exports = BaseShape;
+export class House extends Shape {
+    constructor(key) {
+        super(key);
+    }
+}
+
+export class Platform extends Shape {
+    constructor(key) {
+        super(key);
+    }
+}
+
+export class Street extends Shape {
+    constructor(key) {
+        super(key);
+    }
+}

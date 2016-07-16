@@ -1,7 +1,7 @@
 var SpecificContainer = require("./../base-specific.js");
 var RowContainer      = require("./../universal/row.js");
-var ShapeHouse        = require("../../shapes/house.js");
-var ShapeStreet       = require("../../shapes/street.js");
+var ShapeHouse        = require("../../components/Shapes").House;
+var ShapeStreet       = require("../../components/Shapes").Street;
 
 /**
  * Create an Evostreet Layout City Container

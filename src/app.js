@@ -25,10 +25,10 @@ exports.containers = {
 };
 
 exports.shapes = {
-    'base':     require('./illustrator/shapes/base'),
-    'house':    require('./illustrator/shapes/house'),
-    'street':   require('./illustrator/shapes/street'),
-    'platform': require('./illustrator/shapes/platform')
+    'base':     require('./illustrator/components/Shapes').Shape,
+    'house':    require('./illustrator/components/Shapes').House,
+    'street':   require('./illustrator/components/Shapes').Street,
+    'platform': require('./illustrator/components/Shapes').Platform
 };
 
 exports.rules = {

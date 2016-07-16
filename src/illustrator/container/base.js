@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: "off" */
 
-var BaseShape = require("../shapes/base.js");
+var Shape = require('../components/Shapes').Shape;
 var ConfigurableInterface = require('../interfaces/configurable.js');
 
 /**
@@ -9,7 +9,7 @@ var ConfigurableInterface = require('../interfaces/configurable.js');
  * All Containers implement the Configurable Feature
  * @implements Configurable
  */
-class BaseContainer extends BaseShape {
+class BaseContainer extends Shape {
     constructor(key) {
         super(key);
         this._elements = [];
@@ -93,6 +93,5 @@ class BaseContainer extends BaseShape {
         this._finalized = true;
     }
 }
-
 
 module.exports = ConfigurableInterface(BaseContainer);

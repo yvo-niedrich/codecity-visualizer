@@ -1,4 +1,6 @@
-import {Dependency, TreeNode, Version} from "./Components";
+import {Dependency} from "../components/Dependency";
+import {TreeNode} from "../components/TreeNode";
+import {Version} from "../components/Version";
 
 interface ISoftwareModel {
     /* Get the Models Graph. A List of Dependencies, connecting `source` and `target`. */
