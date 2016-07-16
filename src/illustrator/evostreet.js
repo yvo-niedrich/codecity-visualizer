@@ -1,12 +1,8 @@
 var BaseIllustrator = require("./base.js");
 var Point           = require("./components/point.js");
 var Illustration    = require('./components/illustration.js');
-// var ShapeHouse      = require("./shapes/house.js");
-// var ShapeStreet     = require("./shapes/street.js");
-
 var ShapeHouse      = require("./components/Shapes").House;
 var ShapeStreet     = require("./components/Shapes").Street;
-
 var ShapeContainer  = require("./container/specific/streetcontainer.js");
 
 /**
