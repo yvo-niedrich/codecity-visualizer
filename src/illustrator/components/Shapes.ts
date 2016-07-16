@@ -174,7 +174,7 @@ export abstract class Shape {
     }
 
     /**
-     * Updates the internal Attributes for the SpatialInformation.
+     * Updates the internal AttributeContainer for the SpatialInformation.
      * Also applies Spatial Data for this Shape directly.
      */
     public updateAttributes(attributes: Object) {

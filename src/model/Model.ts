@@ -125,7 +125,7 @@ export class DummyModel extends Model {
             return parseInt(a, 10) - parseInt(b, 10);
         });
 
-        /* Step 4: Create Attributes */
+        /* Step 4: Create AttributeContainer */
         this.pAttributes = {};
         for (const v of this.pVersions) {
             this.pAttributes[String(v)] = {};

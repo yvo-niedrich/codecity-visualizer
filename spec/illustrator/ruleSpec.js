@@ -6,6 +6,52 @@ const root = m.tree;
 const leaf = root.children[0];
 const v = m.versions[0];
 
+describe("Rule/Universal", function () {
+    it('is works by default', function () {
+        const options = {
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(0);
+        expect(res2.testResult).toBe(0);
+    });
+
+    it('is works when partially configured', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'applyRule': function(metricValue) { return metricValue * 2; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(42);
+        expect(res2.testResult).toBe(12);
+    });
+
+    it('is works when fully configured', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(21);
+        expect(res2.testResult).toBe(6);
+    });
+});
+
 describe("Color/Assigned", function () {
     it('Color is randomized', function () {
         const options = {
