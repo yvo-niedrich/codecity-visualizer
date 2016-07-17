@@ -1,14 +1,14 @@
-var BaseIllustrator = require("./base.js");
-var Point           = require("../components/Point").Point;
+var Illustrator     = require('./Illustrator').Illustrator;
+var Point           = require('../components/Point').Point;
 var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require('./components/Shapes').House;
 var ShapePlatform   = require('./components/Shapes').Platform;
-var ShapeContainer  = require("./container/specific/districtcontainer.js");
+var ShapeContainer  = require('./container/specific/districtcontainer.js');
 
 /**
  * Create an District Layout City
  */
-class District extends BaseIllustrator {
+class District extends Illustrator {
     constructor(model, options = {}) {
         super(model, options);
 
