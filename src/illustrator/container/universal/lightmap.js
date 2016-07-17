@@ -1,7 +1,7 @@
 var UniversalContainer = require("../base-universal.js");
 var LightmapTree       = require("../helper/lighttree.js");
-var Cuboid             = require("../../components/cuboid.js");
-var Point              = require("../../components/point.js");
+var Cuboid             = require("../../../components/Cuboid").Cuboid;
+var Point              = require("../../../components/Point").Point;
 
 /**
  * Rows Elements one after the other

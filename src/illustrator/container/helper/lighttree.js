@@ -1,5 +1,5 @@
-var Cuboid = require("../../components/cuboid.js");
-var Point  = require("../../components/point.js");
+var Cuboid = require("../../../components/Cuboid").Cuboid;
+var Point  = require("../../../components/Point").Point;
 
 class LightTreeNode {
     constructor(origin, dimensions) {

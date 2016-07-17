@@ -1,5 +1,5 @@
 var Row    = require("../universal/row.js");
-var Cuboid = require("../../components/cuboid.js");
+var Cuboid = require("../../../components/Cuboid").Cuboid;
 
 /**
  * Strip is a helper class for the GRID-Algorithm. 

@@ -1,6 +1,6 @@
 var UniversalContainer = require("../base-universal.js");
 var Strip              = require("../helper/strip.js");
-var Cuboid             = require("../../components/cuboid.js");
+var Cuboid             = require("../../../components/Cuboid").Cuboid;
 
 /**
  * Rows Elements one after the other

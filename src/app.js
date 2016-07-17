@@ -12,7 +12,7 @@ exports.components = {
 };
 
 exports.illustrators = {
-    'base':      require('./illustrator/base'),
+    'base':      require('./illustrator/Illustrator').Illustrator,
     'evostreet': require('./illustrator/evostreet'),
     'district': require('./illustrator/district')
 };

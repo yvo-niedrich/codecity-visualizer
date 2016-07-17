@@ -3,11 +3,20 @@ import {AttributeContainer} from '../../components/Interfaces';
 /**
  * Classes can implement this Feature to become Configurable
  */
-export class Configurable {
-    private _icDefaults: AttributeContainer = null;
-    private _icOptions: AttributeContainer = {};
 
-    public setDefaults(defaults: AttributeContainer) {
+export interface ConfigurableInterface {
+    setDefaults: (defaults: AttributeContainer) => void;
+    setOptions: (options: AttributeContainer) => void;
+    setOption: (key: string, value: any) => void;
+    getOption: (key: string) => any;
+    requireOption: (key: string) => void;
+}
+
+export class Configurable implements ConfigurableInterface {
+    protected _icDefaults: AttributeContainer = null;
+    protected _icOptions: AttributeContainer = {};
+
+    public setDefaults(defaults: AttributeContainer): void {
         if (typeof(this._icDefaults) === 'undefined' || this._icDefaults === null) {
             this._icDefaults = defaults;
         } else {
