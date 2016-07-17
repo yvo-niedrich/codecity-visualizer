@@ -14,7 +14,6 @@ interface ExponentialRuleConstructor extends RuleConstructor {
 export class ExponentialRule extends Rule {
     constructor(options: ExponentialRuleConstructor) {
         super(options);
-
         this.setDefaults(Object.assign(
             {
                 'min': 0,
@@ -36,7 +35,7 @@ export class ExponentialRule extends Rule {
 
     public execute(model: Model, node: TreeNode, version: Version): { [index: string]: any } {
         const nodeValue = this.getOption('metric')(model, node, version);
-        const newValue = this.expFunction(nodeValue);
+        const newValue = this.expFunction(parseInt(nodeValue, 10));
         return Rule.createTraits(this.getOption('attributes'), newValue);
     }
 

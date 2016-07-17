@@ -36,8 +36,8 @@ exports.rules = {
     'universal': require('./illustrator/rules/Universal').UniversalRule,
 
     'math': {
-        'linear': require('./illustrator/rules/math/linear'),
-        'logarithmic': require('./illustrator/rules/math/logarithmic'),
+        'linear': require('./illustrator/rules/math/Linear').LinearRule,
+        'logarithmic': require('./illustrator/rules/math/Logarithmic').LogarithmicRule,
         'exponential': require('./illustrator/rules/math/Exponential').ExponentialRule
     },
     'color': {
