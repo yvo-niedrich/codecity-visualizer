@@ -59,7 +59,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
      * TODO: Fix Return Value
      */
     public getSpatialInformation(): any {
-        let result = [];
+        let result: Array<any> = [];
         for (const shape of this._elements) {
             result = result.concat(shape.getSpatialInformation());
         }
