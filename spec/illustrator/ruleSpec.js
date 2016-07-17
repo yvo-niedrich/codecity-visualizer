@@ -143,6 +143,23 @@ describe("Math/Exponential", function () {
         expect(res1.testResult).toBe(0);
         expect(res2.testResult).toBe(10000);
     });
+
+    it('Modified exponential function works', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value1']; },
+            'attributes': 'testResult',
+            'min': 5,
+            'factor': .5
+        };
+
+        var rule = new CCV.rules.math.exponential(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(5);
+        expect(res2.testResult).toBe(5000);
+    });
 });
 
 describe("Math/Logarithmic", function () {

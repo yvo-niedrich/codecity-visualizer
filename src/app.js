@@ -38,7 +38,7 @@ exports.rules = {
     'math': {
         'linear': require('./illustrator/rules/math/linear'),
         'logarithmic': require('./illustrator/rules/math/logarithmic'),
-        'exponential': require('./illustrator/rules/math/exponential')
+        'exponential': require('./illustrator/rules/math/Exponential').ExponentialRule
     },
     'color': {
         'gradient': require('./illustrator/rules/color/gradient'),

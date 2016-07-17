@@ -24,7 +24,7 @@ export class UniversalRule extends Rule {
         return this.getOption('condition')(model, node, version);
     }
 
-    public execute(model: Model, node: TreeNode, version: Version) {
+    public execute(model: Model, node: TreeNode, version: Version): any {
         const nodeValue = this.getOption('metric')(model, node, version);
         const newValue = this.getOption('applyRule')(nodeValue);
         return Rule.createTraits(this.getOption('attributes'), newValue);
