@@ -33,7 +33,7 @@ exports.shapes = {
 
 exports.rules = {
     'base': require('./illustrator/rules/Rule').Rule,
-    'universal': require('./illustrator/rules/universal'),
+    'universal': require('./illustrator/rules/Universal').UniversalRule,
 
     'math': {
         'linear': require('./illustrator/rules/math/linear'),

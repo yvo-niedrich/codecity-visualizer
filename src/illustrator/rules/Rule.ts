@@ -7,13 +7,16 @@ import {Configurable} from '../components/Mixins';
 
 export type RuleCondition = (model: Model, node: TreeNode, version: Version) => boolean;
 export type RuleReadMetric = (model: Model, node: TreeNode, version: Version) => any;
-export type RuleMetricApply = (value: any) => any;
-export type RuleConstructor = {
-    condition?: RuleCondition,
-    metric?: RuleReadMetric,
-    applyRule?: RuleMetricApply,
-    attributes: string
+export interface RuleConstructor {
+    condition?: RuleCondition;
+    metric?: RuleReadMetric;
+    attributes: string;
 }
+
+ export const ruleDefaults: Object = {
+    condition: () => true,
+    metric: () => 0,
+};
 
 /**
  * Rules will be executed for every node, before it is drawn and finalized. Rules describe and set the attributes,

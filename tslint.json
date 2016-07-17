@@ -1,8 +1,9 @@
 {
     "extends": "tslint:latest",
     "rules": {
+        "interface-name": "never-prefix",
         "variable-name": ["check-format", "allow-leading-underscore"],
-        "trailing-comma": "never",
+        "trailing-comma": [true, "never"],
         "no-bitwise": false,
         "quotemark": [false, "single"],
         "eofline": false,
