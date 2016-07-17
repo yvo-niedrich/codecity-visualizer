@@ -1,3 +1,4 @@
+import {AttributeContainer} from '../../components/Interfaces';
 import {TreeNode} from '../../components/TreeNode';
 import {Version} from '../../components/Version';
 import {Model} from '../../model/Model';
@@ -12,7 +13,7 @@ export class UniversalRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                applyRule: (val) => val
+                applyRule: (val: any) => val
             },
             ruleDefaults
         ));
@@ -24,7 +25,7 @@ export class UniversalRule extends Rule {
         return this.getOption('condition')(model, node, version);
     }
 
-    public execute(model: Model, node: TreeNode, version: Version): any {
+    public execute(model: Model, node: TreeNode, version: Version): AttributeContainer {
         const nodeValue = this.getOption('metric')(model, node, version);
         const newValue = this.getOption('applyRule')(nodeValue);
         return Rule.createTraits(this.getOption('attributes'), newValue);

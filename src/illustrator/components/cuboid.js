@@ -1,4 +1,3 @@
 // TODO: Entfernen
 // @see Cuboid.ts
-var Cuboid = require('../../components/Cuboid').Cuboid;
-module.exports = Cuboid;
+module.exports = require('../../components/Cuboid').Cuboid;

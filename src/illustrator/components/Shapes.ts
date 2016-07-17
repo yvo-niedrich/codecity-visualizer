@@ -1,13 +1,6 @@
 import {Cuboid} from '../../components/Cuboid';
+import {AttributeContainer, ShapeBaseAttributes} from '../../components/Interfaces';
 import {Point} from '../../components/Point';
-
-type ShapeBaseAttributes = {
-    dimensions: Cuboid,
-    key: string,
-    margin: number,
-    position: Point,
-    rotation: number
-};
 
 /**
  * All shapes occupy a square area.
@@ -177,7 +170,7 @@ export abstract class Shape {
      * Updates the internal AttributeContainer for the SpatialInformation.
      * Also applies Spatial Data for this Shape directly.
      */
-    public updateAttributes(attributes: Object) {
+    public updateAttributes(attributes: AttributeContainer) {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 const value = attributes[key];
@@ -191,7 +184,7 @@ export abstract class Shape {
      */
     public getAttribute(key: string): any {
         const keys = key.split('.');
-        let attr = this._attributes;
+        let attr: any = this._attributes;
         while (keys.length && attr) {
             attr = attr[keys.shift()];
         }
@@ -201,7 +194,7 @@ export abstract class Shape {
     /**
      * Updates a single value within the attributes object
      */
-    private updateAttribute(obj: Object, keys: Array<string>, value: any) {
+    private updateAttribute(obj: AttributeContainer, keys: Array<string>, value: any): void {
         const k = keys.shift();
         if (!keys.length) {
             obj[k] = value;
@@ -215,19 +208,19 @@ export abstract class Shape {
 }
 
 export class House extends Shape {
-    constructor(key) {
+    constructor(key: string) {
         super(key);
     }
 }
 
 export class Platform extends Shape {
-    constructor(key) {
+    constructor(key: string) {
         super(key);
     }
 }
 
 export class Street extends Shape {
-    constructor(key) {
+    constructor(key: string) {
         super(key);
     }
 }

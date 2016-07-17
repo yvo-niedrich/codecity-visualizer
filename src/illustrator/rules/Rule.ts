@@ -1,5 +1,4 @@
-/* eslint no-unused-vars: "off" */
-
+import {AttributeContainer} from '../../components/Interfaces';
 import {TreeNode} from '../../components/TreeNode';
 import {Version} from '../../components/Version';
 import {Model} from '../../model/Model';
@@ -24,8 +23,8 @@ export interface RuleConstructor {
  */
 abstract class Rule extends Configurable {
 
-    public static createTraits(attributes, value) {
-        let result = {};
+    public static createTraits(attributes: Array<string> | string, value: any): AttributeContainer {
+        let result: AttributeContainer = {};
 
         const attr = Array.isArray(attributes) ? attributes : [attributes];
         for (const key of attr) {
@@ -41,7 +40,7 @@ abstract class Rule extends Configurable {
     }
 
     public abstract condition(model: Model, node: TreeNode, version: Version): boolean;
-    public abstract execute(model: Model, node: TreeNode, version: Version): { [index: string]: any };
+    public abstract execute(model: Model, node: TreeNode, version: Version): AttributeContainer;
 }
 
 export { Rule as Rule };

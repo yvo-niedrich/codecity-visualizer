@@ -41,8 +41,8 @@ exports.rules = {
         'exponential': require('./illustrator/rules/math/Exponential').ExponentialRule
     },
     'color': {
-        'gradient': require('./illustrator/rules/color/gradient'),
-        'assigned': require('./illustrator/rules/color/assigned')
+        'gradient': require('./illustrator/rules/color/Gradient').GradientRule,
+        'assigned': require('./illustrator/rules/color/Assigned').AssignedRule
     }
 };
 

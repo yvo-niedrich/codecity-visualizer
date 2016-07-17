@@ -1,37 +1,24 @@
+import {AttributeContainer, SoftwareModel} from "../components/Interfaces";
 import {Dependency} from "../components/Dependency";
 import {TreeNode} from "../components/TreeNode";
 import {Version} from "../components/Version";
 
-interface ISoftwareModel {
-    /* Get the Models Graph. A List of Dependencies, connecting `source` and `target`. */
-    getGraph(): Array<Dependency>;
-
-    /* Get the Root-Node of the tree. */
-    getTree(): TreeNode;
-
-    /* Get an ordered List of all versions. */
-    getVersions(): Array<Version>;
-
-    /* Existence Function */
-    exists(node: TreeNode, version: Version): Boolean;
-
-    /* Property function */
-    getAttributes(node: TreeNode, version: Version): Object;
-}
-
-export abstract class Model implements ISoftwareModel {
+export abstract class Model implements SoftwareModel {
     public abstract getGraph(): Array<Dependency>;
     public abstract getTree(): TreeNode;
     public abstract getVersions(): Array<Version>;
     public abstract exists(node: TreeNode, version: Version): Boolean;
-    public abstract getAttributes(node: TreeNode, version: Version): Object;
+    public abstract getAttributes(node: TreeNode, version: Version): AttributeContainer;
 }
+
+interface NodeAttributes { [index: string]: AttributeContainer; }
+interface AttributeHistory { [index: string]: NodeAttributes; }
 
 export class DummyModel extends Model {
     private pGraph: Array<Dependency>;
     private pTree: TreeNode;
     private pVersions: Array<Version>;
-    private pAttributes: Object;
+    private pAttributes: AttributeHistory;
 
     constructor() {
         super ();
@@ -126,9 +113,9 @@ export class DummyModel extends Model {
         });
 
         /* Step 4: Create AttributeContainer */
-        this.pAttributes = {};
+        this.pAttributes = <AttributeHistory> {};
         for (const v of this.pVersions) {
-            this.pAttributes[String(v)] = {};
+            this.pAttributes[String(v)] = <NodeAttributes> {};
             this.createAttributes(this.pTree, v);
         }
     }
@@ -146,7 +133,7 @@ export class DummyModel extends Model {
         return this.getVersions();
     }
     /** @deprecated */
-    public attributes(node, version) {
+    public attributes(node: TreeNode, version: Version) {
         return this.getAttributes(node, version);
     }
 
@@ -180,7 +167,7 @@ export class DummyModel extends Model {
         return true;
     }
 
-    public getAttributes(node: TreeNode, version: Version): Object {
+    public getAttributes(node: TreeNode, version: Version): AttributeContainer {
         const n = String(node);
         const v = String(version);
 

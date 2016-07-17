@@ -1,6 +1,4 @@
-export type AttributeContainer = {
-    [index: string]: any
-};
+import {AttributeContainer} from '../../components/Interfaces';
 
 /**
  * Classes can implement this Feature to become Configurable
