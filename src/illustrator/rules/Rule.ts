@@ -34,7 +34,7 @@ abstract class Rule extends Configurable {
 
     constructor(options: RuleConstructor) {
         super();
-        // this.setOptions(options);
+        this.setOptions(options);
     }
 
     public abstract condition(model: Model, node: TreeNode, version: Version): boolean;

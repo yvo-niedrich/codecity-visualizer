@@ -1,4 +1,4 @@
-var BaseRule = require('./../base.js');
+var BaseRule = require('./../Rule').Rule;
 
 class LinearRule extends BaseRule {
     constructor(options) {

@@ -1,4 +1,4 @@
-var BaseRule = require('./base.js');
+var BaseRule = require('./Rule').Rule;
 
 class UniversalRule extends BaseRule {
     constructor(options) {

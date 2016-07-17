@@ -32,7 +32,7 @@ exports.shapes = {
 };
 
 exports.rules = {
-    'base': require('./illustrator/rules/base'),
+    'base': require('./illustrator/rules/Rule').Rule,
     'universal': require('./illustrator/rules/universal'),
 
     'math': {

@@ -1,4 +1,4 @@
-var BaseRule = require('./../base.js');
+var BaseRule = require('./../Rule').Rule;
 
 class LogarithmicRule extends BaseRule {
     constructor(options) {
