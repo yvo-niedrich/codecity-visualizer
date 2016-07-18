@@ -299,7 +299,7 @@ export class StreetContainer extends SpecificContainer {
                 this.distributeShapesInDefaultOrder(shapes, left, right);
             }
         } else {
-            this.distributeShapesEquallyByAttribute(shapes, method, left, right);
+            this.distributeShapesEquallyByAttribute(shapes, <distributionFunction> method, left, right);
         }
     }
 
