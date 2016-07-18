@@ -47,5 +47,5 @@ exports.rules = {
 };
 
 exports.helper = {
-    'attributes': require('./model/helper/attributeExtractor')
+    'attributes': require('./model/helper/AttributeExtractor').AttributeExtractor
 };
