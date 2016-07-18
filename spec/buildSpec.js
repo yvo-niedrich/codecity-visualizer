@@ -1,8 +1,9 @@
-var District = require('../lib/illustrator/district');
-var Evostreet = require('../lib/illustrator/evostreet');
-var attributeHelper = require('../lib/model/helper/attributeExtractor');
-var Rule = require('../lib/illustrator/rules/math/linear');
-var Model = require('../lib/model/dummy');
+var CCV = require('../app');
+var District = CCV.illustrators.district;
+var Evostreet = CCV.illustrators.evostreet;
+var attributeHelper = CCV.helper.attributes;
+var Rule = CCV.rules.math.linear;
+var Model = CCV.models.dummy;
 
 var model = new Model();
 var rule = new Rule({
@@ -41,6 +42,105 @@ describe("Evostreet", function() {
 
         expect(illustration.version).toBe(versionToDraw);
         expect(illustration.shapes.length).toBe(64);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Distribution: left", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': 'left',
+                'branch.distribution': 'left'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Distribution: right", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': 'right',
+                'branch.distribution': 'right'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Distribution: alternating by size", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': function(s) { return s.displayDimensions.base; },
+                'branch.distribution': function(s) { return s.displayDimensions.base; }
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Segmentation by key (1 Element each)", function () {
+        var options = {
+            'evostreet.options': {
+                'house.segmentation': function(s) { return s.key; },
+                'house.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1),
+                'branch.segmentation': function(s) { return s.key; },
+                'branch.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1)
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Segmentation by 1. char of key", function () {
+        var options = {
+            'evostreet.options': {
+                'house.segmentation': (s) => String(s.getAttribute('key')).toLowerCase().substr(0,1),
+                'house.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1),
+                'branch.segmentation': (s) => String(s.getAttribute('key')).toLowerCase().substr(0,1),
+                'branch.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1)
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
         expect(illustration.shapes[0].rotation).toBe(0);
         expect(illustration.shapes[1].rotation).not.toBe(0);
     });

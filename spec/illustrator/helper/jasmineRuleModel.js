@@ -1,8 +1,9 @@
 "use strict";
 
-var BaseSoftwareModel = require('../../../lib/model/base');
-var TreeNode = require('../../../lib/model/components/treenode');
-var Version = require('../../../lib/model/components/version');
+var CCV = require('../../../app');
+var BaseSoftwareModel = CCV.models.base;
+var TreeNode = CCV.components.node;
+var Version = CCV.components.version;
 
 class JasmineRuleModel extends BaseSoftwareModel {
     constructor() {

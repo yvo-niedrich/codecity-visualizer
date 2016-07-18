@@ -1,4 +1,5 @@
-var Version = require('../../lib/model/components/version');
+var CCV = require('../../app');
+var Version = CCV.components.version;
 
 describe("Versions", function() {
     it('is distinguishable', function () {

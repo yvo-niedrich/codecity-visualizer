@@ -1,9 +1,72 @@
 var JasmineRuleModel = require('./helper/jasmineRuleModel');
+var CCV = require('../../app');
 
 const m = new JasmineRuleModel();
 const root = m.tree;
 const leaf = root.children[0];
 const v = m.versions[0];
+
+describe("Rule/Universal", function () {
+    it('is works by default', function () {
+        const options = {
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(0);
+        expect(res2.testResult).toBe(0);
+    });
+
+    it('is works when partially configured', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(21);
+        expect(res2.testResult).toBe(6);
+    });
+
+    it('is works when fully configured', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'applyRule': function(metricValue) { return metricValue * 2; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(42);
+        expect(res2.testResult).toBe(12);
+    });
+
+    it('is works when fully configured for Strings', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'applyRule': function(metricValue) { return metricValue < 10 ? 'a' : 'b'; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe('b');
+        expect(res2.testResult).toBe('a');
+    });
+});
 
 describe("Color/Assigned", function () {
     it('Color is randomized', function () {
@@ -13,7 +76,7 @@ describe("Color/Assigned", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/assigned'))(options);
+        var rule = new CCV.rules.color.assigned(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
         
@@ -37,7 +100,7 @@ describe("Color/Gradient", function () {
             'maxColor': 0xFF0000
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/gradient'))(options);
+        var rule = new CCV.rules.color.gradient(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -56,7 +119,7 @@ describe("Color/Gradient", function () {
             'maxColor': 0xFF0000
         };
 
-        var rule = new (require('../../lib/illustrator/rules/color/gradient'))(options);
+        var rule = new CCV.rules.color.gradient(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -73,12 +136,29 @@ describe("Math/Exponential", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/exponential'))(options);
+        var rule = new CCV.rules.math.exponential(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
         expect(res1.testResult).toBe(0);
         expect(res2.testResult).toBe(10000);
+    });
+
+    it('Modified exponential function works', function () {
+        const options = {
+            'condition': function() { return true },
+            'metric': function(model, node) { return model.attributes(node)['test.value1']; },
+            'attributes': 'testResult',
+            'min': 5,
+            'factor': .5
+        };
+
+        var rule = new CCV.rules.math.exponential(options);
+        var res1 = rule.execute(m, root, v);
+        var res2 = rule.execute(m, leaf, v);
+
+        expect(res1.testResult).toBe(5);
+        expect(res2.testResult).toBe(5000);
     });
 });
 
@@ -90,7 +170,7 @@ describe("Math/Logarithmic", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var rule = new CCV.rules.math.logarithmic(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -106,7 +186,7 @@ describe("Math/Logarithmic", function () {
             'logbase': 3.21
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/logarithmic'))(options);
+        var rule = new CCV.rules.math.logarithmic(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -123,7 +203,7 @@ describe("Math/Linear", function () {
             'attributes': 'testResult'
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var rule = new CCV.rules.math.linear(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
@@ -139,7 +219,7 @@ describe("Math/Linear", function () {
             'factor': 1.5
         };
 
-        var rule = new (require('../../lib/illustrator/rules/math/linear'))(options);
+        var rule = new CCV.rules.math.linear(options);
         var res1 = rule.execute(m, root, v);
         var res2 = rule.execute(m, leaf, v);
 
