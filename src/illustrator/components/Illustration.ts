@@ -17,9 +17,6 @@ export class Illustration {
         return this._version;
     }
 
-    /**
-     * @returns {Array}
-     */
     get shapes(): Array<Shape> {
         return this._shapes;
     }
