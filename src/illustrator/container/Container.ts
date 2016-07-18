@@ -2,6 +2,7 @@ import {AttributeContainer} from '../../components/Interfaces';
 import {applyMixins, Configurable, ConfigurableInterface} from '../components/Mixins';
 import {Shape} from '../components/Shapes';
 import {Point} from "../../components/Point";
+import {Cuboid} from "../../components/Cuboid";
 
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
@@ -69,7 +70,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     /**
      * Draws the container and all of it's shapes (after initiating finalizeOnce)
      */
-    public draw(parentPosition: Point, parentRotation: number) {
+    public draw(parentPosition: Point, parentRotation: number): void {
         this.finalizeOnce();
         super.draw(parentPosition, parentRotation);
 
@@ -82,7 +83,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
      * Get the containers dimensions (after initiating finalizeOnce)
      * @return {Cuboid}
      */
-    get displayDimensions() {
+    get displayDimensions(): Cuboid {
         this.finalizeOnce();
         return super.displayDimensions;
     }
@@ -90,12 +91,11 @@ abstract class Container extends Shape implements ConfigurableInterface {
     /**
      * Will initiate the finalization (if it has not been called already)
      */
-    private finalizeOnce() {
+    private finalizeOnce(): void {
         if (!this._finalized) {
+            this._finalized = true;
             this.finalize();
         }
-
-        this._finalized = true;
     }
 }
 
@@ -111,15 +111,15 @@ abstract class SpecificContainer extends Container {
 abstract class UniversalContainer extends Container {
     private _mirrored: boolean;
 
-    constructor(key: string, mirror?: boolean) {
+    constructor(key: string, mirror: boolean = false) {
         super(key);
-        this._mirrored = mirror ? mirror : false;
+        this._mirrored = mirror;
     }
 
     /**
      * Adds shape to the container and honors mirroring
      */
-    public add(shape: Shape) {
+    public add(shape: Shape): void {
         super.add(shape);
 
         if (this._mirrored) {

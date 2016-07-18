@@ -1,5 +1,5 @@
 var SpecificContainer = require("./../Container").SpecificContainer;
-var RowContainer      = require("./../universal/row.js");
+var RowContainer      = require("./../universal/Row").RowContainer;
 var ShapeHouse        = require("../../components/Shapes").House;
 var ShapeStreet       = require("../../components/Shapes").Street;
 
@@ -10,7 +10,6 @@ class StreetContainer extends SpecificContainer {
     constructor(key, options = {}) {
         super(key, options);
 
-        this.setOptions(options);
         this.setDefaults({
             'spacer.initial': 20,
             'spacer.branches': 15,
@@ -117,8 +116,6 @@ class StreetContainer extends SpecificContainer {
     }
 
     finalize() {
-        super.finalize();
-
         if (this._container.road === null) {
             throw 'StreetContainer requires a primary street';
         }

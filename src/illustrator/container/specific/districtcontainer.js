@@ -1,8 +1,8 @@
-var BaseContainer     = require("./../Container").Container;
-var SpecificContainer = require("./../Container").SpecificContainer;
-var LightmapContainer = require("./../universal/lightmap.js");
-var ShapeHouse        = require("../../components/Shapes").House;
-var ShapePlatform     = require("../../components/Shapes").Platform;
+var BaseContainer     = require('./../Container').Container;
+var SpecificContainer = require('./../Container').SpecificContainer;
+var LightmapContainer = require('./../universal/Lightmap').Lightmap;
+var ShapeHouse        = require('../../components/Shapes').House;
+var ShapePlatform     = require('../../components/Shapes').Platform;
 
 /**
  * Create an District Layout City Container
@@ -11,7 +11,6 @@ class DistrictContainer extends SpecificContainer {
     constructor(key, options = {}) {
         super(key, options);
 
-        this.setOptions(options);
         this.setDefaults({
             'spacer.margin': 10,
             'spacer.padding': 5,
@@ -48,8 +47,6 @@ class DistrictContainer extends SpecificContainer {
     }
 
     finalize() {
-        super.finalize();
-
         this._container.districts.add(this._container.houses);
 
         var padding = 2 * this.getOption('spacer.padding');
