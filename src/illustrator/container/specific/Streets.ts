@@ -1,8 +1,8 @@
 /* tslint:disable:member-ordering */
-import {SpecificContainer, Container, UniversalContainer} from "../Container";
-import {RowContainer} from "../universal/Row";
-import {Street, Shape, House} from "../../components/Shapes";
-import {AttributeContainer} from "../../../components/Interfaces";
+import {SpecificContainer, Container, UniversalContainer} from '../Container';
+import {RowContainer} from '../universal/Row';
+import {Street, Shape, House} from '../../components/Shapes';
+import {AttributeContainer} from '../../../components/Interfaces';
 
 interface SegmentContainer {
     segments: Array<string>;

@@ -8,7 +8,7 @@
         "variable-name": ["check-format", "allow-leading-underscore"],
         "trailing-comma": [true, "never"],
         "no-bitwise": false,
-        "quotemark": [false, "single"],
+        "quotemark": [true, "single"],
         "eofline": false,
         "no-constructor-vars": true
     }

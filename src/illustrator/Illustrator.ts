@@ -1,9 +1,9 @@
 import {AttributeContainer} from '../components/Interfaces';
 import {applyMixins, Configurable, ConfigurableInterface} from './components/Mixins';
 import {Rule} from './rules/Rule';
-import {Version} from "../components/Version";
-import {TreeNode} from "../components/TreeNode";
-import {Model} from "../model/Model";
+import {Version} from '../components/Version';
+import {TreeNode} from '../components/TreeNode';
+import {Model} from '../model/Model';
 
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.

@@ -1,7 +1,7 @@
-import {UniversalContainer} from "../Container";
-import {Shape} from "../../components/Shapes";
-import {Cuboid} from "../../../components/Cuboid";
-import {RowContainer} from "./Row";
+import {UniversalContainer} from '../Container';
+import {Shape} from '../../components/Shapes';
+import {Cuboid} from '../../../components/Cuboid';
+import {RowContainer} from './Row';
 
 /**
  * Strip is a helper class for the GRID-Algorithm.

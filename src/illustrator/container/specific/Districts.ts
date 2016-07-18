@@ -1,7 +1,7 @@
-import {SpecificContainer, UniversalContainer, Container} from "../Container";
-import {AttributeContainer} from "../../../components/Interfaces";
-import {Lightmap} from "../universal/Lightmap";
-import {Platform, Shape, House} from "../../components/Shapes";
+import {SpecificContainer, UniversalContainer, Container} from '../Container';
+import {AttributeContainer} from '../../../components/Interfaces';
+import {Lightmap} from '../universal/Lightmap';
+import {Platform, Shape, House} from '../../components/Shapes';
 
 // TODO: Segmentorder --> NULL | function
 interface DistrictContainerOptions extends AttributeContainer {

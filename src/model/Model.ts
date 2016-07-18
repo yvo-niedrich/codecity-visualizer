@@ -1,7 +1,7 @@
-import {AttributeContainer, SoftwareModel} from "../components/Interfaces";
-import {Dependency} from "../components/Dependency";
-import {TreeNode} from "../components/TreeNode";
-import {Version} from "../components/Version";
+import {AttributeContainer, SoftwareModel} from '../components/Interfaces';
+import {Dependency} from '../components/Dependency';
+import {TreeNode} from '../components/TreeNode';
+import {Version} from '../components/Version';
 
 export abstract class Model implements SoftwareModel {
     public abstract getGraph(): Array<Dependency>;

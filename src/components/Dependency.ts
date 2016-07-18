@@ -1,4 +1,4 @@
-import {TreeNode} from "./TreeNode";
+import {TreeNode} from './TreeNode';
 
 /**
  * A Software Dependency
@@ -22,6 +22,6 @@ export class Dependency {
     }
 
     public toString(): string {
-        return this._source + " -> + " + this._target;
+        return this._source + ' -> + ' + this._target;
     }
 }

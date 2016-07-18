@@ -1,7 +1,7 @@
 import {Cuboid} from '../../../components/Cuboid';
 import {Point} from '../../../components/Point';
-import {UniversalContainer} from "../Container";
-import {Shape} from "../../components/Shapes";
+import {UniversalContainer} from '../Container';
+import {Shape} from '../../components/Shapes';
 
 class LightNode {
     private _origin: Point;
@@ -210,7 +210,7 @@ export class Lightmap extends UniversalContainer {
         tree.collectCandidates(candidates, shapeDimensions);
 
         if (!candidates.length) {
-            throw "Could not find a single candidate. This should never happen!";
+            throw 'Could not find a single candidate. This should never happen!';
         }
 
         // Find the best possible Candidate

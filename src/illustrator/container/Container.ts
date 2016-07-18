@@ -1,8 +1,8 @@
 import {AttributeContainer} from '../../components/Interfaces';
 import {applyMixins, Configurable, ConfigurableInterface} from '../components/Mixins';
 import {Shape} from '../components/Shapes';
-import {Point} from "../../components/Point";
-import {Cuboid} from "../../components/Cuboid";
+import {Point} from '../../components/Point';
+import {Cuboid} from '../../components/Cuboid';
 
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
