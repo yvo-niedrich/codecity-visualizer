@@ -104,7 +104,7 @@ A single container represents a non-leaf node of the models structure-tree: The 
  * `house.segmentation` / `branch.segmentation` _(Default: `null`)_ <br />
    You are not limited to one element-container on each side of the road. If you want to devide your branches or houses into different segments along the road, just give the desired shape-attribute and a new container will be created for every distinct value.
  * `house.segmentorder` / `branch.segmentorder` _(Default: `null`)_ <br />
-   By default the segment-containers are sorted by the shapes value (beginning with the smallest). This can be changed by suppling an alternative [compareFunction][JSCompare].
+   By default the segment-containers are sorted naturally by the shapes chosen attribute (beginning with the smallest). Alternatively another method can be defined (see [sort::compareFunction][JSCompare]).
  * `spacer`
    * `spacer.initial` _(Default: `15`)_ <br />
      Initial Space, before any element/container will be positioned.

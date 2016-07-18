@@ -3,7 +3,7 @@ var Point           = require('../components/Point').Point;
 var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require('./components/Shapes').House;
 var ShapePlatform   = require('./components/Shapes').Platform;
-var ShapeContainer  = require('./container/specific/districtcontainer.js');
+var ShapeContainer  = require('./container/specific/Districts').DistrictContainer;
 
 /**
  * Create an District Layout City

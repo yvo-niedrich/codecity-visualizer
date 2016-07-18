@@ -3,7 +3,7 @@ var Point           = require("../components/Point").Point;
 var Illustration    = require('./components/illustration.js');
 var ShapeHouse      = require("./components/Shapes").House;
 var ShapeStreet     = require("./components/Shapes").Street;
-var ShapeContainer  = require("./container/specific/streetcontainer.js");
+var ShapeContainer  = require("./container/specific/Streets").StreetContainer;
 
 /**
  * Create an Evostreet Layout city

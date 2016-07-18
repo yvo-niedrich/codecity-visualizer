@@ -102,7 +102,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
 applyMixins(Container, [Configurable]);
 
 abstract class SpecificContainer extends Container {
-    constructor(key: string, options: AttributeContainer) {
+    constructor(key: string, options: AttributeContainer = {}) {
         super(key);
         this.setOptions(options);
     }

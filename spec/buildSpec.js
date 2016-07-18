@@ -45,6 +45,82 @@ describe("Evostreet", function() {
         expect(illustration.shapes[0].rotation).toBe(0);
         expect(illustration.shapes[1].rotation).not.toBe(0);
     });
+
+    it("Distribution: left", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': 'left',
+                'branch.distribution': 'left'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Distribution: right", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': 'right',
+                'branch.distribution': 'right'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Distribution: alternating by size", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': function(s) { return s.displayDimensions.base; },
+                'branch.distribution': function(s) { return s.displayDimensions.base; }
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Segmentation by Key (1 Element)", function () {
+        var options = {
+            'evostreet.options': {
+                'house.segmentation': 'key',
+                'branch.segmentation': 'key'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
 });
 
 describe("District", function() {
