@@ -1,6 +1,7 @@
 ![# CodeCityVisualizer][logo-image]
 
 [![Travis Banner][travis-banner]][travis-link]
+[![npm version](https://badge.fury.io/js/codecity-visualizer.svg)](https://badge.fury.io/js/codecity-visualizer)
 
 Code Cities convert your complex Software into a picture, so even noobs can understand it.
 
@@ -26,6 +27,8 @@ This plugin uses the ES2015-Syntax, but still requires polyfills, depending on t
 [//]: #
   [travis-banner]: https://travis-ci.org/Ungolianth/codecity-visualizer.svg?branch=master
   [travis-link]: https://travis-ci.org/Ungolianth/codecity-visualizer/branches
+  [npm-banner]: https://badge.fury.io/js/codecity-visualizer.svg
+  [npm-link]: https://www.npmjs.com/package/codecity-visualizer
   [logo-image]: https://raw.githubusercontent.com/Ungolianth/codecity-visualizer/master/ccv.png "CCV-Logo"
   [git-project]: http://git.ungolianth.de/ungolianth/codecity-visualizer.git
   [boot-project]: http://git.ungolianth.de/ungolianth/ccv-bootstrap.git
