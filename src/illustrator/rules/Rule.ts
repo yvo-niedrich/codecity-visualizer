@@ -1,8 +1,8 @@
-import {AttributeContainer} from '../../components/Interfaces';
-import {TreeNode} from '../../components/TreeNode';
-import {Version} from '../../components/Version';
-import {Model} from '../../model/Model';
-import {Configurable} from '../components/Mixins';
+import {AttributeContainer} from "../../components/Interfaces";
+import {TreeNode} from "../../components/TreeNode";
+import {Version} from "../../components/Version";
+import {Model} from "../../model/Model";
+import {Configurable} from "../components/Mixins";
 
 export type RuleCondition = (model: Model, node: TreeNode, version: Version) => boolean;
 export type RuleReadMetric = (model: Model, node: TreeNode, version: Version) => any;

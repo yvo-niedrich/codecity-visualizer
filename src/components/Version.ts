@@ -11,7 +11,7 @@ export class Version {
     }
 
     /**
-     * Convert Version to String (it's key)
+     * Convert Version to String (it"s key)
      * @return {string}
      */
     public toString(): string {

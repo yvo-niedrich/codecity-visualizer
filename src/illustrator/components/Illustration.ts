@@ -1,12 +1,12 @@
-import {Version} from '../../components/Version';
-import {Shape} from './Shapes';
+import {Version} from "../../components/Version";
+import {ShapeBaseAttributes} from "../../components/Interfaces";
 
 /**
  * This is what a SoftwareModel has to look like
  */
 export class Illustration {
     private _version: Version;
-    private _shapes: Array<Shape>;
+    private _shapes: Array<ShapeBaseAttributes>;
 
     constructor(version: Version) {
         this._version = version;
@@ -17,11 +17,11 @@ export class Illustration {
         return this._version;
     }
 
-    get shapes(): Array<Shape> {
+    get shapes(): Array<ShapeBaseAttributes> {
         return this._shapes;
     }
 
-    public addShape(shape: Shape): void {
+    public addShape(shape: ShapeBaseAttributes): void {
         this._shapes.push(shape);
     }
 }

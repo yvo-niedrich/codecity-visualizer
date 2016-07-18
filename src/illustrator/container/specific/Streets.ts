@@ -1,8 +1,8 @@
 /* tslint:disable:member-ordering */
-import {SpecificContainer, Container, UniversalContainer} from '../Container';
-import {RowContainer} from '../universal/Row';
-import {Street, Shape, House} from '../../components/Shapes';
-import {AttributeContainer} from '../../../components/Interfaces';
+import {SpecificContainer, Container, UniversalContainer} from "../Container";
+import {RowContainer} from "../universal/Row";
+import {Street, Shape, House} from "../../components/Shapes";
+import {AttributeContainer} from "../../../components/Interfaces";
 
 interface SegmentContainer {
     segments: Array<string>;
@@ -12,25 +12,25 @@ interface SegmentContainer {
 }
 
 type distributionFunction = (s: Shape) => number;
-type distributionString = 'left' | 'right' | 'default';
+type distributionString = "left" | "right" | "default";
 type distributionMethod = distributionString | distributionFunction;
 
 // TODO: Segmentorder --> NULL | function
-interface StreetContainerOptions extends AttributeContainer {
-    'spacer.initial'?: number;
-    'spacer.branches'?: number;
-    'spacer.terranullius'?: number;
-    'spacer.conclusive'?: number;
+export interface StreetContainerOptions extends AttributeContainer {
+    "spacer.initial"?: number;
+    "spacer.branches"?: number;
+    "spacer.terranullius"?: number;
+    "spacer.conclusive"?: number;
 
-    'house.container'?: UniversalContainer;
-    'house.distribution'?: distributionMethod;
-    'house.segmentation'?: string;
-    'house.segmentorder'?: { (a: any): number };
+    "house.container"?: UniversalContainer;
+    "house.distribution"?: distributionMethod;
+    "house.segmentation"?: string;
+    "house.segmentorder"?: { (a: any): number };
 
-    'branch.container'?: UniversalContainer;
-    'branch.distribution'?: distributionMethod;
-    'branch.segmentation'?: string;
-    'branch.segmentorder'?: { (a: any): number};
+    "branch.container"?: UniversalContainer;
+    "branch.distribution"?: distributionMethod;
+    "branch.segmentation"?: string;
+    "branch.segmentorder"?: { (a: any): number};
 }
 
 /**
@@ -49,20 +49,20 @@ export class StreetContainer extends SpecificContainer {
         super(key, options);
 
         this.setDefaults({
-            'spacer.initial': 20,
-            'spacer.branches': 15,
-            'spacer.terranullius': 20,
-            'spacer.conclusive': 0,
+            "spacer.initial": 20,
+            "spacer.branches": 15,
+            "spacer.terranullius": 20,
+            "spacer.conclusive": 0,
 
-            'house.container': RowContainer,
-            'house.distribution': 'default',
-            'house.segmentation': null,
-            'house.segmentorder': null,
+            "house.container": RowContainer,
+            "house.distribution": "default",
+            "house.segmentation": null,
+            "house.segmentorder": null,
 
-            'branch.container': RowContainer,
-            'branch.distribution': 'default',
-            'branch.segmentation': null,
-            'branch.segmentorder': null
+            "branch.container": RowContainer,
+            "branch.distribution": "default",
+            "branch.segmentation": null,
+            "branch.segmentorder": null
         });
 
         this._leftBranchSpacer = 0;
@@ -100,30 +100,30 @@ export class StreetContainer extends SpecificContainer {
             this.addHouse(shape);
         } else if (shape instanceof Street) {
             if (this._container.road !== null) {
-                throw 'StreetContainer can only have one road.';
+                throw "StreetContainer can only have one road.";
             }
             this._container.road = shape;
         } else {
-            throw 'Unknown Shape-Type: ' + shape;
+            throw "Unknown Shape-Type: " + shape;
         }
     }
 
     private addHouse(shape: House) {
         let segment: string;
 
-        if (this.getOption('house.segmentation')) {
-            segment = this.getOption('house.segmentation')(shape);
+        if (this.getOption("house.segmentation")) {
+            segment = this.getOption("house.segmentation")(shape);
         }
 
-        segment = segment != null ? segment : 'default';
+        segment = segment != null ? segment : "default";
         const segmentIndex = String(segment);
 
         if (this._container.houses.segments.indexOf(segment) < 0) {
-            const houseContainer = this.getOption('house.container');
+            const houseContainer = this.getOption("house.container");
             this._container.houses.segments.push(segment);
             this._container.houses.segmented[segmentIndex] = [];
-            this._container.houses.left[segmentIndex]  = new houseContainer(this.key + '_' + segmentIndex + '_hl');
-            this._container.houses.right[segmentIndex] = new houseContainer(this.key + '_' + segmentIndex + '_hr', true);
+            this._container.houses.left[segmentIndex]  = new houseContainer(this.key + "_" + segmentIndex + "_hl");
+            this._container.houses.right[segmentIndex] = new houseContainer(this.key + "_" + segmentIndex + "_hr", true);
             this._container.houses.left[segmentIndex].rotate(-90);
             this._container.houses.right[segmentIndex].rotate(-90);
         }
@@ -134,19 +134,19 @@ export class StreetContainer extends SpecificContainer {
     private addBranch(shape: StreetContainer): void {
         let segment: string;
 
-        if (this.getOption('branch.segmentation')) {
-            segment = this.getOption('branch.segmentation')(shape);
+        if (this.getOption("branch.segmentation")) {
+            segment = this.getOption("branch.segmentation")(shape);
         }
 
-        segment = segment != null ? segment : 'default';
+        segment = segment != null ? segment : "default";
         const segmentIndex = String(segment);
 
         if (this._container.branches.segments.indexOf(segment) < 0) {
-            const branchContainer = this.getOption('branch.container');
+            const branchContainer = this.getOption("branch.container");
             this._container.branches.segments.push(segment);
             this._container.branches.segmented[segmentIndex] = [];
-            this._container.branches.left[segmentIndex]  = new branchContainer(this.key + '_' + segmentIndex + '_bl');
-            this._container.branches.right[segmentIndex] = new branchContainer(this.key + '_' + segmentIndex + '_br', true);
+            this._container.branches.left[segmentIndex]  = new branchContainer(this.key + "_" + segmentIndex + "_bl");
+            this._container.branches.right[segmentIndex] = new branchContainer(this.key + "_" + segmentIndex + "_br", true);
             this._container.branches.left[segmentIndex].rotate(-90);
             this._container.branches.right[segmentIndex].rotate(-90);
         }
@@ -156,7 +156,7 @@ export class StreetContainer extends SpecificContainer {
 
     public finalize(): void {
         if (this._container.road === null) {
-            throw 'StreetContainer requires a primary street';
+            throw "StreetContainer requires a primary street";
         }
         const mainRoad = this._container.road;
 
@@ -165,7 +165,7 @@ export class StreetContainer extends SpecificContainer {
         this.addBranchesToStructure();
         this.updateDimensions();
 
-        let containersBottom = this.getOption('spacer.initial') - (this.dimensions.width / 2);
+        let containersBottom = this.getOption("spacer.initial") - (this.dimensions.width / 2);
         const halfTheRoadLength = (mainRoad.displayDimensions.length / 2);
         const middleOfTheRoad = (this.dimensions.length / 2) - this.getRightBlockLength() - halfTheRoadLength;
 
@@ -197,7 +197,7 @@ export class StreetContainer extends SpecificContainer {
 
         // Add Terra Nullius (if required)
         if (this._container.branches.segments.length) {
-            containersBottom += this.getOption('spacer.terranullius');
+            containersBottom += this.getOption("spacer.terranullius");
         }
 
         // Place Houses, Segment by Segment
@@ -224,17 +224,17 @@ export class StreetContainer extends SpecificContainer {
 
     private updateDimensions() {
         this.dimensions.length = this.getContainerLength();
-        this.dimensions.width  = this.getContainerWidth() + this.getOption('spacer.conclusive');
+        this.dimensions.width  = this.getContainerWidth() + this.getOption("spacer.conclusive");
     }
 
     private prepareSegments() {
         const sortNaturally = function(a: any, b: any) { return parseInt(a, 10) - parseInt(b, 10); };
 
-        const houseOrder = typeof this.getOption('house.segmentorder') === 'function'
-            ? this.getOption('branch.segmentorder') : sortNaturally;
+        const houseOrder = typeof this.getOption("house.segmentorder") === "function"
+            ? this.getOption("branch.segmentorder") : sortNaturally;
 
-        const branchOrder = typeof this.getOption('branch.segmentorder') === 'function' ?
-            this.getOption('branch.segmentorder') : sortNaturally;
+        const branchOrder = typeof this.getOption("branch.segmentorder") === "function" ?
+            this.getOption("branch.segmentorder") : sortNaturally;
 
         this._container.houses.segments.sort(houseOrder);
         this._container.branches.segments.sort(branchOrder);
@@ -246,7 +246,7 @@ export class StreetContainer extends SpecificContainer {
 
             this.distributeShapes(
                 this._container.houses.segmented[key],
-                this.getOption('house.distribution'),
+                this.getOption("house.distribution"),
                 this._container.houses.left[key],
                 this._container.houses.right[key]
             );
@@ -254,7 +254,7 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private addBranchesToStructure() {
-        const branchSpacer: number = this.getOption('spacer.branches');
+        const branchSpacer: number = this.getOption("spacer.branches");
         let initialLeft = true;
         let initialRight = true;
 
@@ -279,7 +279,7 @@ export class StreetContainer extends SpecificContainer {
 
             this.distributeShapes(
                 this._container.branches.segmented[key],
-                this.getOption('branch.distribution'),
+                this.getOption("branch.distribution"),
                 this._container.branches.left[key],
                 this._container.branches.right[key]
             );
@@ -290,10 +290,10 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private distributeShapes(shapes: Array<Shape>, method: distributionMethod, left: Container, right: Container) {
-        if (typeof method === 'string') {
-            if (method === 'left') {
+        if (typeof method === "string") {
+            if (method === "left") {
                 this.distributeShapesToContainer(shapes, left);
-            } else if (method === 'right') {
+            } else if (method === "right") {
                 this.distributeShapesToContainer(shapes, right);
             } else {
                 this.distributeShapesInDefaultOrder(shapes, left, right);
@@ -340,8 +340,8 @@ export class StreetContainer extends SpecificContainer {
     private getContainerWidth() {
         const houseWidth = this.getHousesBlockTotalWidth();
         const branchWidth = this.getBranchesBlockTotalWidth();
-        const containerMargin = (branchWidth && houseWidth) ? this.getOption('spacer.terranullius') : 0;
-        return houseWidth + branchWidth + this.getOption('spacer.initial') + containerMargin;
+        const containerMargin = (branchWidth && houseWidth) ? this.getOption("spacer.terranullius") : 0;
+        return houseWidth + branchWidth + this.getOption("spacer.initial") + containerMargin;
     }
 
     private getHousesBlockTotalWidth() {

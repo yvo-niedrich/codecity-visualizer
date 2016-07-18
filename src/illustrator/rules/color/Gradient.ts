@@ -1,7 +1,7 @@
-import {TreeNode} from '../../../components/TreeNode';
-import {Version} from '../../../components/Version';
-import {Model} from '../../../model/Model';
-import {Rule, RuleConstructor, ruleDefaults} from '../Rule';
+import {TreeNode} from "../../../components/TreeNode";
+import {Version} from "../../../components/Version";
+import {Model} from "../../../model/Model";
+import {Rule, RuleConstructor, ruleDefaults} from "../Rule";
 
 interface ColorContainer {
     r: number;
@@ -21,26 +21,26 @@ export class GradientRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                'min': 0,
-                'max': 100,
-                'minColor': 0xFFFFFF,
-                'maxColor': 0xFF0000
+                "min": 0,
+                "max": 100,
+                "minColor": 0xFFFFFF,
+                "maxColor": 0xFF0000
             },
             ruleDefaults
         ));
 
-        this.requireOption('metric');
-        this.requireOption('attributes');
+        this.requireOption("metric");
+        this.requireOption("attributes");
     }
 
     public condition(model: Model, node: TreeNode, version: Version): boolean {
-        return this.getOption('condition')(model, node, version);
+        return this.getOption("condition")(model, node, version);
     }
 
     public execute(model: Model, node: TreeNode, version: Version): { [index: string]: any } {
-        const nodeValue = this.getOption('metric')(model, node, version);
+        const nodeValue = this.getOption("metric")(model, node, version);
         const newValue = this.calculateColor(nodeValue);
-        return Rule.createTraits(this.getOption('attributes'), newValue);
+        return Rule.createTraits(this.getOption("attributes"), newValue);
     }
 
     /**
@@ -49,13 +49,13 @@ export class GradientRule extends Rule {
      * @private
      */
     private calculateColor(value: number): number {
-        const startColor = this.hex2rgb(this.getOption('minColor'));
-        const endColor = this.hex2rgb(this.getOption('maxColor'));
-        const steps = this.getOption('max') - this.getOption('min');
+        const startColor = this.hex2rgb(this.getOption("minColor"));
+        const endColor = this.hex2rgb(this.getOption("maxColor"));
+        const steps = this.getOption("max") - this.getOption("min");
         let normalized = Math.min(
-                Math.max(this.getOption('min'), value),
-                this.getOption('max')
-            ) - this.getOption('min');
+                Math.max(this.getOption("min"), value),
+                this.getOption("max")
+            ) - this.getOption("min");
         const percent = Math.min(Math.max(normalized / steps, 0), 1);
         const valueColor = {
             r: startColor.r + ((endColor.r - startColor.r) * percent),

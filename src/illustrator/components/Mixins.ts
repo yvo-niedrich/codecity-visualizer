@@ -1,4 +1,4 @@
-import {AttributeContainer} from '../../components/Interfaces';
+import {AttributeContainer} from "../../components/Interfaces";
 
 /**
  * Classes can implement this Feature to become Configurable
@@ -17,10 +17,10 @@ export class Configurable implements ConfigurableInterface {
     protected _icOptions: AttributeContainer = {};
 
     public setDefaults(defaults: AttributeContainer): void {
-        if (typeof(this._icDefaults) === 'undefined' || this._icDefaults === null) {
+        if (typeof(this._icDefaults) === "undefined" || this._icDefaults === null) {
             this._icDefaults = defaults;
         } else {
-            throw 'Default values are already set';
+            throw "Default values are already set";
         }
     }
 
@@ -35,7 +35,7 @@ export class Configurable implements ConfigurableInterface {
      * Set a single option. Overwrites previous value.
      */
     public setOption(key: string, value: any): void {
-        if (typeof(this._icOptions) === 'undefined' || this._icOptions === null) {
+        if (typeof(this._icOptions) === "undefined" || this._icOptions === null) {
             this._icOptions = {};
         }
 
@@ -46,11 +46,11 @@ export class Configurable implements ConfigurableInterface {
      * Get the content for an option. return null, if no value was set.
      */
     public getOption(key: string): any {
-        if (typeof(this._icOptions) !== 'undefined' && this._icOptions !== null && key in this._icOptions) {
+        if (typeof(this._icOptions) !== "undefined" && this._icOptions !== null && key in this._icOptions) {
             return this._icOptions[key];
         }
 
-        if (typeof(this._icDefaults) !== 'undefined' && this._icDefaults !== null && key in this._icDefaults) {
+        if (typeof(this._icDefaults) !== "undefined" && this._icDefaults !== null && key in this._icDefaults) {
             return this._icDefaults[key];
         }
 
@@ -62,11 +62,11 @@ export class Configurable implements ConfigurableInterface {
      * @throws Exception if key is not set
      */
     public requireOption(key: string): void {
-        if (typeof(this._icOptions) !== 'undefined' && this._icOptions !== null && key in this._icOptions) {
+        if (typeof(this._icOptions) !== "undefined" && this._icOptions !== null && key in this._icOptions) {
             return;
         }
 
-        throw 'Option `' + key + '` was not set.';
+        throw "Option `" + key + "` was not set.";
     }
 }
 

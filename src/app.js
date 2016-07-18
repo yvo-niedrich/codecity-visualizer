@@ -13,8 +13,8 @@ exports.components = {
 
 exports.illustrators = {
     'base':      require('./illustrator/Illustrator').Illustrator,
-    'evostreet': require('./illustrator/evostreet'),
-    'district': require('./illustrator/district')
+    'evostreet': require('./illustrator/Evostreet').Evostreet,
+    'district': require('./illustrator/District').District
 };
 
 exports.containers = {

@@ -1,7 +1,7 @@
-import {Cuboid} from '../../../components/Cuboid';
-import {Point} from '../../../components/Point';
-import {UniversalContainer} from '../Container';
-import {Shape} from '../../components/Shapes';
+import {Cuboid} from "../../../components/Cuboid";
+import {Point} from "../../../components/Point";
+import {UniversalContainer} from "../Container";
+import {Shape} from "../../components/Shapes";
 
 class LightNode {
     private _origin: Point;
@@ -61,12 +61,12 @@ class LightNode {
      */
     public insert(measurements: Cuboid, object: any, cutHorizontalFirst: boolean = true): LightNode {
         if (!this.contentFits(measurements)) {
-            throw 'Object does not fit!';
+            throw "Object does not fit!";
         }
 
         const cutOrder = [
-            { 'method' : this.cutIfWidthDoesNotFit.bind(this),  'value' : measurements.width },
-            { 'method' : this.cutIfLengthDoesNotFit.bind(this), 'value' : measurements.length }
+            { "method" : this.cutIfWidthDoesNotFit.bind(this),  "value" : measurements.width },
+            { "method" : this.cutIfLengthDoesNotFit.bind(this), "value" : measurements.length }
         ];
 
         if (!cutHorizontalFirst) {
@@ -161,7 +161,7 @@ export class Lightmap extends UniversalContainer {
         super(key, mirror);
 
         this.setDefaults({
-            'cutHorizontalFirst': true
+            "cutHorizontalFirst": true
         });
 
         this._currentDimensions = new Cuboid();
@@ -174,7 +174,7 @@ export class Lightmap extends UniversalContainer {
 
         const shapes = this.shapes;
 
-        if (this.getOption('cutHorizontalFirst')) {
+        if (this.getOption("cutHorizontalFirst")) {
             shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width; });
         } else {
             shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length; });
@@ -210,7 +210,7 @@ export class Lightmap extends UniversalContainer {
         tree.collectCandidates(candidates, shapeDimensions);
 
         if (!candidates.length) {
-            throw 'Could not find a single candidate. This should never happen!';
+            throw "Could not find a single candidate. This should never happen!";
         }
 
         // Find the best possible Candidate
@@ -259,7 +259,7 @@ export class Lightmap extends UniversalContainer {
         const winner: LightNode = preserver ? preserver : expander;
 
         // Insert Shape into the candidate and update current dimensions
-        winner.insert(shapeDimensions, shape, this.getOption('cutHorizontalFirst'));
+        winner.insert(shapeDimensions, shape, this.getOption("cutHorizontalFirst"));
 
         this._currentDimensions.length = Math.max(
             winner.origin.x + shapeDimensions.length,

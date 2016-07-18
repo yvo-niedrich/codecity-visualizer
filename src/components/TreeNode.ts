@@ -13,7 +13,7 @@ export class TreeNode {
     }
 
     /**
-     * Convert Node to String (it's key)
+     * Convert Node to String (it"s key)
      * @return {String}
      */
     public toString(): string {
@@ -28,7 +28,7 @@ export class TreeNode {
     public add(child: string | TreeNode): TreeNode {
         let myChild: TreeNode;
 
-        if (typeof child === 'string') {
+        if (typeof child === "string") {
             myChild = new TreeNode(child);
         } else {
             myChild = child;

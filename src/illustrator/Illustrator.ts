@@ -1,9 +1,9 @@
-import {AttributeContainer} from '../components/Interfaces';
-import {applyMixins, Configurable, ConfigurableInterface} from './components/Mixins';
-import {Rule} from './rules/Rule';
-import {Version} from '../components/Version';
-import {TreeNode} from '../components/TreeNode';
-import {Model} from '../model/Model';
+import {AttributeContainer} from "../components/Interfaces";
+import {applyMixins, Configurable, ConfigurableInterface} from "./components/Mixins";
+import {Rule} from "./rules/Rule";
+import {Version} from "../components/Version";
+import {TreeNode} from "../components/TreeNode";
+import {Model} from "../model/Model";
 
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
@@ -42,7 +42,7 @@ abstract class Illustrator implements ConfigurableInterface {
 
     /**
      * Applies all available rules against a single node and returns an Object
-     * covering the changes and additions to the node's attributes
+     * covering the changes and additions to the node"s attributes
      */
     protected applyRules(node: TreeNode, model: Model, version: Version) {
         let attributes = {};

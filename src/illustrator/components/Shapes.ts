@@ -1,11 +1,11 @@
-import {Cuboid} from '../../components/Cuboid';
-import {AttributeContainer, ShapeBaseAttributes} from '../../components/Interfaces';
-import {Point} from '../../components/Point';
+import {Cuboid} from "../../components/Cuboid";
+import {AttributeContainer, ShapeBaseAttributes} from "../../components/Interfaces";
+import {Point} from "../../components/Point";
 
 /**
  * All shapes occupy a square area.
- * It's dimensions are described by the vector `dimensions`.
- * It can be placed and rotated around the shape's centroid.
+ * It"s dimensions are described by the vector `dimensions`.
+ * It can be placed and rotated around the shape"s centroid.
  */
 export abstract class Shape {
     protected _key: String;
@@ -31,7 +31,7 @@ export abstract class Shape {
     }
 
     /**
-     * The shape's (and it's associated model node's) identifier
+     * The shape"s (and it"s associated model node"s) identifier
      */
     get key(): String {
         return this._key;
@@ -52,7 +52,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get this shapes position, relative to it's parent's centroid
+     * Get this shapes position, relative to it"s parent"s centroid
      * @return {Point}}
      * @protected
      */
@@ -61,7 +61,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get the shape's qubic footprint (before any rotation)
+     * Get the shape"s qubic footprint (before any rotation)
      * Intended only for private/protected use.
      * @return {Cuboid}
      * @protected
@@ -71,7 +71,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get the shape's qubic footprint (after any possible relative rotations)
+     * Get the shape"s qubic footprint (after any possible relative rotations)
      */
     get displayDimensions(): Cuboid {
         const swap = this.rotation % 180;
@@ -103,18 +103,18 @@ export abstract class Shape {
     }
 
     /**
-     * Convert Shape to String (it's key/name)
+     * Convert Shape to String (it"s key/name)
      */
     public toString(): string {
         return String(this._key);
     }
 
     /**
-     * Rotate the shape around the it's centroid (clockwise rotation).
+     * Rotate the shape around the it"s centroid (clockwise rotation).
      */
     public rotate (degrees: number) {
         if (degrees % 90) {
-            throw 'Only 90° rotations allowed';
+            throw "Only 90° rotations allowed";
         }
 
         this._attributes.rotation = (720 + this.rotation + degrees) % 360;
@@ -147,7 +147,7 @@ export abstract class Shape {
      */
     public getSpatialInformation(): Array<ShapeBaseAttributes> {
         if (!this._hasBeenDrawn) {
-            throw 'Node has not been drawn yet';
+            throw "Node has not been drawn yet";
         }
 
         const swap = this._absoluteRotation % 180;
@@ -174,7 +174,7 @@ export abstract class Shape {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 const value = attributes[key];
-                this.updateAttribute(this._attributes, key.split('.'), value);
+                this.updateAttribute(this._attributes, key.split("."), value);
             }
         }
     }
@@ -183,7 +183,7 @@ export abstract class Shape {
      * Returns the attribute recorded for key
      */
     public getAttribute(key: string): any {
-        const keys = key.split('.');
+        const keys = key.split(".");
         let attr: any = this._attributes;
         while (keys.length && attr) {
             attr = attr[keys.shift()];

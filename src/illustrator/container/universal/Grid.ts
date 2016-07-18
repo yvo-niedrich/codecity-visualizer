@@ -1,11 +1,11 @@
-import {UniversalContainer} from '../Container';
-import {Shape} from '../../components/Shapes';
-import {Cuboid} from '../../../components/Cuboid';
-import {RowContainer} from './Row';
+import {UniversalContainer} from "../Container";
+import {Shape} from "../../components/Shapes";
+import {Cuboid} from "../../../components/Cuboid";
+import {RowContainer} from "./Row";
 
 /**
  * Strip is a helper class for the GRID-Algorithm.
- * It's contents shall not be shared. with other classes.
+ * It"s contents shall not be shared. with other classes.
  */
 class Strip {
     private _offset: number;
@@ -109,7 +109,7 @@ export class GridContainer extends UniversalContainer {
             // 2) Will the new shape impare the aspect ratio?
             const currentDimensions = this.getCurrentDimensions();
             const newLength = strip.dimensions.length + shape.displayDimensions.length;
-            if (newLength / currentDimensions.width > this.getOption('optimalAspectRatio')) {
+            if (newLength / currentDimensions.width > this.getOption("optimalAspectRatio")) {
                 // 2.1) Inserting the Shape would impare aspect ratio
                 //      Try again on the next strip
 
@@ -134,7 +134,7 @@ export class GridContainer extends UniversalContainer {
     }
 
     private createNewStrip(): void {
-        const rowName = this.key + '_r' + this._strips.length;
+        const rowName = this.key + "_r" + this._strips.length;
         this._strips.push(new Strip(rowName, this.isMirrored));
         this.recalculateStripOffsets();
     }

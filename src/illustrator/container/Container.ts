@@ -1,12 +1,12 @@
-import {AttributeContainer} from '../../components/Interfaces';
-import {applyMixins, Configurable, ConfigurableInterface} from '../components/Mixins';
-import {Shape} from '../components/Shapes';
-import {Point} from '../../components/Point';
-import {Cuboid} from '../../components/Cuboid';
+import {AttributeContainer} from "../../components/Interfaces";
+import {applyMixins, Configurable, ConfigurableInterface} from "../components/Mixins";
+import {Shape} from "../components/Shapes";
+import {Point} from "../../components/Point";
+import {Cuboid} from "../../components/Cuboid";
 
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
- * The container will automatically finalize, once it is drawn or it's dimensions are requested.
+ * The container will automatically finalize, once it is drawn or it"s dimensions are requested.
  * All Containers implement the Configurable Feature
  * @implements Configurable
  */
@@ -56,7 +56,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     }
 
     /**
-     * Get the spatial information for container and it's content
+     * Get the spatial information for container and it"s content
      * TODO: Fix Return Value
      */
     public getSpatialInformation(): any {
@@ -68,7 +68,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     }
 
     /**
-     * Draws the container and all of it's shapes (after initiating finalizeOnce)
+     * Draws the container and all of it"s shapes (after initiating finalizeOnce)
      */
     public draw(parentPosition: Point, parentRotation: number): void {
         this.finalizeOnce();

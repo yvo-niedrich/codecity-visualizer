@@ -1,8 +1,8 @@
-import {Cuboid} from './Cuboid';
-import {Dependency} from './Dependency';
-import {TreeNode} from './TreeNode';
-import {Point} from './Point';
-import {Version} from './Version';
+import {Cuboid} from "./Cuboid";
+import {Dependency} from "./Dependency";
+import {TreeNode} from "./TreeNode";
+import {Point} from "./Point";
+import {Version} from "./Version";
 
 export interface AttributeContainer {
     [index: string]: any;
