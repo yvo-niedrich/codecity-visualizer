@@ -1,4 +1,4 @@
-var SpecificContainer = require("./../base-specific.js");
+var SpecificContainer = require("./../Container").SpecificContainer;
 var RowContainer      = require("./../universal/row.js");
 var ShapeHouse        = require("../../components/Shapes").House;
 var ShapeStreet       = require("../../components/Shapes").Street;

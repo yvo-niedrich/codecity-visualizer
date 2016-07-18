@@ -1,4 +1,4 @@
-var UniversalContainer = require("../base-universal.js");
+var UniversalContainer = require('../Container').UniversalContainer;
 var Strip              = require("../helper/strip.js");
 var Cuboid             = require("../../../components/Cuboid").Cuboid;
 

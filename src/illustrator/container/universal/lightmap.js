@@ -1,4 +1,4 @@
-var UniversalContainer = require("../base-universal.js");
+var UniversalContainer = require('../Container').UniversalContainer;
 var LightmapTree       = require("../helper/lighttree.js");
 var Cuboid             = require("../../../components/Cuboid").Cuboid;
 var Point              = require("../../../components/Point").Point;

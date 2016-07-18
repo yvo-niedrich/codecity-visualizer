@@ -1,5 +1,5 @@
-var BaseContainer     = require("./../base.js");
-var SpecificContainer = require("./../base-specific.js");
+var BaseContainer     = require("./../Container").Container;
+var SpecificContainer = require("./../Container").SpecificContainer;
 var LightmapContainer = require("./../universal/lightmap.js");
 var ShapeHouse        = require("../../components/Shapes").House;
 var ShapePlatform     = require("../../components/Shapes").Platform;

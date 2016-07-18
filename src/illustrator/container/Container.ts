@@ -1,6 +1,6 @@
 import {AttributeContainer} from '../../components/Interfaces';
-import {Shape} from '../components/Shapes';
 import {applyMixins, Configurable, ConfigurableInterface} from '../components/Mixins';
+import {Shape} from '../components/Shapes';
 import {Point} from "../../components/Point";
 
 /**
@@ -101,4 +101,35 @@ abstract class Container extends Shape implements ConfigurableInterface {
 
 applyMixins(Container, [Configurable]);
 
-export {Container};
+abstract class SpecificContainer extends Container {
+    constructor(key: string, options: AttributeContainer) {
+        super(key);
+        this.setOptions(options);
+    }
+}
+
+abstract class UniversalContainer extends Container {
+    private _mirrored: boolean;
+
+    constructor(key: string, mirror?: boolean) {
+        super(key);
+        this._mirrored = mirror ? mirror : false;
+    }
+
+    /**
+     * Adds shape to the container and honors mirroring
+     */
+    public add(shape: Shape) {
+        super.add(shape);
+
+        if (this._mirrored) {
+            shape.rotate(180);
+        }
+    }
+
+    get isMirrored(): boolean {
+        return this._mirrored;
+    }
+}
+
+export {Container, SpecificContainer, UniversalContainer};

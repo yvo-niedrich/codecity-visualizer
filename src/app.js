@@ -18,7 +18,7 @@ exports.illustrators = {
 };
 
 exports.containers = {
-    'base':     require('./illustrator/container/base-universal'),
+    'base':     require('./illustrator/container/Container').UniversalContainer,
     'row':      require('./illustrator/container/universal/row'),
     'lightmap': require('./illustrator/container/universal/lightmap'),
     'grid':     require('./illustrator/container/universal/grid')

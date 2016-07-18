@@ -1,4 +1,4 @@
-var UniversalContainer = require("../base-universal.js");
+var UniversalContainer = require('../Container').UniversalContainer;
 /**
  * Rows Elements one after the other
  */
