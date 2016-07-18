@@ -112,7 +112,7 @@ export class StreetContainer extends SpecificContainer {
         let segment: string;
 
         if (this.getOption('house.segmentation')) {
-            segment = shape.getAttribute(this.getOption('house.segmentation'));
+            segment = this.getOption('house.segmentation')(shape);
         }
 
         segment = segment != null ? segment : 'default';
@@ -135,7 +135,7 @@ export class StreetContainer extends SpecificContainer {
         let segment: string;
 
         if (this.getOption('branch.segmentation')) {
-            segment = shape.getAttribute(this.getOption('branch.segmentation'));
+            segment = this.getOption('branch.segmentation')(shape);
         }
 
         segment = segment != null ? segment : 'default';
@@ -316,13 +316,6 @@ export class StreetContainer extends SpecificContainer {
                 c.add(shapes[i]);
             }
         }
-        // TODO: Kann weg?
-        // for (const key in shapes) {
-        //     if (shapes.hasOwnProperty(key)) {
-        //         const c = (parseInt(key) % 2) ? left : right;
-        //         c.add(shapes[key]);
-        //     }
-        // }
     }
 
     private distributeShapesEquallyByAttribute(

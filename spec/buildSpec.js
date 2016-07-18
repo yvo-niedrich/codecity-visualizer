@@ -103,11 +103,34 @@ describe("Evostreet", function() {
         expect(illustration.shapes[1].rotation).not.toBe(0);
     });
 
-    it("Segmentation by Key (1 Element)", function () {
+    it("Segmentation by key (1 Element each)", function () {
         var options = {
             'evostreet.options': {
-                'house.segmentation': 'key',
-                'branch.segmentation': 'key'
+                'house.segmentation': function(s) { return s.key; },
+                'house.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1),
+                'branch.segmentation': function(s) { return s.key; },
+                'branch.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1)
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Segmentation by 1. char of key", function () {
+        var options = {
+            'evostreet.options': {
+                'house.segmentation': (s) => String(s.getAttribute('key')).toLowerCase().substr(0,1),
+                'house.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1),
+                'branch.segmentation': (s) => String(s.getAttribute('key')).toLowerCase().substr(0,1),
+                'branch.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1)
             }
         };
         var illustrator = new Evostreet(model, options);
