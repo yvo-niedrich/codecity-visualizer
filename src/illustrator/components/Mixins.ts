@@ -70,8 +70,10 @@ export class Configurable implements ConfigurableInterface {
     }
 }
 
-export function applyMixins(derivedCtor: any, baseCtors: any[]) {
-    baseCtors.forEach(baseCtor => {
+export function applyMixins(derivedCtor: any, baseCtors: any) {
+    let baseCtorsArr: Array<any> = Array.isArray(baseCtors) ? baseCtors : [baseCtors];
+
+    baseCtorsArr.forEach(baseCtor => {
         Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
             derivedCtor.prototype[name] = baseCtor.prototype[name];
         });

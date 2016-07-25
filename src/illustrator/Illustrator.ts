@@ -56,6 +56,6 @@ abstract class Illustrator implements ConfigurableInterface {
     }
 }
 
-applyMixins(Illustrator, [Configurable]);
+applyMixins(Illustrator, Configurable);
 
 export {Illustrator};

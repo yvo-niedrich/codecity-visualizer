@@ -15,7 +15,8 @@ type distributionFunction = (s: Shape) => number;
 type distributionString = "left" | "right" | "default";
 type distributionMethod = distributionString | distributionFunction;
 
-// TODO: Segmentorder --> NULL | function
+type segmentOrderMethod  = { (a: any): number} | null;
+
 export interface StreetContainerOptions extends AttributeContainer {
     "spacer.initial"?: number;
     "spacer.branches"?: number;
@@ -25,12 +26,12 @@ export interface StreetContainerOptions extends AttributeContainer {
     "house.container"?: UniversalContainer;
     "house.distribution"?: distributionMethod;
     "house.segmentation"?: string;
-    "house.segmentorder"?: { (a: any): number };
+    "house.segmentorder"?: segmentOrderMethod;
 
     "branch.container"?: UniversalContainer;
     "branch.distribution"?: distributionMethod;
     "branch.segmentation"?: string;
-    "branch.segmentorder"?: { (a: any): number};
+    "branch.segmentorder"?: segmentOrderMethod;
 }
 
 /**

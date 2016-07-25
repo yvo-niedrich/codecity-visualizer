@@ -3,7 +3,6 @@ import {AttributeContainer} from "../../../components/Interfaces";
 import {Lightmap} from "../universal/Lightmap";
 import {Platform, Shape, House} from "../../components/Shapes";
 
-// TODO: Segmentorder --> NULL | function
 export interface DistrictContainerOptions extends AttributeContainer {
     "spacer.margin"?: number;
     "spacer.padding"?: number;

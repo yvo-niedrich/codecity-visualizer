@@ -1,5 +1,4 @@
 export class TreeNode {
-    // TODO: TypeScript 2.0 -> or null!
     public parent: TreeNode | null;
     public readonly children: Array<TreeNode>;
     private key: string;
