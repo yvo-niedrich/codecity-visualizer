@@ -13,7 +13,7 @@ export interface ConfigurableInterface {
 }
 
 export class Configurable implements ConfigurableInterface {
-    protected _icDefaults: AttributeContainer = null;
+    protected _icDefaults: AttributeContainer | null = null;
     protected _icOptions: AttributeContainer = {};
 
     public setDefaults(defaults: AttributeContainer): void {

@@ -40,7 +40,7 @@ export class StreetContainer extends SpecificContainer {
     private _leftBranchSpacer: number;
     private _rightBranchSpacer: number;
     private _container: {
-        road: Street,
+        road: Street | null,
         houses: SegmentContainer,
         branches: SegmentContainer
     };
@@ -109,7 +109,7 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private addHouse(shape: House) {
-        let segment: string;
+        let segment: string | null = null;
 
         if (this.getOption("house.segmentation")) {
             segment = this.getOption("house.segmentation")(shape);
@@ -132,7 +132,7 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private addBranch(shape: StreetContainer): void {
-        let segment: string;
+        let segment: string | null = null;
 
         if (this.getOption("branch.segmentation")) {
             segment = this.getOption("branch.segmentation")(shape);
@@ -222,12 +222,12 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private updateDimensions() {
+    private updateDimensions(): void {
         this.dimensions.length = this.getContainerLength();
         this.dimensions.width  = this.getContainerWidth() + this.getOption("spacer.conclusive");
     }
 
-    private prepareSegments() {
+    private prepareSegments(): void {
         const sortNaturally = function(a: any, b: any) { return parseInt(a, 10) - parseInt(b, 10); };
 
         const houseOrder = typeof this.getOption("house.segmentorder") === "function"
@@ -240,7 +240,7 @@ export class StreetContainer extends SpecificContainer {
         this._container.branches.segments.sort(branchOrder);
     }
 
-    private addHousesToStructure() {
+    private addHousesToStructure(): void {
         for (const segment of this._container.houses.segments) {
             const key = String(segment);
 
@@ -253,7 +253,7 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private addBranchesToStructure() {
+    private addBranchesToStructure(): void {
         const branchSpacer: number = this.getOption("spacer.branches");
         let initialLeft = true;
         let initialRight = true;
@@ -289,7 +289,7 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private distributeShapes(shapes: Array<Shape>, method: distributionMethod, left: Container, right: Container) {
+    private distributeShapes(shapes: Array<Shape>, method: distributionMethod, left: Container, right: Container): void {
         if (typeof method === "string") {
             if (method === "left") {
                 this.distributeShapesToContainer(shapes, left);
@@ -303,13 +303,13 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private distributeShapesToContainer(shapes: Array<Shape>, container: Container) {
+    private distributeShapesToContainer(shapes: Array<Shape>, container: Container): void {
         for (const s of shapes) {
             container.add(s);
         }
     }
 
-    private distributeShapesInDefaultOrder(shapes: Array<Shape>, left: Container, right: Container) {
+    private distributeShapesInDefaultOrder(shapes: Array<Shape>, left: Container, right: Container): void {
         for (let i: number = 0; i < shapes.length; i++) {
             if (shapes.hasOwnProperty(i)) {
                 const c = (i % 2) ? left : right;
@@ -323,7 +323,7 @@ export class StreetContainer extends SpecificContainer {
         attr: distributionFunction,
         left: Container,
         right: Container
-    ) {
+    ): void {
         shapes.sort(function (a: Shape, b: Shape) { return attr(b) - attr(a); });
         let diff = 0;
         for (const s of shapes) {
@@ -337,14 +337,14 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private getContainerWidth() {
+    private getContainerWidth(): number {
         const houseWidth = this.getHousesBlockTotalWidth();
         const branchWidth = this.getBranchesBlockTotalWidth();
         const containerMargin = (branchWidth && houseWidth) ? this.getOption("spacer.terranullius") : 0;
         return houseWidth + branchWidth + this.getOption("spacer.initial") + containerMargin;
     }
 
-    private getHousesBlockTotalWidth() {
+    private getHousesBlockTotalWidth(): number {
         let maxLeftHouses = 0;
         let maxRightHouses = 0;
         let tmp: number;
@@ -374,7 +374,7 @@ export class StreetContainer extends SpecificContainer {
         return Math.max(maxLeftHouses, maxRightHouses);
     }
 
-    private getBranchesBlockTotalWidth() {
+    private getBranchesBlockTotalWidth(): number {
         let maxLeftBranches = 0;
         let maxRightBranches = 0;
         let tmp: number;
@@ -404,14 +404,15 @@ export class StreetContainer extends SpecificContainer {
         return Math.max(maxLeftBranches, maxRightBranches);
     }
 
-    private getContainerLength() {
-        let leftLength  = this.getLeftBlockLength();
-        let rightLength = this.getRightBlockLength();
+    private getContainerLength(): number {
+        const leftLength  = this.getLeftBlockLength();
+        const rightLength = this.getRightBlockLength();
+        const road = this._container.road as Street;
 
-        return leftLength + this._container.road.displayDimensions.length + rightLength;
+        return leftLength + road.displayDimensions.length + rightLength;
     }
 
-    private getLeftBlockLength() {
+    private getLeftBlockLength(): number {
         let maxLeftHouses = 0;
         let maxLeftBranches = 0;
         let tmp: number;
@@ -441,7 +442,7 @@ export class StreetContainer extends SpecificContainer {
         return Math.max(maxLeftHouses, maxLeftBranches) + this._leftBranchSpacer;
     }
 
-    private getRightBlockLength() {
+    private getRightBlockLength(): number {
         let maxRightHouses = 0;
         let maxRightBranches = 0;
         let tmp: number;

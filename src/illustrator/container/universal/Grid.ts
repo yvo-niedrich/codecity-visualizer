@@ -96,7 +96,7 @@ export class GridContainer extends UniversalContainer {
     private calculateGrid() {
         while (this._shapes.length) {
             const strip = this._strips[this._activeStrip];
-            const shape = this._shapes.shift();
+            const shape = this._shapes.shift() as Shape;
 
             // 1) If a new Strip was just created, add the shape
             //    And then return the pointer to the first strip

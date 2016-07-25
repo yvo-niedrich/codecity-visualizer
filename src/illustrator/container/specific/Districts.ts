@@ -22,7 +22,7 @@ export class DistrictContainer extends SpecificContainer {
     private _container: {
         houses: UniversalContainer,
         districts: UniversalContainer,
-        platform: Platform
+        platform: Platform | null
     };
 
     constructor(key: string, options: DistrictContainerOptions = {}) {

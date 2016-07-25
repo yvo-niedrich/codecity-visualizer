@@ -222,8 +222,8 @@ export class Lightmap extends UniversalContainer {
         //             in the best aspect ratio
         let bestPossibleRatio = Infinity;
         let bestPossibleSpace = Infinity;
-        let expander: LightNode = null;
-        let preserver: LightNode = null;
+        let expander: LightNode | null = null;
+        let preserver: LightNode | null = null;
 
         for (const c of candidates) {
             const newLength = Math.max(c.origin.x + shapeDimensions.length, this._currentDimensions.length);
@@ -256,7 +256,11 @@ export class Lightmap extends UniversalContainer {
             }
         }
 
-        const winner: LightNode = preserver ? preserver : expander;
+        if (preserver == null && expander == null) {
+            throw "Lightmap: No suitable candidate";
+        }
+
+        const winner: LightNode = (preserver ? preserver : expander) as LightNode;
 
         // Insert Shape into the candidate and update current dimensions
         winner.insert(shapeDimensions, shape, this.getOption("cutHorizontalFirst"));

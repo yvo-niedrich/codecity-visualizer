@@ -18,7 +18,7 @@ export abstract class Shape {
         this._key = key;
 
         this._hasBeenDrawn = false;
-        this._absolutePosition = null;
+        this._absolutePosition = new Point();
         this._absoluteRotation = 0;
 
         this._attributes = {
@@ -186,7 +186,8 @@ export abstract class Shape {
         const keys = key.split(".");
         let attr: any = this._attributes;
         while (keys.length && attr) {
-            attr = attr[keys.shift()];
+            const index = <string> keys.shift();
+            attr = attr[index];
         }
         return attr;
     }
@@ -195,7 +196,11 @@ export abstract class Shape {
      * Updates a single value within the attributes object
      */
     private updateAttribute(obj: AttributeContainer, keys: Array<string>, value: any): void {
-        const k = keys.shift();
+        if (!keys.length) {
+            return;
+        }
+
+        const k = <string> keys.shift();
         if (!keys.length) {
             obj[k] = value;
         } else {
