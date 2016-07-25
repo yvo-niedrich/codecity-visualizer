@@ -1,4 +1,4 @@
-import {AttributeContainer} from "../../components/Interfaces";
+import {AttributeContainer, ShapeBaseAttributes} from "../../components/Interfaces";
 import {applyMixins, Configurable, ConfigurableInterface} from "../components/Mixins";
 import {Shape} from "../components/Shapes";
 import {Point} from "../../components/Point";
@@ -56,11 +56,10 @@ abstract class Container extends Shape implements ConfigurableInterface {
     }
 
     /**
-     * Get the spatial information for container and it"s content
-     * TODO: Fix Return Value
+     * Get the spatial information for container and it's content
      */
-    public getSpatialInformation(): any {
-        let result: Array<any> = [];
+    public getSpatialInformation(): Array<ShapeBaseAttributes> {
+        let result: Array<ShapeBaseAttributes> = [];
         for (const shape of this._elements) {
             result = result.concat(shape.getSpatialInformation());
         }
@@ -99,7 +98,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     }
 }
 
-applyMixins(Container, [Configurable]);
+applyMixins(Container, Configurable);
 
 abstract class SpecificContainer extends Container {
     constructor(key: string, options: AttributeContainer = {}) {

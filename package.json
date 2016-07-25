@@ -39,7 +39,7 @@
         "jasmine": "^2.4.1",
         "rimraf": "latest",
         "tslint": "^3.13.0",
-        "typescript": "^1.8.10"
+        "typescript": "^2.0.0"
     },
     "babel": {
         "presets": [

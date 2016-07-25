@@ -9,7 +9,7 @@ export class AttributeExtractor {
      * Require that node exists in version. Optionally an attribute can be required for the node and version.
      * @throws Exception if non-existent
      */
-    public static require(model: Model, node: TreeNode, version: Version, attribute: string = null): boolean {
+    public static require(model: Model, node: TreeNode, version: Version, attribute: string | null = null): boolean {
         if (model.exists(node, version)) {
             if (attribute !== null && !(attribute in model.getAttributes(node, version))) {
                 throw "Attribute " + attribute + " does not exist in Version " + version + " for Node " + node;

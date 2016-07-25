@@ -1,9 +1,6 @@
 export class TreeNode {
-    // TODO: TypeScript 2.0 -> or null!
-    public parent: TreeNode;
-
-    // TODO: TypeScript 2.0 -> readonly!
-    public children: Array<TreeNode>;
+    public parent: TreeNode | null;
+    public readonly children: Array<TreeNode>;
     private key: string;
 
     constructor(key: string) {
@@ -45,7 +42,7 @@ export class TreeNode {
      * @param  {string} key Item to find
      * @return {TreeNode}
      */
-    public find(key: TreeNode|string): TreeNode {
+    public find(key: TreeNode|string): TreeNode | null {
         if (this.toString() === key.toString()) {
             return this;
         }

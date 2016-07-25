@@ -1,7 +1,6 @@
 export class Version {
-    // TODO: TypeScript 2.0 -> readonly
-    public key: string;
-    public label: string;
+    public readonly key: string;
+    public readonly label: string;
     private order: number;
 
     constructor(key: string, label: string, order?: number) {
