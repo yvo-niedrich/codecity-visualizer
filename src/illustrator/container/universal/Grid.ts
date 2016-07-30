@@ -58,18 +58,17 @@ class Strip {
 export class GridContainer extends UniversalContainer {
     private _shapes: Array<Shape>;
     private _strips: Array<Strip>;
-    private _activeStrip: number;
 
     constructor(key: string, mirror: boolean = false) {
         super(key, mirror);
 
         this.setDefaults({
-            optimalAspectRatio: 1.0
+            optimalAspectRatio: 1.0,
+            checkNewStripRatio: false
         });
 
         this._shapes = [];
         this._strips = [];
-        this._activeStrip = -1;
     }
 
     public add(shape: Shape): void {
@@ -81,9 +80,6 @@ export class GridContainer extends UniversalContainer {
             return;
         }
 
-        this.createNewStrip();
-        this._activeStrip = 0;
-
         this.calculateGrid();
         this.calculateFinalDimensions();
         this.positionStrips();
@@ -94,15 +90,27 @@ export class GridContainer extends UniversalContainer {
     }
 
     private calculateGrid() {
+        // An initial Strip is required
+        this.createNewStrip();
+
+        let activeStrip: number = 0;
+        let bestFit: { aspectDistance: number; strip: number; } = {
+            aspectDistance: Infinity,
+            strip: -1
+        };
+
         while (this._shapes.length) {
-            const strip = this._strips[this._activeStrip];
+            const strip = this._strips[activeStrip];
             const shape = this._shapes.shift() as Shape;
 
-            // 1) If a new Strip was just created, add the shape
+            // 1) If a new Strip was just created or this is the best fit, add the shape here
             //    And then return the pointer to the first strip
-            if (!strip.dimensions.length) {
+            if (!strip.dimensions.length || bestFit.strip === activeStrip) {
                 this.addAndRecalculate(strip, shape);
-                this._activeStrip = 0;
+
+                activeStrip = 0;
+                bestFit.aspectDistance = Infinity;
+                bestFit.strip = -1;
                 continue;
             }
 
@@ -120,19 +128,36 @@ export class GridContainer extends UniversalContainer {
 
             if (aspectRatioImpaired) {
                 // 2.1) Inserting the Shape would impare aspect ratio
-                //      Try again on the next strip
 
-                // If this is the last strip, create a new strip
-                if (this._activeStrip + 1 === this._strips.length) {
+                // Store the Strip, because adding a new strip might be worse
+                // than inserting the shape here
+                if (possibleAspectRatioDist < bestFit.aspectDistance) {
+                    bestFit.aspectDistance = possibleAspectRatioDist;
+                    bestFit.strip = activeStrip;
+                }
+
+                // If this is the last strip, check if inserting a new
+                // strip is better, than using any of the available strips.
+                let isLastStrip = activeStrip + 1 === this._strips.length;
+                let gotoBestFit = false;
+                if (this.getOption("checkNewStripRatio") && isLastStrip) {
+                    const widthWithNewStrip = currentDimensions.width + shape.displayDimensions.width;
+                    const newStripAspectRatio = this.getAspectRatio(currentDimensions.length, widthWithNewStrip);
+                    const newStripAspectRatioDist = Math.abs(newStripAspectRatio - this.getOption("optimalAspectRatio"));
+                    gotoBestFit = newStripAspectRatioDist > bestFit.aspectDistance;
+                }
+
+                if (isLastStrip && !gotoBestFit) {
                     this.createNewStrip();
                 }
 
+                // Try again on the next strip or best fitting position
                 this._shapes.unshift(shape);
-                this._activeStrip++;
+                activeStrip = gotoBestFit ? bestFit.strip : activeStrip + 1;
 
             } else {
-                // 2.2) The Shape will not impair the aspect ratio on 
-                //    the current strip. Insert the shape.
+                // 2.2) The Shape will not impair the aspect ratio on
+                //      the current strip. Insert the shape.
                 this.addAndRecalculate(strip, shape);
             }
         }
