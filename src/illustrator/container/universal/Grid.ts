@@ -101,15 +101,24 @@ export class GridContainer extends UniversalContainer {
             // 1) If a new Strip was just created, add the shape
             //    And then return the pointer to the first strip
             if (!strip.dimensions.length) {
-                strip.add(shape);
+                this.addAndRecalculate(strip, shape);
                 this._activeStrip = 0;
                 continue;
             }
 
             // 2) Will the new shape impare the aspect ratio?
             const currentDimensions = this.getCurrentDimensions();
-            const newLength = strip.dimensions.length + shape.displayDimensions.length;
-            if (newLength / currentDimensions.width > this.getOption("optimalAspectRatio")) {
+            const newLength = Math.max(strip.dimensions.length + shape.displayDimensions.length, currentDimensions.length);
+
+            const possibleAspectRatio = this.getAspectRatio(newLength, currentDimensions.width);
+            const possibleAspectRatioDist = Math.abs(possibleAspectRatio - this.getOption("optimalAspectRatio"));
+
+            const currentAspectRatio = this.getAspectRatio(currentDimensions.width, currentDimensions.length);
+            const currentAspectRatioDist = Math.abs(currentAspectRatio - this.getOption("optimalAspectRatio"));
+
+            const aspectRatioImpaired = possibleAspectRatioDist > currentAspectRatioDist;
+
+            if (aspectRatioImpaired) {
                 // 2.1) Inserting the Shape would impare aspect ratio
                 //      Try again on the next strip
 
@@ -124,11 +133,7 @@ export class GridContainer extends UniversalContainer {
             } else {
                 // 2.2) The Shape will not impair the aspect ratio on 
                 //    the current strip. Insert the shape.
-                const updateOffsets = strip.add(shape);
-
-                if (updateOffsets) {
-                    this.recalculateStripOffsets();
-                }
+                this.addAndRecalculate(strip, shape);
             }
         }
     }
@@ -137,6 +142,16 @@ export class GridContainer extends UniversalContainer {
         const rowName = this.key + "_r" + this._strips.length;
         this._strips.push(new Strip(rowName, this.isMirrored));
         this.recalculateStripOffsets();
+    }
+
+    private getAspectRatio(length: number, width: number): number {
+        return Math.max(length, width) / Math.min(length, width);
+    }
+
+    private addAndRecalculate(strip: Strip, shape: Shape): void {
+        if (strip.add(shape)) {
+            this.recalculateStripOffsets();
+        }
     }
 
     private recalculateStripOffsets(): void {
