@@ -1,4 +1,5 @@
-![# CodeCityVisualizer][logo-image]
+# CodeCityVisualizer
+![CodeCityVisualizer-Logo][logo-image]
 
 [![Travis Banner][travis-banner]][travis-link]
 [![npm version](https://badge.fury.io/js/codecity-visualizer.svg)](https://badge.fury.io/js/codecity-visualizer)
@@ -11,7 +12,7 @@ For more information check out the [Git-Repository][git-project] or see how to s
 
 Available in ES2015-CommonJS
 
-*FYI: Here is still a lot of work to be done.*
+_FYI: Here is still a lot of work to be done._
 
 ## Polyfills
 This plugin uses the ES2015-Syntax, but still requires polyfills, depending on the interpreter. For minimal (with IE11 / Node v3) polyfilling use `core-js`:
