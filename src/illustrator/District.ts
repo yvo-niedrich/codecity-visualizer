@@ -7,7 +7,7 @@ import {Version} from "../components/Version";
 import {Point} from "../components/Point";
 import {Illustration} from "./components/Illustration";
 import {TreeNode} from "../components/TreeNode";
-import {Shape, House, Platform} from "./components/Shapes";
+import {Shape, House} from "./components/Shapes";
 
 export interface DistrictOptions extends AttributeContainer {
     "layout.tower"?: boolean;
@@ -75,8 +75,7 @@ export class District extends Illustrator {
             return this.createSpatialModel(tree.children[0], version);
         }
 
-        const container = this.createContainer(tree);
-        container.add(this.createPlatform(tree, version));
+        const container = this.createContainer(tree, version);
 
         for (const child of tree.children) {
             if (this._model.exists(child, version)) {
@@ -93,9 +92,22 @@ export class District extends Illustrator {
             node.children[0].children.length > 0;
     }
 
-    private createContainer(name: TreeNode): SpecificContainer {
+    private createContainer(node: TreeNode, version: Version): SpecificContainer {
         const cClass = this.getOption("district.container");
-        return new cClass(String(name) + "_c", this.getOption("district.options"));
+
+        const defaultLayout = {
+            "color": this.getOption("platform.color"),
+            "dimensions.height": this.getOption("platform.height")
+        };
+
+        let cOptions: DistrictContainerOptions = Object.assign({}, this.getOption("district.options"));
+        cOptions["platform.attributes"] = Object.assign(
+            defaultLayout,
+            cOptions["platform.attributes"],
+            this.applyRules(node, this._model, version)
+        );
+
+        return new cClass(String(node), cOptions);
     }
 
     private createHouse(node: TreeNode, version: Version): House {
@@ -111,17 +123,5 @@ export class District extends Illustrator {
         house.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
 
         return house;
-    }
-
-    private createPlatform(node: TreeNode, version: Version): Platform {
-        const defaultLayout = {
-            "color": this.getOption("platform.color"),
-            "dimensions.height": this.getOption("platform.height")
-        };
-
-        const platform = new Platform(String(node));
-        platform.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
-
-        return platform;
     }
 }

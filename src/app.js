@@ -21,7 +21,8 @@ exports.containers = {
     'base':     require('./illustrator/container/Container').UniversalContainer,
     'row':      require('./illustrator/container/universal/Row').RowContainer,
     'lightmap': require('./illustrator/container/universal/Lightmap').Lightmap,
-    'grid':     require('./illustrator/container/universal/Grid').GridContainer
+    'grid':     require('./illustrator/container/universal/Grid').GridContainer,
+    'platform': require('./illustrator/container/universal/Platform').PlatformContainer
 };
 
 exports.shapes = {

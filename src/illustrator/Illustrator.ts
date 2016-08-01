@@ -16,6 +16,7 @@ abstract class Illustrator implements ConfigurableInterface {
     public setOptions: (options: AttributeContainer) => void;
     public setOption: (key: string, value: any) => void;
     public getOption: (key: string) => any;
+    public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
 
     private _illustratorRules: Array<Rule>;
