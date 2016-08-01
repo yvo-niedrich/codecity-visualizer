@@ -25,6 +25,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
 
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "container"});
         this._elements = [];
         this._finalized = false;
     }

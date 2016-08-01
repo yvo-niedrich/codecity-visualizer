@@ -22,6 +22,7 @@ export abstract class Shape {
         this._absoluteRotation = 0;
 
         this._attributes = {
+            type: "shape",
             dimensions: new Cuboid(),
             key: key,
             margin: 0,
@@ -215,17 +216,20 @@ export abstract class Shape {
 export class House extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "house"});
     }
 }
 
 export class Platform extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "platform"});
     }
 }
 
 export class Street extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "street"});
     }
 }
