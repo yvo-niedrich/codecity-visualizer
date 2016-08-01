@@ -9,6 +9,7 @@ export interface AttributeContainer {
 }
 
 export interface ShapeBaseAttributes extends AttributeContainer {
+    type: string;
     dimensions: Cuboid;
     key: string;
     margin: number;
