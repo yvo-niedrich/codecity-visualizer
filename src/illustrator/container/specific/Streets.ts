@@ -28,7 +28,7 @@ export interface StreetContainerOptions extends AttributeContainer {
     "house.distribution"?: distributionMethod;
     "house.segmentation"?: string;
     "house.segmentorder"?: segmentOrderMethod;
-    "house.platforms"?: boolean | ShapeAttributes;
+    "house.platforms"?: null | ShapeAttributes;
 
     "branch.container"?: UniversalContainer;
     "branch.distribution"?: distributionMethod;
@@ -59,7 +59,7 @@ export class StreetContainer extends SpecificContainer {
             "house.distribution": "default",
             "house.segmentation": null,
             "house.segmentorder": null,
-            "house.platforms": false,
+            "house.platforms": null,
 
             "branch.container": RowContainer,
             "branch.distribution": "default",
@@ -205,19 +205,19 @@ export class StreetContainer extends SpecificContainer {
         // Place Houses, Segment by Segment
         for (const hSeg of this.houses.segments) {
             const hKey = String(hSeg);
-            const leftHouses = this.houses.left[hKey];
-            const rightHouses = this.houses.right[hKey];
+            const leftHouses = this.getHouses(hKey, this.houses.left);
+            const rightHouses = this.getHouses(hKey, this.houses.right);
 
             if (leftHouses.size) {
                 leftHouses.position.x = middleOfTheRoad - halfTheRoadLength - leftHouses.centroid.x;
                 leftHouses.position.y = containersBottom + leftHouses.centroid.y;
-                this.addHousesToDraw(leftHouses, true);
+                super.add(leftHouses);
             }
 
             if (rightHouses.size) {
                 rightHouses.position.x = middleOfTheRoad + halfTheRoadLength + rightHouses.centroid.x;
                 rightHouses.position.y = containersBottom + rightHouses.centroid.y;
-                this.addHousesToDraw(rightHouses, false);
+                super.add(rightHouses);
             }
 
             containersBottom += Math.max(leftHouses.displayDimensions.width, rightHouses.displayDimensions.width);
@@ -229,17 +229,18 @@ export class StreetContainer extends SpecificContainer {
         this.dimensions.width  = this.getContainerWidth() + this.getOption("spacer.conclusive");
     }
 
-    private addHousesToDraw(houses: Container, mirror: boolean): void {
-        let hContainer: Container;
-        if (this.getOption("house.platforms")) {
-            hContainer = new PlatformContainer(this.key, mirror);
-            hContainer.setOptions(this.getOption("house.platforms"));
-            hContainer.add(houses);
-        } else {
-            hContainer = houses;
+    private getHouses(key: string, segments: { [index: string]: Container; }): Container {
+        const houses = segments[key];
+        const platformOptions = this.getOption("house.platforms");
+
+        if (!platformOptions || !houses.size) {
+            return houses;
         }
 
-        super.add(hContainer);
+        let hContainer = new PlatformContainer(this.key);
+        hContainer.setOptions(platformOptions);
+        hContainer.add(houses);
+        return hContainer;
     }
 
     private prepareSegments(): void {

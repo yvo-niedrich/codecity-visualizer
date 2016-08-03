@@ -144,6 +144,44 @@ describe("Evostreet", function() {
         expect(illustration.shapes[0].rotation).toBe(0);
         expect(illustration.shapes[1].rotation).not.toBe(0);
     });
+
+    it("Platforms are drawn below houses", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.platforms': {}
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(85);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
+
+    it("Platforms are drawn below houses (distributed to one side)", function () {
+        var options = {
+            'evostreet.options' : {
+                'house.distribution': 'left',
+                'house.platforms': {},
+                'branch.distribution': 'left'
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(76);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+    });
 });
 
 describe("District", function() {

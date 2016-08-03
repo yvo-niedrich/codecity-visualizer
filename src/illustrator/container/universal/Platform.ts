@@ -20,6 +20,10 @@ export class PlatformContainer extends UniversalContainer {
         super.add(this.elements);
     }
 
+    get size(): number {
+        return this.elements.size;
+    }
+
     public add(shape: Shape): void {
         this.elements.add(shape);
     }
