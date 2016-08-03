@@ -1,5 +1,5 @@
 import {Cuboid} from "../../components/Cuboid";
-import {AttributeContainer, ShapeBaseAttributes} from "../../components/Interfaces";
+import {AttributeContainer, ShapeBaseAttributes, ShapeAttributes} from "../../components/Interfaces";
 import {Point} from "../../components/Point";
 
 /**
@@ -171,7 +171,7 @@ export abstract class Shape {
      * Updates the internal AttributeContainer for the SpatialInformation.
      * Also applies Spatial Data for this Shape directly.
      */
-    public updateAttributes(attributes: AttributeContainer) {
+    public updateAttributes(attributes: ShapeAttributes): void {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 const value = attributes[key];
