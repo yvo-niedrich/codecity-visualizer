@@ -1,22 +1,22 @@
 import {UniversalContainer} from "../Container";
-import {RowContainer} from "./Row";
 import {Shape, Platform} from "../../components/Shapes";
 import {AttributeContainer} from "../../../components/Interfaces";
+import {LineContainer} from "./Line";
 
 /**
  * Rows Elements one after the other
  */
 export class PlatformContainer extends UniversalContainer {
-    private elements: RowContainer;
+    private elements: UniversalContainer;
 
     constructor(key: string, mirror: boolean = false) {
         super(key, mirror);
         this.setDefaults({
-            "dimensions.height": 5,
+            "dimensions.height": 4,
             "color": 0x000000
         });
 
-        this.elements = new RowContainer(key + "_row", mirror);
+        this.elements = new LineContainer(key + "_row", mirror);
         super.add(this.elements);
     }
 

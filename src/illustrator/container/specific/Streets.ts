@@ -29,6 +29,7 @@ export interface StreetContainerOptions extends AttributeContainer {
     "house.segmentation"?: string;
     "house.segmentorder"?: segmentOrderMethod;
     "house.platforms"?: null | ShapeAttributes;
+    "house.path"?: null | ShapeAttributes;
 
     "branch.container"?: UniversalContainer;
     "branch.distribution"?: distributionMethod;
@@ -60,6 +61,7 @@ export class StreetContainer extends SpecificContainer {
             "house.segmentation": null,
             "house.segmentorder": null,
             "house.platforms": null,
+            "house.path": null,
 
             "branch.container": RowContainer,
             "branch.distribution": "default",
@@ -165,6 +167,7 @@ export class StreetContainer extends SpecificContainer {
         this.prepareSegments();
         this.addHousesToStructure();
         this.addBranchesToStructure();
+        this.putHousesOnPlatforms();
         this.updateDimensions();
 
         let containersBottom = this.getOption("spacer.initial") - (this.dimensions.width / 2);
@@ -205,8 +208,8 @@ export class StreetContainer extends SpecificContainer {
         // Place Houses, Segment by Segment
         for (const hSeg of this.houses.segments) {
             const hKey = String(hSeg);
-            const leftHouses = this.getHouses(hKey, this.houses.left);
-            const rightHouses = this.getHouses(hKey, this.houses.right);
+            const leftHouses = this.houses.left[hKey];
+            const rightHouses = this.houses.right[hKey];
 
             if (leftHouses.size) {
                 leftHouses.position.x = middleOfTheRoad - halfTheRoadLength - leftHouses.centroid.x;
@@ -229,18 +232,38 @@ export class StreetContainer extends SpecificContainer {
         this.dimensions.width  = this.getContainerWidth() + this.getOption("spacer.conclusive");
     }
 
-    private getHouses(key: string, segments: { [index: string]: Container; }): Container {
-        const houses = segments[key];
+    private putHousesOnPlatforms(): void {
         const platformOptions = this.getOption("house.platforms");
-
-        if (!platformOptions || !houses.size) {
-            return houses;
+        const pathOptions = this.getOption("house.path");
+        if (!platformOptions) {
+            return;
         }
 
-        let hContainer = new PlatformContainer(this.key);
-        hContainer.setOptions(platformOptions);
-        hContainer.add(houses);
-        return hContainer;
+        const wrap = function(c: Container, mirror: boolean): Container {
+            if (!c.size) {
+                return c;
+            }
+
+            let hContainer = new PlatformContainer(this.key, mirror);
+            hContainer.setOptions(platformOptions);
+            hContainer.add(c);
+
+            if (pathOptions) {
+                let path = new Street(this.key);
+                path.updateAttributes(pathOptions);
+                hContainer.add(path);
+            }
+
+            return hContainer;
+        }.bind(this);
+
+        for (const hSeg of this.houses.segments) {
+            const hKey = String(hSeg);
+            this.houses.left[hKey] = wrap(this.houses.left[hKey], false);
+            this.houses.right[hKey] = wrap(this.houses.right[hKey], true);
+        }
+
+        return;
     }
 
     private prepareSegments(): void {
