@@ -16,7 +16,7 @@ export class PlatformContainer extends UniversalContainer {
             "color": 0x000000
         });
 
-        this.elements = new LineContainer(key + "_row", mirror);
+        this.elements = new LineContainer(key, mirror);
         super.add(this.elements);
     }
 

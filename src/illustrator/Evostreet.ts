@@ -97,7 +97,7 @@ export class Evostreet extends Illustrator {
 
     private createContainer(node: TreeNode): SpecificContainer {
         const cClass = this.getOption("evostreet.container");
-        return new cClass(String(node) + "_c", this.getOption("evostreet.options"));
+        return new cClass(String(node), this.getOption("evostreet.options"));
     }
 
     private createRoad(node: TreeNode, version: Version, forceRoot: boolean = false): Street {
