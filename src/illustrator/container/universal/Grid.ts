@@ -161,8 +161,13 @@ export class GridContainer extends UniversalContainer {
 
             } else {
                 // 2.2) The Shape will not impair the aspect ratio on
-                //      the current strip. Insert the shape.
+                //      the current strip. Insert the shape and
+                //      return strip pointer.
                 this.addAndRecalculate(strip, shape);
+
+                activeStrip = 0;
+                bestFit.aspectDistance = Infinity;
+                bestFit.strip = -1;
             }
         }
     }
