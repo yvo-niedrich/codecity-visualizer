@@ -108,7 +108,7 @@ export class DummyModel extends Model {
         ];
 
         // Ensure order
-        this.pVersions.sort(function(a: any, b: any) {
+        this.pVersions.sort((a: any, b: any) => {
             return parseInt(a, 10) - parseInt(b, 10);
         });
 
@@ -184,9 +184,9 @@ export class DummyModel extends Model {
                 const t = String(tree);
                 const v = String(version);
                 this.pAttributes[v][t] = {
-                    "name": t,
-                    "loc" : this.hashString("loc" + t + v) % 687,
-                    "editors" : 1 + this.hashString("edit" + t + v) % 14
+                    name: t,
+                    loc : this.hashString("loc" + t + v) % 687,
+                    editors : 1 + this.hashString("edit" + t + v) % 14
                 };
             }
             return;

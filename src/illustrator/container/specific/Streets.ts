@@ -239,7 +239,7 @@ export class StreetContainer extends SpecificContainer {
             return;
         }
 
-        const wrap = function(c: Container, mirror: boolean): Container {
+        const wrap = (c: Container, mirror: boolean): Container => {
             if (!c.size) {
                 return c;
             }
@@ -255,7 +255,7 @@ export class StreetContainer extends SpecificContainer {
             }
 
             return hContainer;
-        }.bind(this);
+        };
 
         for (const hSeg of this.houses.segments) {
             const hKey = String(hSeg);
@@ -267,7 +267,7 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private prepareSegments(): void {
-        const sortNaturally = function(a: any, b: any) { return parseInt(a, 10) - parseInt(b, 10); };
+        const sortNaturally = (a: any, b: any) => { return parseInt(a, 10) - parseInt(b, 10); };
 
         const houseOrder = typeof this.getOption("house.segmentorder") === "function"
             ? this.getOption("branch.segmentorder") : sortNaturally;
@@ -297,7 +297,7 @@ export class StreetContainer extends SpecificContainer {
         let initialLeft = true;
         let initialRight = true;
 
-        const addSpacerLeft = function(s: StreetContainer) {
+        const addSpacerLeft = (s: StreetContainer): void => {
             if (initialLeft) {
                 initialLeft = false;
             } else {
@@ -305,7 +305,7 @@ export class StreetContainer extends SpecificContainer {
             }
         };
 
-        const addSpacerRight = function(s: StreetContainer) {
+        const addSpacerRight = (s: StreetContainer): void => {
             if (initialRight) {
                 initialRight = false;
             } else {
@@ -363,7 +363,7 @@ export class StreetContainer extends SpecificContainer {
         left: Container,
         right: Container
     ): void {
-        shapes.sort(function (a: Shape, b: Shape) { return attr(b) - attr(a); });
+        shapes.sort((a: Shape, b: Shape) => { return attr(b) - attr(a); });
         let diff = 0;
         for (const s of shapes) {
             if (diff <= 0) {

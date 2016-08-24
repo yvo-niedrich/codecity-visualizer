@@ -22,9 +22,9 @@ export abstract class Shape {
         this._absoluteRotation = 0;
 
         this._attributes = {
+            key,
             type: "shape",
             dimensions: new Cuboid(),
-            key: key,
             margin: 0,
             position: new Point(),
             rotation: 0

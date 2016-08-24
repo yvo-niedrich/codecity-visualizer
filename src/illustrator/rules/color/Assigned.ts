@@ -13,8 +13,8 @@ export class AssignedRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                "salt": 6717153,
-                "shift": 23
+                salt: 6717153,
+                shift: 23
             },
             ruleDefaults
         ));

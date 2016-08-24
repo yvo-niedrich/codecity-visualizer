@@ -15,10 +15,10 @@ export class LinearRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                "min": 0,
-                "max": Infinity,
-                "initial" : 0,
-                "factor": 1
+                min: 0,
+                max: Infinity,
+                initial : 0,
+                factor: 1
             },
             ruleDefaults
         ));

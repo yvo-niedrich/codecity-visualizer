@@ -65,8 +65,8 @@ class LightNode {
         }
 
         const cutOrder = [
-            { "method" : this.cutIfWidthDoesNotFit.bind(this),  "value" : measurements.width },
-            { "method" : this.cutIfLengthDoesNotFit.bind(this), "value" : measurements.length }
+            { method : this.cutIfWidthDoesNotFit.bind(this),  value : measurements.width },
+            { method : this.cutIfLengthDoesNotFit.bind(this), value : measurements.length }
         ];
 
         if (!cutHorizontalFirst) {
@@ -161,7 +161,7 @@ export class Lightmap extends UniversalContainer {
         super(key, mirror);
 
         this.setDefaults({
-            "cutHorizontalFirst": true
+            cutHorizontalFirst: true
         });
 
         this._currentDimensions = new Cuboid();
@@ -175,9 +175,9 @@ export class Lightmap extends UniversalContainer {
         const shapes = this.shapes;
 
         if (this.getOption("cutHorizontalFirst")) {
-            shapes.sort(function(a, b) { return b.displayDimensions.width - a.displayDimensions.width; });
+            shapes.sort((a, b) => { return b.displayDimensions.width - a.displayDimensions.width; } );
         } else {
-            shapes.sort(function(a, b) { return b.displayDimensions.length - a.displayDimensions.length; });
+            shapes.sort((a, b) => { return b.displayDimensions.length - a.displayDimensions.length; });
         }
 
         const origin = new Point();

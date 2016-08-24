@@ -16,11 +16,11 @@ export class ExponentialRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                "min": 0,
-                "max": Infinity,
-                "baseScale" : 1,
-                "power" : 2,
-                "factor": 1
+                min: 0,
+                max: Infinity,
+                baseScale: 1,
+                power: 2,
+                factor: 1
             },
             ruleDefaults
         ));

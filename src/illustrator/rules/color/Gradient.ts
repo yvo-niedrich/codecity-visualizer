@@ -21,10 +21,10 @@ export class GradientRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                "min": 0,
-                "max": 100,
-                "minColor": 0xFFFFFF,
-                "maxColor": 0xFF0000
+                min: 0,
+                max: 100,
+                minColor: 0xFFFFFF,
+                maxColor: 0xFF0000
             },
             ruleDefaults
         ));
@@ -70,7 +70,7 @@ export class GradientRule extends Rule {
         const r = (color >> 16) & 255;
         const g = (color >> 8) & 255;
         const b = color & 255;
-        return { r: r, g: g, b: b };
+        return { r, g, b };
     }
 
     private rgb2hex(color: ColorContainer): number {

@@ -13,7 +13,7 @@ export class PlatformContainer extends UniversalContainer {
         super(key, mirror);
         this.setDefaults({
             "dimensions.height": 4,
-            "color": 0x000000
+            color: 0x000000
         });
 
         this.elements = new LineContainer(key, mirror);
