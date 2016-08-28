@@ -1,7 +1,8 @@
 import {UniversalContainer} from "../Container";
 
 /**
- * Rows Elements one after the other
+ * Rows Elements one after the other, aligned to
+ * the top (regular) or bottom (mirrored) boundary
  */
 export class RowContainer extends UniversalContainer {
     constructor(key: string, mirror: boolean = false) {

@@ -1,7 +1,8 @@
 import {UniversalContainer} from "../Container";
 
 /**
- * Rows Elements one after the other
+ * Lines Elements one after the other, centered on
+ * the y axis (mirroring has no effect)
  */
 export class LineContainer extends UniversalContainer {
     constructor(key: string, mirror: boolean = false) {
