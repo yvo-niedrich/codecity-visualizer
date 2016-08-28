@@ -161,7 +161,8 @@ export class Lightmap extends UniversalContainer {
         super(key, mirror);
 
         this.setDefaults({
-            cutHorizontalFirst: true
+            cutHorizontalFirst: true,
+            sortMethod: (a: Shape, b: Shape) => (b.displayDimensions.base - a.displayDimensions.base)
         });
 
         this._currentDimensions = new Cuboid();
@@ -174,11 +175,8 @@ export class Lightmap extends UniversalContainer {
 
         const shapes = this.shapes;
 
-        if (this.getOption("cutHorizontalFirst")) {
-            shapes.sort((a, b) => { return b.displayDimensions.width - a.displayDimensions.width; } );
-        } else {
-            shapes.sort((a, b) => { return b.displayDimensions.length - a.displayDimensions.length; });
-        }
+        const sortMethod = this.getOption("sortMethod");
+        shapes.sort(sortMethod);
 
         const origin = new Point();
         const worstDimensions = new Cuboid();

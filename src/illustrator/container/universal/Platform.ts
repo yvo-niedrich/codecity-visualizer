@@ -12,7 +12,7 @@ export class PlatformContainer extends UniversalContainer {
     constructor(key: string, mirror: boolean = false) {
         super(key, mirror);
         this.setDefaults({
-            "dimensions.height": 4,
+            "dimensions.height": 10,
             color: 0x000000
         });
 

@@ -4,19 +4,15 @@ import {Lightmap} from "../universal/Lightmap";
 import {Shape, House} from "../../components/Shapes";
 import {PlatformContainer} from "../universal/Platform";
 
+type containerFunction = (s: string, m: boolean) => UniversalContainer;
+
 export interface DistrictContainerOptions extends AttributeContainer {
     "spacer.margin"?: number;
     "spacer.padding"?: number;
 
-    "houses.container"?: UniversalContainer;
-    "houses.options"?: boolean;
-
-    "district.container"?: UniversalContainer;
-    "district.options"?: boolean;
-
-    "platform.container"?: PlatformContainer;
-    "platform.options"?: boolean;
-    "platform.attributes"?: AttributeContainer;
+    "houses.container"?: containerFunction;
+    "district.container"?: containerFunction;
+    "platform.container"?: (s: string, m: boolean) => PlatformContainer;
 }
 
 /**
@@ -29,29 +25,24 @@ export class DistrictContainer extends SpecificContainer {
 
     constructor(key: string, options: DistrictContainerOptions = {}) {
         super(key, options);
-        this.setDefaults({
+
+        const defaults: DistrictContainerOptions = {
             "spacer.margin": 10,
             "spacer.padding": 5,
 
-            "houses.container": Lightmap,
-            "houses.options": false,
-
-            "district.container": Lightmap,
-            "district.options": false,
-
-            "platform.container": PlatformContainer,
-            "platform.options": false,
-            "platform.attributes": {}
-        });
+            "houses.container": (k: string, m: boolean) => new Lightmap(k, m),
+            "district.container": (k: string, m: boolean) => new Lightmap(k, m),
+            "platform.container": (k: string, m: boolean) => new PlatformContainer(k, m)
+        };
+        this.setDefaults(defaults);
 
         const districtContainer = this.getOption("district.container");
         const houseContainer = this.getOption("houses.container");
         const platformContainer = this.getOption("platform.container");
 
-        this.houses = new houseContainer(this.key + "_d", this.getOption("houses.options"));
-        this.districts = new districtContainer(this.key + "_d", this.getOption("district.options"));
-        this.platform = new platformContainer(this.key, this.getOption("platform.options"));
-        this.platform.setOptions(this.getOption("platform.attributes"));
+        this.houses = houseContainer(this.key + "_d", false);
+        this.districts = districtContainer(this.key + "_d", false);
+        this.platform = platformContainer(this.key, false);
         super.add(this.platform);
     }
 

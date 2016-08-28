@@ -18,20 +18,22 @@ type distributionMethod = distributionString | distributionFunction;
 
 type segmentOrderMethod  = { (a: any): number} | null;
 
+type containerFunction = (s: string, m: boolean) => UniversalContainer;
+
 export interface StreetContainerOptions extends AttributeContainer {
     "spacer.initial"?: number;
     "spacer.branches"?: number;
     "spacer.terranullius"?: number;
     "spacer.conclusive"?: number;
 
-    "house.container"?: UniversalContainer;
+    "house.container"?: containerFunction;
     "house.distribution"?: distributionMethod;
     "house.segmentation"?: string;
     "house.segmentorder"?: segmentOrderMethod;
     "house.platforms"?: null | ShapeAttributes;
     "house.path"?: null | ShapeAttributes;
 
-    "branch.container"?: UniversalContainer;
+    "branch.container"?: containerFunction;
     "branch.distribution"?: distributionMethod;
     "branch.segmentation"?: string;
     "branch.segmentorder"?: segmentOrderMethod;
@@ -50,24 +52,25 @@ export class StreetContainer extends SpecificContainer {
     constructor(key: string, options: StreetContainerOptions = {}) {
         super(key, options);
 
-        this.setDefaults({
+        const defaults: StreetContainerOptions = {
             "spacer.initial": 20,
             "spacer.branches": 15,
             "spacer.terranullius": 20,
             "spacer.conclusive": 0,
 
-            "house.container": RowContainer,
+            "house.container": (s: string, m: boolean) => new RowContainer(s, m),
             "house.distribution": "default",
-            "house.segmentation": null,
+            "house.segmentation": "",
             "house.segmentorder": null,
             "house.platforms": null,
             "house.path": null,
 
-            "branch.container": RowContainer,
+            "branch.container": (s: string, m: boolean) => new RowContainer(s, m),
             "branch.distribution": "default",
-            "branch.segmentation": null,
+            "branch.segmentation": "",
             "branch.segmentorder": null
-        });
+        };
+        this.setDefaults(defaults);
 
         this.leftBranchSpacer = 0;
         this.rightBranchSpacer = 0;
@@ -123,11 +126,11 @@ export class StreetContainer extends SpecificContainer {
         const segmentIndex = String(segment);
 
         if (this.houses.segments.indexOf(segment) < 0) {
-            const houseContainer = this.getOption("house.container");
+            const houseContainer: containerFunction = this.getOption("house.container");
             this.houses.segments.push(segment);
             this.houses.segmented[segmentIndex] = [];
-            this.houses.left[segmentIndex]  = new houseContainer(this.key + "_" + segmentIndex + "_hl");
-            this.houses.right[segmentIndex] = new houseContainer(this.key + "_" + segmentIndex + "_hr", true);
+            this.houses.left[segmentIndex]  = houseContainer(this.key + "_" + segmentIndex + "_hl", false);
+            this.houses.right[segmentIndex] = houseContainer(this.key + "_" + segmentIndex + "_hr", true);
             this.houses.left[segmentIndex].rotate(-90);
             this.houses.right[segmentIndex].rotate(-90);
         }
@@ -146,11 +149,11 @@ export class StreetContainer extends SpecificContainer {
         const segmentIndex = String(segment);
 
         if (this.branches.segments.indexOf(segment) < 0) {
-            const branchContainer = this.getOption("branch.container");
+            const branchContainer: containerFunction = this.getOption("branch.container");
             this.branches.segments.push(segment);
             this.branches.segmented[segmentIndex] = [];
-            this.branches.left[segmentIndex]  = new branchContainer(this.key + "_" + segmentIndex + "_bl");
-            this.branches.right[segmentIndex] = new branchContainer(this.key + "_" + segmentIndex + "_br", true);
+            this.branches.left[segmentIndex]  = branchContainer(this.key + "_" + segmentIndex + "_bl", false);
+            this.branches.right[segmentIndex] = branchContainer(this.key + "_" + segmentIndex + "_br", true);
             this.branches.left[segmentIndex].rotate(-90);
             this.branches.right[segmentIndex].rotate(-90);
         }

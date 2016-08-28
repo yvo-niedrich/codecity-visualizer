@@ -8,6 +8,8 @@ import {Point} from "../components/Point";
 import {Illustration} from "./components/Illustration";
 import {TreeNode} from "../components/TreeNode";
 import {Shape, House} from "./components/Shapes";
+import {PlatformContainer} from "./container/universal/Platform";
+// import {PlatformContainer} from "./container/universal/Platform";
 
 export interface DistrictOptions extends AttributeContainer {
     "layout.tower"?: boolean;
@@ -95,17 +97,27 @@ export class District extends Illustrator {
     private createContainer(node: TreeNode, version: Version): SpecificContainer {
         const cClass = this.getOption("district.container");
 
-        const defaultLayout = {
-            color: this.getOption("platform.color"),
-            "dimensions.height": this.getOption("platform.height")
-        };
-
         let cOptions: DistrictContainerOptions = Object.assign({}, this.getOption("district.options"));
-        cOptions["platform.attributes"] = Object.assign(
-            defaultLayout,
-            cOptions["platform.attributes"],
-            this.applyRules(node, this._model, version)
-        );
+
+        const platformOptions = this.applyRules(node, this._model, version);
+
+        // TODO: Fix this!
+        let oldFunc: (s: string, m: boolean) => PlatformContainer;
+        if (cOptions["platform.container"] !== undefined) {
+            oldFunc = <(s: string, m: boolean) => PlatformContainer> cOptions["platform.container"];
+        } else {
+            oldFunc = (s: string, m: boolean) => new PlatformContainer(s, m);
+        }
+
+        cOptions["platform.container"] = (s: string, m: boolean) => {
+            let o = oldFunc(s, m);
+            for (const key in platformOptions) {
+                if (platformOptions.hasOwnProperty(key)) {
+                    o.setOption(key, platformOptions[key]);
+                }
+            }
+            return o;
+        };
 
         return new cClass(String(node), cOptions);
     }
