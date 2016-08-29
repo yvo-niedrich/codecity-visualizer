@@ -72,7 +72,7 @@ describe("District", function() {
             },
             'metric': function(model, node) {
                 var level = 0;
-                var tnode = node.parent
+                var tnode = node.parent;
                 while(tnode) {
                     tnode = tnode.parent;
                     level++;
