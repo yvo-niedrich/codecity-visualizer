@@ -5,11 +5,18 @@ import {Street, Shape, House} from "../../components/Shapes";
 import {AttributeContainer, ShapeAttributes} from "../../../components/Interfaces";
 import {PlatformContainer} from "../universal/Platform";
 
-interface SegmentContainer {
+interface HouseSegmentContainer {
     segments: Array<string>;
     segmented: { [index: string]: Array<Shape> };
-    left: { [index: string]: Container };
-    right: { [index: string]: Container };
+    left: { [index: string]: UniversalContainer };
+    right: { [index: string]: UniversalContainer };
+}
+
+interface BranchSegmentContainer {
+    segments: Array<string>;
+    segmented: { [index: string]: Array<Shape> };
+    left: { [index: string]: SpecificContainer };
+    right: { [index: string]: SpecificContainer };
 }
 
 type distributionFunction = (s: Shape) => number;
@@ -46,8 +53,8 @@ export class StreetContainer extends SpecificContainer {
     private leftBranchSpacer: number;
     private rightBranchSpacer: number;
     private road: Street | null;
-    private houses: SegmentContainer;
-    private branches: SegmentContainer;
+    private houses: HouseSegmentContainer;
+    private branches: BranchSegmentContainer;
 
     constructor(key: string, options: StreetContainerOptions = {}) {
         super(key, options);
@@ -242,12 +249,12 @@ export class StreetContainer extends SpecificContainer {
             return;
         }
 
-        const wrap = (c: Container, mirror: boolean): Container => {
+        const wrap = (c: UniversalContainer): UniversalContainer => {
             if (!c.size) {
                 return c;
             }
 
-            let hContainer = new PlatformContainer(this.key, mirror);
+            let hContainer = new PlatformContainer(this.key, c.isMirrored);
             hContainer.setOptions(platformOptions);
             hContainer.add(c);
 
@@ -262,8 +269,8 @@ export class StreetContainer extends SpecificContainer {
 
         for (const hSeg of this.houses.segments) {
             const hKey = String(hSeg);
-            this.houses.left[hKey] = wrap(this.houses.left[hKey], false);
-            this.houses.right[hKey] = wrap(this.houses.right[hKey], true);
+            this.houses.left[hKey] = wrap(this.houses.left[hKey]);
+            this.houses.right[hKey] = wrap(this.houses.right[hKey]);
         }
 
         return;
