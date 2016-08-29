@@ -1,9 +1,10 @@
 var CCV = require('../app');
-var District = CCV.illustrators.district;
 var Evostreet = CCV.illustrators.evostreet;
+var GridContainer = CCV.containers.grid;
+var LightmapContainer = CCV.containers.lightmap;
+var RowContainer = CCV.containers.row;
 var attributeHelper = CCV.helper.attributes;
 var Rule = CCV.rules.math.linear;
-var ColorRule = CCV.rules.color.gradient;
 var Model = CCV.models.dummy;
 
 var model = new Model();
@@ -183,91 +184,137 @@ describe("Evostreet", function() {
         expect(illustration.shapes[0].rotation).toBe(0);
         expect(illustration.shapes[1].rotation).not.toBe(0);
     });
-});
 
-describe("District", function() {
-    it("builds a district city", function () {
-        var decreasePlatformHeight = function (a, b) {
-            var p = new CCV.containers.platform(a, b);
-            p.setOption("dimensions.height", 5);
-            return p;
-        };
-
+    it("builds an evolutional city with grid-container", function () {
         var options = {
-            "district.options" : {
-                "platform.container": decreasePlatformHeight
+            'evostreet.options': {
+                'branch.container': function(key, mirror) {
+                    return new GridContainer(key, mirror);
+                },
+                'house.container': function(key, mirror) {
+                    return new GridContainer(key, mirror);
+                },
+                'log': true
             }
         };
-        var illustrator = new District(model, options);
+        var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
         var versionToDraw = model.versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
-        var illustrationCount = illustration.shapes.length;
         expect(illustration.version).toBe(versionToDraw);
-        expect(illustrationCount).toBe(66);
-        expect(illustration.shapes[0].position.z).toBe(15);
-        expect(illustration.shapes[illustrationCount-1].position.z).toBe(0);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+
+        expect(illustration.shapes[63].key).toBe('elephant');
+        expect(illustration.shapes[63].type).toBe('house');
+        expect(illustration.shapes[63].dimensions.length).toBe(40);
+        expect(illustration.shapes[63].dimensions.width).toBe(40);
+        expect(illustration.shapes[63].dimensions.height).toBe(12);
+        expect(illustration.shapes[63].position.x).not.toBe(0);
+        expect(illustration.shapes[63].position.y).not.toBe(0);
+        expect(illustration.shapes[63].position.z).toBe(0);
     });
 
-    it("district city prevents towers", function () {
-        var options = { 'layout.tower': false };
-        var illustrator = new District(model, options);
-
-        illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
-        var illustration = illustrator.draw(versionToDraw);
-
-        var illustrationCount = illustration.shapes.length;
-        expect(illustration.version).toBe(versionToDraw);
-        expect(illustrationCount).toBe(64);
-        expect(illustration.shapes[0].position.z).toBe(30);
-        expect(illustration.shapes[illustrationCount-1].position.z).toBe(0);
-    });
-
-    it("district city paints platforms", function () {
-        var options = { 'layout.tower': false };
-        var illustrator = new District(model, options);
-
-        illustrator.addRule(rule);
-        illustrator.addRule(new ColorRule({
-            'condition': function(model, node) {
-                return node.children.length !== 0;
-            },
-            'metric': function(model, node) {
-                var level = 0;
-                var tnode = node.parent
-                while(tnode) {
-                    tnode = tnode.parent;
-                    level++;
+    it("builds an evolutional city with grid-container and platforms", function () {
+        var options = {
+            'evostreet.options': {
+                'branch.container': function(key, mirror) {
+                    return new GridContainer(key, mirror);
+                },
+                'house.container': function(key, mirror) {
+                    return new GridContainer(key, mirror);
+                },
+                'house.platforms': {
+                    "dimensions.height": 1,
+                    color: 0xFFFFFF
                 }
-                return level;
-            },
-            'attributes': 'color',
-            'max': 10,
-            'minColor': 0x111111,
-            'maxColor': 0xCCCCCC
-        }));
+            }
+        };
+        var illustrator = new Evostreet(model, options);
 
+        illustrator.addRule(rule);
         var versionToDraw = model.versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
-        var illustrationCount = illustration.shapes.length;
         expect(illustration.version).toBe(versionToDraw);
-        expect(illustrationCount).toBe(64);
+        expect(illustration.shapes.length).toBe(85);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
 
-        expect(illustration.shapes[63].key).toBe("zoo");
-        expect(illustration.shapes[63].type).toBe("platform");
-        expect(illustration.shapes[63].color).toBe(0x111111);
+        expect(illustration.shapes[80].key).toBe('elephant');
+        expect(illustration.shapes[80].type).toBe('house');
+        expect(illustration.shapes[80].dimensions.length).toBe(40);
+        expect(illustration.shapes[80].dimensions.width).toBe(40);
+        expect(illustration.shapes[80].dimensions.height).toBe(12);
+        expect(illustration.shapes[80].position.x).not.toBe(0);
+        expect(illustration.shapes[80].position.y).not.toBe(0);
+        expect(illustration.shapes[80].position.z).toBe(1);
+    });
 
-        expect(illustration.shapes[33].key).toBe("cats");
-        expect(illustration.shapes[33].type).toBe("platform");
-        expect(illustration.shapes[33].color).toBeCloseTo(0x363636, 0);
+    it("builds an evolutional city with lightmap-container", function () {
+        var options = {
+            'branch.container': function(key, mirror) {
+                return new LightmapContainer(key, mirror);
+            },
+            'evostreet.options': {
+                'house.container': function(key, mirror) {
+                    return new LightmapContainer(key, mirror);
+                }
+            }
+        };
+        var illustrator = new Evostreet(model, options);
 
-        expect(illustration.shapes[62].key).toBe("reptiles");
-        expect(illustration.shapes[62].type).toBe("platform");
-        expect(illustration.shapes[62].color).not.toBe(0);
-        expect(illustration.shapes[62].color).toBeCloseTo(0x232324, 0);
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+
+        expect(illustration.shapes[63].key).toBe('elephant');
+        expect(illustration.shapes[63].type).toBe('house');
+        expect(illustration.shapes[63].dimensions.length).toBe(40);
+        expect(illustration.shapes[63].dimensions.width).toBe(40);
+        expect(illustration.shapes[63].dimensions.height).toBe(12);
+        expect(illustration.shapes[63].position.x).not.toBe(0);
+        expect(illustration.shapes[63].position.y).not.toBe(0);
+        expect(illustration.shapes[63].position.z).toBe(0);
+    });
+
+    it("builds an evolutional city with row-container", function () {
+        var options = {
+            'evostreet.options': {
+                'branch.container': function(key, mirror) {
+                    return new RowContainer(key, mirror);
+                },
+                'house.container': function(key, mirror) {
+                    return new RowContainer(key, mirror);
+                }
+            }
+        };
+        var illustrator = new Evostreet(model, options);
+
+        illustrator.addRule(rule);
+        var versionToDraw = model.versions[1];
+        var illustration = illustrator.draw(versionToDraw);
+
+        expect(illustration.version).toBe(versionToDraw);
+        expect(illustration.shapes.length).toBe(66);
+        expect(illustration.shapes[0].rotation).toBe(0);
+        expect(illustration.shapes[1].rotation).not.toBe(0);
+
+        expect(illustration.shapes[63].key).toBe('elephant');
+        expect(illustration.shapes[63].type).toBe('house');
+        expect(illustration.shapes[63].dimensions.length).toBe(40);
+        expect(illustration.shapes[63].dimensions.width).toBe(40);
+        expect(illustration.shapes[63].dimensions.height).toBe(12);
+        expect(illustration.shapes[63].position.x).not.toBe(0);
+        expect(illustration.shapes[63].position.y).not.toBe(0);
+        expect(illustration.shapes[63].position.z).toBe(0);
     });
 });

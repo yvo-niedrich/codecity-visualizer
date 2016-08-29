@@ -64,7 +64,7 @@ export class GridContainer extends UniversalContainer {
 
         this.setDefaults({
             optimalAspectRatio: 1.0,
-            checkNewStripRatio: false
+            checkNewStripRatio: true
         });
 
         this._shapes = [];
@@ -72,7 +72,7 @@ export class GridContainer extends UniversalContainer {
     }
 
     get size(): number {
-        return this._shapes.length;
+        return this._shapes.length + super.size;
     }
 
     public add(shape: Shape): void {
