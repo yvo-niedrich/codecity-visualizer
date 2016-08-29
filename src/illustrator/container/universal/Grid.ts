@@ -72,7 +72,17 @@ export class GridContainer extends UniversalContainer {
     }
 
     get size(): number {
-        return this._shapes.length + super.size;
+        if (this._shapes.length) {
+            return this._shapes.length;
+        }
+
+        if (this._strips.length) {
+            return this._strips
+                        .map((v: Strip) => v.container.size)
+                        .reduce((a, b) => (a + b));
+        }
+
+        return 0;
     }
 
     public add(shape: Shape): void {

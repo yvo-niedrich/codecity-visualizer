@@ -1,4 +1,4 @@
-var CCV = require('../../app');
+var CCV = require('../../../app');
 var RowContainer = CCV.containers.row;
 var GridContainer = CCV.containers.grid;
 var LightmapContainer = CCV.containers.lightmap;
@@ -35,11 +35,13 @@ describe("RowContainer", function () {
 
         container.add(s1);
         container.add(s2);
+        expect(container.size).toBe(2);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
         var spatialNodes = container.getSpatialInformation();
 
+        expect(container.size).toBe(2);
         expect(spatialNodes.length).toBe(2);
         expect(spatialNodes[0].position.x).toBe(-5);
         expect(spatialNodes[0].position.y).toBe(-2.5);
@@ -77,11 +79,13 @@ describe("RowContainer", function () {
 
         container.add(s1);
         container.add(s2);
+        expect(container.size).toBe(2);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
         var spatialNodes = container.getSpatialInformation();
 
+        expect(container.size).toBe(2);
         expect(spatialNodes.length).toBe(2);
         expect(spatialNodes[0].position.x).toBe(-5);
         expect(spatialNodes[0].position.y).toBe(2.5);
@@ -128,11 +132,13 @@ describe("GridContainer", function () {
         container.add(s1);
         container.add(s2);
         container.add(s3);
+        expect(container.size).toBe(3);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
         var spatialNodes = container.getSpatialInformation();
 
+        expect(container.size).toBe(3);
         expect(spatialNodes.length).toBe(3);
 
         expect(spatialNodes[0].key).toBe('s1');
@@ -184,11 +190,13 @@ describe("GridContainer", function () {
         container.add(s1);
         container.add(s2);
         container.add(s3);
+        expect(container.size).toBe(3);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
         var spatialNodes = container.getSpatialInformation();
 
+        expect(container.size).toBe(3);
         expect(spatialNodes.length).toBe(3);
 
         expect(spatialNodes[0].key).toBe('s1');
@@ -242,13 +250,14 @@ describe("LightmapContainer", function () {
         container.add(s1);
         container.add(s2);
         container.add(s3);
+        expect(container.size).toBe(3);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
         var spatialNodes = container.getSpatialInformation();
 
+        expect(container.size).toBe(3);
         expect(spatialNodes.length).toBe(3);
-
 
         expect(spatialNodes[0].key).toBe('s1');
         expect(spatialNodes[0].position.x).toBe(-2.5);
@@ -299,6 +308,7 @@ describe("LightmapContainer", function () {
         container.add(s1);
         container.add(s2);
         container.add(s3);
+        expect(container.size).toBe(3);
 
         var origin = new Point(0, 0);
         container.draw(origin, 0);
@@ -306,7 +316,7 @@ describe("LightmapContainer", function () {
 
         expect(spatialNodes.length).toBe(3);
 
-
+        expect(container.size).toBe(3);
         expect(spatialNodes[0].key).toBe('s1');
         expect(spatialNodes[0].position.x).toBe(-2.5);
         expect(spatialNodes[0].position.y).toBe(0);
