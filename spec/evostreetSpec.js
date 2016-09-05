@@ -108,9 +108,9 @@ describe("Evostreet", function() {
     it("Segmentation by key (1 Element each)", function () {
         var options = {
             'evostreet.options': {
-                'house.segmentation': function(s) { return s.key; },
+                'house.segmentation': (s) => s.key,
                 'house.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1),
-                'branch.segmentation': function(s) { return s.key; },
+                'branch.segmentation': (s) => s.key,
                 'branch.segmentorder': (a, b) => a === b ? 0 : (a > b ? 1 : -1)
             }
         };
