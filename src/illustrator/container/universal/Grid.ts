@@ -39,7 +39,7 @@ class Strip {
     }
 
     public add(shape: Shape): boolean {
-        const recommendOffsetRecalculation = this.dimensions.length &&
+        const recommendOffsetRecalculation = this.dimensions.length > 0 &&
                                             this.dimensions.width < shape.displayDimensions.width;
 
         this.dimensions.length += shape.displayDimensions.length;
