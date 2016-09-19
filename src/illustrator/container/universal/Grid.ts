@@ -64,7 +64,7 @@ export class GridContainer extends UniversalContainer {
 
         this.setDefaults({
             optimalAspectRatio: 1.0,
-            checkNewStripRatio: true
+            useBestFitMethod: true
         });
 
         this._shapes = [];
@@ -154,7 +154,7 @@ export class GridContainer extends UniversalContainer {
                 // strip is better, than using any of the available strips.
                 let isLastStrip = activeStrip + 1 === this._strips.length;
                 let gotoBestFit = false;
-                if (this.getOption("checkNewStripRatio") && isLastStrip) {
+                if (this.getOption("useBestFitMethod") && isLastStrip) {
                     const widthWithNewStrip = currentDimensions.width + shape.displayDimensions.width;
                     const newStripAspectRatio = this.getAspectRatio(currentDimensions.length, widthWithNewStrip);
                     const newStripAspectRatioDist = Math.abs(newStripAspectRatio - this.getOption("optimalAspectRatio"));

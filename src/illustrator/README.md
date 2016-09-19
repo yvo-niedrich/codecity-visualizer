@@ -74,6 +74,7 @@ Can be mirrored along the x-axis, so the shapes are *below* the axis. If the con
 Arranges the shapes in a rectangle with the as introduced in the [Strip Treemap Approach][StripTreemaps]. The input order is not changed, therefore it's use of available space can be subpar.
 an be mirrored along the x-axis, so the shapes are *below* the axis. If the container should be mirrored, the `mirrored` flag needs to be `true` on initialisation.
  * `optimalAspectRatio` --  _(Default: `1.0`)_
+ * `useBestFitMethod` --  _(Default: `true`)_
 
 ### Lightmap
 The Lightmap-Approach aims to create a small rectangle with the best aspect ratio, filled with all the shapes. It was introduced to code cities by [Richard Wettel][WettelPub]. These shapes will be sorted, so consistency can not be guaranteed.
@@ -93,23 +94,23 @@ Evostreet-Container accepts:
 <br />
 
 A single container represents a non-leaf node of the models structure-tree: The node itself is represented by the street, it's children are the houses and container (or the other branching streets). Houses and branches can be configured similarly:
- * `house.container` / `branch.container` _(Default: `RowContainer`)_ <br />
+ * `house.container` / `branch.container` _(Default: `(key: string, mirror: boolean) => new UniversalContainer(key, mirror)`)_ <br />
    Houses and branches are not drawn directly, they are first stored in a container. This allows for a configurable positioning of every street-component.
  * `house.distribution` / `branch.distribution` _(Default: `'default'`)_ <br />
    House- and branches-container will be placed on either side of the road, but how the shapes are distributed to these can be configured:
-    * `'default'`: Place the shapes alternating into the left and right container
+    * `'default'`: Place the shapes alternating into the left and right container by their default input
     * `'left'`: Place all shapes in the left container
     * `'right'`: Place all shapes in the right container
-    * `function(shape) { return shape.attribute; }`: Place the shapes into the left and right container, alternating by given attribute-order
- * `house.segmentation` / `branch.segmentation` _(Default: `null`)_ <br />
+    * `(s: Shape) => number`: Shapes will be sorted by their "distribution value" and then placed alternating left and right of the street.
+ * `house.segmentation` / `branch.segmentation` _(Default: `(s: Shape) => 'default'`)_ <br />
    You are not limited to one element-container on each side of the road. If you want to divide your branches or houses into different segments along the road, provide a function to convert a shape to a _string_-Value
    * `function(shape) { return shape.getAttribute('attr'); }`
- * `house.segmentorder` / `branch.segmentorder` _(Default: `null`)_ <br />
+ * `house.segmentorder` / `branch.segmentorder` _(Default: `natural sort by segment name`)_ <br />
    By default the segment-containers are sorted naturally by the shapes chosen attribute (beginning with the smallest). Alternatively another method can be defined (see [sort::compareFunction][JSCompare]).
  * `spacer`
    * `spacer.initial` _(Default: `15`)_ <br />
      Initial Space, before any element/container will be positioned.
-   * `spacer.branches` _(Default: `10`)_ <br />
+   * `spacer.branches` _(Default: `15`)_ <br />
      Don't line branches together, but let them breath
    * `spacer.terranullius` _(Default: `20`)_ <br />
      Space between the last branch- and the first house-container
@@ -119,22 +120,21 @@ A single container represents a non-leaf node of the models structure-tree: The 
 
 ### DistrictContainer
 District-Container accepts:
- * `Platform`-Shape (only one platform is accepted!)
  * `House`-Shapes
- * `BaseContainer`
+ * `Container`
 
  <br />
 
  A single container represents a non-leaf node of the models structure-tree: The node itself is represented by the platform, it's children are the houses and districts, placed on top of it. The container for houses and districts can be configured similarly:
-* `house.container` / `district.container` _(Default: `LightmapContainer`)_ <br />
-   Houses and Districts are not drawn directly, they are first stored in a container. This allows for a configurable positioning of every district-component.
-* `district.options` / `houses.options`  _(Default: `false`)_ <br />
-  Every container will be instantiated with the its `options` as second parameter. This means it's the `isMirrored`-Parameter for BaseContainer and the `options`-Parameter for `SpecificContainer`.
+ * `house.container` / `district.container` _(Default: `(key: string, mirror: boolean) => UniversalContainer`)_ <br />
+    Houses and Districts are not drawn directly, they are first stored in a container. This allows for a configurable positioning of every district-component. The containers will be created with an anonymous method.
+ * `platform.container` _(Default: `(key: string, mirror: boolean) => PlatformContainer`)_ <br />
+    Like house- and district-containers the underlying platform is also created with an anonymous method on runtime. With this method the platform can be fully configured. 
  * `spacer`
    * `spacer.margin` _(Default: `10`)_ <br />
-     Creates a margin on the outside of the platform
+      Creates a margin on the outside of the platform
    * `spacer.padding` _(Default: `5`)_ <br />
-     Padding between houses and the edge of the platform
+      Padding between houses and the edge of the platform
 
 <br />
 
