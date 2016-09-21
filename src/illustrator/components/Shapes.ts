@@ -1,14 +1,14 @@
 import {Cuboid} from "../../components/Cuboid";
-import {AttributeContainer, ShapeBaseAttributes} from "../../components/Interfaces";
+import {AttributeContainer, ShapeBaseAttributes, ShapeAttributes} from "../../components/Interfaces";
 import {Point} from "../../components/Point";
 
 /**
  * All shapes occupy a square area.
- * It"s dimensions are described by the vector `dimensions`.
- * It can be placed and rotated around the shape"s centroid.
+ * It's dimensions are described by the vector `dimensions`.
+ * It can be placed and rotated around the shape's centroid.
  */
 export abstract class Shape {
-    protected _key: String;
+    protected _key: string;
     protected _hasBeenDrawn: boolean;
     protected _absolutePosition: Point;
     protected _absoluteRotation: number;
@@ -22,8 +22,9 @@ export abstract class Shape {
         this._absoluteRotation = 0;
 
         this._attributes = {
+            key,
+            type: "shape",
             dimensions: new Cuboid(),
-            key: key,
             margin: 0,
             position: new Point(),
             rotation: 0
@@ -33,7 +34,7 @@ export abstract class Shape {
     /**
      * The shape"s (and it"s associated model node"s) identifier
      */
-    get key(): String {
+    get key(): string {
         return this._key;
     }
 
@@ -52,7 +53,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get this shapes position, relative to it"s parent"s centroid
+     * Get this shapes position, relative to it's parent's centroid
      * @return {Point}}
      * @protected
      */
@@ -61,7 +62,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get the shape"s qubic footprint (before any rotation)
+     * Get the shape's qubic footprint (before any rotation)
      * Intended only for private/protected use.
      * @return {Cuboid}
      * @protected
@@ -71,7 +72,7 @@ export abstract class Shape {
     }
 
     /**
-     * Get the shape"s qubic footprint (after any possible relative rotations)
+     * Get the shape's qubic footprint (after any possible relative rotations)
      */
     get displayDimensions(): Cuboid {
         const swap = this.rotation % 180;
@@ -110,7 +111,7 @@ export abstract class Shape {
     }
 
     /**
-     * Rotate the shape around the it"s centroid (clockwise rotation).
+     * Rotate the shape around the it's centroid (clockwise rotation).
      */
     public rotate (degrees: number) {
         if (degrees % 90) {
@@ -170,7 +171,7 @@ export abstract class Shape {
      * Updates the internal AttributeContainer for the SpatialInformation.
      * Also applies Spatial Data for this Shape directly.
      */
-    public updateAttributes(attributes: AttributeContainer) {
+    public updateAttributes(attributes: ShapeAttributes): void {
         for (let key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 const value = attributes[key];
@@ -215,17 +216,20 @@ export abstract class Shape {
 export class House extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "house"});
     }
 }
 
 export class Platform extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "platform"});
     }
 }
 
 export class Street extends Shape {
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "street"});
     }
 }

@@ -9,6 +9,7 @@ export interface ConfigurableInterface {
     setOptions: (options: AttributeContainer) => void;
     setOption: (key: string, value: any) => void;
     getOption: (key: string) => any;
+    getOptions: () => AttributeContainer;
     requireOption: (key: string) => void;
 }
 
@@ -55,6 +56,13 @@ export class Configurable implements ConfigurableInterface {
         }
 
         return null;
+    }
+
+    /**
+     * Get all Options in a single Object
+     */
+    public getOptions(): AttributeContainer {
+        return Object.assign({}, this._icDefaults, this._icOptions);
     }
 
     /**

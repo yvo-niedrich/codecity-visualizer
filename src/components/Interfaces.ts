@@ -8,7 +8,19 @@ export interface AttributeContainer {
     [index: string]: any;
 }
 
+export interface ShapeAttributes extends AttributeContainer {
+    type?: string;
+    "dimensions.length"?: number;
+    "dimensions.width"?: number;
+    "dimensions.height"?: number;
+    "position.x"?: number;
+    "position.y"?: number;
+    "position.z"?: number;
+    rotation?: number;
+}
+
 export interface ShapeBaseAttributes extends AttributeContainer {
+    type: string;
     dimensions: Cuboid;
     key: string;
     margin: number;

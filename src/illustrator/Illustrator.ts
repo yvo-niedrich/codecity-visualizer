@@ -16,6 +16,7 @@ abstract class Illustrator implements ConfigurableInterface {
     public setOptions: (options: AttributeContainer) => void;
     public setOption: (key: string, value: any) => void;
     public getOption: (key: string) => any;
+    public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
 
     private _illustratorRules: Array<Rule>;
@@ -44,7 +45,7 @@ abstract class Illustrator implements ConfigurableInterface {
      * Applies all available rules against a single node and returns an Object
      * covering the changes and additions to the node"s attributes
      */
-    protected applyRules(node: TreeNode, model: Model, version: Version) {
+    protected applyRules(node: TreeNode, model: Model, version: Version): AttributeContainer {
         let attributes = {};
         for (const rule of this._illustratorRules) {
             if (rule instanceof Rule && rule.condition(model, node, version)) {

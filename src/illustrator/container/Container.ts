@@ -17,6 +17,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     public setOptions: (options: AttributeContainer) => void;
     public setOption: (key: string, value: any) => void;
     public getOption: (key: string) => any;
+    public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
 
     private _elements: Array<Shape>;
@@ -24,6 +25,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
 
     constructor(key: string) {
         super(key);
+        this.updateAttributes({type: "container"});
         this._elements = [];
         this._finalized = false;
     }

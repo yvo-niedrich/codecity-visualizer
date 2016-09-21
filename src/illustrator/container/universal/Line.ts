@@ -1,10 +1,10 @@
 import {UniversalContainer} from "../Container";
 
 /**
- * Rows Elements one after the other, aligned to
- * the top (regular) or bottom (mirrored) boundary
+ * Lines Elements one after the other, centered on
+ * the y axis (mirroring has no effect)
  */
-export class RowContainer extends UniversalContainer {
+export class LineContainer extends UniversalContainer {
     constructor(key: string, mirror: boolean = false) {
         super(key, mirror);
     }
@@ -31,14 +31,9 @@ export class RowContainer extends UniversalContainer {
 
         for (const shape of this.shapes) {
             shape.position.x = firstFreePosition + (shape.displayDimensions.length / 2);
-            shape.position.y = this.alignOnXAxis(shape.displayDimensions.width);
+            shape.position.y = 0;
 
             firstFreePosition += shape.displayDimensions.length;
         }
-    }
-
-    private alignOnXAxis(shapeWidth: number) {
-        const p = this.isMirrored ? (this.dimensions.width - shapeWidth) : (shapeWidth - this.dimensions.width);
-        return p / 2;
     }
 }

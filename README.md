@@ -24,6 +24,8 @@ This plugin uses the ES2015-Syntax, but still requires polyfills, depending on t
  * core-js/fn/object/get-own-property-names.js
  * core-js/fn/object/get-own-property-symbols.js
 
+## Demo
+To see this library in action check out the SonarQube-Plugin [Softvis3D][softvis3d].<br /> _(Also available at the "SonarQube Update Center")_
 
 [//]: #
   [travis-banner]: https://travis-ci.org/Ungolianth/codecity-visualizer.svg?branch=master
@@ -33,3 +35,4 @@ This plugin uses the ES2015-Syntax, but still requires polyfills, depending on t
   [logo-image]: https://raw.githubusercontent.com/Ungolianth/codecity-visualizer/master/ccv.png "CCV-Logo"
   [git-project]: http://git.ungolianth.de/ungolianth/codecity-visualizer.git
   [boot-project]: http://git.ungolianth.de/ungolianth/ccv-bootstrap.git
+  [softvis3d]: http://softvis3d.com/

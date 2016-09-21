@@ -16,11 +16,11 @@ export class LogarithmicRule extends Rule {
         super(options);
         this.setDefaults(Object.assign(
             {
-                "min": 0,
-                "max": Infinity,
-                "logexp" : 1,
-                "logbase" : 2,
-                "factor": 1
+                min: 0,
+                max: Infinity,
+                logexp: 1,
+                logbase: 2,
+                factor: 1
             },
             ruleDefaults
         ));

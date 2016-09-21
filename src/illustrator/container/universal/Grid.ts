@@ -39,7 +39,7 @@ class Strip {
     }
 
     public add(shape: Shape): boolean {
-        const recommendOffsetRecalculation = this.dimensions.length &&
+        const recommendOffsetRecalculation = this.dimensions.length > 0 &&
                                             this.dimensions.width < shape.displayDimensions.width;
 
         this.dimensions.length += shape.displayDimensions.length;
@@ -64,11 +64,25 @@ export class GridContainer extends UniversalContainer {
 
         this.setDefaults({
             optimalAspectRatio: 1.0,
-            checkNewStripRatio: false
+            useBestFitMethod: true
         });
 
         this._shapes = [];
         this._strips = [];
+    }
+
+    get size(): number {
+        if (this._shapes.length) {
+            return this._shapes.length;
+        }
+
+        if (this._strips.length) {
+            return this._strips
+                        .map((v: Strip) => v.container.size)
+                        .reduce((a, b) => (a + b));
+        }
+
+        return 0;
     }
 
     public add(shape: Shape): void {
@@ -140,7 +154,7 @@ export class GridContainer extends UniversalContainer {
                 // strip is better, than using any of the available strips.
                 let isLastStrip = activeStrip + 1 === this._strips.length;
                 let gotoBestFit = false;
-                if (this.getOption("checkNewStripRatio") && isLastStrip) {
+                if (this.getOption("useBestFitMethod") && isLastStrip) {
                     const widthWithNewStrip = currentDimensions.width + shape.displayDimensions.width;
                     const newStripAspectRatio = this.getAspectRatio(currentDimensions.length, widthWithNewStrip);
                     const newStripAspectRatioDist = Math.abs(newStripAspectRatio - this.getOption("optimalAspectRatio"));
@@ -157,8 +171,13 @@ export class GridContainer extends UniversalContainer {
 
             } else {
                 // 2.2) The Shape will not impair the aspect ratio on
-                //      the current strip. Insert the shape.
+                //      the current strip. Insert the shape and
+                //      return strip pointer.
                 this.addAndRecalculate(strip, shape);
+
+                activeStrip = 0;
+                bestFit.aspectDistance = Infinity;
+                bestFit.strip = -1;
             }
         }
     }

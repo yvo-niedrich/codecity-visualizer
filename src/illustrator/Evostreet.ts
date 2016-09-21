@@ -97,7 +97,7 @@ export class Evostreet extends Illustrator {
 
     private createContainer(node: TreeNode): SpecificContainer {
         const cClass = this.getOption("evostreet.container");
-        return new cClass(String(node) + "_c", this.getOption("evostreet.options"));
+        return new cClass(String(node), this.getOption("evostreet.options"));
     }
 
     private createRoad(node: TreeNode, version: Version, forceRoot: boolean = false): Street {
@@ -112,7 +112,7 @@ export class Evostreet extends Illustrator {
         const defaultLayout = {
             "dimensions.length": this.getOption("highway.length"),
             "dimensions.height": 1,
-            "color": this.getOption("highway.color")
+            color: this.getOption("highway.color")
         };
 
         const highway = new Street(String(node));
@@ -124,7 +124,7 @@ export class Evostreet extends Illustrator {
         const defaultLayout = {
             "dimensions.length": this.getOption("street.length"),
             "dimensions.height": 1,
-            "color": this.getOption("street.color")
+            color: this.getOption("street.color")
         };
 
         const street = new Street(String(node));
@@ -137,8 +137,8 @@ export class Evostreet extends Illustrator {
             "dimensions.length": this.getOption("house.length"),
             "dimensions.width": this.getOption("house.width"),
             "dimensions.height": this.getOption("house.height"),
-            "margin": this.getOption("house.margin"),
-            "color": this.getOption("house.color")
+            margin: this.getOption("house.margin"),
+            color: this.getOption("house.color")
         };
 
         const house = new House(String(node));
