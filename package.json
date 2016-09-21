@@ -1,8 +1,9 @@
 {
     "name": "codecity-visualizer",
-    "version": "0.3.5",
+    "version": "0.3.6",
     "description": "Fully Configurable Code Visualisation Tool",
     "main": "lib/app.js",
+    "typings": "src/lib.d.ts",
     "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
     "license": "MIT",
     "keywords": [
@@ -13,7 +14,7 @@
     ],
     "repository": {
         "type": "http",
-        "url": "git+http://git.ungolianth.de/ungolianth/codecity-visualizer.git"
+        "url": "git+https://github.com/Ungolianth/codecity-visualizer.git"
     },
     "scripts": {
         "lint": "npm run lint:sources -s && npm run lint:tests -s",
