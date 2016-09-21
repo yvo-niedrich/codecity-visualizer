@@ -1,9 +1,9 @@
 {
     "name": "codecity-visualizer",
-    "version": "0.3.6",
+    "version": "0.3.7",
     "description": "Fully Configurable Code Visualisation Tool",
     "main": "lib/app.js",
-    "typings": "src/lib.d.ts",
+    "typings": "types/lib.d.ts",
     "author": "Yvo Niedrich <yvo.niedrich@gmail.com>",
     "license": "MIT",
     "keywords": [
