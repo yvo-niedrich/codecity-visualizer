@@ -7,7 +7,7 @@ import {Model} from "./models";
 class Rule {}
 
 export namespace appIllustrators {
-    export abstract class base implements ConfigurableInterface{
+    export abstract class base implements ConfigurableInterface {
         // Satisfy Configurable-Interface
         public setDefaults: (defaults: AttributeContainer) => void;
         public setOptions: (options: AttributeContainer) => void;

@@ -67,3 +67,12 @@ export interface EvostreetOptions extends AttributeContainer {
     "evostreet.container"?: SpecificContainer;
     "evostreet.options"?: StreetContainerOptions;
 }
+
+export abstract class Configurable implements ConfigurableInterface {
+    public setDefaults: (defaults: AttributeContainer) => void;
+    public setOptions: (options: AttributeContainer) => void;
+    public setOption: (key: string, value: any) => void;
+    public getOption: (key: string) => any;
+    public getOptions: () => AttributeContainer;
+    public requireOption: (key: string) => void;
+}
