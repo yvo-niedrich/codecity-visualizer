@@ -1,11 +1,7 @@
 /* tslint:disable */
-import {Cuboid, Point} from "./components"
-
-// TODO: Classes
-class SpecificContainer {}
-class UniversalContainer {}
-class DistrictContainerOptions {}
-class StreetContainerOptions {}
+import {Cuboid, Point} from "./components";
+import {Platform as PlatformContainer, SpecificContainer, UniversalContainer} from "./containers";
+import {Shape} from "./shapes";
 
 export interface AttributeContainer {
     [index: string]: any;
@@ -75,4 +71,40 @@ export abstract class Configurable implements ConfigurableInterface {
     public getOption: (key: string) => any;
     public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
+}
+
+type containerFunction = (s: string, m: boolean) => UniversalContainer;
+
+export interface DistrictContainerOptions extends AttributeContainer {
+    "spacer.margin"?: number;
+    "spacer.padding"?: number;
+
+    "houses.container"?: containerFunction;
+    "district.container"?: containerFunction;
+    "platform.container"?: (s: string, m: boolean) => PlatformContainer;
+}
+
+type distributionFunction = (s: Shape) => number;
+type distributionString = "left" | "right" | "default";
+type distributionMethod = distributionString | distributionFunction;
+
+type containerFunction = (key: string, mirror: boolean) => UniversalContainer;
+
+export interface StreetContainerOptions extends AttributeContainer {
+    "spacer.initial"?: number;
+    "spacer.branches"?: number;
+    "spacer.terranullius"?: number;
+    "spacer.conclusive"?: number;
+
+    "house.container"?: containerFunction;
+    "house.distribution"?: distributionMethod;
+    "house.segmentation"?: { (s: Shape): string };
+    "house.segmentorder"?: { (a: string, b: string): number };
+    "house.platforms"?: null | ShapeAttributes;
+    "house.path"?: null | ShapeAttributes;
+
+    "branch.container"?: containerFunction;
+    "branch.distribution"?: distributionMethod;
+    "branch.segmentation"?: { (s: Shape): string };
+    "branch.segmentorder"?: { (a: string, b: string): number };
 }

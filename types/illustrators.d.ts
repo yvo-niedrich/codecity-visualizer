@@ -2,9 +2,7 @@
 import {Version, TreeNode} from "./components";
 import {ConfigurableInterface, AttributeContainer, DistrictOptions, StreetContainerOptions} from "./interfaces";
 import {Model} from "./models";
-
-// TODO: Rules!
-class Rule {}
+import {Rule} from "./rules";
 
 export namespace appIllustrators {
     export abstract class base implements ConfigurableInterface {

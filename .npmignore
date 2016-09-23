@@ -3,6 +3,7 @@ tmp
 src
 spec
 .gitlab-ci.yml
+.travis.yml
 tslint.json
 
 out
