@@ -4,15 +4,13 @@
 [![Travis Banner][travis-banner]][travis-link]
 [![npm version](https://badge.fury.io/js/codecity-visualizer.svg)](https://badge.fury.io/js/codecity-visualizer)
 
-Code Cities convert your complex Software into a picture, so even noobs can understand it.
+Code cities convert your complex Software into a picture, for everyone to understand.
 
 This fully customizable library contains a collection of experimantal, as well as proven algorithms and layouts.
 
 For more information check out the [Git-Repository][git-project] or see how to start using the library with the [Boostrap-Project][boot-project].
 
-Available in ES2015-CommonJS
-
-_FYI: Here is still a lot of work to be done._
+Available in ES2015-CommonJS _(supports TypeScript Typehints)_.
 
 ## Polyfills
 This plugin uses the ES2015-Syntax, but still requires polyfills, depending on the interpreter. For minimal (with IE11 / Node v3) polyfilling use `core-js`:
