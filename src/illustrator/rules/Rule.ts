@@ -14,7 +14,7 @@ export interface RuleConstructor {
 
  export const ruleDefaults: Object = {
     condition: () => true,
-    metric: () => 0,
+    metric: () => 0
 };
 
 /**
