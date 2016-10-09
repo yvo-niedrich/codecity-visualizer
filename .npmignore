@@ -2,11 +2,14 @@ node_modules
 tmp
 src
 spec
-.gitlab-ci.yml
-.travis.yml
 tslint.json
 .nyc_output/
 coverage/
+
+.gitlab-ci.yml
+.travis.yml
+.babelrc
+.eslintrc
 
 out
 *.tgz

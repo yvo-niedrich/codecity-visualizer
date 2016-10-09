@@ -1,0 +1,34 @@
+{
+    "plugins": [
+        "jasmine"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script"
+    },
+    "env": {
+        "node": true,
+        "jasmine": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:jasmine/recommended"
+    ],
+    "rules": {
+        "no-eval": [
+            "error",
+            {
+                "allowIndirect": false
+            }
+        ],
+        "no-self-compare": "error",
+        "complexity": "error",
+        "yoda": [
+            "error",
+            "never",
+            {
+                "exceptRange": true
+            }
+        ]
+    }
+}

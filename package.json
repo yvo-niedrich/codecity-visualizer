@@ -29,6 +29,7 @@
     "pretest": "npm run lint:tests -s",
     "test:force": "jasmine",
     "test:coverage": "nyc npm run test:force",
+    "posttest:coverage": "rimraf .nyc_output",
     "prepublish": "npm run build -s && npm test -s"
   },
   "dependencies": {},
@@ -44,47 +45,5 @@
     "ts-node": "^1.4.1",
     "tslint": "^3.13.0",
     "typescript": "^2.0.0"
-  },
-  "babel": {
-    "presets": [
-      "es2015"
-    ],
-    "plugins": [
-      "add-module-exports"
-    ]
-  },
-  "eslintConfig": {
-    "plugins": [
-      "jasmine"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "script"
-    },
-    "env": {
-      "node": true,
-      "jasmine": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:jasmine/recommended"
-    ],
-    "rules": {
-      "no-eval": [
-        "error",
-        {
-          "allowIndirect": false
-        }
-      ],
-      "no-self-compare": "error",
-      "complexity": "error",
-      "yoda": [
-        "error",
-        "never",
-        {
-          "exceptRange": true
-        }
-      ]
-    }
   }
 }
