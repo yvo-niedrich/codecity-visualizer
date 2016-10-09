@@ -68,7 +68,7 @@ describe("Rule/Universal", function () {
         expect(res2.testResult).toBe('a');
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for universal rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
@@ -100,7 +100,7 @@ describe("Color/Assigned", function () {
         expect(0x000000 <= res2.testResult && res2.testResult <= 0xFFFFFF).toBeTruthy();
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for assigned color rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value4']; },
@@ -150,7 +150,7 @@ describe("Color/Gradient", function () {
         expect(res2.testResult).toBe(0xFF0000);
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for gradient color rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
@@ -198,7 +198,7 @@ describe("Math/Exponential", function () {
         expect(res2.testResult).toBe(5000);
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for exponential rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value1']; },
@@ -243,7 +243,7 @@ describe("Math/Logarithmic", function () {
         expect(res2.testResult).toBeCloseTo(3.37, 2);
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for logarithmic rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
@@ -287,7 +287,7 @@ describe("Math/Linear", function () {
         expect(res2.testResult).toBe(9);
     });
 
-    it('honours the condition', function () {
+    it('honours the condition for linear rules', function () {
         const options = {
             'condition': function(model, node) { return node.children.length === 0; },
             'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
