@@ -9,6 +9,7 @@ var ColorRule = CCV.rules.color.gradient;
 var Model = CCV.models.dummy;
 
 var model = new Model();
+var versions = model.getVersions();
 var rule = new Rule({
     'condition': function(model, node) { return node.children.length === 0; },
     'metric': function(model, node, version) {
@@ -36,7 +37,7 @@ describe("District", function() {
         var illustrator = new District(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;
@@ -51,7 +52,7 @@ describe("District", function() {
         var illustrator = new District(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;
@@ -85,7 +86,7 @@ describe("District", function() {
             'maxColor': 0xCCCCCC
         }));
 
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;
@@ -117,7 +118,7 @@ describe("District", function() {
         var illustrator = new District(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;
@@ -147,7 +148,7 @@ describe("District", function() {
         var illustrator = new District(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;
@@ -177,7 +178,7 @@ describe("District", function() {
         var illustrator = new District(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         var illustrationCount = illustration.shapes.length;

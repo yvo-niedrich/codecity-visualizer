@@ -120,23 +120,6 @@ export class DummyModel extends Model {
         }
     }
 
-    /** @deprecated */
-    public get graph() {
-        return this.getGraph();
-    }
-    /** @deprecated */
-    public get tree() {
-        return this.getTree();
-    }
-    /** @deprecated */
-    public get versions() {
-        return this.getVersions();
-    }
-    /** @deprecated */
-    public attributes(node: TreeNode, version: Version) {
-        return this.getAttributes(node, version);
-    }
-
     public getGraph(): Array<Dependency> {
         return this.pGraph;
     }
@@ -164,7 +147,7 @@ export class DummyModel extends Model {
             return mammals && mammals.find(node) ? true : false;
         }
 
-        return true;
+        return !!this.pTree.find(node);
     }
 
     public getAttributes(node: TreeNode, version: Version): AttributeContainer {

@@ -46,7 +46,7 @@ build:npm:
 test:jasmine:
   stage: test
   script:
-    - npm run test
+    - npm run test:coverage
   dependencies:
     - setup:npm
     - build:npm

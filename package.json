@@ -28,6 +28,7 @@
     "postbuild:force": "rimraf tmp",
     "pretest": "npm run lint:tests -s",
     "test:force": "jasmine",
+    "test:coverage": "nyc npm run test:force",
     "prepublish": "npm run build -s && npm test -s"
   },
   "dependencies": {},
@@ -40,6 +41,7 @@
     "jasmine": "^2.5.0",
     "nyc": "^8.3.1",
     "rimraf": "latest",
+    "ts-node": "^1.4.1",
     "tslint": "^3.13.0",
     "typescript": "^2.0.0"
   },
@@ -68,10 +70,20 @@
       "plugin:jasmine/recommended"
     ],
     "rules": {
-      "no-eval": ["error", {"allowIndirect": false}],
+      "no-eval": [
+        "error",
+        {
+          "allowIndirect": false
+        }
+      ],
       "no-self-compare": "error",
       "complexity": "error",
-      "yoda": ["error", "never", { "exceptRange": true }
+      "yoda": [
+        "error",
+        "never",
+        {
+          "exceptRange": true
+        }
       ]
     }
   }

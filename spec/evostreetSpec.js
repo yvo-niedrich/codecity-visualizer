@@ -8,6 +8,7 @@ var Rule = CCV.rules.math.linear;
 var Model = CCV.models.dummy;
 
 var model = new Model();
+var versions = model.getVersions();
 var rule = new Rule({
     'condition': function(model, node) { return node.children.length === 0; },
     'metric': function(model, node, version) {
@@ -25,7 +26,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -39,7 +40,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -58,7 +59,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -77,7 +78,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -96,7 +97,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -117,7 +118,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -138,7 +139,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -156,7 +157,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -176,7 +177,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -200,7 +201,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -236,7 +237,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -268,7 +269,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);
@@ -300,7 +301,7 @@ describe("Evostreet", function() {
         var illustrator = new Evostreet(model, options);
 
         illustrator.addRule(rule);
-        var versionToDraw = model.versions[1];
+        var versionToDraw = versions[1];
         var illustration = illustrator.draw(versionToDraw);
 
         expect(illustration.version).toBe(versionToDraw);

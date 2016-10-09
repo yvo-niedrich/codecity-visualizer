@@ -2,9 +2,10 @@ var JasmineRuleModel = require('./helper/jasmineRuleModel');
 var CCV = require('../../app');
 
 const m = new JasmineRuleModel();
-const root = m.tree;
+const root = m.getTree();
 const leaf = root.children[0];
-const v = m.versions[0];
+const versions = m.getVersions();
+const v = versions[0];
 
 describe("Rule/Universal", function () {
     it('is works by default', function () {
@@ -23,7 +24,7 @@ describe("Rule/Universal", function () {
     it('is works when partially configured', function () {
         const options = {
             'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
             'attributes': 'testResult'
         };
 
@@ -38,7 +39,7 @@ describe("Rule/Universal", function () {
     it('is works when fully configured', function () {
         const options = {
             'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
             'applyRule': function(metricValue) { return metricValue * 2; },
             'attributes': 'testResult'
         };
@@ -54,7 +55,7 @@ describe("Rule/Universal", function () {
     it('is works when fully configured for Strings', function () {
         const options = {
             'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
             'applyRule': function(metricValue) { return metricValue < 10 ? 'a' : 'b'; },
             'attributes': 'testResult'
         };
@@ -66,13 +67,25 @@ describe("Rule/Universal", function () {
         expect(res1.testResult).toBe('b');
         expect(res2.testResult).toBe('a');
     });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
+            'applyRule': function(metricValue) { return metricValue < 10 ? 'a' : 'b'; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.universal(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
+    });
 });
 
 describe("Color/Assigned", function () {
     it('Color is randomized', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value4']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value4']; },
             'attributes': 'testResult'
         };
 
@@ -86,13 +99,24 @@ describe("Color/Assigned", function () {
         expect(0x000000 <= res1.testResult && res1.testResult <= 0xFFFFFF).toBeTruthy();
         expect(0x000000 <= res2.testResult && res2.testResult <= 0xFFFFFF).toBeTruthy();
     });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value4']; },
+            'attributes': 'testResult'
+        };
+
+        var rule = new CCV.rules.color.assigned(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
+    });
 });
 
 describe("Color/Gradient", function () {
     it('Gradient Color working', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
             'attributes': 'testResult',
             'min': 0,
             'max': 60,
@@ -110,8 +134,7 @@ describe("Color/Gradient", function () {
 
     it('Gradient Min/Max working', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
             'attributes': 'testResult',
             'min': 15,
             'max': 45,
@@ -126,13 +149,28 @@ describe("Color/Gradient", function () {
         expect(res1.testResult).toBe(0x00CC00);
         expect(res2.testResult).toBe(0xFF0000);
     });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
+            'attributes': 'testResult',
+            'min': 15,
+            'max': 45,
+            'minColor': 0x00CC00,
+            'maxColor': 0xFF0000
+        };
+
+        var rule = new CCV.rules.color.gradient(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
+    });
 });
 
 describe("Math/Exponential", function () {
     it('Exponential function works', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value1']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value1']; },
             'attributes': 'testResult'
         };
 
@@ -146,8 +184,7 @@ describe("Math/Exponential", function () {
 
     it('Modified exponential function works', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value1']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value1']; },
             'attributes': 'testResult',
             'min': 5,
             'factor': .5
@@ -160,13 +197,26 @@ describe("Math/Exponential", function () {
         expect(res1.testResult).toBe(5);
         expect(res2.testResult).toBe(5000);
     });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value1']; },
+            'attributes': 'testResult',
+            'min': 5,
+            'factor': .5
+        };
+
+        var rule = new CCV.rules.math.exponential(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
+    });
 });
 
 describe("Math/Logarithmic", function () {
     it('logarithmic function works', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
             'attributes': 'testResult'
         };
 
@@ -180,8 +230,7 @@ describe("Math/Logarithmic", function () {
 
     it('logarithmic function works with other bases', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value2']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
             'attributes': 'testResult',
             'logbase': 3.21
         };
@@ -193,13 +242,25 @@ describe("Math/Logarithmic", function () {
         expect(res1.testResult).toBeCloseTo(0.6, 1);
         expect(res2.testResult).toBeCloseTo(3.37, 2);
     });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value2']; },
+            'attributes': 'testResult',
+            'logbase': 3.21
+        };
+
+        var rule = new CCV.rules.math.logarithmic(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
+    });
 });
 
 describe("Math/Linear", function () {
     it('Linear function works', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
             'attributes': 'testResult'
         };
 
@@ -213,8 +274,7 @@ describe("Math/Linear", function () {
 
     it('Linear function scales', function () {
         const options = {
-            'condition': function() { return true },
-            'metric': function(model, node) { return model.attributes(node)['test.value3']; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
             'attributes': 'testResult',
             'factor': 1.5
         };
@@ -225,5 +285,18 @@ describe("Math/Linear", function () {
 
         expect(res1.testResult).toBe(31.5);
         expect(res2.testResult).toBe(9);
+    });
+
+    it('honours the condition', function () {
+        const options = {
+            'condition': function(model, node) { return node.children.length === 0; },
+            'metric': function(model, node) { return model.getAttributes(node)['test.value3']; },
+            'attributes': 'testResult',
+            'factor': 1.5
+        };
+
+        var rule = new CCV.rules.math.linear(options);
+        expect(rule.condition(m, root, v)).toBeFalsy();
+        expect(rule.condition(m, leaf, v)).toBeTruthy();
     });
 });

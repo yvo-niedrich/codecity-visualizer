@@ -31,7 +31,7 @@ class JasmineRuleModel extends BaseSoftwareModel {
      * Get the Models Graph. A List of Objects, connecting `source` and `target`.
      * @return {Array<Dependency>}
      */
-    get graph() {
+    getGraph() {
         return [];
     }
 
@@ -39,7 +39,7 @@ class JasmineRuleModel extends BaseSoftwareModel {
      * Get the Root-Node of the tree.
      * @return {TreeNode}
      */
-    get tree() {
+    getTree() {
         return this._tree;
     }
 
@@ -47,7 +47,7 @@ class JasmineRuleModel extends BaseSoftwareModel {
      * Get an ordered List of all versions.
      * @return {Array<Version>}
      */
-    get versions() {
+    getVersions() {
         return [this._version];
     }
 
@@ -63,7 +63,7 @@ class JasmineRuleModel extends BaseSoftwareModel {
      * Property function
      * @return {Object}
      */
-    attributes(node) {
+    getAttributes(node) {
         return this._attr[String(node)];
     }
 }
