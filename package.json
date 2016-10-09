@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "npm run lint:sources -s && npm run lint:tests -s",
     "build": "npm run build:force -s",
-    "test": "npm run test:force -s",
+    "test": "npm run test:coverage -s",
     "lint:sources": "eslint src && tslint \"src/**/*.ts?(x)\"",
     "lint:tests": "eslint spec && tslint \"spec/**/*.ts?(x)\"",
     "prebuild": "npm run lint:sources -s",
