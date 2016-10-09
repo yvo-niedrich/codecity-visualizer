@@ -5,6 +5,8 @@ spec
 .gitlab-ci.yml
 .travis.yml
 tslint.json
+.nyc_output/
+coverage/
 
 out
 *.tgz
