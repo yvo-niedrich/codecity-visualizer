@@ -31,6 +31,6 @@ To see this library in action check out the SonarQube-Plugin [Softvis3D][softvis
   [npm-banner]: https://badge.fury.io/js/codecity-visualizer.svg
   [npm-link]: https://www.npmjs.com/package/codecity-visualizer
   [logo-image]: https://raw.githubusercontent.com/Ungolianth/codecity-visualizer/master/ccv.png "CCV-Logo"
-  [git-project]: http://git.ungolianth.de/ungolianth/codecity-visualizer.git
+  [git-project]: https://github.com/Ungolianth/codecity-visualizer.git
   [boot-project]: http://git.ungolianth.de/ungolianth/ccv-bootstrap.git
   [softvis3d]: http://softvis3d.com/
