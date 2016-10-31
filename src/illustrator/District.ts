@@ -1,6 +1,5 @@
 import {Illustrator} from "./Illustrator";
 import {Model} from "../model/Model";
-import {AttributeContainer} from "../components/Interfaces";
 import {SpecificContainer} from "./container/Container";
 import {DistrictContainer, DistrictContainerOptions} from "./container/specific/Districts";
 import {Version} from "../components/Version";
@@ -9,7 +8,6 @@ import {Illustration} from "./components/Illustration";
 import {TreeNode} from "../components/TreeNode";
 import {Shape, House} from "./components/Shapes";
 import {PlatformContainer} from "./container/universal/Platform";
-// import {PlatformContainer} from "./container/universal/Platform";
 
 export interface DistrictOptions extends AttributeContainer {
     "layout.tower"?: boolean;

@@ -1,13 +1,8 @@
-import {TreeNode} from "./TreeNode";
+export class Dependency implements DependencyInterface {
+    public readonly source: TreeNodeInterface;
+    public readonly target: TreeNodeInterface;
 
-/**
- * A Software Dependency
- */
-export class Dependency {
-    public readonly source: TreeNode;
-    public readonly target: TreeNode;
-
-    constructor(source: TreeNode, target: TreeNode) {
+    constructor(source: TreeNodeInterface, target: TreeNodeInterface) {
         this.source = source;
         this.target = target;
     }

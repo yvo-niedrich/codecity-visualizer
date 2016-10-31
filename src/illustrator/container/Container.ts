@@ -1,4 +1,3 @@
-import {AttributeContainer, ShapeBaseAttributes} from "../../components/Interfaces";
 import {applyMixins, Configurable, ConfigurableInterface} from "../components/Mixins";
 import {Shape} from "../components/Shapes";
 import {Point} from "../../components/Point";

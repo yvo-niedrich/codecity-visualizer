@@ -1,4 +1,4 @@
-export class Version {
+export class Version implements VersionInterface {
     public readonly key: string;
     public readonly label: string;
     private order: number;

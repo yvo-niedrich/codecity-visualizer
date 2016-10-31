@@ -1,5 +1,3 @@
-import {AttributeContainer} from "../../components/Interfaces";
-
 /**
  * Classes can implement this Feature to become Configurable
  */

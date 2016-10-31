@@ -1,4 +1,4 @@
-export class Point {
+export class Point implements PointInterface {
     private _y: number;
     private _x: number;
     private _z: number;

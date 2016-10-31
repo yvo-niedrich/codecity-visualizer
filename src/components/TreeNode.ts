@@ -1,4 +1,4 @@
-export class TreeNode {
+export class TreeNode implements TreeNodeInterface {
     public parent: TreeNode | null;
     public readonly children: Array<TreeNode>;
     private key: string;

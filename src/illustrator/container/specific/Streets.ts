@@ -2,7 +2,6 @@
 import {SpecificContainer, Container, UniversalContainer} from "../Container";
 import {RowContainer} from "../universal/Row";
 import {Street, Shape, House} from "../../components/Shapes";
-import {AttributeContainer, ShapeAttributes} from "../../../components/Interfaces";
 import {PlatformContainer} from "../universal/Platform";
 
 interface HouseSegmentContainer {

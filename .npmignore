@@ -1,8 +1,7 @@
 node_modules
-tmp
-src
-spec
-tslint.json
+tmp/
+src/
+spec/
 .nyc_output/
 coverage/
 
@@ -10,6 +9,7 @@ coverage/
 .travis.yml
 .babelrc
 .eslintrc
+tslint.json
 
 out
 *.tgz

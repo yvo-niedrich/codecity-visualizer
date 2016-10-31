@@ -1,5 +1,4 @@
 import {Cuboid} from "../../components/Cuboid";
-import {AttributeContainer, ShapeBaseAttributes, ShapeAttributes} from "../../components/Interfaces";
 import {Point} from "../../components/Point";
 
 /**
@@ -58,7 +57,7 @@ export abstract class Shape {
      * @protected
      */
     get position(): Point {
-        return this._attributes.position;
+        return (this._attributes.position as Point);
     }
 
     /**
@@ -68,7 +67,7 @@ export abstract class Shape {
      * @protected
      */
     get dimensions(): Cuboid {
-        return this._attributes.dimensions;
+        return (this._attributes.dimensions as Cuboid);
     }
 
     /**

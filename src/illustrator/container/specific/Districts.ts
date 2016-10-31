@@ -1,5 +1,4 @@
 import {SpecificContainer, UniversalContainer, Container} from "../Container";
-import {AttributeContainer} from "../../../components/Interfaces";
 import {Lightmap} from "../universal/Lightmap";
 import {Shape, House} from "../../components/Shapes";
 import {PlatformContainer} from "../universal/Platform";

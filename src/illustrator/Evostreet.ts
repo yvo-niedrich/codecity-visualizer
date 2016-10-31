@@ -1,4 +1,3 @@
-import {AttributeContainer} from "../components/Interfaces";
 import {SpecificContainer} from "./container/Container";
 import {Illustrator} from "./Illustrator";
 import {Model} from "../model/Model";

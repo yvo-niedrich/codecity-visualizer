@@ -1,4 +1,3 @@
-import {AttributeContainer} from "../components/Interfaces";
 import {applyMixins, Configurable, ConfigurableInterface} from "./components/Mixins";
 import {Rule} from "./rules/Rule";
 import {Version} from "../components/Version";

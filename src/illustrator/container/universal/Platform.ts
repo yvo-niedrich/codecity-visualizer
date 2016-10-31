@@ -1,6 +1,5 @@
 import {UniversalContainer} from "../Container";
 import {Shape, Platform} from "../../components/Shapes";
-import {AttributeContainer} from "../../../components/Interfaces";
 import {LineContainer} from "./Line";
 
 /**

@@ -1,4 +1,4 @@
-export class Cuboid {
+export class Cuboid implements CuboidInterface {
     private _length: number;
     private _width: number;
     private _height: number;

@@ -1,5 +1,4 @@
 import {Version} from "../../components/Version";
-import {ShapeBaseAttributes} from "../../components/Interfaces";
 
 /**
  * This is what a SoftwareModel has to look like

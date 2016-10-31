@@ -1,7 +1,6 @@
 import {Model} from "../Model";
 import {TreeNode} from "../../components/TreeNode";
 import {Version} from "../../components/Version";
-import {AttributeContainer} from "../../components/Interfaces";
 
 export class AttributeExtractor {
 

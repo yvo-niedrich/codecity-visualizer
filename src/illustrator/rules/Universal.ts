@@ -1,4 +1,3 @@
-import {AttributeContainer} from "../../components/Interfaces";
 import {TreeNode} from "../../components/TreeNode";
 import {Version} from "../../components/Version";
 import {Model} from "../../model/Model";
