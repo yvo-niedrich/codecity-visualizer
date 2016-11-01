@@ -1,14 +1,15 @@
-import {Model} from "../Model";
-import {TreeNode} from "../../components/TreeNode";
-import {Version} from "../../components/Version";
-
 export class AttributeExtractor {
 
     /**
      * Require that node exists in version. Optionally an attribute can be required for the node and version.
      * @throws Exception if non-existent
      */
-    public static require(model: Model, node: TreeNode, version: Version, attribute: string | null = null): boolean {
+    public static require(
+        model: SoftwareModel,
+        node: TreeNodeInterface,
+        version: VersionInterface,
+        attribute: string | null = null
+    ): boolean {
         if (model.exists(node, version)) {
             if (attribute !== null && !(attribute in model.getAttributes(node, version))) {
                 throw "Attribute " + attribute + " does not exist in Version " + version + " for Node " + node;
@@ -25,7 +26,11 @@ export class AttributeExtractor {
      * first appearance
      * @throws Exception if no data is available
      */
-    public static attrFallbackFirstAvailable(model: Model, node: TreeNode, version: Version): AttributeContainer {
+    public static attrFallbackFirstAvailable(
+        model: SoftwareModel,
+        node: TreeNodeInterface,
+        version: VersionInterface
+    ): AttributeContainer {
         if (model.exists(node, version)) {
             return model.getAttributes(node, version);
         }
@@ -38,7 +43,11 @@ export class AttributeExtractor {
      * first appearance on a preceding version
      * @throws Exception if no data is available in range
      */
-    public static attrFallbackFirstAvailablePredecessor(model: Model, node: TreeNode, version: Version): AttributeContainer {
+    public static attrFallbackFirstAvailablePredecessor(
+        model: SoftwareModel,
+        node: TreeNodeInterface,
+        version: VersionInterface
+    ): AttributeContainer {
         let vIndex = model.getVersions().indexOf(version);
 
         while (vIndex >= 0) {
@@ -56,7 +65,11 @@ export class AttributeExtractor {
      * first appearance on a succeeding version
      * @throws Exception if no data is available in range
      */
-    public static attrFallbackFirstAvailableSuccessor(model: Model, node: TreeNode, version: Version): AttributeContainer {
+    public static attrFallbackFirstAvailableSuccessor(
+        model: SoftwareModel,
+        node: TreeNodeInterface,
+        version: VersionInterface
+    ): AttributeContainer {
         let vIndex = model.getVersions().indexOf(version);
         const versions = model.getVersions().length;
 
@@ -75,7 +88,11 @@ export class AttributeExtractor {
      * versions, then the succeeding versions.
      * @throws Exception if no data is available
      */
-    public static attrFallbackSweep(model: Model, node: TreeNode, version: Version): AttributeContainer {
+    public static attrFallbackSweep(
+        model: SoftwareModel,
+        node: TreeNodeInterface,
+        version: VersionInterface
+    ): AttributeContainer {
         try {
             return AttributeExtractor.attrFallbackFirstAvailablePredecessor(model, node, version);
         } catch (err) {
@@ -96,7 +113,7 @@ export class AttributeExtractor {
      * @returns {Object}
      * @throws Exception if no data is available
      */
-    public static attrFirstAvailableVersion(model: Model, node: TreeNode) {
+    public static attrFirstAvailableVersion(model: SoftwareModel, node: TreeNodeInterface) {
         for (const v of model.getVersions()) {
             if (model.exists(node, v)) {
                 return model.getAttributes(node, v);

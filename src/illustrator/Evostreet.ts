@@ -1,11 +1,8 @@
 import {SpecificContainer} from "./container/Container";
 import {Illustrator} from "./Illustrator";
-import {Model} from "../model/Model";
 import {StreetContainer, StreetContainerOptions} from "./container/specific/Streets";
-import {Version} from "../components/Version";
 import {Illustration} from "./components/Illustration";
 import {Point} from "../components/Point";
-import {TreeNode} from "../components/TreeNode";
 import {Shape, Street, House} from "./components/Shapes";
 
 export interface EvostreetOptions extends AttributeContainer {
@@ -27,9 +24,9 @@ export interface EvostreetOptions extends AttributeContainer {
  * Create an Evostreet Layout city
  */
 export class Evostreet extends Illustrator {
-    private _model: Model;
+    private _model: SoftwareModel;
 
-    constructor(model: Model, options: EvostreetOptions = {}) {
+    constructor(model: SoftwareModel, options: EvostreetOptions = {}) {
         super();
 
         this._model = model;
@@ -54,7 +51,7 @@ export class Evostreet extends Illustrator {
         });
     }
 
-    public draw(version: Version): Illustration {
+    public draw(version: VersionInterface): Illustration {
         const spatialModel = this.createSpatialModel(this._model.getTree(), version);
 
         const origin = new Point(0, 0, 0);
@@ -69,7 +66,7 @@ export class Evostreet extends Illustrator {
         return illustration;
     }
 
-    private createSpatialModel(tree: TreeNode, version: Version, skippedRoot: boolean = false): Shape {
+    private createSpatialModel(tree: TreeNodeInterface, version: VersionInterface, skippedRoot: boolean = false): Shape {
         if (!tree.children.length) {
             return this.createHouse(tree, version);
         }
@@ -88,18 +85,18 @@ export class Evostreet extends Illustrator {
         return container;
     }
 
-    private preventSnail(node: TreeNode): boolean {
+    private preventSnail(node: TreeNodeInterface): boolean {
         return !this.getOption("layout.snail") &&
             node.children.length === 1 &&
             node.children[0].children.length > 0;
     }
 
-    private createContainer(node: TreeNode): SpecificContainer {
+    private createContainer(node: TreeNodeInterface): SpecificContainer {
         const cClass = this.getOption("evostreet.container");
         return new cClass(String(node), this.getOption("evostreet.options"));
     }
 
-    private createRoad(node: TreeNode, version: Version, forceRoot: boolean = false): Street {
+    private createRoad(node: TreeNodeInterface, version: VersionInterface, forceRoot: boolean = false): Street {
         if (node.parent === null || forceRoot) {
             return this.createHighway(node, version);
         } else {
@@ -107,7 +104,7 @@ export class Evostreet extends Illustrator {
         }
     }
 
-    private createHighway(node: TreeNode, version: Version): Street {
+    private createHighway(node: TreeNodeInterface, version: VersionInterface): Street {
         const defaultLayout = {
             "dimensions.length": this.getOption("highway.length"),
             "dimensions.height": 1,
@@ -115,11 +112,11 @@ export class Evostreet extends Illustrator {
         };
 
         const highway = new Street(String(node));
-        highway.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+        highway.updateAttributes(Object.assign(defaultLayout, this.applyRules(this._model, node, version)));
         return highway;
     }
 
-    private createStreet(node: TreeNode, version: Version): Street {
+    private createStreet(node: TreeNodeInterface, version: VersionInterface): Street {
         const defaultLayout = {
             "dimensions.length": this.getOption("street.length"),
             "dimensions.height": 1,
@@ -127,11 +124,11 @@ export class Evostreet extends Illustrator {
         };
 
         const street = new Street(String(node));
-        street.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+        street.updateAttributes(Object.assign(defaultLayout, this.applyRules(this._model, node, version)));
         return street;
     }
 
-    private createHouse(node: TreeNode, version: Version): House {
+    private createHouse(node: TreeNodeInterface, version: VersionInterface): House {
         const defaultLayout = {
             "dimensions.length": this.getOption("house.length"),
             "dimensions.width": this.getOption("house.width"),
@@ -141,7 +138,7 @@ export class Evostreet extends Illustrator {
         };
 
         const house = new House(String(node));
-        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(this._model, node, version)));
         return house;
     }
 }

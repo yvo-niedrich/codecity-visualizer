@@ -1,8 +1,5 @@
 import {applyMixins, Configurable, ConfigurableInterface} from "./components/Mixins";
 import {Rule} from "./rules/Rule";
-import {Version} from "../components/Version";
-import {TreeNode} from "../components/TreeNode";
-import {Model} from "../model/Model";
 
 /**
  * Converts the model into a 2D SoftwareCity consisting of SpatialNodes.
@@ -29,7 +26,7 @@ abstract class Illustrator implements ConfigurableInterface {
      * for the chosen version.
      * Returns a list of SpatialNodes, which can be rendered in
      */
-    public abstract draw(version: Version): any;
+    public abstract draw(version: VersionInterface): any;
 
     /**
      * Add a Metric-Rule, which will create or alter the attributes
@@ -44,7 +41,7 @@ abstract class Illustrator implements ConfigurableInterface {
      * Applies all available rules against a single node and returns an Object
      * covering the changes and additions to the node"s attributes
      */
-    protected applyRules(node: TreeNode, model: Model, version: Version): AttributeContainer {
+    protected applyRules(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): AttributeContainer {
         let attributes = {};
         for (const rule of this._illustratorRules) {
             if (rule instanceof Rule && rule.condition(model, node, version)) {

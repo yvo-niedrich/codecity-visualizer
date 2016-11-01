@@ -1,18 +1,16 @@
-import {Version} from "../../components/Version";
-
 /**
  * This is what a SoftwareModel has to look like
  */
 export class Illustration {
-    private _version: Version;
+    private _version: VersionInterface;
     private _shapes: Array<ShapeBaseAttributes>;
 
-    constructor(version: Version) {
+    constructor(version: VersionInterface) {
         this._version = version;
         this._shapes  = [];
     }
 
-    get version(): Version {
+    get version(): VersionInterface {
         return this._version;
     }
 
