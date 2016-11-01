@@ -27,7 +27,7 @@
     "build:force": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
     "postbuild:force": "rimraf tmp",
     "pretest": "npm run lint:tests -s",
-    "test:force": "JASMINE_CONFIG_PATH=spec/jasmine.json jasmine ",
+    "test:force": "jasmine JASMINE_CONFIG_PATH=spec/jasmine.json",
     "test:coverage": "nyc npm run test:force",
     "posttest:coverage": "rimraf .nyc_output",
     "prepublish": "npm run build -s && npm test -s"

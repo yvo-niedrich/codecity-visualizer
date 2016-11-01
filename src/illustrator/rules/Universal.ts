@@ -1,6 +1,3 @@
-import {TreeNode} from "../../components/TreeNode";
-import {Version} from "../../components/Version";
-import {Model} from "../../model/Model";
 import {Rule, RuleConstructor, ruleDefaults} from "./Rule";
 
 interface UniversalRuleConstructor extends RuleConstructor {
@@ -20,11 +17,11 @@ export class UniversalRule extends Rule {
         this.requireOption("attributes");
     }
 
-    public condition(model: Model, node: TreeNode, version: Version): boolean {
+    public condition(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): boolean {
         return this.getOption("condition")(model, node, version);
     }
 
-    public execute(model: Model, node: TreeNode, version: Version): AttributeContainer {
+    public execute(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): AttributeContainer {
         const nodeValue = this.getOption("metric")(model, node, version);
         const newValue = this.getOption("applyRule")(nodeValue);
         return Rule.createTraits(this.getOption("attributes"), newValue);
