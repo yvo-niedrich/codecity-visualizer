@@ -1,7 +1,5 @@
 import {applyMixins, Configurable, ConfigurableInterface} from "../components/Mixins";
 import {Shape} from "../components/Shapes";
-import {Point} from "../../components/Point";
-import {Cuboid} from "../../components/Cuboid";
 
 /**
  * A Shape-Container stores shapes and place them (relative to the containers origin).
@@ -70,7 +68,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     /**
      * Draws the container and all of it"s shapes (after initiating finalizeOnce)
      */
-    public draw(parentPosition: Point, parentRotation: number): void {
+    public draw(parentPosition: PointInterface, parentRotation: number): void {
         this.finalizeOnce();
         super.draw(parentPosition, parentRotation);
 
@@ -83,7 +81,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
      * Get the containers dimensions (after initiating finalizeOnce)
      * @return {Cuboid}
      */
-    get displayDimensions(): Cuboid {
+    get displayDimensions(): CuboidInterface {
         this.finalizeOnce();
         return super.displayDimensions;
     }

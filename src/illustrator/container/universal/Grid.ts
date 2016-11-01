@@ -9,7 +9,7 @@ import {RowContainer} from "./Row";
  */
 class Strip {
     private _offset: number;
-    private _dimensions: Cuboid;
+    private _dimensions: CuboidInterface;
     private _container: RowContainer;
 
     constructor(name: string, mirrored: boolean) {
@@ -206,7 +206,7 @@ export class GridContainer extends UniversalContainer {
         }
     }
 
-    private getCurrentDimensions(): Cuboid {
+    private getCurrentDimensions(): CuboidInterface {
         const d = new Cuboid();
 
         for (const s of this._strips) {

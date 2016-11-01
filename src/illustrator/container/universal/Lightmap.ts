@@ -4,23 +4,23 @@ import {UniversalContainer} from "../Container";
 import {Shape} from "../../components/Shapes";
 
 class LightNode {
-    private _origin: Point;
-    private _dimensions: Cuboid;
+    private _origin: PointInterface;
+    private _dimensions: CuboidInterface;
     private _content: any;
     private _children: Array<LightNode>;
 
-    constructor(origin: Point, dimensions: Cuboid) {
+    constructor(origin: PointInterface, dimensions: CuboidInterface) {
         this._origin = origin;
         this._dimensions = dimensions;
         this._content = null;
         this._children = [];
     }
 
-    get origin() {
+    get origin(): PointInterface {
         return this._origin;
     }
 
-    get dimensions() {
+    get dimensions(): CuboidInterface {
         return this._dimensions;
     }
 
@@ -28,7 +28,7 @@ class LightNode {
         return this._content;
     }
 
-    public contentFits(measurements: Cuboid): boolean {
+    public contentFits(measurements: CuboidInterface): boolean {
         if (this._content) {
             return false;
         }
@@ -36,7 +36,7 @@ class LightNode {
         return (this.dimensions.length >= measurements.length && this.dimensions.width >= measurements.width);
     }
 
-    public collectCandidates(collection: Array<LightNode>, measurements: Cuboid): void {
+    public collectCandidates(collection: Array<LightNode>, measurements: CuboidInterface): void {
         if (this._children.length) {
             for (const c of this._children) {
                 c.collectCandidates(collection, measurements);
@@ -59,7 +59,7 @@ class LightNode {
     /**
      * @throws Error
      */
-    public insert(measurements: Cuboid, object: any, cutHorizontalFirst: boolean = true): LightNode {
+    public insert(measurements: CuboidInterface, object: any, cutHorizontalFirst: boolean = true): LightNode {
         if (!this.contentFits(measurements)) {
             throw "Object does not fit!";
         }
