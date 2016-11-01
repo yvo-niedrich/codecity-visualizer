@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "npm run lint:sources -s && npm run lint:tests -s",
     "build": "npm run build:force -s",
-    "test": "npm run test:coverage -s",
+    "test": "npm run test:force -s",
     "lint:sources": "eslint src && tslint \"src/**/*.ts?(x)\"",
     "lint:tests": "eslint spec && tslint \"spec/**/*.ts?(x)\"",
     "prebuild": "npm run lint:sources -s",
@@ -28,8 +28,6 @@
     "postbuild:force": "rimraf tmp",
     "pretest": "npm run lint:tests -s",
     "test:force": "jasmine JASMINE_CONFIG_PATH=spec/jasmine.json",
-    "test:coverage": "nyc npm run test:force",
-    "posttest:coverage": "rimraf .nyc_output",
     "prepublish": "npm run build -s && npm test -s"
   },
   "dependencies": {},
@@ -40,7 +38,6 @@
     "eslint": "^3.9.1",
     "eslint-plugin-jasmine": "^1.8.1",
     "jasmine": "^2.5.2",
-    "nyc": "^8.3.2",
     "rimraf": "latest",
     "ts-node": "^1.6.1",
     "tslint": "^3.15.1",

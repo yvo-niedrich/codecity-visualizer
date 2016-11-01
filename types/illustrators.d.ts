@@ -34,7 +34,7 @@ export namespace appIllustrators {
          * Applies all available rules against a single node and returns an Object
          * covering the changes and additions to the node"s attributes
          */
-        protected applyRules(node: TreeNode, model: Model, version: Version): AttributeContainer;
+        protected applyRules(model: Model, node: TreeNode, version: Version): AttributeContainer;
     }
 
     export class district extends base {
