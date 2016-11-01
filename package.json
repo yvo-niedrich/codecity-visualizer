@@ -1,6 +1,6 @@
 {
   "name": "codecity-visualizer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Fully Configurable Code Visualisation Tool",
   "main": "lib/app.js",
   "typings": "types/lib.d.ts",
@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "npm run lint:sources -s && npm run lint:tests -s",
     "build": "npm run build:force -s",
-    "test": "npm run test:coverage -s",
+    "test": "npm run test:force -s",
     "lint:sources": "eslint src && tslint \"src/**/*.ts?(x)\"",
     "lint:tests": "eslint spec && tslint \"spec/**/*.ts?(x)\"",
     "prebuild": "npm run lint:sources -s",
@@ -27,9 +27,7 @@
     "build:force": "tsc -p src --outDir tmp && babel tmp --out-dir lib",
     "postbuild:force": "rimraf tmp",
     "pretest": "npm run lint:tests -s",
-    "test:force": "JASMINE_CONFIG_PATH=spec/jasmine.json jasmine ",
-    "test:coverage": "nyc npm run test:force",
-    "posttest:coverage": "rimraf .nyc_output",
+    "test:force": "jasmine JASMINE_CONFIG_PATH=spec/jasmine.json",
     "prepublish": "npm run build -s && npm test -s"
   },
   "dependencies": {},
@@ -40,7 +38,6 @@
     "eslint": "^3.9.1",
     "eslint-plugin-jasmine": "^1.8.1",
     "jasmine": "^2.5.2",
-    "nyc": "^8.3.2",
     "rimraf": "latest",
     "ts-node": "^1.6.1",
     "tslint": "^3.15.1",

@@ -1,5 +1,4 @@
-/* tslint:disable:member-ordering */
-import {SpecificContainer, Container, UniversalContainer} from "../Container";
+import {Container, SpecificContainer, UniversalContainer} from "../Container";
 import {RowContainer} from "../universal/Row";
 import {Street, Shape, House} from "../../components/Shapes";
 import {PlatformContainer} from "../universal/Platform";
@@ -120,40 +119,6 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private addHouse(shape: House) {
-        const segmentFunc: { (s: Shape): string; } = this.getOption("house.segmentation");
-        const segmentIndex = String(segmentFunc(shape));
-
-        if (this.houses.segments.indexOf(segmentIndex) < 0) {
-            const houseContainer: containerFunction = this.getOption("house.container");
-            this.houses.segments.push(segmentIndex);
-            this.houses.segmented[segmentIndex] = [];
-            this.houses.left[segmentIndex]  = houseContainer(this.key + "_" + segmentIndex + "_hl", false);
-            this.houses.right[segmentIndex] = houseContainer(this.key + "_" + segmentIndex + "_hr", true);
-            this.houses.left[segmentIndex].rotate(-90);
-            this.houses.right[segmentIndex].rotate(-90);
-        }
-
-        this.houses.segmented[segmentIndex].push(shape);
-    }
-
-    private addBranch(shape: StreetContainer): void {
-        const segmentFunc: { (s: Shape): string; } = this.getOption("branch.segmentation");
-        const segmentIndex = String(segmentFunc(shape));
-
-        if (this.branches.segments.indexOf(segmentIndex) < 0) {
-            const branchContainer: containerFunction = this.getOption("branch.container");
-            this.branches.segments.push(segmentIndex);
-            this.branches.segmented[segmentIndex] = [];
-            this.branches.left[segmentIndex]  = branchContainer(this.key + "_" + segmentIndex + "_bl", false);
-            this.branches.right[segmentIndex] = branchContainer(this.key + "_" + segmentIndex + "_br", true);
-            this.branches.left[segmentIndex].rotate(-90);
-            this.branches.right[segmentIndex].rotate(-90);
-        }
-
-        this.branches.segmented[segmentIndex].push(shape);
-    }
-
     public finalize(): void {
         if (this.road === null) {
             throw "StreetContainer requires a primary street";
@@ -221,6 +186,40 @@ export class StreetContainer extends SpecificContainer {
 
             containersBottom += Math.max(leftHouses.displayDimensions.width, rightHouses.displayDimensions.width);
         }
+    }
+
+    private addHouse(shape: House) {
+        const segmentFunc = this.getOption("house.segmentation") as (s: Shape) => string;
+        const segmentIndex = String(segmentFunc(shape));
+
+        if (this.houses.segments.indexOf(segmentIndex) < 0) {
+            const houseContainer: containerFunction = this.getOption("house.container");
+            this.houses.segments.push(segmentIndex);
+            this.houses.segmented[segmentIndex] = [];
+            this.houses.left[segmentIndex]  = houseContainer(this.key + "_" + segmentIndex + "_hl", false);
+            this.houses.right[segmentIndex] = houseContainer(this.key + "_" + segmentIndex + "_hr", true);
+            this.houses.left[segmentIndex].rotate(-90);
+            this.houses.right[segmentIndex].rotate(-90);
+        }
+
+        this.houses.segmented[segmentIndex].push(shape);
+    }
+
+    private addBranch(shape: StreetContainer): void {
+        const segmentFunc = this.getOption("branch.segmentation") as (s: Shape) => string;
+        const segmentIndex = String(segmentFunc(shape));
+
+        if (this.branches.segments.indexOf(segmentIndex) < 0) {
+            const branchContainer: containerFunction = this.getOption("branch.container");
+            this.branches.segments.push(segmentIndex);
+            this.branches.segmented[segmentIndex] = [];
+            this.branches.left[segmentIndex]  = branchContainer(this.key + "_" + segmentIndex + "_bl", false);
+            this.branches.right[segmentIndex] = branchContainer(this.key + "_" + segmentIndex + "_br", true);
+            this.branches.left[segmentIndex].rotate(-90);
+            this.branches.right[segmentIndex].rotate(-90);
+        }
+
+        this.branches.segmented[segmentIndex].push(shape);
     }
 
     private updateDimensions(): void {

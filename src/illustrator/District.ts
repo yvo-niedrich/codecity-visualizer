@@ -1,11 +1,8 @@
 import {Illustrator} from "./Illustrator";
-import {Model} from "../model/Model";
 import {SpecificContainer} from "./container/Container";
 import {DistrictContainer, DistrictContainerOptions} from "./container/specific/Districts";
-import {Version} from "../components/Version";
 import {Point} from "../components/Point";
 import {Illustration} from "./components/Illustration";
-import {TreeNode} from "../components/TreeNode";
 import {Shape, House} from "./components/Shapes";
 import {PlatformContainer} from "./container/universal/Platform";
 
@@ -26,9 +23,9 @@ export interface DistrictOptions extends AttributeContainer {
  * Create an District Layout City
  */
 export class District extends Illustrator {
-    private _model: Model;
+    private _model: SoftwareModel;
 
-    constructor(model: Model, options: DistrictOptions = {}) {
+    constructor(model: SoftwareModel, options: DistrictOptions = {}) {
         super();
 
         this.setOptions(options);
@@ -51,7 +48,7 @@ export class District extends Illustrator {
         this._model = model;
     }
 
-    public draw(version: Version): Illustration {
+    public draw(version: VersionInterface): Illustration {
         const spatialModel = this.createSpatialModel(this._model.getTree(), version);
 
         const origin = new Point(0, 0, 0);
@@ -66,7 +63,7 @@ export class District extends Illustrator {
         return illustration;
     }
 
-    private createSpatialModel(tree: TreeNode, version: Version): Shape {
+    private createSpatialModel(tree: TreeNodeInterface, version: VersionInterface): Shape {
         if (!tree.children.length) {
             return this.createHouse(tree, version);
         }
@@ -86,18 +83,18 @@ export class District extends Illustrator {
         return container;
     }
 
-    private preventTower(node: TreeNode): boolean {
+    private preventTower(node: TreeNodeInterface): boolean {
         return !this.getOption("layout.tower") &&
             node.children.length === 1 &&
             node.children[0].children.length > 0;
     }
 
-    private createContainer(node: TreeNode, version: Version): SpecificContainer {
+    private createContainer(node: TreeNodeInterface, version: VersionInterface): SpecificContainer {
         const cClass = this.getOption("district.container");
 
         let cOptions: DistrictContainerOptions = Object.assign({}, this.getOption("district.options"));
 
-        const platformOptions = this.applyRules(node, this._model, version);
+        const platformOptions = this.applyRules(this._model, node, version);
 
         // TODO: Fix this!
         let oldFunc: (s: string, m: boolean) => PlatformContainer;
@@ -120,7 +117,7 @@ export class District extends Illustrator {
         return new cClass(String(node), cOptions);
     }
 
-    private createHouse(node: TreeNode, version: Version): House {
+    private createHouse(node: TreeNodeInterface, version: VersionInterface): House {
         const defaultLayout = {
             "dimensions.length": this.getOption("house.length"),
             "dimensions.width": this.getOption("house.width"),
@@ -130,7 +127,7 @@ export class District extends Illustrator {
         };
 
         const house = new House(String(node));
-        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(node, this._model, version)));
+        house.updateAttributes(Object.assign(defaultLayout, this.applyRules(this._model, node, version)));
 
         return house;
     }

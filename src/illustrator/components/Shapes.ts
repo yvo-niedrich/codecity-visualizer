@@ -9,7 +9,7 @@ import {Point} from "../../components/Point";
 export abstract class Shape {
     protected _key: string;
     protected _hasBeenDrawn: boolean;
-    protected _absolutePosition: Point;
+    protected _absolutePosition: PointInterface;
     protected _absoluteRotation: number;
     private _attributes: ShapeBaseAttributes;
 
@@ -66,14 +66,14 @@ export abstract class Shape {
      * @return {Cuboid}
      * @protected
      */
-    get dimensions(): Cuboid {
+    get dimensions(): CuboidInterface {
         return (this._attributes.dimensions as Cuboid);
     }
 
     /**
      * Get the shape's qubic footprint (after any possible relative rotations)
      */
-    get displayDimensions(): Cuboid {
+    get displayDimensions(): CuboidInterface {
         const swap = this.rotation % 180;
         const l = this.dimensions.length + 2 * this.margin;
         const w = this.dimensions.width  + 2 * this.margin;
@@ -88,7 +88,7 @@ export abstract class Shape {
     /**
      * Get the shapes centroid (with relative rotation)
      */
-    get centroid (): Point {
+    get centroid (): PointInterface {
         return new Point(
             this.displayDimensions.length / 2,
             this.displayDimensions.width / 2
@@ -123,7 +123,7 @@ export abstract class Shape {
     /**
      * Draw the Shape (calculate final absolute position and rotation)
      */
-    public draw(parentPosition: Point, parentRotation: number) {
+    public draw(parentPosition: PointInterface, parentRotation: number) {
         const a = (720 - parentRotation) % 360;
         const rad = a * (Math.PI / 180);
         const transformedRelativePosition = new Point(

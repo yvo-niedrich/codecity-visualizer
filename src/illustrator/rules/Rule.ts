@@ -1,10 +1,7 @@
-import {TreeNode} from "../../components/TreeNode";
-import {Version} from "../../components/Version";
-import {Model} from "../../model/Model";
 import {Configurable} from "../components/Mixins";
 
-export type RuleCondition = (model: Model, node: TreeNode, version: Version) => boolean;
-export type RuleReadMetric = (model: Model, node: TreeNode, version: Version) => any;
+export type RuleCondition = (model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface) => boolean;
+export type RuleReadMetric = (model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface) => any;
 export interface RuleConstructor {
     condition?: RuleCondition;
     metric?: RuleReadMetric;
@@ -38,8 +35,8 @@ abstract class Rule extends Configurable {
         this.setOptions(options);
     }
 
-    public abstract condition(model: Model, node: TreeNode, version: Version): boolean;
-    public abstract execute(model: Model, node: TreeNode, version: Version): AttributeContainer;
+    public abstract condition(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): boolean;
+    public abstract execute(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): AttributeContainer;
 }
 
 export { Rule as Rule };
