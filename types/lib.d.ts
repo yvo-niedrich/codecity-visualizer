@@ -5,6 +5,7 @@ import {appIllustrators} from "./illustrators";
 import {appModels} from "./models";
 import {appRules} from "./rules";
 import {appShapes} from "./shapes";
+import {appHelpers} from "./helpers";
 
 export {
     appComponents as components,
@@ -12,5 +13,6 @@ export {
     appIllustrators as illustrators,
     appModels as models,
     appRules as rules,
-    appShapes as shapes
+    appShapes as shapes,
+    appHelpers as helper
 };

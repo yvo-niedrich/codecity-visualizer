@@ -73,7 +73,7 @@ export abstract class Configurable implements ConfigurableInterface {
     public requireOption: (key: string) => void;
 }
 
-type containerFunction = (s: string, m: boolean) => UniversalContainer;
+type containerFunction = (key: string, mirror: boolean) => UniversalContainer;
 
 export interface DistrictContainerOptions extends AttributeContainer {
     "spacer.margin"?: number;
@@ -88,7 +88,6 @@ type distributionFunction = (s: Shape) => number;
 type distributionString = "left" | "right" | "default";
 type distributionMethod = distributionString | distributionFunction;
 
-type containerFunction = (key: string, mirror: boolean) => UniversalContainer;
 
 export interface StreetContainerOptions extends AttributeContainer {
     "spacer.initial"?: number;
@@ -107,4 +106,43 @@ export interface StreetContainerOptions extends AttributeContainer {
     "branch.distribution"?: distributionMethod;
     "branch.segmentation"?: { (s: Shape): string };
     "branch.segmentorder"?: { (a: string, b: string): number };
+}
+
+export interface CuboidInterface {
+    length: number;
+    width: number;
+    height: number;
+    diagonal: number;
+    base: number;
+}
+
+export interface DependencyInterface {
+    source: TreeNodeInterface;
+    target: TreeNodeInterface;
+}
+
+export interface PointInterface {
+    y: number;
+    x: number;
+    z: number;
+}
+
+export interface TreeNodeInterface {
+    children: Array<TreeNodeInterface>;
+    parent: TreeNodeInterface | null;
+    add(child: string | TreeNodeInterface): TreeNodeInterface;
+    find(key: TreeNodeInterface|string): TreeNodeInterface | null;
+}
+
+export interface VersionInterface {
+    key: string;
+    label: string;
+}
+
+export interface SoftwareModel {
+    getGraph(): Array<DependencyInterface>;
+    getTree(): TreeNodeInterface;
+    getVersions(): Array<VersionInterface>;
+    exists(node: TreeNodeInterface, version: VersionInterface): Boolean;
+    getAttributes(node: TreeNodeInterface, version: VersionInterface): AttributeContainer;
 }

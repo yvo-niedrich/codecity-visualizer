@@ -2,7 +2,6 @@
 import {Cuboid, Point} from "./components";
 import {ShapeAttributes, ShapeBaseAttributes} from "./interfaces";
 
-
 export namespace appShapes {
     export abstract class base {
         protected _key: string;
@@ -11,14 +10,13 @@ export namespace appShapes {
         protected _absoluteRotation: number;
 
         public constructor(key: string);
-        get key(): string;
-        set margin(margin: number);
-        get margin(): number;
-        get position(): Point;
-        get dimensions(): Cuboid;
-        get displayDimensions(): Cuboid;
-        get centroid (): Point;
-        get rotation(): number;
+        public readonly key: string;
+        public margin: number;
+        public readonly position: Point;
+        public readonly dimensions: Cuboid;
+        public readonly displayDimensions: Cuboid;
+        public readonly centroid : Point;
+        public readonly rotation: number;
         public toString(): string;
         public rotate (degrees: number);
         public draw(parentPosition: Point, parentRotation: number);

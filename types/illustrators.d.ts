@@ -43,7 +43,7 @@ export namespace appIllustrators {
         public getOption: (key: string) => any;
         public getOptions: () => AttributeContainer;
 
-        public constructor(model: Model, options: DistrictOptions = {});
+        public constructor(model: Model, options: DistrictOptions);
         public draw(version: Version): any;
     }
 
@@ -53,7 +53,7 @@ export namespace appIllustrators {
         public getOption: (key: string) => any;
         public getOptions: () => AttributeContainer;
 
-        public constructor(model: Model, options: StreetContainerOptions = {});
+        public constructor(model: Model, options?: StreetContainerOptions);
         public draw(version: Version): any;
     }
 }
