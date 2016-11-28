@@ -3,9 +3,9 @@ import {TreeNode} from "../components/TreeNode";
 import {Version} from "../components/Version";
 
 export abstract class Model implements SoftwareModel {
-    public abstract getGraph(): Array<Dependency>;
+    public abstract getGraph(): Dependency[];
     public abstract getTree(): TreeNode;
-    public abstract getVersions(): Array<Version>;
+    public abstract getVersions(): Version[];
     public abstract exists(node: TreeNode, version: Version): Boolean;
     public abstract getAttributes(node: TreeNode, version: Version): AttributeContainer;
 }
@@ -14,9 +14,9 @@ interface NodeAttributes { [index: string]: AttributeContainer; }
 interface AttributeHistory { [index: string]: NodeAttributes; }
 
 export class DummyModel extends Model {
-    private pGraph: Array<Dependency>;
+    private pGraph: Dependency[];
     private pTree: TreeNode;
-    private pVersions: Array<Version>;
+    private pVersions: Version[];
     private pAttributes: AttributeHistory;
 
     constructor() {
@@ -114,12 +114,12 @@ export class DummyModel extends Model {
         /* Step 4: Create AttributeContainer */
         this.pAttributes = <AttributeHistory> {};
         for (const v of this.pVersions) {
-            this.pAttributes[String(v)] = <NodeAttributes> {};
+            this.pAttributes[String(v)] = {} as NodeAttributes;
             this.createAttributes(this.pTree, v);
         }
     }
 
-    public getGraph(): Array<Dependency> {
+    public getGraph(): Dependency[] {
         return this.pGraph;
     }
 
@@ -127,7 +127,7 @@ export class DummyModel extends Model {
         return this.pTree;
     }
 
-    public getVersions(): Array<Version> {
+    public getVersions(): Version[] {
         return this.pVersions;
     }
 
@@ -143,7 +143,7 @@ export class DummyModel extends Model {
 
             // Since Reptiles were acquired later, they are first available on opening day
             const mammals = this.pTree.find("mammals");
-            return mammals && mammals.find(node) ? true : false;
+            return !!(mammals && mammals.find(node));
         }
 
         return !!this.pTree.find(node);

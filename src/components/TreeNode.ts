@@ -1,6 +1,6 @@
 export class TreeNode implements TreeNodeInterface {
     public parent: TreeNode | null;
-    public readonly children: Array<TreeNode>;
+    public readonly children: TreeNode[];
     private key: string;
 
     constructor(key: string) {

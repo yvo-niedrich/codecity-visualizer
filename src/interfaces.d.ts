@@ -42,7 +42,7 @@ declare interface PointInterface {
 }
 
 declare interface TreeNodeInterface {
-    children: Array<TreeNodeInterface>;
+    children: TreeNodeInterface[];
     parent: TreeNodeInterface | null;
     add(child: string | TreeNodeInterface): TreeNodeInterface;
     find(key: TreeNodeInterface|string): TreeNodeInterface | null;
@@ -54,9 +54,9 @@ declare interface VersionInterface {
 }
 
 declare interface SoftwareModel {
-    getGraph(): Array<DependencyInterface>;
+    getGraph(): DependencyInterface[];
     getTree(): TreeNodeInterface;
-    getVersions(): Array<VersionInterface>;
+    getVersions(): VersionInterface[];
     exists(node: TreeNodeInterface, version: VersionInterface): Boolean;
     getAttributes(node: TreeNodeInterface, version: VersionInterface): AttributeContainer;
 }

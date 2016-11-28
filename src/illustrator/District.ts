@@ -122,8 +122,8 @@ export class District extends Illustrator {
             "dimensions.length": this.getOption("house.length"),
             "dimensions.width": this.getOption("house.width"),
             "dimensions.height": this.getOption("house.height"),
-            margin: this.getOption("house.margin"),
-            color: this.getOption("house.color")
+            "margin": this.getOption("house.margin"),
+            "color": this.getOption("house.color")
         };
 
         const house = new House(String(node));

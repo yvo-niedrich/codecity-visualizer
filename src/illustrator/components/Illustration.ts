@@ -3,7 +3,7 @@
  */
 export class Illustration {
     private _version: VersionInterface;
-    private _shapes: Array<ShapeBaseAttributes>;
+    private _shapes: ShapeBaseAttributes[];
 
     constructor(version: VersionInterface) {
         this._version = version;
@@ -14,7 +14,7 @@ export class Illustration {
         return this._version;
     }
 
-    get shapes(): Array<ShapeBaseAttributes> {
+    get shapes(): ShapeBaseAttributes[] {
         return this._shapes;
     }
 

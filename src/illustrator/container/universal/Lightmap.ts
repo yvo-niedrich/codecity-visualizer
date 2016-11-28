@@ -7,7 +7,7 @@ class LightNode {
     private _origin: PointInterface;
     private _dimensions: CuboidInterface;
     private _content: any;
-    private _children: Array<LightNode>;
+    private _children: LightNode[];
 
     constructor(origin: PointInterface, dimensions: CuboidInterface) {
         this._origin = origin;
@@ -36,7 +36,7 @@ class LightNode {
         return (this.dimensions.length >= measurements.length && this.dimensions.width >= measurements.width);
     }
 
-    public collectCandidates(collection: Array<LightNode>, measurements: CuboidInterface): void {
+    public collectCandidates(collection: LightNode[], measurements: CuboidInterface): void {
         if (this._children.length) {
             for (const c of this._children) {
                 c.collectCandidates(collection, measurements);
@@ -46,7 +46,7 @@ class LightNode {
         }
     }
 
-    public collectNodesWithContent(collection: Array<LightNode>): void {
+    public collectNodesWithContent(collection: LightNode[]): void {
         if (this._children.length) {
             for (const c of this._children) {
                 c.collectNodesWithContent(collection);
@@ -199,7 +199,7 @@ export class Lightmap extends UniversalContainer {
 
     private addShapeToTree(shape: Shape, tree: LightNode): void {
         const shapeDimensions = shape.displayDimensions;
-        const candidates: Array<LightNode> = [];
+        const candidates: LightNode[] = [];
 
         if (!shapeDimensions.length || !shapeDimensions.width) {
             return;
@@ -284,7 +284,7 @@ export class Lightmap extends UniversalContainer {
     }
 
     private positionShapes(tree: LightNode): void {
-        const containers: Array<LightNode> = [];
+        const containers: LightNode[] = [];
         tree.collectNodesWithContent(containers);
 
         for (const node of containers) {

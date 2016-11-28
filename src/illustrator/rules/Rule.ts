@@ -19,7 +19,7 @@ export interface RuleConstructor {
  */
 abstract class Rule extends Configurable {
 
-    public static createTraits(attributes: Array<string> | string, value: any): AttributeContainer {
+    public static createTraits(attributes: string[] | string, value: any): AttributeContainer {
         let result: AttributeContainer = {};
 
         const attr = Array.isArray(attributes) ? attributes : [attributes];

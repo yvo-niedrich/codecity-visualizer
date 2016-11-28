@@ -17,20 +17,20 @@ export class Point implements PointInterface {
         return this._x;
     }
 
-    get y(): number {
-        return this._y;
-    }
-
-    get z(): number {
-        return this._z;
-    }
-
     set x(x: number) {
         this._x = x;
     }
 
+    get y(): number {
+        return this._y;
+    }
+
     set y(y: number) {
         this._y = y;
+    }
+
+    get z(): number {
+        return this._z;
     }
 
     set z(z: number) {

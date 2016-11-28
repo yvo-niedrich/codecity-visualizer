@@ -17,7 +17,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
 
-    private _elements: Array<Shape>;
+    private _elements: Shape[];
     private _finalized: boolean;
 
     constructor(key: string) {
@@ -43,7 +43,7 @@ abstract class Container extends Shape implements ConfigurableInterface {
     /**
      * Get all shapes of this container
      */
-    get shapes(): Array<Shape> {
+    get shapes(): Shape[] {
         return this._elements;
     }
 
@@ -57,8 +57,8 @@ abstract class Container extends Shape implements ConfigurableInterface {
     /**
      * Get the spatial information for container and it's content
      */
-    public getSpatialInformation(): Array<ShapeBaseAttributes> {
-        let result: Array<ShapeBaseAttributes> = [];
+    public getSpatialInformation(): ShapeBaseAttributes[] {
+        let result: ShapeBaseAttributes[] = [];
         for (const shape of this._elements) {
             result = result.concat(shape.getSpatialInformation());
         }

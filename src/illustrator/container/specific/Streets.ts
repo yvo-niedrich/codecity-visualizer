@@ -4,15 +4,15 @@ import {Street, Shape, House} from "../../components/Shapes";
 import {PlatformContainer} from "../universal/Platform";
 
 interface HouseSegmentContainer {
-    segments: Array<string>;
-    segmented: { [index: string]: Array<Shape> };
+    segments: string[];
+    segmented: { [index: string]: Shape[] };
     left: { [index: string]: UniversalContainer };
     right: { [index: string]: UniversalContainer };
 }
 
 interface BranchSegmentContainer {
-    segments: Array<string>;
-    segmented: { [index: string]: Array<Shape> };
+    segments: string[];
+    segmented: { [index: string]: Shape[] };
     left: { [index: string]: SpecificContainer };
     right: { [index: string]: SpecificContainer };
 }
@@ -318,7 +318,7 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private distributeShapes(shapes: Array<Shape>, method: distributionMethod, left: Container, right: Container): void {
+    private distributeShapes(shapes: Shape[], method: distributionMethod, left: Container, right: Container): void {
         if (typeof method === "string") {
             if (method === "left") {
                 this.distributeShapesToContainer(shapes, left);
@@ -332,13 +332,13 @@ export class StreetContainer extends SpecificContainer {
         }
     }
 
-    private distributeShapesToContainer(shapes: Array<Shape>, container: Container): void {
+    private distributeShapesToContainer(shapes: Shape[], container: Container): void {
         for (const s of shapes) {
             container.add(s);
         }
     }
 
-    private distributeShapesInDefaultOrder(shapes: Array<Shape>, left: Container, right: Container): void {
+    private distributeShapesInDefaultOrder(shapes: Shape[], left: Container, right: Container): void {
         for (let i: number = 0; i < shapes.length; i++) {
             if (shapes.hasOwnProperty(i)) {
                 const c = (i % 2) ? left : right;
@@ -348,7 +348,7 @@ export class StreetContainer extends SpecificContainer {
     }
 
     private distributeShapesEquallyByAttribute(
-        shapes: Array<Shape>,
+        shapes: Shape[],
         attr: distributionFunction,
         left: Container,
         right: Container

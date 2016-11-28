@@ -17,20 +17,20 @@ export class Cuboid implements CuboidInterface {
         this._length = length;
     }
 
-    set width(width: number) {
-        this._width = width;
-    }
-
-    set height(height: number) {
-        this._height = height;
-    }
-
     get length(): number {
         return this._length;
     }
 
+    set width(width: number) {
+        this._width = width;
+    }
+
     get width(): number {
         return this._width;
+    }
+
+    set height(height: number) {
+        this._height = height;
     }
 
     get height(): number {

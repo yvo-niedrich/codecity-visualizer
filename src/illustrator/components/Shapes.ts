@@ -145,7 +145,7 @@ export abstract class Shape {
     /**
      * Draw the Shape
      */
-    public getSpatialInformation(): Array<ShapeBaseAttributes> {
+    public getSpatialInformation(): ShapeBaseAttributes[] {
         if (!this._hasBeenDrawn) {
             throw "Node has not been drawn yet";
         }
@@ -195,7 +195,7 @@ export abstract class Shape {
     /**
      * Updates a single value within the attributes object
      */
-    private updateAttribute(obj: AttributeContainer, keys: Array<string>, value: any): void {
+    private updateAttribute(obj: AttributeContainer, keys: string[], value: any): void {
         if (!keys.length) {
             return;
         }

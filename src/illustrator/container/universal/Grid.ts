@@ -56,8 +56,8 @@ class Strip {
  * Rows Elements one after the other
  */
 export class GridContainer extends UniversalContainer {
-    private _shapes: Array<Shape>;
-    private _strips: Array<Strip>;
+    private _shapes: Shape[];
+    private _strips: Strip[];
 
     constructor(key: string, mirror: boolean = false) {
         super(key, mirror);
@@ -78,8 +78,8 @@ export class GridContainer extends UniversalContainer {
 
         if (this._strips.length) {
             return this._strips
-                        .map((v: Strip) => v.container.size)
-                        .reduce((a, b) => (a + b));
+                .map((v: Strip) => v.container.size)
+                .reduce((a, b) => (a + b));
         }
 
         return 0;
@@ -200,9 +200,9 @@ export class GridContainer extends UniversalContainer {
 
     private recalculateStripOffsets(): void {
         let offset = 0;
-        for (let i = 0; i < this._strips.length; i++) {
-            this._strips[i].offset = offset;
-            offset += this._strips[i].dimensions.width;
+        for (let strip of this._strips) {
+            strip.offset = offset;
+            offset += strip.dimensions.width;
         }
     }
 
