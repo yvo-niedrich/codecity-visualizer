@@ -5,7 +5,7 @@ export type RuleReadMetric = (model: SoftwareModel, node: TreeNodeInterface, ver
 export interface RuleConstructor {
     condition?: RuleCondition;
     metric?: RuleReadMetric;
-    attributes: string;
+    attributes: string | string[];
 }
 
  export const ruleDefaults: Object = {
@@ -18,7 +18,6 @@ export interface RuleConstructor {
  * reflected in the SpatialNode. It may define new properties, the renderer can take advantage of.
  */
 abstract class Rule extends Configurable {
-
     public static createTraits(attributes: string[] | string, value: any): AttributeContainer {
         let result: AttributeContainer = {};
 
