@@ -13,14 +13,14 @@ For more information check out the [Git-Repository][git-project] or see how to s
 Available in ES2015-CommonJS _(supports TypeScript Typehints)_.
 
 ## Polyfills
-This plugin uses the ES2015-Syntax, but still requires polyfills, depending on the interpreter. For minimal (with IE11 / Node v3) polyfilling use `core-js`:
+This plugin is deployed in the ES2015-Syntax, but still requires polyfills, depending on your interpreter. For minimal polyfilling (tested with IE11 / Node v3) use `core-js`:
  * core-js/fn/set
- * core-js/fn/array/index-of.js
- * core-js/fn/array/is-array.js
- * core-js/fn/object/get-own-property-descriptor.js
- * core-js/fn/object/get-own-property-descriptors.js
- * core-js/fn/object/get-own-property-names.js
- * core-js/fn/object/get-own-property-symbols.js
+ * core-js/fn/array/index-of
+ * core-js/fn/array/is-array
+ * core-js/fn/object/get-own-property-descriptor
+ * core-js/fn/object/get-own-property-descriptors
+ * core-js/fn/object/get-own-property-names
+ * core-js/fn/object/get-own-property-symbols
 
 ## Demo
 To see this library in action check out the SonarQube-Plugin [Softvis3D][softvis3d].<br /> _(Also available at the "SonarQube Update Center")_

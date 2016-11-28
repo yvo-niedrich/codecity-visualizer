@@ -2,8 +2,6 @@ node_modules
 tmp/
 src/
 spec/
-.nyc_output/
-coverage/
 
 .gitlab-ci.yml
 .travis.yml

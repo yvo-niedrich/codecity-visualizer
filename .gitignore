@@ -4,8 +4,6 @@ lib/
 *.tgz
 *.log
 *.bat
-.nyc_output/
-coverage/
 
 # IDE
 .idea
