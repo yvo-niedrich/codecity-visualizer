@@ -6,7 +6,7 @@ type RuleReadMetric = (model: SoftwareModel, node: TreeNodeInterface, version: V
 interface RuleConstructor {
     condition?: RuleCondition;
     metric?: RuleReadMetric;
-    attributes: string;
+    attributes: string | string[];
 }
 
 interface UniversalRuleConstructor extends RuleConstructor {
