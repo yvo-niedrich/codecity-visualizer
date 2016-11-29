@@ -32,27 +32,27 @@ export namespace appContainers {
 
     export class grid extends UniversalContainer {
         constructor(key: string, mirror?: boolean);
-        public finalize();
+        public finalize(): void;
     }
 
     export class lightmap extends UniversalContainer {
         constructor(key: string, mirror?: boolean);
-        public finalize();
+        public finalize(): void;
     }
 
     export class line extends UniversalContainer {
         constructor(key: string, mirror?: boolean);
-        public finalize();
+        public finalize(): void;
     }
 
     export class platform extends UniversalContainer {
         constructor(key: string, mirror?: boolean);
-        public finalize();
+        public finalize(): void;
     }
 
     export class row extends UniversalContainer {
         constructor(key: string, mirror?: boolean);
-        public finalize();
+        public finalize(): void;
     }
 }
 

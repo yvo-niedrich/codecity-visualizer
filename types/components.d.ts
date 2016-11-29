@@ -4,8 +4,8 @@ export namespace appComponents {
         public length: number;
         public width: number;
         public height: number;
-        public readonly diagonal;
-        public readonly base;
+        public readonly diagonal: number;
+        public readonly base: number;
         constructor(length?: number, width?: number, height?: number);
     }
 

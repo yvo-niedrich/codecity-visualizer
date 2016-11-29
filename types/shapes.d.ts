@@ -18,10 +18,10 @@ export namespace appShapes {
         public readonly centroid : Point;
         public readonly rotation: number;
         public toString(): string;
-        public rotate (degrees: number);
-        public draw(parentPosition: Point, parentRotation: number);
+        public rotate (degrees: number): void;
+        public draw(parentPosition: Point, parentRotation: number): void;
         public getSpatialInformation(): Array<ShapeBaseAttributes>;
-        public updateAttributes(attributes: ShapeAttributes);
+        public updateAttributes(attributes: ShapeAttributes): void;
         public getAttribute(key: string): any;
     }
 
