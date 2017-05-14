@@ -232,3 +232,6 @@ export class Street extends Shape {
         this.updateAttributes({type: "street"});
     }
 }
+
+export class Highway extends Street {
+}

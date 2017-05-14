@@ -1,6 +1,6 @@
 import {Container, SpecificContainer, UniversalContainer} from "../Container";
 import {RowContainer} from "../universal/Row";
-import {Street, Shape, House} from "../../components/Shapes";
+import {Street, Shape, House, Highway} from "../../components/Shapes";
 import {PlatformContainer} from "../universal/Platform";
 
 interface HouseSegmentContainer {
@@ -28,6 +28,8 @@ export interface StreetContainerOptions extends AttributeContainer {
     "spacer.branches"?: number;
     "spacer.terranullius"?: number;
     "spacer.conclusive"?: number;
+
+    "road.trim"?: boolean;
 
     "house.container"?: containerFunction;
     "house.distribution"?: distributionMethod;
@@ -124,6 +126,8 @@ export class StreetContainer extends SpecificContainer {
             throw new Error("StreetContainer requires a primary street");
         }
         const mainRoad = this.road;
+        let branchCount = 0;
+        let houseCount = 0;
 
         this.prepareSegments();
         this.addHousesToStructure();
@@ -138,7 +142,7 @@ export class StreetContainer extends SpecificContainer {
         mainRoad.dimensions.width = this.dimensions.width;
         mainRoad.position.x = middleOfTheRoad;
         mainRoad.position.y = 0;
-        super.add(this.road);
+        super.add(mainRoad);
 
         // Place Branches, Segment by Segment
         for (const bSeg of this.branches.segments) {
@@ -150,12 +154,14 @@ export class StreetContainer extends SpecificContainer {
                 leftBranch.position.x = middleOfTheRoad - halfTheRoadLength - leftBranch.centroid.x;
                 leftBranch.position.y = containersBottom + leftBranch.centroid.y;
                 super.add(leftBranch);
+                branchCount++;
             }
 
             if (rightBranch.size) {
                 rightBranch.position.x = middleOfTheRoad + halfTheRoadLength + rightBranch.centroid.x;
                 rightBranch.position.y = containersBottom + rightBranch.centroid.y;
                 super.add(rightBranch);
+                branchCount++;
             }
 
             containersBottom += Math.max(leftBranch.displayDimensions.width, rightBranch.displayDimensions.width);
@@ -176,16 +182,26 @@ export class StreetContainer extends SpecificContainer {
                 leftHouses.position.x = middleOfTheRoad - halfTheRoadLength - leftHouses.centroid.x;
                 leftHouses.position.y = containersBottom + leftHouses.centroid.y;
                 super.add(leftHouses);
+                houseCount++;
             }
 
             if (rightHouses.size) {
                 rightHouses.position.x = middleOfTheRoad + halfTheRoadLength + rightHouses.centroid.x;
                 rightHouses.position.y = containersBottom + rightHouses.centroid.y;
                 super.add(rightHouses);
+                houseCount++;
             }
 
             containersBottom += Math.max(leftHouses.displayDimensions.width, rightHouses.displayDimensions.width);
         }
+
+        if (this.getOption("road.trim") && !houseCount) {
+            this.trimMainRoad(mainRoad);
+        }
+    }
+
+    public getRoad(): Street | null {
+        return this.road;
     }
 
     private addHouse(shape: House) {
@@ -499,5 +515,48 @@ export class StreetContainer extends SpecificContainer {
         }
 
         return Math.max(maxRightHouses, maxRightBranches) + this.rightBranchSpacer;
+    }
+
+    private trimMainRoad(mainRoad: Street): void {
+        let furthestStreetPosition = -Infinity;
+        const xPos = this.dimensions.width / 2;
+        for (const s of this.shapes) {
+            if (!(s instanceof UniversalContainer)) {
+                continue;
+            }
+
+            const containerPos = s.rotation ? s.position.y : -s.position.y;
+            furthestStreetPosition = (s as UniversalContainer)
+                .shapes
+                .reduce(
+                    (carry: number, shape: Shape) => {
+                        const roadBlock = shape as StreetContainer;
+                        const road: Street = roadBlock.getRoad() as Street;
+                        if (!road) {
+                            return carry;
+                        }
+
+                        const roadsEnd = roadBlock.rotation ? -road.position.x : road.position.x;
+                        const roadWidth = (road.dimensions.length / 2);
+
+                        return Math.max(
+                            containerPos + roadBlock.position.x + roadsEnd + roadWidth,
+                            carry
+                        );
+                    },
+                    furthestStreetPosition
+                );
+        }
+
+        furthestStreetPosition = this.dimensions.width - furthestStreetPosition - xPos;
+
+        if (mainRoad instanceof Highway) {
+            furthestStreetPosition -= this.getOption("spacer.initial") * .5;
+        }
+
+        if (0 < furthestStreetPosition && furthestStreetPosition < mainRoad.dimensions.width) {
+            mainRoad.dimensions.width -= furthestStreetPosition;
+            mainRoad.position.y -= (furthestStreetPosition / 2);
+        }
     }
 }

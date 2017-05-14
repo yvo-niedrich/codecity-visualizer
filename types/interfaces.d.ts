@@ -95,6 +95,8 @@ export interface StreetContainerOptions extends AttributeContainer {
     "spacer.terranullius"?: number;
     "spacer.conclusive"?: number;
 
+    "road.trim"?: boolean;
+
     "house.container"?: containerFunction;
     "house.distribution"?: distributionMethod;
     "house.segmentation"?: { (s: Shape): string };

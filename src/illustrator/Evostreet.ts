@@ -3,7 +3,7 @@ import {Illustrator} from "./Illustrator";
 import {StreetContainer, StreetContainerOptions} from "./container/specific/Streets";
 import {Illustration} from "./components/Illustration";
 import {Point} from "../components/Point";
-import {Shape, Street, House} from "./components/Shapes";
+import {Shape, Street, House, Highway} from "./components/Shapes";
 
 export interface EvostreetOptions extends AttributeContainer {
     "layout.snail"?: boolean;
@@ -34,7 +34,7 @@ export class Evostreet extends Illustrator {
         this.setDefaults({
             "layout.snail": true,
 
-            "highway.length": 40,
+            "highway.length": 45,
             "highway.color": 0x156289,
 
             "street.length": 20,
@@ -111,7 +111,7 @@ export class Evostreet extends Illustrator {
             "color": this.getOption("highway.color")
         };
 
-        const highway = new Street(String(node));
+        const highway = new Highway(String(node));
         highway.updateAttributes(Object.assign(defaultLayout, this.applyRules(this._model, node, version)));
         return highway;
     }
