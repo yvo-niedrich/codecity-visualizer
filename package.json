@@ -1,6 +1,6 @@
 {
   "name": "codecity-visualizer",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Fully Configurable Code Visualisation Tool",
   "main": "lib/app.js",
   "typings": "types/lib.d.ts",
