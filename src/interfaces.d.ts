@@ -57,6 +57,6 @@ declare interface SoftwareModel {
     getGraph(): DependencyInterface[];
     getTree(): TreeNodeInterface;
     getVersions(): VersionInterface[];
-    exists(node: TreeNodeInterface, version: VersionInterface): Boolean;
+    exists(node: TreeNodeInterface, version: VersionInterface): boolean;
     getAttributes(node: TreeNodeInterface, version: VersionInterface): AttributeContainer;
 }

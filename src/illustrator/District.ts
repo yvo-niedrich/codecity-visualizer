@@ -92,20 +92,20 @@ export class District extends Illustrator {
     private createContainer(node: TreeNodeInterface, version: VersionInterface): SpecificContainer {
         const cClass = this.getOption("district.container");
 
-        let cOptions: DistrictContainerOptions = Object.assign({}, this.getOption("district.options"));
+        const cOptions: DistrictContainerOptions = Object.assign({}, this.getOption("district.options"));
 
         const platformOptions = this.applyRules(this._model, node, version);
 
         // TODO: Fix this!
         let oldFunc: (s: string, m: boolean) => PlatformContainer;
         if (cOptions["platform.container"] !== undefined) {
-            oldFunc = <(s: string, m: boolean) => PlatformContainer> cOptions["platform.container"];
+            oldFunc = cOptions["platform.container"] as (s: string, m: boolean) => PlatformContainer;
         } else {
             oldFunc = (s: string, m: boolean) => new PlatformContainer(s, m);
         }
 
         cOptions["platform.container"] = (s: string, m: boolean) => {
-            let o = oldFunc(s, m);
+            const o = oldFunc(s, m);
             for (const key in platformOptions) {
                 if (platformOptions.hasOwnProperty(key)) {
                     o.setOption(key, platformOptions[key]);

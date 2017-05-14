@@ -8,6 +8,7 @@ spec/
 .babelrc
 .eslintrc
 tslint.json
+yarn.lock
 
 out
 *.tgz

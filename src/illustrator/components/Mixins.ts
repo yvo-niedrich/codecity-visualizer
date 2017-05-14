@@ -19,7 +19,7 @@ export class Configurable implements ConfigurableInterface {
         if (typeof(this._icDefaults) === "undefined" || this._icDefaults === null) {
             this._icDefaults = defaults;
         } else {
-            throw "Default values are already set";
+            throw new Error("Default values are already set");
         }
     }
 
@@ -72,12 +72,12 @@ export class Configurable implements ConfigurableInterface {
             return;
         }
 
-        throw "Option `" + key + "` was not set.";
+        throw new Error("Option `" + key + "` was not set.");
     }
 }
 
 export function applyMixins(derivedCtor: any, baseCtors: any) {
-    let baseCtorsArr: any[] = Array.isArray(baseCtors) ? baseCtors : [baseCtors];
+    const baseCtorsArr: any[] = Array.isArray(baseCtors) ? baseCtors : [baseCtors];
 
     baseCtorsArr.forEach((baseCtor) => {
         Object.getOwnPropertyNames(baseCtor.prototype).forEach((name) => {

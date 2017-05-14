@@ -112,9 +112,9 @@ export abstract class Shape {
     /**
      * Rotate the shape around the it's centroid (clockwise rotation).
      */
-    public rotate (degrees: number) {
+    public rotate(degrees: number) {
         if (degrees % 90) {
-            throw "Only 90° rotations allowed";
+            throw new Error("Only 90° rotations allowed");
         }
 
         this._attributes.rotation = (720 + this.rotation + degrees) % 360;
@@ -147,7 +147,7 @@ export abstract class Shape {
      */
     public getSpatialInformation(): ShapeBaseAttributes[] {
         if (!this._hasBeenDrawn) {
-            throw "Node has not been drawn yet";
+            throw new Error("Node has not been drawn yet");
         }
 
         const swap = this._absoluteRotation % 180;
@@ -157,7 +157,7 @@ export abstract class Shape {
             this.dimensions.height
         );
 
-        let spatialInformation = Object.assign({}, this._attributes);
+        const spatialInformation = Object.assign({}, this._attributes);
 
         spatialInformation.dimensions = rotatedDimensions;
         spatialInformation.position = this._absolutePosition;
@@ -171,7 +171,7 @@ export abstract class Shape {
      * Also applies Spatial Data for this Shape directly.
      */
     public updateAttributes(attributes: ShapeAttributes): void {
-        for (let key in attributes) {
+        for (const key in attributes) {
             if (attributes.hasOwnProperty(key)) {
                 const value = attributes[key];
                 this.updateAttribute(this._attributes, key.split("."), value);
@@ -183,10 +183,10 @@ export abstract class Shape {
      * Returns the attribute recorded for key
      */
     public getAttribute(key: string): any {
-        const keys = key.split(".");
+        const keys: string[] = key.split(".");
         let attr: any = this._attributes;
         while (keys.length && attr) {
-            const index = <string> keys.shift();
+            const index = keys.shift() as string;
             attr = attr[index];
         }
         return attr;
@@ -200,7 +200,7 @@ export abstract class Shape {
             return;
         }
 
-        const k = <string> keys.shift();
+        const k = keys.shift() as string;
         if (!keys.length) {
             obj[k] = value;
         } else {

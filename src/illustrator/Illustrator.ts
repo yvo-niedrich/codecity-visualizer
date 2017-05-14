@@ -12,6 +12,7 @@ abstract class Illustrator implements ConfigurableInterface {
     public setOptions: (options: AttributeContainer) => void;
     public setOption: (key: string, value: any) => void;
     public getOption: (key: string) => any;
+    //noinspection JSUnusedGlobalSymbols
     public getOptions: () => AttributeContainer;
     public requireOption: (key: string) => void;
 
@@ -42,7 +43,7 @@ abstract class Illustrator implements ConfigurableInterface {
      * covering the changes and additions to the node"s attributes
      */
     protected applyRules(model: SoftwareModel, node: TreeNodeInterface, version: VersionInterface): AttributeContainer {
-        let attributes = {};
+        const attributes = {};
         for (const rule of this._illustratorRules) {
             if (rule instanceof Rule && rule.condition(model, node, version)) {
                 Object.assign(attributes, rule.execute(model, node, version));

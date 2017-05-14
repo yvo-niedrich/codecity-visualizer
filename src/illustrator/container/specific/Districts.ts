@@ -51,7 +51,7 @@ export class DistrictContainer extends SpecificContainer {
         } else if (shape instanceof House) {
             this.houses.add(shape);
         } else {
-            throw "Unknown Shape Type: " + shape;
+            throw new Error("Unknown Shape Type: " + shape);
         }
     }
 

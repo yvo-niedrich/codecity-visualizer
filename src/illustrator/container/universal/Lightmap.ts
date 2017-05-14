@@ -61,7 +61,7 @@ class LightNode {
      */
     public insert(measurements: CuboidInterface, object: any, cutHorizontalFirst: boolean = true): LightNode {
         if (!this.contentFits(measurements)) {
-            throw "Object does not fit!";
+            throw new Error("Object does not fit!");
         }
 
         const cutOrder = [
@@ -208,7 +208,7 @@ export class Lightmap extends UniversalContainer {
         tree.collectCandidates(candidates, shapeDimensions);
 
         if (!candidates.length) {
-            throw "Could not find a single candidate. This should never happen!";
+            throw new Error("Could not find a single candidate. This should never happen!");
         }
 
         // Find the best possible Candidate
@@ -255,7 +255,7 @@ export class Lightmap extends UniversalContainer {
         }
 
         if (preserver == null && expander == null) {
-            throw "Lightmap: No suitable candidate";
+            throw new Error("Lightmap: No suitable candidate");
         }
 
         const winner: LightNode = (preserver ? preserver : expander) as LightNode;

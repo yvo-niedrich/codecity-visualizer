@@ -14,7 +14,7 @@ export namespace appModels {
         public abstract getGraph(): Array<Dependency>;
         public abstract getTree(): TreeNode;
         public abstract getVersions(): Array<Version>;
-        public abstract exists(node: TreeNode, version: Version): Boolean;
+        public abstract exists(node: TreeNode, version: Version): boolean;
         public abstract getAttributes(node: TreeNode, version: Version): {[index: string]: any};
     }
 
@@ -22,7 +22,7 @@ export namespace appModels {
         public getGraph(): Array<Dependency>;
         public getTree(): TreeNode;
         public getVersions(): Array<Version>;
-        public exists(node: TreeNode, version: Version): Boolean;
+        public exists(node: TreeNode, version: Version): boolean;
         public getAttributes(node: TreeNode, version: Version): {[index: string]: any};
     }
 }

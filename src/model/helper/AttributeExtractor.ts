@@ -12,13 +12,13 @@ export class AttributeExtractor {
     ): boolean {
         if (model.exists(node, version)) {
             if (attribute !== null && !(attribute in model.getAttributes(node, version))) {
-                throw "Attribute " + attribute + " does not exist in Version " + version + " for Node " + node;
+                throw new Error("Attribute " + attribute + " does not exist in Version " + version + " for Node " + node);
             }
 
             return true;
         }
 
-        throw "Node " + node + " does not exist in Version " + version;
+        throw new Error("Node " + node + " does not exist in Version " + version);
     }
 
     /**
@@ -57,7 +57,7 @@ export class AttributeExtractor {
             }
         }
 
-        throw "No data for Node " + node + " existing before Version " + version;
+        throw  new Error("No data for Node " + node + " existing before Version " + version);
     }
 
     /**
@@ -80,7 +80,7 @@ export class AttributeExtractor {
             }
         }
 
-        throw "No data for Node " + node + " existing after Version " + version;
+        throw new Error("No data for Node " + node + " existing after Version " + version);
     }
 
     /**
@@ -105,7 +105,7 @@ export class AttributeExtractor {
             // No Data available after version
         }
 
-        throw "No data for Node " + node + " available";
+        throw new Error("No data for Node " + node + " available");
     }
 
     /**
@@ -120,6 +120,6 @@ export class AttributeExtractor {
             }
         }
 
-        throw "No data for Node " + node + " existing";
+        throw new Error("No data for Node " + node + " existing");
     }
 }

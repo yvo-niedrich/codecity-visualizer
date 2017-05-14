@@ -108,7 +108,7 @@ export class GridContainer extends UniversalContainer {
         this.createNewStrip();
 
         let activeStrip: number = 0;
-        let bestFit: { aspectDistance: number; strip: number; } = {
+        const bestFit: { aspectDistance: number; strip: number; } = {
             aspectDistance: Infinity,
             strip: -1
         };
@@ -152,7 +152,7 @@ export class GridContainer extends UniversalContainer {
 
                 // If this is the last strip, check if inserting a new
                 // strip is better, than using any of the available strips.
-                let isLastStrip = activeStrip + 1 === this._strips.length;
+                const isLastStrip = activeStrip + 1 === this._strips.length;
                 let gotoBestFit = false;
                 if (this.getOption("useBestFitMethod") && isLastStrip) {
                     const widthWithNewStrip = currentDimensions.width + shape.displayDimensions.width;
@@ -200,7 +200,7 @@ export class GridContainer extends UniversalContainer {
 
     private recalculateStripOffsets(): void {
         let offset = 0;
-        for (let strip of this._strips) {
+        for (const strip of this._strips) {
             strip.offset = offset;
             offset += strip.dimensions.width;
         }

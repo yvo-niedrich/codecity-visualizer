@@ -31,15 +31,15 @@ export interface StreetContainerOptions extends AttributeContainer {
 
     "house.container"?: containerFunction;
     "house.distribution"?: distributionMethod;
-    "house.segmentation"?: { (s: Shape): string };
-    "house.segmentorder"?: { (a: string, b: string): number };
+    "house.segmentation"?: (s: Shape) => string;
+    "house.segmentorder"?: (a: string, b: string) => number;
     "house.platforms"?: null | ShapeAttributes;
     "house.path"?: null | ShapeAttributes;
 
     "branch.container"?: containerFunction;
     "branch.distribution"?: distributionMethod;
-    "branch.segmentation"?: { (s: Shape): string };
-    "branch.segmentorder"?: { (a: string, b: string): number };
+    "branch.segmentation"?: (s: Shape) => string;
+    "branch.segmentorder"?: (a: string, b: string) => number;
 }
 
 /**
@@ -111,17 +111,17 @@ export class StreetContainer extends SpecificContainer {
             this.addHouse(shape);
         } else if (shape instanceof Street) {
             if (this.road !== null) {
-                throw "StreetContainer can only have one road.";
+                throw new Error("StreetContainer can only have one road.");
             }
             this.road = shape;
         } else {
-            throw "Unknown Shape-Type: " + shape;
+            throw new Error("Unknown Shape-Type: " + shape);
         }
     }
 
     public finalize(): void {
         if (this.road === null) {
-            throw "StreetContainer requires a primary street";
+            throw new Error("StreetContainer requires a primary street");
         }
         const mainRoad = this.road;
 
@@ -239,12 +239,12 @@ export class StreetContainer extends SpecificContainer {
                 return c;
             }
 
-            let hContainer = new PlatformContainer(this.key, c.isMirrored);
+            const hContainer = new PlatformContainer(this.key, c.isMirrored);
             hContainer.setOptions(platformOptions);
             hContainer.add(c);
 
             if (pathOptions) {
-                let path = new Street(this.key);
+                const path = new Street(this.key);
                 path.updateAttributes(pathOptions);
                 hContainer.add(path);
             }
@@ -328,7 +328,7 @@ export class StreetContainer extends SpecificContainer {
                 this.distributeShapesInDefaultOrder(shapes, left, right);
             }
         } else {
-            this.distributeShapesEquallyByAttribute(shapes, <distributionFunction> method, left, right);
+            this.distributeShapesEquallyByAttribute(shapes, method, left, right);
         }
     }
 
@@ -353,7 +353,7 @@ export class StreetContainer extends SpecificContainer {
         left: Container,
         right: Container
     ): void {
-        shapes.sort((a: Shape, b: Shape) => { return attr(b) - attr(a); });
+        shapes.sort((a: Shape, b: Shape) => attr(b) - attr(a));
         let diff = 0;
         for (const s of shapes) {
             if (diff <= 0) {

@@ -28,6 +28,7 @@
     "postbuild:force": "rimraf tmp",
     "pretest": "npm run lint:tests -s",
     "test:force": "jasmine JASMINE_CONFIG_PATH=spec/jasmine.json",
+    "preversion": "npm run build -s && npm test -s",
     "prepublish": "npm run build -s && npm test -s"
   },
   "dependencies": {},
@@ -39,8 +40,8 @@
     "eslint-plugin-jasmine": "^2.1.0",
     "jasmine": "^2.5.2",
     "rimraf": "latest",
-    "ts-node": "^1.7.0",
-    "tslint": "^4.0.2",
+    "ts-node": "^3.0.4",
+    "tslint": "^5.2.0",
     "typescript": "^2.0.10"
   }
 }

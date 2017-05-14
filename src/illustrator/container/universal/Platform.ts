@@ -32,7 +32,7 @@ export class PlatformContainer extends UniversalContainer {
             return;
         }
 
-        let d = this.elements.displayDimensions;
+        const d = this.elements.displayDimensions;
 
         this.dimensions.length = d.length;
         this.dimensions.width  = d.width;
@@ -44,7 +44,7 @@ export class PlatformContainer extends UniversalContainer {
     private createPlatform(): void {
         const platform = new Platform(this.key);
 
-        let platformOptions: AttributeContainer = Object.assign({
+        const platformOptions: AttributeContainer = Object.assign({
             "dimensions.length": this.dimensions.length,
             "dimensions.width": this.dimensions.width
         }, this.getOptions());

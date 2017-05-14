@@ -6,7 +6,7 @@ export abstract class Model implements SoftwareModel {
     public abstract getGraph(): Dependency[];
     public abstract getTree(): TreeNode;
     public abstract getVersions(): Version[];
-    public abstract exists(node: TreeNode, version: Version): Boolean;
+    public abstract exists(node: TreeNode, version: Version): boolean;
     public abstract getAttributes(node: TreeNode, version: Version): AttributeContainer;
 }
 
@@ -23,8 +23,8 @@ export class DummyModel extends Model {
         super ();
 
         // Prepare
-        let marmoset = new TreeNode("marmoset");
-        let tortoise = new TreeNode("tortoise");
+        const marmoset = new TreeNode("marmoset");
+        const tortoise = new TreeNode("tortoise");
 
         /* Step 1: Create Tree */
         this.pTree = new TreeNode("zoo");
@@ -112,9 +112,9 @@ export class DummyModel extends Model {
         });
 
         /* Step 4: Create AttributeContainer */
-        this.pAttributes = <AttributeHistory> {};
+        this.pAttributes = {};
         for (const v of this.pVersions) {
-            this.pAttributes[String(v)] = {} as NodeAttributes;
+            this.pAttributes[String(v)] = {};
             this.createAttributes(this.pTree, v);
         }
     }
@@ -131,7 +131,7 @@ export class DummyModel extends Model {
         return this.pVersions;
     }
 
-    public exists(node: TreeNode, version: Version): Boolean {
+    public exists(node: TreeNode, version: Version): boolean {
         // In Alpha-Version, some animals were missing
         if (String(version) === "alpha") {
 

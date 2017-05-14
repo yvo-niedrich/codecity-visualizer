@@ -8,7 +8,7 @@ export interface RuleConstructor {
     attributes: string | string[];
 }
 
- export const ruleDefaults: Object = {
+export const ruleDefaults = {
     condition: () => true,
     metric: () => 0
 };
@@ -19,7 +19,7 @@ export interface RuleConstructor {
  */
 abstract class Rule extends Configurable {
     public static createTraits(attributes: string[] | string, value: any): AttributeContainer {
-        let result: AttributeContainer = {};
+        const result: AttributeContainer = {};
 
         const attr = Array.isArray(attributes) ? attributes : [attributes];
         for (const key of attr) {

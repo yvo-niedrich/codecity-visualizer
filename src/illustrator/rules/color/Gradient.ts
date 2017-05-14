@@ -49,7 +49,7 @@ export class GradientRule extends Rule {
         const startColor = this.hex2rgb(this.getOption("minColor"));
         const endColor = this.hex2rgb(this.getOption("maxColor"));
         const steps = this.getOption("max") - this.getOption("min");
-        let normalized = Math.min(
+        const normalized = Math.min(
                 Math.max(this.getOption("min"), value),
                 this.getOption("max")
             ) - this.getOption("min");
